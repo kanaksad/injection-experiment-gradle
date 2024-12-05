@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<scanner>
+    <serialization active="true"/>
+    <uuid>0ac9a909-7b41-4448-bd68-aefae00e2520</uuid>
+    <path>/Users/nima/Desktop/injection-experiment-gradle/abagil/annotator-out/0</path>
+    <processor>
+        <LOMBOK active="true"/>
+    </processor>
+    <annotations/>
+</scanner>

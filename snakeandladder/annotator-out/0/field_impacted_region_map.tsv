@@ -1,0 +1,8 @@
+REGION_CLASS	REGION_MEMBER	USED_MEMBER	USED_CLASS	SOURCE_TYPE
+com.lbp.SessionListenerClasses.SessionListener	sessionCreated(javax.servlet.http.HttpSessionEvent)	out	java.lang.System	SOURCE
+com.lbp.SessionListenerClasses.SessionListener	sessionDestroyed(javax.servlet.http.HttpSessionEvent)	out	java.lang.System	SOURCE
+com.lbp.jspclasses.StartGame	doPost(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)	out	java.lang.System	SOURCE
+com.lbp.jspclasses.GetColors	doPost(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)	length	Array	SOURCE
+com.lbp.jspclasses.GetWinner	getWinner(java.lang.String)	out	java.lang.System	SOURCE
+com.lbp.servletclasses.join	doPost(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)	out	java.lang.System	SOURCE
+com.lbp.servletclasses.join	doPost(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)	out	java.lang.System	SOURCE
