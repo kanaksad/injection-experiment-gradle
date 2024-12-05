@@ -28,7 +28,7 @@ def run_annotator():
     commands += ["--depth", "25"]
     commands += ["-ch"]
     # Uncomment to see build output
-    # commands += ['-rboserr']
+    commands += ['-rboserr']
     # Uncomment to disable outer loop
     # commands += ['-dol']
     # Uncomment to disable parallel processing

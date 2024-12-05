@@ -3,6 +3,7 @@ package shared;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * A class for writing data sets
@@ -18,7 +19,7 @@ public class DataSetWriter {
     /**
      * The file name
      */
-    private String filename;
+    private @RUntainted String filename;
 
     /**
      * True to append the results to the end of
@@ -36,7 +37,7 @@ public class DataSetWriter {
      * Make a new data set writer
      * @param set the data set to writer
      */
-    public DataSetWriter(DataSet set, String filename) {
+    public DataSetWriter(DataSet set, @RUntainted String filename) {
         this.set = set;
         this.filename = filename;
         this.append = false;
@@ -47,7 +48,7 @@ public class DataSetWriter {
      * Make a new data set writer
      * @param set the data set to writer
      */
-    public DataSetWriter(DataSet set, String filename, boolean append) {
+    public DataSetWriter(DataSet set, @RUntainted String filename, boolean append) {
         this.set = set;
         this.filename = filename;
         this.append = append;
@@ -58,7 +59,7 @@ public class DataSetWriter {
      * Make a new data set writer
      * @param set the data set to writer
      */
-    public DataSetWriter(DataSet set, String filename, boolean append, String[] labelStrings) {
+    public DataSetWriter(DataSet set, @RUntainted String filename, boolean append, String[] labelStrings) {
         this.set = set;
         this.filename = filename;
         this.append = append;

@@ -17,7 +17,6 @@ checkerFramework {
             "-AenableTypeArgumentInference=$System.env.ANNOTATOR_TYPE_ARG",
             "-AenableSerialization",
             "-AserializationConfigPath=" + checker_config,
-            '-Awarns'
     ]
 }
 

@@ -1,0 +1,30 @@
+2024-12-05T13:01:36.301530:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:01:38.564630:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:01:39.554599:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:01:48.669748:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:01:50.790970:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:01:51.877514:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:02:04.077083:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:02:23.359532:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:02:39.027354:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:02:54.498785:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:03:09.737714:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:03:25.571817:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:03:40.151094:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:03:55.611826:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-05T13:03:56.663035:cd /Users/nima/Desktop/injection-experiment-gradle && ./annotator-command.sh abagil
+

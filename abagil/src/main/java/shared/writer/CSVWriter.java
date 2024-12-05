@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Write arbitrary data to a CSV file.  This is used to write results out,
@@ -16,12 +17,12 @@ import java.util.List;
  */
 public class CSVWriter implements Writer {
 
-    private String fileName;
+    private @RUntainted String fileName;
     private List<String> fields;
     private List<String> buffer;
     private FileWriter fileWriter;
 
-    public CSVWriter(String fileName, String[] fields) {
+    public CSVWriter(@RUntainted String fileName, String[] fields) {
         this.fileName = fileName;
         this.fields   = Arrays.asList(fields);
         this.buffer   = new ArrayList<String>();

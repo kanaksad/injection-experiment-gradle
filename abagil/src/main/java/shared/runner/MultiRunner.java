@@ -7,6 +7,7 @@ import shared.tester.ConfusionMatrixTestMetric;
 import shared.writer.CSVWriter;
 import shared.writer.Writer;
 import util.TimeUtil;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * A runner for multiple tests/experiments.  This class takes in a Runner, an array of iteration values to use,
@@ -21,7 +22,7 @@ public class MultiRunner {
     private int[] iterArray;
     private int[] pctTrainArray;
     private Writer writer;
-    private File outputFolder;
+    private @RUntainted File outputFolder;
 
     public MultiRunner(Runner runner, int[] iterArray, int[] pctTrainArray) {
         this.runner        = runner;
@@ -89,7 +90,7 @@ public class MultiRunner {
      * 
      * @param outputFolder
      */
-    public void setOutputFolder(File outputFolder) {
+    public void setOutputFolder(@RUntainted File outputFolder) {
         this.outputFolder = outputFolder;
     }
 }
