@@ -1,9 +1,6 @@
 plugins {
     id 'java'
-}
-
-repositories {
-    mavenCentral()
+    id 'org.checkerframework' version '0.6.37'
 }
 
 dependencies {
@@ -19,5 +16,28 @@ dependencies {
     implementation "com.google.code.gson:gson:2.2.4"
     implementation 'org.jgrapht:jgrapht-core:0.9.0'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
+}
 
+// Annotator scripts
+def checker_config = project.projectDir.toString() + "/annotator-out/checker.xml"
+checkerFramework {
+    checkers = [
+            'edu.ucr.cs.riple.taint.ucrtainting.UCRTaintingChecker',
+    ]
+
+    extraJavacArgs = [
+            '-AannotatedPackages=' + 'edu.cmu.sv.ws.ssnoc',
+            "-AenableLibraryCheck=$System.env.ANNOTATOR_LIBRARY",
+            "-AenablePolyTaintInference=$System.env.ANNOTATOR_POLY",
+            "-AenableTypeArgumentInference=$System.env.ANNOTATOR_TYPE_ARG",
+            "-AenableSerialization",
+            "-AserializationConfigPath=" + checker_config,
+            '-Awarns'
+    ]
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xmaxerrs" << "100000"
+    options.compilerArgs << "-Xmaxwarns" << "100000"
+    options.compilerArgs += '-nowarn'
 }

@@ -25,6 +25,10 @@ allprojects {
 //        errorprone "com.google.errorprone:error_prone_core:2.3.2"
 //        errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
 //        compileOnly "com.uber.nullaway:nullaway-annotations:0.10.20"
+        annotationProcessor "edu.ucr.cs.riple.taint:ucrtainting-checker:$System.env.UCRT_VERSION"
+        compileOnly "edu.ucr.cs.riple.taint:ucrtainting-checker-qual:$System.env.UCRT_VERSION"
+
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
     }
 
 //    def scanner_path = project.projectDir.toString() + "/annotator-out/scanner.xml"

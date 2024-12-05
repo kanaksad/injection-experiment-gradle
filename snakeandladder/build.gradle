@@ -1,11 +1,28 @@
 plugins {
     id 'java'
+    id 'org.checkerframework' version '0.6.37'
 }
 
-repositories {
-    mavenCentral()
+// Annotator scripts
+def checker_config = project.projectDir.toString() + "/annotator-out/checker.xml"
+checkerFramework {
+    checkers = [
+            'edu.ucr.cs.riple.taint.ucrtainting.UCRTaintingChecker',
+    ]
+
+    extraJavacArgs = [
+            '-AannotatedPackages=' + 'com.lbp',
+            "-AenableLibraryCheck=$System.env.ANNOTATOR_LIBRARY",
+            "-AenablePolyTaintInference=$System.env.ANNOTATOR_POLY",
+            "-AenableTypeArgumentInference=$System.env.ANNOTATOR_TYPE_ARG",
+            "-AenableSerialization",
+            "-AserializationConfigPath=" + checker_config,
+            '-Awarns'
+    ]
 }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xmaxerrs" << "100000"
+    options.compilerArgs << "-Xmaxwarns" << "100000"
+    options.compilerArgs += '-nowarn'
 }
