@@ -53,16 +53,16 @@ public class MeasureMemoryService extends BaseService{
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 				public void run(){
 					if(stop ==false){
-						OperatingSystemMXBean bean = (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-	
+						OperatingSystemMXBean bean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+
 						long maxMemory = bean.getTotalPhysicalMemorySize()/1024;
 						long freeVMemory = bean.getFreePhysicalMemorySize()/1024;
-	
+
 						long usedVMemory = maxMemory-freeVMemory;
-	
+
 						long freeSpace = 0;
 						long usedSpace = 0;
-	
+
 						for(java.nio.file.Path root : FileSystems.getDefault().getRootDirectories())
 						{
 							try{
@@ -74,10 +74,10 @@ public class MeasureMemoryService extends BaseService{
 							}catch (IOException e){
 								Log.trace(e.toString());
 							}
-	
+
 							Log.trace("Time elapsed: " + minutes);
 							minutes++;
-	
+
 						}
 						memDetails.setUsedVolatile(usedVMemory);
 						memDetails.setFreeVolatile(freeVMemory);

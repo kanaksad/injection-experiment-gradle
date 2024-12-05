@@ -27,19 +27,19 @@ import edu.cmu.sv.ws.ssnoc.dto.MessageDetail;
 /**
  * This class contains the implementation of the RESTful API calls made with
  * respect to messages.
- * 
+ *
  */
 
 @Path("/message")
 public class MessageService extends BaseService {
-	
+
 	/**
 	 * This method adds a chatmessage to the database
-	 * 
+	 *
 	 * @param sendinguserName
 	 * @param receivinguserName
 	 * @param chatmessage
-	 * 
+	 *
 	 * @return - An object of type Response with the status of the request
 	 */
 	@POST
@@ -49,10 +49,10 @@ public class MessageService extends BaseService {
 	public Response sendChatMessage(@PathParam("sendingUserName") String sendinguserName,
 			@PathParam("receivingUserName") String receivinguserName,
 			MessageDetail chatmessage) {
-		
+
 		Log.enter(sendinguserName,receivinguserName,chatmessage);
 		MessageDetail resp = new MessageDetail();
-		
+
 		try {
 			UserPO sendpo = DAOFactory.getInstance().getUserDAO().findByName(sendinguserName);
 			UserPO receivepo = DAOFactory.getInstance().getUserDAO().findByName(receivinguserName);
@@ -61,9 +61,9 @@ public class MessageService extends BaseService {
 			}
 
 			IMessageDetailDAO mdao = DAOFactory.getInstance().getMessageDetailDAO();
-			java.util.Date date= new java.util.Date();
+			Date date= new Date();
 			Timestamp timeStmp = new Timestamp(date.getTime());
-			
+
 			MessageDetailPO mpo = new MessageDetailPO();
 			mpo.setFrom_userId(sendpo.getUserId());
 			mpo.setTo_userId(receivepo.getUserId());
@@ -71,21 +71,21 @@ public class MessageService extends BaseService {
 			mpo.setMessage_timestamp(timeStmp);
 //			mpo.setLocation("");
 			mdao.save(mpo);
-			
+
 		} catch (Exception e) {
 			handleException(e);
 		} finally {
 			Log.exit();
 		}
-		
+
 		return created(resp);
 	}
-	
+
 	/**
 	 * The message with a particular messageId.
-	 * 
+	 *
 	 * @param messageId
-	 * 
+	 *
 	 * @return - Details of the Message
 	 */
 	@GET
@@ -93,7 +93,7 @@ public class MessageService extends BaseService {
 	@Path("/{messageID}")
 	public MessageDetail findMessage(@PathParam("messageID") long messageId) {
 		Log.enter(messageId);
-		
+
 		if(messageId < 0){
 			return null;
 		}
@@ -111,7 +111,7 @@ public class MessageService extends BaseService {
 			messageDetail.setMessage(mpo.getMessage());
 //			messageDetail.setLocation(mpo.getLocation());
 			messageDetail.setMessage_timestamp(mpo.getMessage_timestamp());
-			
+
 		} catch (Exception e) {
 			handleException(e);
 		} finally {
@@ -120,15 +120,15 @@ public class MessageService extends BaseService {
 
 		return messageDetail;
 	}
-	
+
 	/**
 	 * This method saves the message posted at the wall by the user, in the database
-	 * 
+	 *
 	 * @param user
 	 *            - An object of type User
 	 * @return - An object of type Response with the status of the request
 	 */
-	
+
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
@@ -138,28 +138,28 @@ public class MessageService extends BaseService {
 		try {
 			IUserDAO dao = DAOFactory.getInstance().getUserDAO();
 			UserPO existingUser = dao.findByName(msgDetail.getFrom_userName());
-			
+
 			if (existingUser != null) {
 				IMessageDetailDAO mdao = DAOFactory.getInstance().getMessageDetailDAO();
 				MessageDetailPO mpo = new MessageDetailPO();
 				mpo.setFrom_userId(existingUser.getUserId());
 				mpo.setTo_userId(0);
 
-				//				If no message found then return 
+				//				If no message found then return
 				if(msgDetail.getMessage().trim() == "")
 						return badRequest();
-				
+
 				mpo.setMessage(msgDetail.getMessage());
 				//Get Time stamp
 				Date date= new Date();
 		         //getTime() returns current time in milliseconds
 				long time = date.getTime();
-		         //Passed the milliseconds to constructor of Timestamp class 
+		         //Passed the milliseconds to constructor of Timestamp class
 				Timestamp ts = new Timestamp(time);
 				mpo.setMessage_timestamp(ts);
 //				mpo.setLocation(msgDetail.getLocation());
-				
-				mdao.save(mpo);		
+
+				mdao.save(mpo);
 			}
 			else
 				return badRequest();
@@ -178,11 +178,11 @@ public class MessageService extends BaseService {
 	@Path("/announcement")
 	public Response addPublicAnnouncements(MessageDetail msgDetail) {
 		Log.enter(msgDetail);
-	
+
 		try {
 			IUserDAO dao = DAOFactory.getInstance().getUserDAO();
 			UserPO existingUser = dao.findByName(msgDetail.getFrom_userName());
-			
+
 			if (existingUser != null) {
 				IMessageDetailDAO mdao = DAOFactory.getInstance().getMessageDetailDAO();
 				MessageDetailPO mpo = new MessageDetailPO();
@@ -193,12 +193,12 @@ public class MessageService extends BaseService {
 				Date date= new Date();
 		         //getTime() returns current time in milliseconds
 				long time = date.getTime();
-		         //Passed the milliseconds to constructor of Timestamp class 
+		         //Passed the milliseconds to constructor of Timestamp class
 				Timestamp ts = new Timestamp(time);
 				mpo.setMessage_timestamp(ts);
 //				mpo.setLocation(msgDetail.getLocation());
-				
-				mdao.save(mpo);		
+
+				mdao.save(mpo);
 			}
 		} catch (Exception e) {
 			handleException(e);

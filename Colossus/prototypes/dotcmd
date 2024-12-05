@@ -1,6 +1,0 @@
-#!/bin/sh
-for file in $*;
-do base=`basename $file .dot`;
-out=$base.png
-dot -Tpng -Nfontsize=8 -Nshape=box < $file > $out;
-done

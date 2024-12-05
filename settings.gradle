@@ -1,0 +1,10 @@
+rootProject.name = 'injection-experiement'
+include 'abagil'
+include 'colossus'
+include 'emergencysnrest'
+include 'farmtycoon'
+include 'jclosterzone'
+include 'jexcelapi'
+include 'mediaplayer'
+include 'snakeandladder'
+

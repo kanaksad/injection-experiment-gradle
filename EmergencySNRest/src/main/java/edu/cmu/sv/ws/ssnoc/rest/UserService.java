@@ -38,7 +38,7 @@ import edu.cmu.sv.ws.ssnoc.dto.User;
 /**
  * This class contains the implementation of the RESTful API calls made with
  * respect to users.
- * 
+ *
  */
 
 @Path("/user")
@@ -47,7 +47,7 @@ public class UserService extends BaseService {
 	/**
 	 * This method checks the validity of the user name and if it is valid, adds
 	 * it to the database
-	 * 
+	 *
 	 * @param user
 	 *            - An object of type User
 	 * @return - An object of type Response with the status of the request
@@ -91,7 +91,7 @@ public class UserService extends BaseService {
 			UserPO justAddedUser = dao.findByName(user.getUserName());
 			IMessageDetailDAO mdao = DAOFactory.getInstance()
 					.getMessageDetailDAO();
-			java.util.Date date = new java.util.Date();
+			Date date = new Date();
 			Timestamp timeStmp = new Timestamp(date.getTime());
 
 			MessageDetailPO mpo = new MessageDetailPO();
@@ -112,10 +112,10 @@ public class UserService extends BaseService {
 
 	/**
 	 * This method is used to login a user.
-	 * 
+	 *
 	 * @param user
 	 *            - User information to login
-	 * 
+	 *
 	 * @return - Status 200 when successful login. Else other status.
 	 */
 	@POST
@@ -143,12 +143,12 @@ public class UserService extends BaseService {
 	 * This method will validate the user's password based on what information
 	 * is sent from the UI, versus the information retrieved for that user from
 	 * the database.
-	 * 
+	 *
 	 * @param password
 	 *            - Encrypted Password
 	 * @param po
 	 *            - User info from DB
-	 * 
+	 *
 	 * @return - Flag specifying YES or NO
 	 */
 	private boolean validateUserPassword(String password, UserPO po) {
@@ -174,14 +174,14 @@ public class UserService extends BaseService {
 		checkUser[1] = details[0];
 		return (details.equals(checkUser));
 	}
-	
+
 
 	/**
 	 * All all information related to a particular userName.
-	 * 
+	 *
 	 * @param userName
 	 *            - User Name
-	 * 
+	 *
 	 * @return - Details of the User
 	 */
 	@GET
@@ -215,10 +215,10 @@ public class UserService extends BaseService {
 	/**
 	 * This method is used to update the status of a user along with the
 	 * timestamp and location.
-	 * 
+	 *
 	 * @param user
 	 *            - User information
-	 * 
+	 *
 	 * @return - Status 200 when successful login. Else other status.
 	 */
 	@POST
@@ -268,10 +268,10 @@ public class UserService extends BaseService {
 
 	/**
 	 * This method is used to update the profile of a user.
-	 * 
+	 *
 	 * @param user
 	 *            - User information
-	 * 
+	 *
 	 * @return - Status 200 when successful update file except user name. Status
 	 *         201 when successful update file including user name. Else other
 	 *         status
