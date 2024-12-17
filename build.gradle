@@ -26,7 +26,7 @@ allprojects {
 //        errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
 //        compileOnly "com.uber.nullaway:nullaway-annotations:0.10.20"
         annotationProcessor "edu.ucr.cs.riple.taint:ucrtainting-checker:$System.env.UCRT_VERSION"
-        compileOnly "edu.ucr.cs.riple.taint:ucrtainting-checker-qual:$System.env.UCRT_VERSION"
+        compileOnly "edu.ucr.cs.riple.taint:ucrtainting-checker-qual:0.3-SNAPSHOT"
 
         implementation fileTree(dir: 'libs', include: ['*.jar'])
     }
