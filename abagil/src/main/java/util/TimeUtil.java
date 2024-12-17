@@ -1,4 +1,5 @@
 package util;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * A utility for preparing and presenting run time metrics.
@@ -8,7 +9,7 @@ package util;
  */
 public class TimeUtil {
 
-    public static String formatTime(long time) {
+    public static @RUntainted String formatTime(@RUntainted long time) {
         long secs = ((long) time) / 1000;
         long min  = secs / 60;
         secs     -= min  * 60;

@@ -1,6 +1,7 @@
 package shared.tester;
 
 import shared.Instance;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * A test metric for accuracy.  This metric reports of % correct and % incorrect for a test run.
@@ -10,8 +11,8 @@ import shared.Instance;
  */
 public class AccuracyTestMetric extends TestMetric {
 
-    private int count;    
-    private int countCorrect;
+    private @RUntainted int count;    
+    private @RUntainted int countCorrect;
     
     @Override
     public void addResult(Instance expected, Instance actual) {
@@ -23,7 +24,7 @@ public class AccuracyTestMetric extends TestMetric {
         }
     }
     
-    public double getPctCorrect() {
+    public @RUntainted double getPctCorrect() {
         return count > 0 ? ((double)countCorrect)/count : 1; //if count is 0, we consider it all correct
     }
 

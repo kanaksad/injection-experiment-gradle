@@ -9,6 +9,7 @@ import dist.Distribution;
 import dist.MixtureDistribution;
 import dist.DiscreteDistribution;
 import dist.MultivariateGaussian;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * An em clusterer
@@ -45,7 +46,7 @@ public class EMClusterer extends AbstractConditionalDistribution implements Func
     /**
      * How many iterations it took
      */
-    private int iterations;
+    private @RUntainted int iterations;
 
     /**
      * Whether to print stuff

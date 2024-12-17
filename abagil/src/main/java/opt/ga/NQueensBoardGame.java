@@ -5,6 +5,7 @@ package opt.ga;
 
 import java.util.ArrayList;
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class NQueensBoardGame {
 
@@ -136,7 +137,7 @@ public class NQueensBoardGame {
 
 	}
 
-	public String getBoardPic() {
+	public @RUntainted String getBoardPic() {
 
 		StringBuffer buffer = new StringBuffer();
 		for (int row = 0; (row < size); row++) { // row

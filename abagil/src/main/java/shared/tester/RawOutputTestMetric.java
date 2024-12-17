@@ -1,10 +1,11 @@
 package shared.tester;
 
 import shared.Instance;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class RawOutputTestMetric extends TestMetric {
 
-    StringBuilder builder = new StringBuilder();
+    @RUntainted StringBuilder builder = new StringBuilder();
     @Override
     public void addResult(Instance expected, Instance actual) {
         builder.append("Expected: ");

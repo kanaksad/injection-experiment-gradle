@@ -2,6 +2,7 @@ package shared.runner;
 import shared.tester.AccuracyTestMetric;
 import shared.tester.ConfusionMatrixTestMetric;
 import shared.tester.RawOutputTestMetric;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * A runner for a given experiment or test.  The runner will be responsible
@@ -39,7 +40,7 @@ public interface Runner {
      * 
      * @return
      */
-    public String getName();
+    public @RUntainted String getName();
     
     /**
      * Get the raw output metric for the last run.
@@ -53,14 +54,14 @@ public interface Runner {
      * 
      * @return
      */
-    public long getTrainingTime();
+    public @RUntainted long getTrainingTime();
 
     /**
      * Get the testing time for the last run.
      * 
      * @return
      */
-    public long getTestTime();
+    public @RUntainted long getTestTime();
 
     /**
      * Run the runner with the specified number of training iterations and

@@ -134,3 +134,35 @@
 
 2024-12-16T19:23:40.093447:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
 
+2024-12-16T19:29:57.322231:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:30:07.098373:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:30:14.512806:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:30:21.607387:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:30:28.496868:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:30:35.410488:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:30:42.600843:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:30:49.589065:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:30:56.506915:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:31:03.431903:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:31:10.735321:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:31:17.867597:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:31:25.107400:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:31:32.087997:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:31:39.210337:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
+2024-12-16T19:31:46.170955:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh abagil
+
