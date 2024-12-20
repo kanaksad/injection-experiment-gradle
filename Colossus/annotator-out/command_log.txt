@@ -1,0 +1,26 @@
+2024-12-17T21:02:36.403846:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:03:36.785927:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:04:26.294507:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:05:18.414269:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:06:12.683731:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:07:04.390308:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:07:53.682995:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:08:45.114987:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:09:37.689172:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:10:26.548035:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:11:18.086430:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:12:08.156145:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
+2024-12-17T21:12:57.338948:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh Colossus
+
