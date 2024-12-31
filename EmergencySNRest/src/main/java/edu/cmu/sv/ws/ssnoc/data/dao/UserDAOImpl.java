@@ -12,6 +12,7 @@ import edu.cmu.sv.ws.ssnoc.data.SQL;
 import edu.cmu.sv.ws.ssnoc.data.po.MessageDetailPO;
 import edu.cmu.sv.ws.ssnoc.data.po.UserPO;
 import edu.cmu.sv.ws.ssnoc.dto.UserCluster;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * DAO implementation for saving User information in the H2 database.
@@ -42,7 +43,7 @@ public class UserDAOImpl extends BaseDAOImpl implements IUserDAO {
 		return users;
 	}
 
-	private List<UserPO> processResults(PreparedStatement stmt) {
+	private List<UserPO> processResults(@RUntainted PreparedStatement stmt) {
 		Log.enter(stmt);
 
 		if (stmt == null) {

@@ -16,6 +16,8 @@ import org.h2.util.StringUtils;
 
 import edu.cmu.sv.ws.ssnoc.common.logging.Log;
 import edu.cmu.sv.ws.ssnoc.data.po.UserPO;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
 
 /**
  * This is a utility class which is used to encrypt and decrypt passwords. This
@@ -33,7 +35,7 @@ public class SSNCipher {
 	 * @return - SecretKey object
 	 * @throws NoSuchAlgorithmException
 	 */
-	public static final SecretKey generateRandomKey()
+	public static final @RUntainted SecretKey generateRandomKey()
 			throws NoSuchAlgorithmException {
 		return KeyGenerator.getInstance(ENCRYPTION_ALGORITHM).generateKey();
 	}
@@ -69,7 +71,7 @@ public class SSNCipher {
 	 * @throws IllegalBlockSizeException
 	 * @throws BadPaddingException
 	 */
-	public static final byte[] encrypt(String password, SecretKey key)
+	public static final @RPolyTainted byte[] encrypt(@RPolyTainted String password, SecretKey key)
 			throws InvalidKeyException, NoSuchAlgorithmException,
 			NoSuchPaddingException, UnsupportedEncodingException,
 			IllegalBlockSizeException, BadPaddingException {
@@ -100,13 +102,13 @@ public class SSNCipher {
 	 * @throws BadPaddingException
 	 * @throws UnsupportedEncodingException
 	 */
-	public static final String decrypt(byte[] password, SecretKey key)
+	public static final @RUntainted String decrypt(@RUntainted byte[] password, SecretKey key)
 			throws NoSuchAlgorithmException, NoSuchPaddingException,
 			InvalidKeyException, IllegalBlockSizeException,
 			BadPaddingException, UnsupportedEncodingException {
 		Cipher cipher = Cipher.getInstance(ENCRYPTION_ALGORITHM);
 		cipher.init(Cipher.DECRYPT_MODE, key);
-		byte[] utf8 = cipher.doFinal(password);
+		@RUntainted byte[] utf8 = cipher.doFinal(password);
 		return new String(utf8, CHAR_SET);
 	}
 
@@ -123,7 +125,7 @@ public class SSNCipher {
 		}
 		try {
 			SecretKey key = SSNCipher.generateRandomKey();
-			byte[] encryptedPassword = SSNCipher.encrypt(po.getPassword(), key);
+			@RUntainted byte[] encryptedPassword = SSNCipher.encrypt(po.getPassword(), key);
 			po.setPassword(StringUtils.convertBytesToHex(encryptedPassword));
 			po.setSalt(StringUtils.convertBytesToHex(key.getEncoded()));
 		} catch (Exception e) {

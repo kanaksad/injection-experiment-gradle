@@ -10,6 +10,7 @@ import java.util.List;
 
 import edu.cmu.sv.ws.ssnoc.common.logging.Log;
 import edu.cmu.sv.ws.ssnoc.data.TestSQL;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * This is a utility class to provide common functions to access and handle
@@ -18,9 +19,9 @@ import edu.cmu.sv.ws.ssnoc.data.TestSQL;
  */
 public class TestDBUtils {
 	private static boolean TEST_DB_TABLES_EXIST = false;
-	private static List<String> CREATE_TEST_TABLE_LST;
-	private static List<String> RESET_TEST_TABLE_LST;
-	private static List<String> DELETE_TEST_TABLE_LST;
+	private static List<@RUntainted String> CREATE_TEST_TABLE_LST;
+	private static List<@RUntainted String> RESET_TEST_TABLE_LST;
+	private static List<@RUntainted String> DELETE_TEST_TABLE_LST;
 
 	static {
 		CREATE_TEST_TABLE_LST = new ArrayList<String>();

@@ -12,6 +12,7 @@ import edu.cmu.sv.ws.ssnoc.common.logging.Log;
 import edu.cmu.sv.ws.ssnoc.common.utils.SSNCipher;
 import edu.cmu.sv.ws.ssnoc.data.SQL;
 import edu.cmu.sv.ws.ssnoc.data.po.UserPO;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * This is a utility class to provide common functions to access and handle
@@ -22,7 +23,7 @@ public class DBUtils {
 	private static boolean DB_TABLES_EXIST = false;
 
 
-	private static List<String> CREATE_TABLE_LST;
+	private static List<@RUntainted String> CREATE_TABLE_LST;
 
 	static {
 		CREATE_TABLE_LST = new ArrayList<String>();

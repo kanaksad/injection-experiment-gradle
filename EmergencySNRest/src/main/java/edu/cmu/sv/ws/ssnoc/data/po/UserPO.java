@@ -1,6 +1,7 @@
 package edu.cmu.sv.ws.ssnoc.data.po;
 
 import com.google.gson.Gson;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * This is the persistence class to save all user information in the system.
@@ -12,8 +13,8 @@ import com.google.gson.Gson;
 public class UserPO {
 	private long userId;
 	private String userName;
-	private String password;
-	private String salt;
+	private @RUntainted String password;
+	private @RUntainted String salt;
 	private String profession;
 	private String role;
 	private String accountStatus;
@@ -44,19 +45,19 @@ public class UserPO {
 		this.userName = userName;
 	}
 
-	public String getPassword() {
+	public @RUntainted String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(@RUntainted String password) {
 		this.password = password;
 	}
 
-	public String getSalt() {
+	public @RUntainted String getSalt() {
 		return salt;
 	}
 
-	public void setSalt(String salt) {
+	public void setSalt(@RUntainted String salt) {
 		this.salt = salt;
 	}
 	

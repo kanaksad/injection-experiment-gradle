@@ -3,6 +3,7 @@ package edu.cmu.sv.ws.ssnoc.dto;
 import java.sql.Timestamp;
 
 import com.google.gson.Gson;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * This object contains user information that is responded as part of the REST
@@ -11,7 +12,7 @@ import com.google.gson.Gson;
  */
 public class User {
 	private String userName;
-	private String password;
+	private @RUntainted String password;
 	private String profession;
 	private String status;
 	private Timestamp statusUpdateTime;
@@ -36,11 +37,11 @@ public class User {
 		this.userName = userName;
 	}
 
-	public String getPassword() {
+	public @RUntainted String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(@RUntainted String password) {
 		this.password = password;
 	}
 	
