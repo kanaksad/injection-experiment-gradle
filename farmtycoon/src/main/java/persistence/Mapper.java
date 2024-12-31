@@ -2,6 +2,7 @@ package persistence;
 
 import java.sql.SQLException;
 import java.util.Map;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * The interface between the database and
@@ -43,5 +44,5 @@ public interface Mapper {
 	 *
 	 * @return a <"columnname","sqltype"> Map containing the fields.
 	 */
-	public abstract Map<String, String> getFields();
+	public abstract Map<@RUntainted String, @RUntainted String> getFields();
 }

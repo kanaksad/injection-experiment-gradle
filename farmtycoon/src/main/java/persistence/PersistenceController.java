@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import exceptions.DBCloseException;
 import exceptions.DBConnectException;
 import exceptions.SystemDBException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class PersistenceController {
 	private static PersistenceController persistenceController;
@@ -21,7 +22,7 @@ public class PersistenceController {
 		db = new DB();
 	}
 
-	public void setSaveName(String name) throws DBCloseException,
+	public void setSaveName(@RUntainted String name) throws DBCloseException,
 			DBConnectException, SystemDBException {
 		db.close();
 		db = new DB(name);

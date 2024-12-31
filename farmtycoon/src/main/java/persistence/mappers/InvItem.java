@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import persistence.DBmap;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class InvItem implements persistence.Mapper {
 
@@ -23,8 +24,8 @@ public class InvItem implements persistence.Mapper {
 	}
 
 	@Override
-	public Map<String, String> getFields() {
-		Map<String, String> fields = new HashMap<String, String>();
+	public Map<@RUntainted String, @RUntainted String> getFields() {
+		Map<@RUntainted String, @RUntainted String> fields = new HashMap<@RUntainted String, @RUntainted String>();
 		fields.put("Product", "TEXT");
 		fields.put("Amount", "INT");
 		return fields;

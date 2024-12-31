@@ -12,6 +12,7 @@ import exceptions.InventoryFullException;
 import api.Coordinate;
 import api.TileAction;
 import api.TileInfo;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  *
@@ -66,7 +67,7 @@ public class Tile extends Savable {
 		return coord;
 	}
 
-	public int getId() {
+	public @RUntainted int getId() {
 		return coord.hashCode();
 	}
 
@@ -76,7 +77,7 @@ public class Tile extends Savable {
 	 * @throws InvalidStateException if the tile has an invalid state.
 	 * @see TileState#getActions()
 	 */
-	public TileAction[] getActions() throws InvalidStateException {
+	public @RUntainted TileAction[] getActions() throws InvalidStateException {
 		return state.getActions();
 	}
 
@@ -101,7 +102,7 @@ public class Tile extends Savable {
 	 * @param action the action to execute.
 	 * @return whether or not the action succeeded.
 	 */
-	public boolean executeAction(TileAction action) {
+	public boolean executeAction(@RUntainted TileAction action) {
 		return executeAction(action, Game.getGame().getClock().getTime());
 	}
 	/**
@@ -111,7 +112,7 @@ public class Tile extends Savable {
 	 * @param timestamp the time at which this should happen/have happened
 	 * @return whether or not the action succeeded.
 	 */
-	public boolean executeAction(TileAction action, long timestamp) {
+	public boolean executeAction(@RUntainted TileAction action, long timestamp) {
 		try {
 			if(Game.getGame().getCash() < action.getCost()) {
 				MsgQue.get().put("MSG_NOCASH", timestamp);

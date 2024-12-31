@@ -3,6 +3,7 @@ package domain.tiles;
 import api.TileAction;
 import api.TileInfo;
 import domain.TileState;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * @author Rigès De Witte, Simon Peeters,Barny Pieters,Laurens Van Damme

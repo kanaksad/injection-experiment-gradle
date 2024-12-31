@@ -9,6 +9,7 @@ import exceptions.SystemDBException;
 import api.Coordinate;
 import api.TileAction;
 import api.TileInfo;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * The controller for the game.
@@ -98,7 +99,7 @@ public class Game {
 	 * @return the actions available on this tile.
 	 * @throws InvalidStateException if the tile has an invalid state.
 	 */
-	public TileAction[] getTileActions(Coordinate coord) throws InvalidStateException {
+	public @RUntainted TileAction[] getTileActions(Coordinate coord) throws InvalidStateException {
 		return farm.getTile(coord).getActions();
 	}
 
@@ -110,7 +111,7 @@ public class Game {
 	 * @return whether or not the action succeeded.
 	 * @throws NoSuchTileException if there is no tile at this coordinate.
 	 */
-	public boolean executeAction(Coordinate coord, TileAction action) throws NoSuchTileException {
+	public boolean executeAction(Coordinate coord, @RUntainted TileAction action) throws NoSuchTileException {
 		return farm.getTile(coord).executeAction(action);
 	}
 

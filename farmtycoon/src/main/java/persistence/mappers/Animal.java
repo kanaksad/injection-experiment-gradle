@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import persistence.DBmap;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class Animal implements persistence.Mapper {
 	@SuppressWarnings("serial")
@@ -17,7 +18,7 @@ public class Animal implements persistence.Mapper {
 				new Object[] { animal.getType(), animal.getStart().getTime() });
 	}
 
-	public Map<String, String> getFields() {
+	public Map<@RUntainted String, @RUntainted String> getFields() {
 		return new HashMap<String, String>() {
 			{
 				put("type", "TEXT");

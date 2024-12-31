@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import exceptions.InventoryFullException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * This class implements an inventory.
@@ -163,7 +164,7 @@ public class Inventory extends java.util.AbstractMap<Product, Integer> {
 	private class EntrySet extends java.util.AbstractSet<Entry<Product, Integer>> {
 		public java.util.Iterator<Entry<Product, Integer>> iterator() {
 			return new InventoryIterator<Entry<Product, Integer>>() {
-				public Entry<Product, Integer> get(int i) {
+				public Entry<Product, Integer> get(@RUntainted int i) {
 					return new InvItem(i);
 				}
 			};
@@ -174,7 +175,7 @@ public class Inventory extends java.util.AbstractMap<Product, Integer> {
 	}
 
 	private abstract class InventoryIterator<T> implements java.util.Iterator<T> {
-		int index = 0;
+		@RUntainted int index = 0;
 
 		public boolean hasNext() {
 			return index != size;
@@ -187,7 +188,7 @@ public class Inventory extends java.util.AbstractMap<Product, Integer> {
 				throw new NoSuchElementException();
 			return get(index++);
 		}
-		protected abstract T get(int i);
+		protected abstract T get(@RUntainted int i);
 	}
 
 	/**
@@ -195,7 +196,7 @@ public class Inventory extends java.util.AbstractMap<Product, Integer> {
 	 * @author Rigès De Witte, Simon Peeters,Barny Pieters,Laurens Van Damme
 	 */
 	public class InvItem extends Savable implements Entry<Product, Integer> {
-		public InvItem(int index) {
+		public InvItem(@RUntainted int index) {
 			if (index >= size || index < 0)
 				throw new NoSuchElementException();
 			this.id = index;

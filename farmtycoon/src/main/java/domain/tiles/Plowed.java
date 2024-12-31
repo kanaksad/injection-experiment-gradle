@@ -3,6 +3,7 @@ package domain.tiles;
 import api.TileAction;
 import api.TileInfo;
 import domain.TileState;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class Plowed implements TileState
 {
@@ -11,7 +12,7 @@ public class Plowed implements TileState
 		return Crops.values();
 	}
 
-	public TileState executeAction(TileAction action, domain.Tile tile, long timestamp) {
+	public TileState executeAction(@RUntainted TileAction action, domain.Tile tile, long timestamp) {
 		if(action instanceof Crops) {
 			Crops crop = (Crops) action;
 			return new Crop(crop);

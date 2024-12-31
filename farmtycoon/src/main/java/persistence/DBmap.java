@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import api.StringJoiner;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Map extending the HashMap with some Database specific functionality.
@@ -12,7 +13,7 @@ import api.StringJoiner;
  *
  */
 public class DBmap extends HashMap<String, Object> {
-	private final Mapper mapper;
+	private final @RUntainted Mapper mapper;
 
 	/**
 	 * Construct a new Map form a java ResultSet.
@@ -20,7 +21,7 @@ public class DBmap extends HashMap<String, Object> {
 	 * @param rs the java ResultSet to initialize the map from
 	 * @throws SQLException
 	 */
-	public DBmap(Mapper mapper, java.sql.ResultSet rs) throws SQLException {
+	public DBmap(@RUntainted Mapper mapper, java.sql.ResultSet rs) throws SQLException {
 		this(mapper);
 		java.sql.ResultSetMetaData meta = rs.getMetaData();
 		int count = meta.getColumnCount();
@@ -32,7 +33,7 @@ public class DBmap extends HashMap<String, Object> {
 	 * Construct a new empty Map.
 	 * @param mapper the Mapper for the object to create this map for.
 	 */
-	public DBmap(Mapper mapper) {
+	public DBmap(@RUntainted Mapper mapper) {
 		super();
 		this.mapper = mapper;
 	}
@@ -43,7 +44,7 @@ public class DBmap extends HashMap<String, Object> {
 	 * @param keys an array containing the keys to initialize this map with.
 	 * @param vals an array containing the values to initialize this map with, should be the same size as keys.
 	 */
-	public DBmap(Mapper mapper, String[] keys, Object[] vals) {
+	public DBmap(@RUntainted Mapper mapper, String[] keys, Object[] vals) {
 		this(mapper);
 		for (int i = 0; i < keys.length; i++)
 			put(keys[i], vals[i]);
@@ -54,7 +55,7 @@ public class DBmap extends HashMap<String, Object> {
 	 * @param key the name of the field.
 	 * @return the integer representation of the value.
 	 */
-	public int getInt(String key) {
+	public @RUntainted int getInt(@RUntainted String key) {
 		return (Integer) get(key);
 	}
 
@@ -72,7 +73,7 @@ public class DBmap extends HashMap<String, Object> {
 	 * @param key the name of the field.
 	 * @return the String representation of the value.
 	 */
-	public String getStr(String key) {
+	public @RUntainted String getStr(@RUntainted String key) {
 		return (String) get(key);
 	}
 
@@ -99,9 +100,9 @@ public class DBmap extends HashMap<String, Object> {
 	 * @param id the id to include in the update statement.
 	 * @return the update sql statement to write this map to a database.
 	 */
-	public String getUpdateSql(int id) {
+	public @RUntainted String getUpdateSql(@RUntainted int id) {
 		StringJoiner pairs = new StringJoiner(",");
-		for (Entry<String, Object> e : entrySet())
+		for (Entry<@RUntainted String, @RUntainted Object> e : entrySet())
 			pairs.add(e.getKey() + " = " + format(e.getValue()));
 		return String.format("UPDATE %s SET %s WHERE id = %d", mapper
 				.getClass().getSimpleName(), pairs.toString(), id);
@@ -119,10 +120,10 @@ public class DBmap extends HashMap<String, Object> {
 	 * @param id the id to include in the insert statement.
 	 * @return the insert sql statement to write this map to a database.
 	 */
-	public String getInsertSql(int id) {
+	public @RUntainted String getInsertSql(@RUntainted int id) {
 		StringJoiner names = new StringJoiner(",", "id");
 		StringJoiner values = new StringJoiner(",", id);
-		for (Entry<String, Object> e : entrySet()) {
+		for (Entry<@RUntainted String, @RUntainted Object> e : entrySet()) {
 			names.add(e.getKey());
 			values.add(format(e.getValue()));
 		}
@@ -131,7 +132,7 @@ public class DBmap extends HashMap<String, Object> {
 				.toString());
 	}
 
-	private String format(Object obj) {
+	private @RUntainted String format(@RUntainted Object obj) {
 		if (obj instanceof String)
 			return "'" + (String) obj + "'";
 		return obj.toString();

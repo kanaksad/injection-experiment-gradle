@@ -6,6 +6,7 @@ import domain.Game;
 import domain.Tile;
 import domain.TileState;
 import exceptions.InvalidStateException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class Barn implements TileState {
 

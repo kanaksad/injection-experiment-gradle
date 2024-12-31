@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import persistence.DBmap;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class Factory implements persistence.Mapper {
 	public domain.tiles.Factory load(DBmap map) {
@@ -16,7 +17,7 @@ public class Factory implements persistence.Mapper {
 				new Object[] { factory.getType(), factory.getStart(), factory.getDamage(), factory.getState() });
 	}
 
-	public Map<String, String> getFields() {
+	public Map<@RUntainted String, @RUntainted String> getFields() {
 		return new HashMap<String, String>() {
 			{
 				put("type", "TEXT");

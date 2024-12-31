@@ -2,6 +2,7 @@ package api;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Type for defining Coordinates.
@@ -14,27 +15,27 @@ import java.util.Collection;
  */
 
 public class Coordinate {
-	private final short x;
-	private final short y;
+	private final @RUntainted short x;
+	private final @RUntainted short y;
 
 	/**
 	 * Create a new coordinate object with coordinates x and y
 	 */
-	public Coordinate(int x, int y) {
+	public Coordinate(@RUntainted int x, @RUntainted int y) {
 		this.x=(short) x;
 		this.y=(short) y; }
 
 	/**
 	 * Get the X value for this coordinate object.
 	 */
-	public short getX() { return x; }
+	public @RUntainted short getX() { return x; }
 	/**
 	 * Get the y value for this coordinate object.
 	 */
-	public short getY() { return y; }
+	public @RUntainted short getY() { return y; }
 
 	@Override
-	public int hashCode() {
+	public @RUntainted int hashCode() {
 		return ( getY() << 16 ) | ( getX() & 0xFFFF );
 	}
 
@@ -48,7 +49,7 @@ public class Coordinate {
 	/**
 	 * Reconstruct a coordinate from a given hash
 	 */
-	public static Coordinate forHash(int hash) {
+	public static Coordinate forHash(@RUntainted int hash) {
 		short x = (short) (hash >> 16);
 		short y = (short) (hash & 0xFFFF);
 		return new Coordinate(x,y);

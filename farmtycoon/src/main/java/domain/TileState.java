@@ -3,6 +3,7 @@ package domain;
 import exceptions.InvalidStateException;
 import exceptions.InventoryFullException;
 import api.TileInfo;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * This interface defines the glue between the tile and the different possible states.
@@ -22,7 +23,7 @@ public interface TileState {
 	 * @return whether or not the action succeeded.
 	 * @throws InventoryFullException if there are not enough slots left in the inventory.
 	 */
-	public TileState executeAction(api.TileAction action, Tile tile, long timestamp) throws InventoryFullException;
+	public TileState executeAction(api.@RUntainted TileAction action, Tile tile, long timestamp) throws InventoryFullException;
 	/**
 	 * @return the time at which this tile will expire.
 	 */

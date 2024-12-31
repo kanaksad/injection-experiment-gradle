@@ -8,6 +8,7 @@ import java.util.Set;
 
 import exceptions.DBConnectException;
 import exceptions.SystemDBException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Enum containing all information needed to save Savable objects to the
@@ -48,12 +49,12 @@ public enum MapperList {
 	FACTORY(new persistence.mappers.Factory());
 
 	private DB db;
-	private String tablename;
-	private final Mapper mapper;
-	private final Map<String, String> fields;
-	private int nextid = 0;
+	private @RUntainted String tablename;
+	private final @RUntainted Mapper mapper;
+	private final Map<@RUntainted String, @RUntainted String> fields;
+	private @RUntainted int nextid = 0;
 
-	private MapperList(Mapper mapper) {
+	private MapperList(@RUntainted Mapper mapper) {
 		try {
 			this.db = PersistenceController.getInstance().getDB();
 		} catch (DBConnectException e) {
@@ -99,7 +100,7 @@ public enum MapperList {
 	public void initIfNeed() throws SQLException {
 		java.sql.Statement st = db.getConnection().createStatement();
 		String update = "id INTEGER PRIMARY KEY";
-		for (Map.Entry<String, String> e : this.fields.entrySet())
+		for (Map.Entry<@RUntainted String, @RUntainted String> e : this.fields.entrySet())
 			update += ", " + e.getKey() + " " + e.getValue();
 		st.executeUpdate(String.format("CREATE TABLE IF NOT EXISTS %s (%s)",
 				this.tablename, update));
@@ -111,7 +112,7 @@ public enum MapperList {
 	 * @return the loaded object
 	 * @throws SQLException
 	 */
-	public domain.Savable loadById(int id) throws SQLException {
+	public domain.Savable loadById(@RUntainted int id) throws SQLException {
 		java.sql.Statement st = db.getConnection().createStatement();
 		ResultSet rs = st.executeQuery(String.format(
 				"SELECT * FROM %s WHERE id = %d", this.tablename, id));
@@ -139,7 +140,7 @@ public enum MapperList {
 	 * get the next id for this table.
 	 * @return
 	 */
-	public int getNextID() {
+	public @RUntainted int getNextID() {
 		return nextid++;
 	}
 }

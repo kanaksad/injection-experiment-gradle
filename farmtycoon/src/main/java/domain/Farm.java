@@ -10,6 +10,7 @@ import api.Coordinate;
 
 import domain.tiles.Market;
 import exceptions.NoSuchTileException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * The Class which has control over the whole farm.
@@ -152,7 +153,7 @@ public class Farm extends Savable {
 		return market;
 	}
 
-	public int getId() {
+	public @RUntainted int getId() {
 		return 0;
 	}
 

@@ -1,4 +1,5 @@
 package api;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Wrapper around StringBuilder to join string using the given glue.
@@ -12,14 +13,14 @@ public class StringJoiner {
 	/**
 	 * StringBuilder in which the string is constructed
 	 */
-	StringBuilder builder;
+	@RUntainted StringBuilder builder;
 
 	/**
 	 * Create a new StringJoiner using the given glue and initialize it.
 	 * @param glue the glue to use
 	 * @param coll the elements to initially add.
 	 */
-	public StringJoiner(String glue, Object...coll){
+	public StringJoiner(String glue, @RUntainted Object...coll){
 		this(glue);
 		for(Object o : coll)
 			add(o);
@@ -39,14 +40,14 @@ public class StringJoiner {
 	 * The elements toString() method will be used.
 	 * @param o element to add.
 	 */
-	public void add(Object o) {
+	public void add(@RUntainted Object o) {
 		if (builder == null)
 			builder = new StringBuilder(o.toString());
 		else
 			builder.append(glue).append(o.toString());
 	}
 	
-	public String toString(){
+	public @RUntainted String toString(){
 		return builder.toString();
 	}
 }

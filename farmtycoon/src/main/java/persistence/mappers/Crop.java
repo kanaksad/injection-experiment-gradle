@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import persistence.DBmap;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class Crop implements persistence.Mapper {
 	public domain.tiles.Crop load(DBmap map) {
@@ -16,7 +17,7 @@ public class Crop implements persistence.Mapper {
 				new Object[] { crop.getType(), crop.getPlanted(), crop.getState() });
 	}
 
-	public Map<String, String> getFields() {
+	public Map<@RUntainted String, @RUntainted String> getFields() {
 		return new HashMap<String, String>() {
 			{
 				put("type", "TEXT");

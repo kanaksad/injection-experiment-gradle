@@ -9,6 +9,7 @@ import domain.MsgQue;
 import domain.Savable;
 import domain.TileState;
 import exceptions.InventoryFullException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class Crop extends Savable implements TileState {
 
@@ -31,8 +32,8 @@ public class Crop extends Savable implements TileState {
 		}
 	}
 
-	private Crops crop;
-	private State state;
+	private @RUntainted Crops crop;
+	private @RUntainted State state;
 	private long planted;
 	private long infected;
 	private int infectioncount;
@@ -41,11 +42,11 @@ public class Crop extends Savable implements TileState {
 		this(Crops.valueOf(type), planted, State.valueOf(state));
 	}
 
-	public Crop(Crops crop) {
+	public Crop(@RUntainted Crops crop) {
 		this(crop,  Game.getGame().getClock().getTime(), State.GROWING);
 	}
 
-	public Crop(Crops crop, long date, State state) {
+	public Crop(@RUntainted Crops crop, long date, @RUntainted State state) {
 		this.crop = crop;
 		this.planted = date;
 		this.state = state;

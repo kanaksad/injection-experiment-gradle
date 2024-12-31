@@ -1,4 +1,5 @@
 package api;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Class containing information about the state of a specific tile.
@@ -6,15 +7,15 @@ package api;
  *
  */
 public class TileInfo {
-	private final String field;
-	private final String subtype;
-	private final String state;
+	private final @RUntainted String field;
+	private final @RUntainted String subtype;
+	private final @RUntainted String state;
 	private final long expiryTime;
 
-	public TileInfo(String field, String subtype, String state) {
+	public TileInfo(@RUntainted String field, @RUntainted String subtype, @RUntainted String state) {
 		this(field,subtype,state,0);
 	}
-	public TileInfo(String field, String subtype, String state, long expirytime) {
+	public TileInfo(@RUntainted String field, @RUntainted String subtype, @RUntainted String state, long expirytime) {
 		this.field = field;
 		this.subtype = subtype;
 		this.state = state;

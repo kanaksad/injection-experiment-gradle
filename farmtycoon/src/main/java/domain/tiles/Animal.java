@@ -12,6 +12,7 @@ import domain.Savable;
 import domain.TileState;
 import exceptions.InvalidStateException;
 import exceptions.InventoryFullException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 public class Animal extends Savable implements TileState{
 
 	private enum Animals implements TileAction {
@@ -50,8 +51,8 @@ public class Animal extends Savable implements TileState{
 		}
 	}
 
-	private Animals animal;
-	private State state;
+	private @RUntainted Animals animal;
+	private @RUntainted State state;
 	private Date start;
 
 	public Animal() {
@@ -61,11 +62,11 @@ public class Animal extends Savable implements TileState{
 		this(Animals.valueOf(type), new Date(start));
 	}
 
-	public Animal(Animals animal) {
+	public Animal(@RUntainted Animals animal) {
 		this(animal,  Game.getGame().getClock().getDate());
 	}
 
-	public Animal(Animals animal, Date date) {
+	public Animal(@RUntainted Animals animal, Date date) {
 		this.animal = animal;
 		this.start = date;
 		this.state = State.NORMAL;
@@ -90,7 +91,7 @@ public class Animal extends Savable implements TileState{
 	}
 
 	@Override
-	public TileState executeAction(TileAction action, domain.Tile tile, long timestamp) throws InventoryFullException {
+	public TileState executeAction(@RUntainted TileAction action, domain.Tile tile, long timestamp) throws InventoryFullException {
 		if(action instanceof Animals)
 			return new Animal((Animals) action);
 		if(action == TileAction.Defaults.EXPIRE) {

@@ -3,6 +3,7 @@ package domain.tiles;
 import api.TileAction;
 import api.TileInfo;
 import domain.TileState;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class Plowing implements TileState {
 	private static final long PLOWTIME = 2*domain.Clock.MSECONDSADAY;

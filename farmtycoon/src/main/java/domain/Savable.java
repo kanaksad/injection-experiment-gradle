@@ -2,6 +2,7 @@ package domain;
 
 import java.sql.SQLException;
 import java.util.Set;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * An abstract class used to abstract the save and load logic from elements that can be saved to the database.
@@ -9,12 +10,12 @@ import java.util.Set;
  *
  */
 public abstract class Savable {
-	protected int id = -1;
+	protected @RUntainted int id = -1;
 
 	/**
 	 * @return the id of this object, if the id field is not available, a new id is generated.
 	 */
-	public int getId() {
+	public @RUntainted int getId() {
 		if (id == -1)
 			id = persistence.MapperList.valueOf(
 					this.getClass().getSimpleName().toUpperCase()).getNextID();
@@ -37,7 +38,7 @@ public abstract class Savable {
 	 * @return the loaded object.
 	 * @throws SQLException
 	 */
-	public static Savable load(Class<? extends Savable> type, int id)
+	public static Savable load(Class<? extends Savable> type, @RUntainted int id)
 			throws SQLException {
 		return persistence.MapperList.valueOf(
 				type.getSimpleName().toUpperCase()).loadById(id);

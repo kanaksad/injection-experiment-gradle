@@ -3,10 +3,11 @@ package persistence;
 import java.sql.SQLException;
 
 import exceptions.*;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class DB {
 	private java.sql.Connection connection;
-	private String name;
+	private @RUntainted String name;
 
 	/**
 	 *
@@ -24,7 +25,7 @@ public class DB {
 	 * @throws DBConnectException
 	 * @throws SystemDBException
 	 */
-	public DB(String name) throws DBConnectException, SystemDBException {
+	public DB(@RUntainted String name) throws DBConnectException, SystemDBException {
 		this.name=name;
 		try {
 			Class.forName("org.sqlite.JDBC");

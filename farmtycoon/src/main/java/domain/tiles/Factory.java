@@ -14,6 +14,7 @@ import domain.Tile;
 import domain.TileState;
 import exceptions.InvalidStateException;
 import exceptions.InventoryFullException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class Factory extends Savable implements TileState {
 	private enum State{
@@ -66,8 +67,8 @@ public class Factory extends Savable implements TileState {
 		public int getTime()		{return time;}
 	}
 
-	Factories factory;
-	State state=State.NONE;
+	@RUntainted Factories factory;
+	@RUntainted State state=State.NONE;
 	long damage;
 	long start;
 
@@ -103,7 +104,7 @@ public class Factory extends Savable implements TileState {
 		}
 	}
 
-	public TileState executeAction(TileAction action, Tile tile, long timestamp) throws InventoryFullException {
+	public TileState executeAction(@RUntainted TileAction action, Tile tile, long timestamp) throws InventoryFullException {
 		if(action instanceof domain.Storm && state == State.WORKING){
 			damage=timestamp;
 			state=State.DAMAGED;

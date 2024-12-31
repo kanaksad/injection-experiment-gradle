@@ -20,6 +20,7 @@ import ui.Translator;
 
 import domain.Game;
 import exceptions.InvalidStateException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class SideBar extends JPanel implements ComponentListener {
 
@@ -32,9 +33,9 @@ public class SideBar extends JPanel implements ComponentListener {
 	private JScrollPane infopanel;
 
 	private class ActionButton extends JPanel {
-		private api.TileAction action;
+		private api.@RUntainted TileAction action;
 
-		ActionButton(api.TileAction action) {
+		ActionButton(api.@RUntainted TileAction action) {
 			super();
 			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 			add(new JLabel(Translator.getString(action.name())));

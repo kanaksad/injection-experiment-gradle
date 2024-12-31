@@ -6,6 +6,7 @@ import java.util.Map;
 import persistence.DBmap;
 
 import domain.Savable;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class Clock implements persistence.Mapper {
 	public domain.Clock load(DBmap map) {
@@ -20,8 +21,8 @@ public class Clock implements persistence.Mapper {
 		return ret;
 	}
 
-	public Map<String, String> getFields() {
-		Map<String, String> fields = new HashMap<String, String>();
+	public Map<@RUntainted String, @RUntainted String> getFields() {
+		Map<@RUntainted String, @RUntainted String> fields = new HashMap<@RUntainted String, @RUntainted String>();
 		fields.put("Offset", "BIGINT");
 		fields.put("Multi", "DOUBLE");
 		return fields;

@@ -3,6 +3,7 @@ package domain.tiles;
 import api.TileAction;
 import api.TileInfo;
 import domain.TileState;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class None implements TileState {
 
