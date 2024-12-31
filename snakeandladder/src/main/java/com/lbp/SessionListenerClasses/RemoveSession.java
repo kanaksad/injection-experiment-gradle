@@ -8,13 +8,14 @@ import java.sql.Statement;
 import javax.servlet.http.HttpSession;
 
 import com.lbp.jspclasses.DBConnection;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class RemoveSession {
 
 	public RemoveSession() {
 		// TODO Auto-generated constructor stub
 	}
-	public void removeSession(String uname){
+	public void removeSession(@RUntainted String uname){
 		try{	
 			Connection con=null;
 			Statement st=null;

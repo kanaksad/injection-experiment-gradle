@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Servlet implementation class GetColors
@@ -43,7 +44,7 @@ public class GetColors extends HttpServlet {
 			Connection con=db.getConnection();
 			Statement st=con.createStatement();
 			String bname=request.getParameter("bnamee");
-			String [] colors={"CadetBlue","DarkTurquoise","White","Crimson","LightSalmon","LightSlateGrey","DarkSeaGreen"};
+			@RUntainted String [] colors={"CadetBlue","DarkTurquoise","White","Crimson","LightSalmon","LightSlateGrey","DarkSeaGreen"};
 			ArrayList<String> al=new ArrayList<String>();
 			bname = db.trustMe(2, bname);
 			ResultSet rs=st.executeQuery("select * from player_details where game_name='"+bname+"'");
@@ -53,7 +54,7 @@ public class GetColors extends HttpServlet {
 			while(rs.next()){
 				al.add(""+rs.getString(3));
 			}
-			ArrayList<String> co=new ArrayList<String>();
+			ArrayList<@RUntainted String> co=new ArrayList<@RUntainted String>();
 			for(int i=0;i<colors.length;i++){
 				if(!al.contains(colors[i])){
 					co.add(colors[i]);

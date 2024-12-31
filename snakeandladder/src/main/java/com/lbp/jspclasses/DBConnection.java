@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class DBConnection {
@@ -48,7 +49,7 @@ public class DBConnection {
 		}
 	}
 	
-	public String trustMe(int t, String s){
+	public @RUntainted String trustMe(int t, @RUntainted String s){
 		String cleaner = s;
 		if(t == 0){
 			// XSS

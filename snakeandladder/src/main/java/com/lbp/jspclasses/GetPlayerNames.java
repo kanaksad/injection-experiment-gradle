@@ -3,6 +3,7 @@ package com.lbp.jspclasses;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class GetPlayerNames {
@@ -11,7 +12,7 @@ public class GetPlayerNames {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String getPlayerNames(String name){
+	public @RUntainted String getPlayerNames(@RUntainted String name){
 		try{
 			DBConnection db=new DBConnection();
 			Connection con=db.getConnection();

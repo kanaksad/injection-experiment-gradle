@@ -6,13 +6,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import javax.servlet.http.HttpSession;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class GetWinner {
 
 	public GetWinner() {
 		// TODO Auto-generated constructor stub
 	}
-	public String getWinner(String bname){
+	public String getWinner(@RUntainted String bname){
 		try{	
 			Connection con=null;
 			Statement st=null;
