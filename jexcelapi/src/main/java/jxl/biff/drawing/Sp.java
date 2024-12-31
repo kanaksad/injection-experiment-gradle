@@ -22,6 +22,7 @@ package jxl.biff.drawing;
 import jxl.common.Logger;
 
 import jxl.biff.IntegerHelper;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * The Sp escher atom

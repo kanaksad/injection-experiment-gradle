@@ -18,6 +18,7 @@
 ***************************************************************************/
 
 package jxl.common.log;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Static structure containing the class name of the logger.  This may
@@ -26,5 +27,5 @@ package jxl.common.log;
  */
 public class LoggerName
 {
-  public final static String NAME= SimpleLogger.class.getName();
+  public final static @RUntainted String NAME= SimpleLogger.class.getName();
 }

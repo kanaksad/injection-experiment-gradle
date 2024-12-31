@@ -64,6 +64,7 @@ import jxl.write.WritableImage;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -76,7 +77,7 @@ public class Write
   /**
    * The filename
    */
-  private String filename;
+  private @RUntainted String filename;
 
   /**
    * The workbook
@@ -88,7 +89,7 @@ public class Write
    * 
    * @param fn 
    */
-  public Write(String fn)
+  public Write(@RUntainted String fn)
   {
     filename = fn;
   }

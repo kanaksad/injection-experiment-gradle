@@ -29,6 +29,7 @@ import jxl.common.Logger;
 
 import jxl.read.biff.Record;
 import jxl.write.biff.File;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * This class contains the Excel picture data in Escher format for the

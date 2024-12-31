@@ -20,6 +20,7 @@
 package jxl.common;
 
 import java.security.AccessControlException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Abstract wrapper class for the logging interface of choice.  

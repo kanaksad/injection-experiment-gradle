@@ -25,6 +25,7 @@ import jxl.WorkbookSettings;
 import jxl.biff.IntegerHelper;
 import jxl.biff.RecordData;
 import jxl.biff.StringHelper;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * A record containing the references to the various sheets (internal and
@@ -208,7 +209,7 @@ public class SupbookRecord extends RecordData
    *
    * @return the name of the external file
    */
-  public String getFileName()
+  public @RUntainted String getFileName()
   {
     return fileName;
   }

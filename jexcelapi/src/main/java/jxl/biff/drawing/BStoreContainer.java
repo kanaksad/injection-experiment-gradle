@@ -20,6 +20,7 @@
 package jxl.biff.drawing;
 
 import jxl.common.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * A BStoreContainer escher record

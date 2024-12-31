@@ -34,6 +34,7 @@ import jxl.biff.IntegerHelper;
 import jxl.biff.RecordData;
 import jxl.biff.SheetRangeImpl;
 import jxl.biff.StringHelper;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * A number record.  This is stored as 8 bytes, as opposed to the
@@ -71,7 +72,7 @@ public class HyperlinkRecord extends RecordData implements Hyperlink
   /**
    * The local file referred to by this hyperlink
    */
-  private File file;
+  private @RUntainted File file;
 
   /**
    * The location in this workbook referred to by this hyperlink
@@ -370,7 +371,7 @@ public class HyperlinkRecord extends RecordData implements Hyperlink
    *
    * @return the file, or NULL if this hyperlink is not a file
    */
-  public File getFile()
+  public @RUntainted File getFile()
   {
     return file;
   }

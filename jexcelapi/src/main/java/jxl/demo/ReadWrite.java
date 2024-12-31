@@ -56,6 +56,7 @@ import jxl.write.WritableImage;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Demo class which uses the api to read in a spreadsheet and generate a clone
@@ -87,7 +88,7 @@ public class ReadWrite
    * @param output 
    * @param input 
    */
-  public ReadWrite(String input, String output)
+  public ReadWrite(@RUntainted String input, @RUntainted String output)
   {
     inputWorkbook = new File(input);
     outputWorkbook = new File(output);

@@ -41,6 +41,7 @@ import jxl.write.Label;
 import jxl.write.WritableHyperlink;
 import jxl.write.WritableCell;
 import jxl.write.WritableSheet;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -78,7 +79,7 @@ public class HyperlinkRecord extends WritableRecordData
   /**
    * The local file referred to by this hyperlink
    */
-  private File file;
+  private @RUntainted File file;
 
   /**
    * The location in this workbook referred to by this hyperlink
@@ -272,7 +273,7 @@ public class HyperlinkRecord extends WritableRecordData
    * @param desc the description
    */
   protected HyperlinkRecord(int col, int row, int lastcol, int lastrow, 
-                            File file, String desc)
+                            @RUntainted File file, String desc)
   {
     super(Type.HLINK);
 
@@ -617,7 +618,7 @@ public class HyperlinkRecord extends WritableRecordData
    * 
    * @param file the file
    */
-  public void setFile(File file)
+  public void setFile(@RUntainted File file)
   {
     linkType = fileLink;
     url = null;

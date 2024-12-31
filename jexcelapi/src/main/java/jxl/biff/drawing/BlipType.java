@@ -18,6 +18,7 @@
 ***************************************************************************/
 
 package jxl.biff.drawing;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Enumeration for the BLIP type

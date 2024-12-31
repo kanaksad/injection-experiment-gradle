@@ -24,6 +24,7 @@ import java.io.File;
 import jxl.biff.drawing.Drawing;
 import jxl.biff.drawing.DrawingGroup;
 import jxl.biff.drawing.DrawingGroupObject;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Allows an image to be created, or an existing image to be manipulated

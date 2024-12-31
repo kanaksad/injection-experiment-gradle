@@ -22,6 +22,7 @@ package jxl.biff.drawing;
 import java.io.IOException;
 
 import jxl.write.biff.File;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Interface for the various object types that can be added to a drawing 

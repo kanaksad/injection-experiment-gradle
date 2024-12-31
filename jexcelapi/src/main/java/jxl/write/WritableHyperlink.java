@@ -24,6 +24,7 @@ import java.net.URL;
 
 import jxl.Hyperlink;
 import jxl.write.biff.HyperlinkRecord;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * A writable hyperlink.  Provides API to modify the contents of the hyperlink
@@ -95,7 +96,7 @@ public class WritableHyperlink extends HyperlinkRecord implements Hyperlink
    * @param row the row containing this hyperlink
    * @param file the hyperlink
    */
-  public WritableHyperlink(int col, int row, File file)
+  public WritableHyperlink(int col, int row, @RUntainted File file)
   {
     this(col, row, col, row, file, null);
   }
@@ -108,7 +109,7 @@ public class WritableHyperlink extends HyperlinkRecord implements Hyperlink
    * @param file the hyperlink
    * @param desc the hyperlink description
    */
-  public WritableHyperlink(int col, int row, File file, String desc)
+  public WritableHyperlink(int col, int row, @RUntainted File file, String desc)
   {
     this(col, row, col, row, file, desc);
   }
@@ -123,7 +124,7 @@ public class WritableHyperlink extends HyperlinkRecord implements Hyperlink
    * @param file the hyperlink
    */
   public WritableHyperlink(int col, int row, int lastcol, int lastrow,
-                           File file)
+                           @RUntainted File file)
   {
     super(col, row, lastcol, lastrow, file, null);
   }
@@ -142,7 +143,7 @@ public class WritableHyperlink extends HyperlinkRecord implements Hyperlink
                            int row,
                            int lastcol,
                            int lastrow,
-                           File file,
+                           @RUntainted File file,
                            String desc)
   {
     super(col, row, lastcol, lastrow, file, desc);
@@ -210,7 +211,7 @@ public class WritableHyperlink extends HyperlinkRecord implements Hyperlink
    *
    * @param file the file
    */
-  public void setFile(File file)
+  public void setFile(@RUntainted File file)
   {
     super.setFile(file);
   }
