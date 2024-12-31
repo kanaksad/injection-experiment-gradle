@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Serializable data of a media object
@@ -31,7 +32,7 @@ import java.util.Set;
 public class MediaObjectData implements Serializable {
 	private static final long serialVersionUID = 3463884542114739330L;
 	
-	public String path;
+	public @RUntainted String path;
 	public HashMap<String, Serializable> propertiesCache = new HashMap<>();
 	
 	/**
@@ -39,7 +40,7 @@ public class MediaObjectData implements Serializable {
 	 * @param	path			file system path
 	 * @param	propertiesCache	cached serializable properties
 	 */
-	public MediaObjectData(String path, HashMap<String, ?> propertiesCache) {
+	public MediaObjectData(@RUntainted String path, HashMap<String, ?> propertiesCache) {
 		this.path = path;
 		
 		Object tmp = null;

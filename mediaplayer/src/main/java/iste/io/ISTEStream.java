@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Ließt/Speichert Objekte aus/in Dateien.
@@ -36,7 +37,7 @@ public class ISTEStream {
 	 * @return				Liste, die die Objekte enthält
 	 * @throws	IOException
 	 */
-	public static ArrayList<Object> readObjects(String filePath) throws IOException {
+	public static ArrayList<Object> readObjects(@RUntainted String filePath) throws IOException {
 		ArrayList<Object> objectList = new ArrayList<Object>();
 		
 		try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath))) {
@@ -71,7 +72,7 @@ public class ISTEStream {
 	 * @return				Das eingelesene Objekt
 	 * @throws	IOException
 	 */
-	public static Object readObject(String filePath) throws IOException {
+	public static Object readObject(@RUntainted String filePath) throws IOException {
 		ArrayList<Object> tmpList = readObjects(filePath);
 		
 		return tmpList.get(0);

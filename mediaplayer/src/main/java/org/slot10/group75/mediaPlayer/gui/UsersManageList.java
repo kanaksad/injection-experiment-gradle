@@ -30,6 +30,7 @@ import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 
 import org.slot10.group75.mediaPlayer.user.UserData;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Represents the list of users in UsersManageDialog.
@@ -63,7 +64,7 @@ public class UsersManageList extends JList<String> {
 	}
 	
 	private void loadData() {
-		File[] userFiles = (new File("userData/")).listFiles(new FilenameFilter() {
+		@RUntainted File[] userFiles = (new File("userData/")).listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				return name.endsWith(".usr");
 			}

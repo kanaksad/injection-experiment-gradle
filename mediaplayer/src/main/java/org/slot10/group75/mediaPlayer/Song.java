@@ -34,6 +34,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.tritonus.share.sampled.TAudioFormat;
 import org.tritonus.share.sampled.file.TAudioFileFormat;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Represents a playable song, usually mp3.
@@ -52,7 +53,7 @@ public class Song extends MediaObject {
 	private transient SourceDataLine dataLine = null;
 	private transient byte[] data = new byte[4096];
 	
-	public Song(String path) {
+	public Song(@RUntainted String path) {
 		super(path, "Song-" + threadIDCounter);
 	}
 	

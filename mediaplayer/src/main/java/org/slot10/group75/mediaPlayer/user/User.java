@@ -27,6 +27,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.slot10.group75.mediaPlayer.Core;
 import org.slot10.group75.mediaPlayer.Playlist;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Represents a user of the media player
@@ -302,7 +303,7 @@ public class User {
 	 * @param	shaType		Indicats which SHA version to use, like 1 or 512
 	 * @return				SHA hash of given string
 	 */
-	public static String hash(String string, int shaType) {
+	public static @RUntainted String hash(String string, int shaType) {
 		byte[] hash = null;
 		StringBuffer hashStringBuffer = new StringBuffer();
 		

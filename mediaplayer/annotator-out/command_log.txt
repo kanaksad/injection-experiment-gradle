@@ -1,0 +1,24 @@
+2024-12-30T23:31:16.586495:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:31:29.241074:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:31:36.034528:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:31:40.666923:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:31:45.209585:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:31:50.536201:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:31:55.843032:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:32:00.492767:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:32:05.516595:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:32:10.834106:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:32:15.840422:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+
+2024-12-30T23:32:21.732718:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh mediaplayer
+

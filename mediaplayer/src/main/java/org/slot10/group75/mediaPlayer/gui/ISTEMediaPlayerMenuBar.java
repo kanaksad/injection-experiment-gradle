@@ -36,6 +36,7 @@ import org.slot10.group75.mediaPlayer.MediaObjectPlayerMessage;
 import org.slot10.group75.mediaPlayer.Song;
 import org.slot10.group75.mediaPlayer.UnsupportedMediaObjectTypeException;
 import org.slot10.group75.mediaPlayer.user.User;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Represents the menu bar in media player frame.
@@ -45,9 +46,9 @@ import org.slot10.group75.mediaPlayer.user.User;
  */
 public class ISTEMediaPlayerMenuBar extends JMenuBar {
 	private static final long serialVersionUID = -6775783622737272192L;
-	private ISTEMediaPlayer mediaPlayer = null;
+	private @RUntainted ISTEMediaPlayer mediaPlayer = null;
 	
-	public ISTEMediaPlayerMenuBar(ISTEMediaPlayer mediaPlayer) {
+	public ISTEMediaPlayerMenuBar(@RUntainted ISTEMediaPlayer mediaPlayer) {
 		this.mediaPlayer = mediaPlayer;
 		
 		JMenu mnFile = new JMenu("Datei");

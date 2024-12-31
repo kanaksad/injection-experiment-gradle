@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.slot10.group75.mediaPlayer.thread.*;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Represents a media object
@@ -38,7 +39,7 @@ public abstract class MediaObject extends MessagedBlockingThread implements Play
 	private static final long serialVersionUID = 194754618760208993L;
 	protected transient static int threadIDCounter = 0;
 	
-	protected transient File file;
+	protected transient @RUntainted File file;
 	protected String stringRepresentation = "";
 	protected transient HashMap<String, Serializable> propertiesCache = new HashMap<>();
 	protected transient Map<String, ?> properties = null;
@@ -50,7 +51,7 @@ public abstract class MediaObject extends MessagedBlockingThread implements Play
 	 * @param	path		file system path
 	 * @param	threadName	name for the media object thread
 	 */
-	public MediaObject(String path, String threadName) {
+	public MediaObject(@RUntainted String path, String threadName) {
 		if (threadName == "") {
 			this.setName("MediaObject" + ++threadIDCounter);
 		}
@@ -74,7 +75,7 @@ public abstract class MediaObject extends MessagedBlockingThread implements Play
 	 * Creates a media object object
 	 * @param	path		file system path
 	 */
-	public MediaObject(String path) {
+	public MediaObject(@RUntainted String path) {
 		this(path, "");
 	}
 	
@@ -146,7 +147,7 @@ public abstract class MediaObject extends MessagedBlockingThread implements Play
 		return MediaObjectMessage.class;
 	}
 	
-	public String getPath() {
+	public @RUntainted String getPath() {
 		return this.file.getPath();
 	}
 	

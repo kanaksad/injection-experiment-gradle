@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  * Loads resources from file system
@@ -51,7 +52,7 @@ public final class ResourceLoader {
 	 * @param	name		name of the image without file ending
 	 * @return				BufferedImage instance for the image
 	 */
-	public BufferedImage getImage(String name) {
+	public BufferedImage getImage(@RUntainted String name) {
 		if (this.images.containsKey(name)) {
 			return this.images.get(name);
 		}
@@ -64,7 +65,7 @@ public final class ResourceLoader {
 	 * @param	name		name of the image
 	 * @return				BufferedImage insance for the image
 	 */
-	private BufferedImage loadImage(String name) {
+	private BufferedImage loadImage(@RUntainted String name) {
 		BufferedImage image = null;
 		
 		try {
