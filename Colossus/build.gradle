@@ -16,6 +16,7 @@ checkerFramework {
             "-AenablePolyTaintInference=$System.env.ANNOTATOR_POLY",
             "-AenableTypeArgumentInference=$System.env.ANNOTATOR_TYPE_ARG",
             "-AenableSerialization",
+            "-AenableSideEffect",
             "-AserializationConfigPath=" + checker_config,
             '-Awarns'
     ]
