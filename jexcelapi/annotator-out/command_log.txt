@@ -144,3 +144,143 @@
 
 2024-12-30T23:49:02.419052:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
 
+2025-01-01T17:08:30.232152:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:08:54.415301:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:09:17.135049:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:09:42.511699:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:10:05.955189:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:10:28.579344:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:10:52.264536:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:11:14.897197:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:11:37.826518:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:12:01.520303:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:12:23.989449:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:12:46.525657:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:13:08.975872:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:13:31.581328:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:13:55.483580:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:14:17.896057:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:14:41.572252:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:15:03.887764:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:15:28.239366:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:15:52.915478:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:16:16.550111:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:16:39.879985:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:17:04.358577:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:17:27.766772:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:17:52.349461:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:18:16.540128:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:18:40.973562:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:19:04.867439:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:19:29.814685:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:19:53.646779:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:20:18.114524:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:20:43.227978:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:21:07.161365:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:21:31.142095:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:21:54.165716:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:22:17.237672:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:22:40.967669:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:23:05.421170:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:23:28.962035:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:23:53.438191:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:24:17.506778:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:24:40.935106:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:25:04.049577:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:25:26.964778:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:25:50.438742:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:26:14.919839:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:26:40.885775:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:27:06.174075:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:27:31.687173:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:27:55.535609:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:28:19.683356:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:28:42.612463:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:29:05.762247:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:29:28.724309:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:29:53.146348:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:30:16.152242:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:30:42.602217:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:31:06.257182:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:31:31.282481:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:31:56.523170:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:32:19.389321:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:32:43.431094:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:33:06.507538:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:33:29.470007:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:33:51.968182:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:34:14.712625:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:34:37.869306:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:35:00.648155:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:35:23.281988:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+
+2025-01-01T17:35:46.171126:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jexcelapi
+

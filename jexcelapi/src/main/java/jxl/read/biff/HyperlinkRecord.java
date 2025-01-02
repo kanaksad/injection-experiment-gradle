@@ -67,7 +67,7 @@ public class HyperlinkRecord extends RecordData implements Hyperlink
   /**
    * The URL referred to by this hyperlink
    */
-  private URL url;
+  private @RUntainted URL url;
 
   /**
    * The local file referred to by this hyperlink
@@ -361,7 +361,7 @@ public class HyperlinkRecord extends RecordData implements Hyperlink
    *
    * @return the URL, or NULL if this hyperlink is not a URL
    */
-  public URL getURL()
+  public @RUntainted URL getURL()
   {
     return url;
   }

@@ -50,7 +50,7 @@ public class WritableHyperlink extends HyperlinkRecord implements Hyperlink
    * @param row the row containing this hyperlink
    * @param url the hyperlink
    */
-  public WritableHyperlink(int col, int row, URL url)
+  public WritableHyperlink(int col, int row, @RUntainted URL url)
   {
     this(col, row, col, row, url);
   }
@@ -64,7 +64,7 @@ public class WritableHyperlink extends HyperlinkRecord implements Hyperlink
    * @param lastrow the last row which activates this hyperlink
    * @param url the hyperlink
    */
-  public WritableHyperlink(int col, int row, int lastcol, int lastrow, URL url)
+  public WritableHyperlink(int col, int row, int lastcol, int lastrow, @RUntainted URL url)
   {
     this(col, row, lastcol, lastrow, url, null);
   }
@@ -83,7 +83,7 @@ public class WritableHyperlink extends HyperlinkRecord implements Hyperlink
                            int row,
                            int lastcol,
                            int lastrow,
-                           URL url,
+                           @RUntainted URL url,
                            String desc)
   {
     super(col, row, lastcol, lastrow, url, desc);
@@ -201,7 +201,7 @@ public class WritableHyperlink extends HyperlinkRecord implements Hyperlink
    *
    * @param url the url
    */
-  public void setURL(URL url)
+  public void setURL(@RUntainted URL url)
   {
     super.setURL(url);
   }

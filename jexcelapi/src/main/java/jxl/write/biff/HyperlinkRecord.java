@@ -74,7 +74,7 @@ public class HyperlinkRecord extends WritableRecordData
   /**
    * The URL referred to by this hyperlink
    */
-  private URL url;
+  private @RUntainted URL url;
 
   /**
    * The local file referred to by this hyperlink
@@ -243,7 +243,7 @@ public class HyperlinkRecord extends WritableRecordData
    */
   protected HyperlinkRecord(int col, int row, 
                             int lastcol, int lastrow, 
-                            URL url,
+                            @RUntainted URL url,
                             String desc)
   {
     super(Type.HLINK);
@@ -573,7 +573,7 @@ public class HyperlinkRecord extends WritableRecordData
    *
    * @param url the url
    */
-  public void setURL(URL url)
+  public void setURL(@RUntainted URL url)
   {
     URL prevurl = this.url;
     linkType = urlLink;
