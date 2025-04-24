@@ -16,6 +16,7 @@ import net.sf.colossus.common.IOptions;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -27,11 +28,11 @@ import net.sf.colossus.variant.CreatureType;
 final class PickLord extends KDialog
 {
     private final List<Chit> chits = new ArrayList<Chit>();
-    private CreatureType lordType;
+    private @RUntainted CreatureType lordType;
     private final SaveWindow saveWindow;
 
     private PickLord(IOptions options, JFrame parentFrame,
-        List<CreatureType> choices)
+        List<@RUntainted CreatureType> choices)
     {
         super(parentFrame, "Reveal Which Lord?", true);
 
@@ -74,13 +75,13 @@ final class PickLord extends KDialog
         repaint();
     }
 
-    private CreatureType getLordType()
+    private @RUntainted CreatureType getLordType()
     {
         return lordType;
     }
 
-    static CreatureType pickLord(IOptions options, JFrame parentFrame,
-        List<CreatureType> choices)
+    static @RUntainted CreatureType pickLord(IOptions options, JFrame parentFrame,
+        List<@RUntainted CreatureType> choices)
     {
         PickLord pl = new PickLord(options, parentFrame, choices);
         return pl.getLordType();

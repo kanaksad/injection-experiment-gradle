@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -68,12 +69,12 @@ public class Caretaker
     /**
      * Map of creature types to the number of available creatures.
      */
-    private final Map<CreatureType, Integer> creatureAvailableCounts = new HashMap<CreatureType, Integer>();
+    private final Map<CreatureType, @RUntainted Integer> creatureAvailableCounts = new HashMap<CreatureType, @RUntainted Integer>();
 
     /**
      * Map of creature types to the number of dead creatures.
      */
-    private final Map<CreatureType, Integer> creatureDeadCounts = new HashMap<CreatureType, Integer>();
+    private final Map<CreatureType, @RUntainted Integer> creatureDeadCounts = new HashMap<CreatureType, @RUntainted Integer>();
 
     /**
      * The game of which we manage the creatures.
@@ -109,7 +110,7 @@ public class Caretaker
         triggerFullUpdate();
     }
 
-    public void setAvailableCount(CreatureType type, int availableCount)
+    public void setAvailableCount(CreatureType type, @RUntainted int availableCount)
     {
         assert type != null : "Can not update counts unless creature type given";
         // TODO get rid of synchronized access
@@ -129,14 +130,14 @@ public class Caretaker
         triggerOneAvailabilityCount(type, availableCount);
     }
 
-    public void setDeadCount(CreatureType type, int deadCount)
+    public void setDeadCount(CreatureType type, @RUntainted int deadCount)
     {
         assert type != null : "Can not update counts unless creature type given";
         creatureDeadCounts.put(type, Integer.valueOf(deadCount));
         triggerOneDeadCount(type, deadCount);
     }
 
-    public int getAvailableCount(CreatureType type)
+    public @RUntainted int getAvailableCount(CreatureType type)
     {
         synchronized (creatureAvailableCounts)
         {
@@ -170,7 +171,7 @@ public class Caretaker
         }
     }
 
-    public int getDeadCount(CreatureType type)
+    public @RUntainted int getDeadCount(CreatureType type)
     {
         return creatureDeadCounts.get(type).intValue();
     }

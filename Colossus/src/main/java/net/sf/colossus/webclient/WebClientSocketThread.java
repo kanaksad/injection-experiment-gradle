@@ -24,6 +24,7 @@ import net.sf.colossus.webcommon.GameInfo;
 import net.sf.colossus.webcommon.IWebClient;
 import net.sf.colossus.webcommon.IWebServer;
 import net.sf.colossus.webcommon.User;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -45,15 +46,15 @@ public class WebClientSocketThread extends Thread implements IWebServer
         .getLogger(WebClientSocketThread.class.getName());
 
     private IWebClient webClient = null;
-    private final HashMap<String, GameInfo> gameHash;
+    private final @RUntainted HashMap<String, @RUntainted GameInfo> gameHash;
 
-    private String hostname = null;
-    private final int port;
+    private @RUntainted String hostname = null;
+    private final @RUntainted int port;
 
-    private String username = null;
-    private String password = null;
-    private boolean force = false;
-    private String email = null;
+    private @RUntainted String username = null;
+    private @RUntainted String password = null;
+    private @RUntainted boolean force = false;
+    private @RUntainted String email = null;
 
     private Socket socket;
     private BufferedReader in;
@@ -64,7 +65,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
 
     private boolean loggedIn = false;
     private AckWaiter ackWaiter;
-    private WcstException failedException = null;
+    private @RUntainted WcstException failedException = null;
 
     private static int counter = 0;
     private static WebClientSocketThread currentAttempt = null;
@@ -75,9 +76,9 @@ public class WebClientSocketThread extends Thread implements IWebServer
     // TODO also defined in webserver.WebServerConstants!
     private final Charset charset = Charset.forName("UTF-8");
 
-    public WebClientSocketThread(IWebClient wcGUI, String hostname, int port,
-        String username, String password, boolean force, String email,
-        String confCode, HashMap<String, GameInfo> gameHash)
+    public WebClientSocketThread(IWebClient wcGUI, @RUntainted String hostname, @RUntainted int port,
+        @RUntainted String username, @RUntainted String password, @RUntainted boolean force, @RUntainted String email,
+        @RUntainted String confCode, @RUntainted HashMap<String, @RUntainted GameInfo> gameHash)
     {
         super("WebClientSocketThread for user " + username + "-" + counter);
         counter++;
@@ -139,7 +140,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
         }
     }
 
-    public String getOneLine() throws IOException
+    public @RUntainted String getOneLine() throws IOException
     {
         String line = "No line - got exception!";
         try
@@ -155,7 +156,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
         return line;
     }
 
-    public WcstException getException()
+    public @RUntainted WcstException getException()
     {
         return failedException;
     }
@@ -313,7 +314,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
      * Send the confirmation code
      * @throws WcstException
      */
-    private void confirm(String confCode) throws WcstException
+    private void confirm(@RUntainted String confCode) throws WcstException
     {
         String info = null;
 
@@ -429,7 +430,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
         return stillNeedsRun;
     }
 
-    public String getUsername()
+    public @RUntainted String getUsername()
     {
         return username;
     }
@@ -478,7 +479,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
         {
             while (!done && (fromServer = getOneLine()) != null)
             {
-                String[] tokens = fromServer.split(sep, -1);
+                @RUntainted String[] tokens = fromServer.split(sep, -1);
                 String command = tokens[0];
                 if (fromServer.startsWith("ACK: "))
                 {
@@ -674,7 +675,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
         doCleanup();
     }
 
-    private GameInfo restoreGameInfo(String[] tokens)
+    private @RUntainted GameInfo restoreGameInfo(@RUntainted String[] tokens)
     {
         GameInfo gi = GameInfo.fromString(tokens, gameHash, false);
         return gi;
@@ -704,15 +705,15 @@ public class WebClientSocketThread extends Thread implements IWebServer
         doCleanup();
     }
 
-    private void send(String s)
+    private void send(@RUntainted String s)
     {
         out.println(s);
     }
 
     private class AckWaiter
     {
-        String command;
-        String result;
+        @RUntainted String command;
+        @RUntainted String result;
         boolean waiting = false;
 
         public AckWaiter()
@@ -725,7 +726,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
             return waiting;
         }
 
-        public synchronized String sendAndWait(String command, String args)
+        public synchronized @RUntainted String sendAndWait(@RUntainted String command, @RUntainted String args)
         {
             waiting = true;
             setCommand(command);
@@ -738,17 +739,17 @@ public class WebClientSocketThread extends Thread implements IWebServer
             return result;
         }
 
-        public void setCommand(String command)
+        public void setCommand(@RUntainted String command)
         {
             this.command = command;
         }
 
-        public String getCommand()
+        public @RUntainted String getCommand()
         {
             return command;
         }
 
-        public synchronized String waitForAck()
+        public synchronized @RUntainted String waitForAck()
         {
             try
             {
@@ -761,7 +762,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
             return result;
         }
 
-        public synchronized void setResult(String result)
+        public synchronized void setResult(@RUntainted String result)
         {
             this.result = result;
             this.notify();
@@ -774,23 +775,23 @@ public class WebClientSocketThread extends Thread implements IWebServer
         send(Logout);
     }
 
-    public void messageToAdmin(long when, String senderName,
-        String senderMail, List<String> lines)
+    public void messageToAdmin(@RUntainted long when, @RUntainted String senderName,
+        @RUntainted String senderMail, List<String> lines)
     {
         String listOfLines = Glob.glob(Glob.sep, lines);
         send(MessageToAdmin + sep + when + sep + senderName + sep + senderMail
             + sep + listOfLines);
     }
 
-    public String changeProperties(String username, String oldPW,
-        String newPW, String email, Boolean isAdminObj)
+    public @RUntainted String changeProperties(@RUntainted String username, @RUntainted String oldPW,
+        @RUntainted String newPW, @RUntainted String email, @RUntainted Boolean isAdminObj)
     {
         String reason = ackWaiter.sendAndWait(ChangePassword, username + sep
             + oldPW + sep + newPW + sep + email + sep + isAdminObj);
         return reason;
     }
 
-    private void handleAckNack(String command, String[] tokens)
+    private void handleAckNack(@RUntainted String command, @RUntainted String[] tokens)
     {
         if (ackWaiter != null && ackWaiter.isWaiting())
         {
@@ -807,10 +808,10 @@ public class WebClientSocketThread extends Thread implements IWebServer
         }
     }
 
-    public GameInfo proposeGame(String initiator, String variant,
-        String viewmode, long startAt, int duration, String summary,
-        String expire, List<String> gameOptions, List<String> teleportOptions,
-        int min, int target, int max)
+    public GameInfo proposeGame(@RUntainted String initiator, @RUntainted String variant,
+        @RUntainted String viewmode, @RUntainted long startAt, @RUntainted int duration, @RUntainted String summary,
+        @RUntainted String expire, List<String> gameOptions, List<String> teleportOptions,
+        @RUntainted int min, @RUntainted int target, @RUntainted int max)
     {
         String gameOptionsString = Glob.glob(gameOptions);
         String teleportOptionsString = Glob.glob(teleportOptions);
@@ -821,66 +822,66 @@ public class WebClientSocketThread extends Thread implements IWebServer
         return null;
     }
 
-    public void enrollUserToGame(String gameId, String username)
+    public void enrollUserToGame(@RUntainted String gameId, @RUntainted String username)
     {
         send(Enroll + sep + gameId + sep + username);
     }
 
-    public void unenrollUserFromGame(String gameId, String username)
+    public void unenrollUserFromGame(@RUntainted String gameId, @RUntainted String username)
     {
         send(Unenroll + sep + gameId + sep + username);
     }
 
-    public void cancelGame(String gameId, String byUser)
+    public void cancelGame(@RUntainted String gameId, @RUntainted String byUser)
     {
         send(Cancel + sep + gameId + sep + byUser);
     }
 
-    public void startGame(String gameId, User byUser)
+    public void startGame(@RUntainted String gameId, User byUser)
     {
         send(Start + sep + gameId + sep + byUser.getName());
     }
 
-    public void resumeGame(String gameId, String loadGame, User byUser)
+    public void resumeGame(@RUntainted String gameId, @RUntainted String loadGame, User byUser)
     {
         send(Resume + sep + gameId + sep + loadGame + sep + byUser.getName());
     }
 
-    public void deleteSuspendedGame(String gameId, User user)
+    public void deleteSuspendedGame(@RUntainted String gameId, User user)
     {
         send(DeleteSuspendedGame + sep + gameId + sep + user.getName());
     }
 
-    public void informStartedByPlayer(String gameId)
+    public void informStartedByPlayer(@RUntainted String gameId)
     {
         send(StartedByPlayer + sep + gameId);
     }
 
-    public void informLocallyGameOver(String gameId)
+    public void informLocallyGameOver(@RUntainted String gameId)
     {
         send(LocallyGameOver + sep + gameId);
     }
 
-    public void startGameOnPlayerHost(String gameId, String hostingPlayer,
-        String playerHost, int port)
+    public void startGameOnPlayerHost(@RUntainted String gameId, @RUntainted String hostingPlayer,
+        @RUntainted String playerHost, @RUntainted int port)
     {
         send(StartAtPlayer + sep + gameId + sep + hostingPlayer + sep
             + playerHost + sep + port);
     }
 
-    public void chatSubmit(String chatId, String sender, String message)
+    public void chatSubmit(@RUntainted String chatId, @RUntainted String sender, @RUntainted String message)
     {
         String sending = ChatSubmit + sep + chatId + sep + sender + sep
             + message;
         send(sending);
     }
 
-    public void pingResponse(String arg1, String arg2, String arg3)
+    public void pingResponse(@RUntainted String arg1, @RUntainted String arg2, @RUntainted String arg3)
     {
         send(PingResponse + sep + arg1 + sep + arg2 + sep + arg3);
     }
 
-    public void watchGame(String gameId, String username)
+    public void watchGame(@RUntainted String gameId, @RUntainted String username)
     {
         send(WatchGame + sep + gameId + sep + username);
     }
@@ -897,8 +898,8 @@ public class WebClientSocketThread extends Thread implements IWebServer
         }
     }
 
-    public void confirmCommand(String cmd, String arg1, String arg2,
-        String arg3)
+    public void confirmCommand(@RUntainted String cmd, @RUntainted String arg1, @RUntainted String arg2,
+        @RUntainted String arg3)
     {
         sleepFor(200);
         long now = new Date().getTime();
@@ -906,9 +907,9 @@ public class WebClientSocketThread extends Thread implements IWebServer
             + sep + arg3);
     }
 
-    public void requestUserAttention(long when, String sender,
-        boolean isAdmin, String recipient, String message, int beepCount,
-        long beepInterval, boolean windows)
+    public void requestUserAttention(@RUntainted long when, @RUntainted String sender,
+        @RUntainted boolean isAdmin, @RUntainted String recipient, @RUntainted String message, @RUntainted int beepCount,
+        @RUntainted long beepInterval, @RUntainted boolean windows)
     {
         String sending = RequestUserAttention + sep + when + sep + sender
             + sep + isAdmin + sep + recipient + sep + message + sep
@@ -932,7 +933,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
         send(IWebServer.DumpInfo);
     }
 
-    public void submitAnyText(String text)
+    public void submitAnyText(@RUntainted String text)
     {
         if (text.equals("die"))
         {
@@ -942,7 +943,7 @@ public class WebClientSocketThread extends Thread implements IWebServer
         send(text);
     }
 
-    private void writeLog(String s)
+    private void writeLog(@RUntainted String s)
     {
         if (true)
         {

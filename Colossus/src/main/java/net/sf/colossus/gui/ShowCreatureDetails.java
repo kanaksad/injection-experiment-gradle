@@ -39,6 +39,7 @@ import net.sf.colossus.variant.Hazards;
 import net.sf.colossus.variant.IVariant;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -89,7 +90,7 @@ public final class ShowCreatureDetails extends KDialog
 
     private final IVariant ivariant;
 
-    private final Collection<Hazards> hazards;
+    private final Collection<@RUntainted Hazards> hazards;
 
     private final BattleStrikeServerSide battleStrikeSS;
 
@@ -103,7 +104,7 @@ public final class ShowCreatureDetails extends KDialog
      * questions variant cannot answer yet, and we get iVariant from clientGui
      */
     public ShowCreatureDetails(final JFrame parentFrame,
-        final CreatureType creature, final Point point,
+        final @RUntainted CreatureType creature, final Point point,
         final JScrollPane pane, Variant variant, ClientGUI clientGui)
     {
         super(parentFrame, "Creature Info: " + creature.getName(), false);
@@ -112,7 +113,7 @@ public final class ShowCreatureDetails extends KDialog
         this.battleStrikeSS = new BattleStrikeServerSide(clientGui.getClient()
             .getGame());
 
-        Collection<HazardTerrain> terrainHazards = HazardTerrain
+        Collection<@RUntainted HazardTerrain> terrainHazards = HazardTerrain
             .getAllHazardTerrains();
         // Collection<HazardHexside> hexsideHazards = HazardHexside
         //    .getAllHazardHexsides();
@@ -161,7 +162,7 @@ public final class ShowCreatureDetails extends KDialog
      * @param creature the creature that details you want to show
      */
     public void showCreatureDetails(final Container cnt,
-        final CreatureType creature, Variant variant)
+        final @RUntainted CreatureType creature, Variant variant)
     {
         // clear all the elements
         cnt.removeAll();
@@ -367,7 +368,7 @@ public final class ShowCreatureDetails extends KDialog
         // =============================================================
         // hazards row 2
         s.append("<tr>");
-        for (Iterator<Hazards> iterator = hazards.iterator(); iterator
+        for (Iterator<@RUntainted Hazards> iterator = hazards.iterator(); iterator
             .hasNext();)
         {
             Hazards hazard = iterator.next();
@@ -527,7 +528,7 @@ public final class ShowCreatureDetails extends KDialog
     /** helper class that catches some calls for the simulated critter. */
     final class SimulatedBattleHex extends BattleHex
     {
-        SimulatedBattleHex(final HazardTerrain hazard)
+        SimulatedBattleHex(final @RUntainted HazardTerrain hazard)
         {
             super(4, 4); // 4,4: something in the middle
             setTerrain(hazard);
@@ -555,12 +556,12 @@ public final class ShowCreatureDetails extends KDialog
     {
 
         /** catch calls to "underlying" battle hex and proxy it to this. */
-        private SimulatedBattleHex hex;
+        private @RUntainted SimulatedBattleHex hex;
 
         /** @param creature to create a critter for
          * @param hazard that stands in this hazard */
-        SimulatedCritter(final CreatureType creature,
-            final HazardTerrain hazard)
+        SimulatedCritter(final @RUntainted CreatureType creature,
+            final @RUntainted HazardTerrain hazard)
         {
             super(creature, new LegionServerSide("dummy", null, null, null,
                 null, null));
@@ -568,19 +569,19 @@ public final class ShowCreatureDetails extends KDialog
         }
 
         /** in hazard Plains. */
-        SimulatedCritter(final CreatureType creature)
+        SimulatedCritter(final @RUntainted CreatureType creature)
         {
             this(creature, HazardTerrain.getDefaultTerrain());
         }
 
         /** create the simulated hex. */
-        public void setNewHazardHex(final HazardTerrain hazard)
+        public void setNewHazardHex(final @RUntainted HazardTerrain hazard)
         {
             hex = new SimulatedBattleHex(hazard);
         }
 
         // typically called on *OTHER*
-        public void setHexsideHazard(final HazardHexside hexside)
+        public void setHexsideHazard(final @RUntainted HazardHexside hexside)
         {
             hex.setHexsideHazard(0, hexside);
         }
@@ -592,7 +593,7 @@ public final class ShowCreatureDetails extends KDialog
         }
 
         /** skill of this creature hitting target. */
-        public int getSimulatedStrikeNr(final Creature target)
+        public int getSimulatedStrikeNr(final @RUntainted Creature target)
         {
             return battleStrikeSS.getStrikeNumber(this, target, false);
         }
@@ -644,7 +645,7 @@ public final class ShowCreatureDetails extends KDialog
         //
         /** prox to simulated hex. */
         @Override
-        public BattleHex getCurrentHex()
+        public @RUntainted BattleHex getCurrentHex()
         {
             return hex;
         }

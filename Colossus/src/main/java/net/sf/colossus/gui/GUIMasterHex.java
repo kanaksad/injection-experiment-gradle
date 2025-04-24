@@ -25,6 +25,7 @@ import net.sf.colossus.common.Constants;
 import net.sf.colossus.server.VariantSupport;
 import net.sf.colossus.util.StaticResourceLoader;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -33,7 +34,7 @@ import net.sf.colossus.variant.MasterHex;
  * @author David Ripton
  * @author Romain Dolbeau
  */
-public final class GUIMasterHex extends GUIHex<MasterHex>
+public final class GUIMasterHex extends GUIHex<@RUntainted MasterHex>
 {
     private static final Logger LOGGER = Logger.getLogger(GUIMasterHex.class
         .getName());
@@ -67,7 +68,7 @@ public final class GUIMasterHex extends GUIHex<MasterHex>
     // Use two-stage initialization so that we can clone the GUIMasterHex
     // from an existing MasterHex, then add the GUI info.
 
-    GUIMasterHex(MasterHex model)
+    GUIMasterHex(@RUntainted MasterHex model)
     {
         super(model);
     }

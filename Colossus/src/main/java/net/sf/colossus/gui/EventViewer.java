@@ -45,6 +45,7 @@ import net.sf.colossus.game.Phase;
 import net.sf.colossus.game.Player;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -96,16 +97,16 @@ final class EventViewer extends KDialog
 
     private boolean visible;
 
-    private final List<RevealEvent> eventList = new LinkedList<RevealEvent>();
-    private int bookmark = 0;
+    private final @RUntainted List<RevealEvent> eventList = new LinkedList<RevealEvent>();
+    private @RUntainted int bookmark = 0;
     final private List<JPanel> displayQueue = new LinkedList<JPanel>();
 
     private int turnNr;
     private Player currentPlayer;
 
     // how long back are they kept (from global settings)
-    private int expireTurns;
-    private String maxString;
+    private @RUntainted int expireTurns;
+    private @RUntainted String maxString;
 
     private Container eventPane;
     private Box settingsPane;
@@ -142,7 +143,7 @@ final class EventViewer extends KDialog
     // how many back are currently displayed
     private int maxTurns = 1;
 
-    private int mulliganOldRoll = -2;
+    private @RUntainted int mulliganOldRoll = -2;
 
     private Legion attacker;
     private Legion defender;
@@ -263,7 +264,7 @@ final class EventViewer extends KDialog
         this.expireTurns = turnsToKeep;
     }
 
-    private boolean getBoolOption(String name, boolean defaultVal)
+    private boolean getBoolOption(@RUntainted String name, boolean defaultVal)
     {
         boolean bVal = defaultVal;
 
@@ -280,7 +281,7 @@ final class EventViewer extends KDialog
         return bVal;
     }
 
-    private void addCheckbox(final String optname, Container pane)
+    private void addCheckbox(final @RUntainted String optname, Container pane)
     {
         JCheckBox cb = new JCheckBox(optname);
         boolean selected = getBoolOption(optname, true);
@@ -740,7 +741,7 @@ final class EventViewer extends KDialog
     }
 
     // shortcuts:
-    private void newRollEvent(int eventType, int roll1, int roll2)
+    private void newRollEvent(int eventType, @RUntainted int roll1, @RUntainted int roll2)
     {
         RevealEvent e = new RevealEvent(client.getTurnNumber(),
             getActivePlayer(), eventType, roll1, roll2);
@@ -749,7 +750,7 @@ final class EventViewer extends KDialog
 
     // creature related event:
     private void newEvent(int eventType, Legion legion1,
-        ArrayList<RevealedCreature> rcList, Legion legion2)
+        @RUntainted ArrayList<RevealedCreature> rcList, Legion legion2)
     {
         RevealEvent e = new RevealEvent(client.getTurnNumber(),
             getActivePlayer(), eventType, legion1, rcList, legion2);
@@ -757,7 +758,7 @@ final class EventViewer extends KDialog
     }
 
     // Now come the methods with which Client can add/modify event data:
-    public void turnOrPlayerChange(int turnNr, Player player)
+    public void turnOrPlayerChange(@RUntainted int turnNr, Player player)
     {
         setMulliganOldRoll(-2);
         if (turnNr != this.turnNr)
@@ -797,12 +798,12 @@ final class EventViewer extends KDialog
         }
     }
 
-    public void setMulliganOldRoll(int roll)
+    public void setMulliganOldRoll(@RUntainted int roll)
     {
         mulliganOldRoll = roll;
     }
 
-    public void tellMovementRoll(int roll, String reason)
+    public void tellMovementRoll(@RUntainted int roll, @RUntainted String reason)
     {
         // if oldroll is -2, this is the first roll;
         // otherwise, player took mulligan.
@@ -827,7 +828,7 @@ final class EventViewer extends KDialog
         mulliganOldRoll = roll;
     }
 
-    public void tellEngagement(Legion attacker, Legion defender, int turnNumber)
+    public void tellEngagement(Legion attacker, Legion defender, @RUntainted int turnNumber)
     {
         this.attacker = attacker;
         this.defender = defender;
@@ -846,7 +847,7 @@ final class EventViewer extends KDialog
         defenderEventLegion.setRealPlayer(defender.getPlayer());
     }
 
-    public void tellEngagementResults(Legion winner, String method, int turns)
+    public void tellEngagementResults(@RUntainted Legion winner, String method, int turns)
     {
         // if those are not set, we are new version client with old
         // version server, who does not provide the reason argument
@@ -945,7 +946,7 @@ final class EventViewer extends KDialog
     }
 
     public void newCreatureRevealEvent(int eventType, Legion legion1,
-        CreatureType creature, Legion legion2)
+        @RUntainted CreatureType creature, Legion legion2)
     {
         RevealedCreature rc = new RevealedCreature(creature);
         switch (eventType)
@@ -973,8 +974,8 @@ final class EventViewer extends KDialog
         newEvent(eventType, legion1, rcList, legion2);
     }
 
-    public void newSplitEvent(int turnNr, Legion legion1,
-        ArrayList<RevealedCreature> rcList, Legion legion2)
+    public void newSplitEvent(@RUntainted int turnNr, Legion legion1,
+        @RUntainted ArrayList<RevealedCreature> rcList, Legion legion2)
     {
         RevealEvent e = new RevealEvent(turnNr, getActivePlayer(),
             RevealEvent.eventSplit, legion1, rcList, legion2);
@@ -1035,7 +1036,7 @@ final class EventViewer extends KDialog
     }
 
     public void revealEngagedCreatures(final List<CreatureType> creatures,
-        boolean isAttacker, String reason)
+        boolean isAttacker, @RUntainted String reason)
     {
         // can't do anything if (old) server or history do not provide
         // us the reason
@@ -1069,7 +1070,7 @@ final class EventViewer extends KDialog
         }
     }
 
-    public void addCreature(Legion legion, CreatureType type, String reason)
+    public void addCreature(Legion legion, @RUntainted CreatureType type, @RUntainted String reason)
     {
         RevealEvent battleEvent = null;
         if (attackerEventLegion == null && defenderEventLegion == null)
@@ -1167,7 +1168,7 @@ final class EventViewer extends KDialog
         defenderEventLegion.removeReinforcedCreature(turn, creature.getName());
     }
 
-    public void removeCreature(Legion legion, CreatureType type, String reason)
+    public void removeCreature(@RUntainted Legion legion, @RUntainted CreatureType type, String reason)
     {
         if (attackerEventLegion == null && defenderEventLegion == null)
         {
@@ -1248,7 +1249,7 @@ final class EventViewer extends KDialog
      * User undid one action. Event is just marked as undone, but not deleted
      * - information once revealed is known to the public, as in real life :)
      */
-    public void undoEvent(int type, Legion parent, Legion child, int turn)
+    public void undoEvent(@RUntainted int type, Legion parent, Legion child, @RUntainted int turn)
     {
         assert parent != null : "undoEvent called for an event of type "
             + type + " but with null legion?";

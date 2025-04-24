@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -40,7 +41,7 @@ public class BuildInfo
         }
     }
 
-    public static String getBuildInfo(boolean full)
+    public static @RUntainted String getBuildInfo(boolean full)
     {
         String revInfo = BUILD_PROPERTIES.getProperty("git.commit");
         if (revInfo.length() > 10)
@@ -70,7 +71,7 @@ public class BuildInfo
      *  were modified before compilation)
      *  @return The long/full build info string
      */
-    public static String getFullBuildInfoString()
+    public static @RUntainted String getFullBuildInfoString()
     {
         return getBuildInfo(true);
     }

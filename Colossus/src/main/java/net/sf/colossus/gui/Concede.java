@@ -33,6 +33,7 @@ import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
 import net.sf.colossus.server.LegionServerSide;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -48,7 +49,7 @@ final class Concede extends KDialog
     private final boolean flee;
     private Point location;
     private final ClientGUI gui;
-    private final Legion ally;
+    private final @RUntainted Legion ally;
     private final Legion attacker;
     private final Legion defender;
 
@@ -56,7 +57,7 @@ final class Concede extends KDialog
 
     private final JButton showMapButton;
 
-    private Concede(ClientGUI clientGui, JFrame parentFrame, Legion ally,
+    private Concede(ClientGUI clientGui, JFrame parentFrame, @RUntainted Legion ally,
         Legion enemy, boolean flee)
     {
         super(parentFrame, (flee ? "Flee" : "Concede") + " with Legion "
@@ -275,9 +276,9 @@ final class Concede extends KDialog
         pane.add(pointsPanel);
         pane.add(Box.createRigidArea(new Dimension(scale / 4, 0)));
 
-        List<String> imageNames = gui.getGameClientSide().getLegionImageNames(
+        List<@RUntainted String> imageNames = gui.getGameClientSide().getLegionImageNames(
             legion);
-        Iterator<String> it = imageNames.iterator();
+        Iterator<@RUntainted String> it = imageNames.iterator();
         while (it.hasNext())
         {
             String imageName = it.next();
@@ -290,13 +291,13 @@ final class Concede extends KDialog
 
     private static Concede currentDialog = null;
 
-    static void concede(ClientGUI gui, JFrame parentFrame, Legion ally,
+    static void concede(ClientGUI gui, JFrame parentFrame, @RUntainted Legion ally,
         Legion enemy)
     {
         currentDialog = new Concede(gui, parentFrame, ally, enemy, false);
     }
 
-    static void flee(ClientGUI gui, JFrame parentFrame, Legion ally,
+    static void flee(ClientGUI gui, JFrame parentFrame, @RUntainted Legion ally,
         Legion enemy)
     {
         currentDialog = new Concede(gui, parentFrame, ally, enemy, true);
@@ -306,7 +307,7 @@ final class Concede extends KDialog
      * the argument is the yes or no; which type it is (flee or concede)
      * is based on which type the last opened dialog was
      */
-    static void inactivityAutoFleeOrConcede(boolean reply)
+    static void inactivityAutoFleeOrConcede(@RUntainted boolean reply)
     {
         if (currentDialog == null)
         {
@@ -323,7 +324,7 @@ final class Concede extends KDialog
         return this.attacker;
     }
 
-    private void processAnswer(boolean answer)
+    private void processAnswer(@RUntainted boolean answer)
     {
         // Feature Request #223, confirm before allowing the player to concede
         // if their Titan is in the legion
@@ -360,7 +361,7 @@ final class Concede extends KDialog
         finishUp(answer);
     }
 
-    private void finishUp(boolean answer)
+    private void finishUp(@RUntainted boolean answer)
     {
         location = getLocation();
         saveWindow.saveLocation(location);

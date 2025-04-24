@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 
 import net.sf.colossus.webcommon.IGameManager;
 import net.sf.colossus.webcommon.IManagedGame;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /** This "manager" is accessible via RMI (served by the ColossusRegistry

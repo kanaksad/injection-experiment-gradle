@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.colossus.util.HTMLColor;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -26,13 +27,13 @@ public enum PlayerColor
         "Silver", "Si", KeyEvent.VK_S), SKY("Sky", "Sk", KeyEvent.VK_K), PINE(
         "Pine", "Pi", KeyEvent.VK_N), INDIGO("Indigo", "In", KeyEvent.VK_I);
 
-    private final String name;
-    private final String shortName;
+    private final @RUntainted String name;
+    private final @RUntainted String shortName;
     private final int mnemonic;
     private final Color backgroundColor;
     private final Color foregroundColor;
 
-    private PlayerColor(String name, String shortName, int mnemonic)
+    private PlayerColor(@RUntainted String name, @RUntainted String shortName, int mnemonic)
     {
         this.name = name;
         this.shortName = shortName;
@@ -48,12 +49,12 @@ public enum PlayerColor
         return mnemonic;
     }
 
-    public String getName()
+    public @RUntainted String getName()
     {
         return name;
     }
 
-    public String getShortName()
+    public @RUntainted String getShortName()
     {
         return shortName;
     }
@@ -68,7 +69,7 @@ public enum PlayerColor
         return foregroundColor;
     }
 
-    public static PlayerColor getByName(String name)
+    public static @RUntainted PlayerColor getByName(String name)
     {
         for (PlayerColor color : values())
         {
@@ -92,7 +93,7 @@ public enum PlayerColor
         return null;
     }
 
-    public static List<PlayerColor> getByName(List<String> names)
+    public static List<PlayerColor> getByName(List<@RUntainted String> names)
     {
         List<PlayerColor> retVal = new ArrayList<PlayerColor>();
         for (String name : names)

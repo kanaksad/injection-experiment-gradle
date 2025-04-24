@@ -14,6 +14,7 @@ import net.sf.colossus.common.Options;
 import net.sf.colossus.util.Glob;
 import net.sf.colossus.util.Split;
 import net.sf.colossus.webclient.WebClient;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -37,29 +38,29 @@ public class GameInfo
     private static final Logger LOGGER = Logger.getLogger(GameInfo.class
         .getName());
 
-    private static int nextFreeGameId = 1;
+    private static @RUntainted int nextFreeGameId = 1;
 
-    private String gameId;
+    private @RUntainted String gameId;
 
-    private GameType type;
-    private GameState state;
+    private @RUntainted GameType type;
+    private @RUntainted GameState state;
     /** temporary backup during startingAttempt */
-    private GameState oldState;
+    private @RUntainted GameState oldState;
     private User startingUser = null;
 
-    private int portNr = -1;
-    private String hostingHost = "";
-    private IGameRunner gameRunner;
+    private @RUntainted int portNr = -1;
+    private @RUntainted String hostingHost = "";
+    private @RUntainted IGameRunner gameRunner;
 
-    private String initiator;
-    private String variant;
-    private String viewmode;
+    private @RUntainted String initiator;
+    private @RUntainted String variant;
+    private @RUntainted String viewmode;
     private final boolean autosave = true;
 
     // those 3 should still be added at client side:
-    private String eventExpiring;
-    private boolean unlimitedMulligans;
-    private boolean balancedTowers;
+    private @RUntainted String eventExpiring;
+    private @RUntainted boolean unlimitedMulligans;
+    private @RUntainted boolean balancedTowers;
     private boolean autoSansLordBattles;
     private boolean inactivityTimeout;
     private boolean probabilityBasedBattleHits;
@@ -71,26 +72,26 @@ public class GameInfo
     private boolean noTitanTeleportOpt;
     private boolean noFirstTurnWarlockRecruitOpt;
 
-    private int min;
-    private int target;
-    private int max;
-    private int onlineCount;
+    private @RUntainted int min;
+    private @RUntainted int target;
+    private @RUntainted int max;
+    private @RUntainted int onlineCount;
 
     private String resumeFromFilename;
 
     // next three only needed for scheduled games
-    private long startTime = 0;
-    private int duration = 0;
-    private String summary = "";
+    private @RUntainted long startTime = 0;
+    private @RUntainted int duration = 0;
+    private @RUntainted String summary = "";
     // private String infoText = "";
 
-    private int enrolledPlayers;
+    private @RUntainted int enrolledPlayers;
 
-    private ArrayList<User> players = null;
+    private @RUntainted ArrayList<User> players = null;
 
     // used on server side, to create a game proposed by client
 
-    private GameInfo(GameType type)
+    private GameInfo(@RUntainted GameType type)
     {
         this.gameId = String.valueOf(getNextFreeGameId());
         this.type = type;
@@ -106,12 +107,12 @@ public class GameInfo
      *
      *  @param id Next games should have higher number than given id
      */
-    public static void setNextFreeGameId(int id)
+    public static void setNextFreeGameId(@RUntainted int id)
     {
         nextFreeGameId = id;
     }
 
-    private static int getNextFreeGameId()
+    private static @RUntainted int getNextFreeGameId()
     {
         return nextFreeGameId++;
     }
@@ -121,15 +122,15 @@ public class GameInfo
         return makeTypeFromStarttime(startTime).equals(GameType.INSTANT);
     }
 
-    private static GameType makeTypeFromStarttime(long startTime)
+    private static @RUntainted GameType makeTypeFromStarttime(long startTime)
     {
         return (startTime == -1 ? GameType.INSTANT : GameType.SCHEDULED);
     }
 
-    public GameInfo(String initiator, String variant, String viewmode,
-        long startTime, int duration, String summary, String expire,
-        List<String> gameOptions, List<String> teleportOptions, int min,
-        int target, int max)
+    public GameInfo(@RUntainted String initiator, @RUntainted String variant, @RUntainted String viewmode,
+        @RUntainted long startTime, @RUntainted int duration, @RUntainted String summary, @RUntainted String expire,
+        @RUntainted List<@RUntainted String> gameOptions, @RUntainted List<@RUntainted String> teleportOptions, @RUntainted int min,
+        @RUntainted int target, @RUntainted int max)
     {
         this(makeTypeFromStarttime(startTime));
 
@@ -162,7 +163,7 @@ public class GameInfo
      * go through list containing the extraOptions, set the corresponding
      * boolean values to true
      */
-    private void parseExtraOptions(List<String> extraOptions)
+    private void parseExtraOptions(@RUntainted List<@RUntainted String> extraOptions)
     {
         if (extraOptions.size() == 0)
         {
@@ -177,7 +178,7 @@ public class GameInfo
 
         LOGGER.finest("Extra options size: " + extraOptions.size());
 
-        for (Iterator<String> iterator = extraOptions.iterator(); iterator
+        for (Iterator<@RUntainted String> iterator = extraOptions.iterator(); iterator
             .hasNext();)
         {
             String string = iterator.next();
@@ -237,7 +238,7 @@ public class GameInfo
     // ================= now the stuff for the client side ===============
 
     // used on client side, to restore a proposed game sent by server
-    public GameInfo(String gameId, boolean onServer)
+    public GameInfo(@RUntainted String gameId, boolean onServer)
     {
         this.gameId = gameId;
         if (onServer)
@@ -251,8 +252,8 @@ public class GameInfo
         this.players = new ArrayList<User>();
     }
 
-    public static GameInfo fromString(String[] tokens,
-        HashMap<String, GameInfo> games, boolean fromFile)
+    public static @RUntainted GameInfo fromString(@RUntainted String[] tokens,
+        @RUntainted HashMap<String, @RUntainted GameInfo> games, @RUntainted boolean fromFile)
     {
         GameInfo gi;
 
@@ -296,7 +297,7 @@ public class GameInfo
         {
             if (token8.length() > 0)
             {
-                List<String> extraOptions = Split.split(Glob.sep, token8);
+                List<@RUntainted String> extraOptions = Split.split(Glob.sep, token8);
                 LOGGER.finest("Game extra options string is '" + token8 + "'");
                 gi.parseExtraOptions(extraOptions);
             }
@@ -308,7 +309,7 @@ public class GameInfo
             {
                 LOGGER.finest("Teleport extra options string is '" + token9
                     + "'");
-                List<String> teleportOptions = Split.split(Glob.sep, token9);
+                List<@RUntainted String> teleportOptions = Split.split(Glob.sep, token9);
                 gi.parseExtraOptions(teleportOptions);
             }
             else
@@ -339,8 +340,8 @@ public class GameInfo
         return gi;
     }
 
-    public String toStringCheckClientVersion(String username,
-        int clientVersion, String sep)
+    public @RUntainted String toStringCheckClientVersion(@RUntainted String username,
+        int clientVersion, @RUntainted String sep)
     {
         String giString;
         if (clientVersion >= WebClient.WC_VERSION_DELETE_SUSPENDED_GAME)
@@ -365,7 +366,7 @@ public class GameInfo
         return giString;
     }
 
-    public String toStringLegacy(String sep)
+    public @RUntainted String toStringLegacy(@RUntainted String sep)
     {
         StringBuilder playerList = new StringBuilder();
         Iterator<User> it = players.iterator();
@@ -405,7 +406,7 @@ public class GameInfo
         return message;
     }
 
-    public String toString(String sep)
+    public @RUntainted String toString(@RUntainted String sep)
     {
         StringBuilder playerList = new StringBuilder();
         Iterator<User> it = players.iterator();
@@ -436,7 +437,7 @@ public class GameInfo
      * @param noDelete TODO
      * @return
      */
-    public String toStringFixState(String sep, boolean noSuspend,
+    public @RUntainted String toStringFixState(@RUntainted String sep, boolean noSuspend,
         boolean noDelete)
     {
         StringBuilder playerList = new StringBuilder();
@@ -468,12 +469,12 @@ public class GameInfo
         return message;
     }
 
-    public String getExtraOptionsAsString()
+    public @RUntainted String getExtraOptionsAsString()
     {
         return Glob.glob(getExtraOptions());
     }
 
-    public String getTeleportOptionsAsString()
+    public @RUntainted String getTeleportOptionsAsString()
     {
         return Glob.glob(getTeleportOptions());
     }
@@ -540,12 +541,12 @@ public class GameInfo
         return teleportOptions;
     }
 
-    public void setState(GameState state)
+    public void setState(@RUntainted GameState state)
     {
         this.state = state;
     }
 
-    public GameState getGameState()
+    public @RUntainted GameState getGameState()
     {
         return this.state;
     }
@@ -556,47 +557,47 @@ public class GameInfo
         return isSch;
     }
 
-    public String getStateString()
+    public @RUntainted String getStateString()
     {
         return this.state.toString();
     }
 
-    public String getGameId()
+    public @RUntainted String getGameId()
     {
         return this.gameId;
     }
 
-    public void setGameId(String val)
+    public void setGameId(@RUntainted String val)
     {
         this.gameId = val;
     }
 
-    public void setGameRunner(IGameRunner gr)
+    public void setGameRunner(@RUntainted IGameRunner gr)
     {
         this.gameRunner = gr;
     }
 
-    public IGameRunner getGameRunner()
+    public @RUntainted IGameRunner getGameRunner()
     {
         return gameRunner;
     }
 
-    public int getPort()
+    public @RUntainted int getPort()
     {
         return this.portNr;
     }
 
-    public void setPort(int nr)
+    public void setPort(@RUntainted int nr)
     {
         this.portNr = nr;
     }
 
-    public void setHostingHost(String host)
+    public void setHostingHost(@RUntainted String host)
     {
         hostingHost = host;
     }
 
-    public String getHostingHost()
+    public @RUntainted String getHostingHost()
     {
         return hostingHost;
     }
@@ -606,7 +607,7 @@ public class GameInfo
         return initiator;
     }
 
-    public void setInitiator(String val)
+    public void setInitiator(@RUntainted String val)
     {
         initiator = val;
     }
@@ -616,7 +617,7 @@ public class GameInfo
         return Long.valueOf(startTime);
     }
 
-    public void setStartTime(String val)
+    public void setStartTime(@RUntainted String val)
     {
         startTime = Long.parseLong(val);
     }
@@ -626,7 +627,7 @@ public class GameInfo
         return Integer.valueOf(duration);
     }
 
-    public void setDuration(String val)
+    public void setDuration(@RUntainted String val)
     {
         duration = Integer.parseInt(val);
     }
@@ -636,22 +637,22 @@ public class GameInfo
         return summary;
     }
 
-    public void setSummary(String val)
+    public void setSummary(@RUntainted String val)
     {
         summary = val;
     }
 
-    public String getVariant()
+    public @RUntainted String getVariant()
     {
         return variant;
     }
 
-    public void setVariant(String val)
+    public void setVariant(@RUntainted String val)
     {
         variant = val;
     }
 
-    public String getViewmode()
+    public @RUntainted String getViewmode()
     {
         return viewmode;
     }
@@ -661,7 +662,7 @@ public class GameInfo
         return autosave;
     }
 
-    public void setViewmode(String val)
+    public void setViewmode(@RUntainted String val)
     {
         viewmode = val;
     }
@@ -671,7 +672,7 @@ public class GameInfo
         return eventExpiring;
     }
 
-    public void setEventExpiring(String val)
+    public void setEventExpiring(@RUntainted String val)
     {
         eventExpiring = val;
     }
@@ -681,7 +682,7 @@ public class GameInfo
         return unlimitedMulligans;
     }
 
-    public void setUnlimitedMulligans(boolean val)
+    public void setUnlimitedMulligans(@RUntainted boolean val)
     {
         unlimitedMulligans = val;
     }
@@ -691,7 +692,7 @@ public class GameInfo
         return balancedTowers;
     }
 
-    public void setBalancedTowers(boolean val)
+    public void setBalancedTowers(@RUntainted boolean val)
     {
         balancedTowers = val;
     }
@@ -815,7 +816,7 @@ public class GameInfo
         return Integer.valueOf(min);
     }
 
-    public void setMin(Integer val)
+    public void setMin(@RUntainted Integer val)
     {
         min = val.intValue();
     }
@@ -830,7 +831,7 @@ public class GameInfo
         return target;
     }
 
-    public void setTarget(Integer val)
+    public void setTarget(@RUntainted Integer val)
     {
         target = val.intValue();
     }
@@ -840,7 +841,7 @@ public class GameInfo
         return Integer.valueOf(max);
     }
 
-    public void setMax(Integer val)
+    public void setMax(@RUntainted Integer val)
     {
         max = val.intValue();
     }
@@ -860,12 +861,12 @@ public class GameInfo
         return onlineCount;
     }
 
-    public void setOnlineCount(int count)
+    public void setOnlineCount(@RUntainted int count)
     {
         onlineCount = count;
     }
 
-    public void setEnrolledCount(Integer val)
+    public void setEnrolledCount(@RUntainted Integer val)
     {
         enrolledPlayers = val.intValue();
     }
@@ -885,7 +886,7 @@ public class GameInfo
         return this.players;
     }
 
-    public String getPlayerListAsString()
+    public @RUntainted String getPlayerListAsString()
     {
         if (players == null)
         {
@@ -983,12 +984,12 @@ public class GameInfo
         return found;
     }
 
-    public void setPlayerList(ArrayList<User> playerlist)
+    public void setPlayerList(@RUntainted ArrayList<User> playerlist)
     {
         players = playerlist;
     }
 
-    public boolean updateOnlineCount(int newCount)
+    public boolean updateOnlineCount(@RUntainted int newCount)
     {
         if (newCount != onlineCount)
         {
@@ -1001,7 +1002,7 @@ public class GameInfo
     /*
      * return reason why fail, or null if ok
      */
-    public String enroll(User user)
+    public @RUntainted String enroll(User user)
     {
         String reason = null;
         // Just in case, to avoid duplicates (e.g. bounce/double click)

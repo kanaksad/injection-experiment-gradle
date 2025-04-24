@@ -3,17 +3,18 @@ package net.sf.colossus.server;
 
 import java.util.LinkedList;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 public class ExtraRollRequest
 {
     private static final Logger LOGGER = Logger
         .getLogger(ExtraRollRequest.class.getName());
 
-    private LinkedList<ClientHandler> eligibleClients = null;
-    int currentRequestId = 0;
+    private @RUntainted LinkedList<ClientHandler> eligibleClients = null;
+    @RUntainted int currentRequestId = 0;
     ClientHandler currentRequestor = null;
     int approvals = 0;
-    int denials = 0;
+    @RUntainted int denials = 0;
 
     private final Server server;
 
@@ -87,7 +88,7 @@ public class ExtraRollRequest
         }
     }
 
-    synchronized public void handleExtraRollResponse(int requestId,
+    synchronized public void handleExtraRollResponse(@RUntainted int requestId,
         ClientHandler processingCH, boolean approved)
     {
         String playerName = processingCH.getPlayerName();

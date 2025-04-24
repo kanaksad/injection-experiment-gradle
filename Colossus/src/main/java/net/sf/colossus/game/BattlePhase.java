@@ -2,6 +2,7 @@
  *
  */
 package net.sf.colossus.game;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public enum BattlePhase
@@ -39,7 +40,7 @@ public enum BattlePhase
      * Returns a non-localized UI string for the phase.
      */
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         return name;
     }
@@ -49,12 +50,12 @@ public enum BattlePhase
         return doesWhat;
     }
 
-    private final String name;
+    private final @RUntainted String name;
     private final boolean isMovePhase;
     private final boolean isFightPhase;
     private final String doesWhat;
 
-    private BattlePhase(String name, boolean isMovePhase,
+    private BattlePhase(@RUntainted String name, boolean isMovePhase,
         boolean isFightPhase, String doesWhat)
     {
         this.name = name;

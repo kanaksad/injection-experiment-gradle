@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import net.sf.colossus.webcommon.User;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -44,17 +45,17 @@ class RegisterPasswordPanel extends JDialog
     private final boolean isRegister;
 
     private final Box yBox;
-    private final JTextField rploginField;
-    private JTextField rpEmailField;
+    private final @RUntainted JTextField rploginField;
+    private @RUntainted JTextField rpEmailField;
 
     private JPasswordField rpOldPW;
-    private final JPasswordField rpNewPW1;
+    private final @RUntainted JPasswordField rpNewPW1;
     private final JPasswordField rpNewPW2;
 
     private final JButton rpButton;
 
     public RegisterPasswordPanel(WebClient webClient, boolean isRegister,
-        String username)
+        @RUntainted String username)
     {
         super(webClient, "", true);
 
@@ -365,7 +366,7 @@ class RegisterPasswordPanel extends JDialog
         }
     }
 
-    private void handleConfirmation(String name, String newPW1, String email)
+    private void handleConfirmation(@RUntainted String name, @RUntainted String newPW1, @RUntainted String email)
     {
         boolean done = false;
         while (!done)

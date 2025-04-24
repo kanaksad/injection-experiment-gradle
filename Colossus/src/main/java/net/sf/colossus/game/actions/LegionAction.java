@@ -2,6 +2,7 @@ package net.sf.colossus.game.actions;
 
 
 import net.sf.colossus.game.Legion;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -12,9 +13,9 @@ import net.sf.colossus.game.Legion;
  */
 public abstract class LegionAction implements GameAction
 {
-    protected final Legion legion;
+    protected final @RUntainted Legion legion;
 
-    public LegionAction(Legion legion)
+    public LegionAction(@RUntainted Legion legion)
     {
         this.legion = legion;
     }
@@ -22,7 +23,7 @@ public abstract class LegionAction implements GameAction
     /**
      * The legion that was changed.
      */
-    public Legion getLegion()
+    public @RUntainted Legion getLegion()
     {
         return legion;
     }

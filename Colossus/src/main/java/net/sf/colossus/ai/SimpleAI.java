@@ -41,6 +41,7 @@ import net.sf.colossus.variant.HazardTerrain;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.xmlparser.TerrainRecruitLoader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -65,13 +66,13 @@ public class SimpleAI extends AbstractAI
      */
     private static class TerrainBonuses
     {
-        final int attackerPower;
-        final int defenderPower;
-        final int attackerSkill;
-        final int defenderSkill;
+        final @RUntainted int attackerPower;
+        final @RUntainted int defenderPower;
+        final @RUntainted int attackerSkill;
+        final @RUntainted int defenderSkill;
 
-        TerrainBonuses(int attackerPower, int defenderPower,
-            int attackerSkill, int defenderSkill)
+        TerrainBonuses(@RUntainted int attackerPower, @RUntainted int defenderPower,
+            @RUntainted int attackerSkill, @RUntainted int defenderSkill)
         {
             this.attackerPower = attackerPower;
             this.defenderPower = defenderPower;
@@ -132,7 +133,7 @@ public class SimpleAI extends AbstractAI
     boolean timeIsUp;
     private int splitsDone = 0;
     private int splitsAcked = 0;
-    private List<String> remainingMarkers = null;
+    private List<@RUntainted String> remainingMarkers = null;
 
     public SimpleAI(Client client)
     {
@@ -169,12 +170,12 @@ public class SimpleAI extends AbstractAI
      * @param preferredShortColor thos with this color first
      * @returns list of markers
      */
-    private List<String> prepareMarkers(Set<String> markerIds,
+    private List<@RUntainted String> prepareMarkers(Set<@RUntainted String> markerIds,
         String preferredShortColor)
     {
-        List<String> myMarkerIds = new ArrayList<String>();
-        List<String> otherMarkerIds = new ArrayList<String>();
-        List<String> allMarkerIds = new ArrayList<String>();
+        List<@RUntainted String> myMarkerIds = new ArrayList<@RUntainted String>();
+        List<@RUntainted String> otherMarkerIds = new ArrayList<@RUntainted String>();
+        List<@RUntainted String> allMarkerIds = new ArrayList<@RUntainted String>();
 
         // split between own / other
         for (String markerId : markerIds)
@@ -204,10 +205,10 @@ public class SimpleAI extends AbstractAI
         return allMarkerIds;
     }
 
-    public String pickMarker(Set<String> markerIds, String preferredShortColor)
+    public @RUntainted String pickMarker(Set<@RUntainted String> markerIds, String preferredShortColor)
     {
-        List<String> myMarkerIds = new ArrayList<String>();
-        List<String> otherMarkerIds = new ArrayList<String>();
+        List<@RUntainted String> myMarkerIds = new ArrayList<@RUntainted String>();
+        List<@RUntainted String> otherMarkerIds = new ArrayList<@RUntainted String>();
         // split between own / other
         for (String markerId : markerIds)
         {
@@ -253,7 +254,7 @@ public class SimpleAI extends AbstractAI
                     legion.getCurrentHex(), true);
                 if (recruit != null)
                 {
-                    List<String> recruiters = client.findEligibleRecruiters(
+                    List<@RUntainted String> recruiters = client.findEligibleRecruiters(
                         legion, recruit);
 
                     String recruiterName = null;
@@ -270,7 +271,7 @@ public class SimpleAI extends AbstractAI
         client.resetRecruitReservations();
     }
 
-    public void reinforce(Legion legion)
+    public void reinforce(@RUntainted Legion legion)
     {
         CreatureType recruit = chooseRecruit(((LegionClientSide)legion),
             legion.getCurrentHex(), false);
@@ -279,7 +280,7 @@ public class SimpleAI extends AbstractAI
         if (recruit != null)
         {
             recruitName = recruit.getName();
-            List<String> recruiters = client.findEligibleRecruiters(legion,
+            List<@RUntainted String> recruiters = client.findEligibleRecruiters(legion,
                 recruit);
             if (!recruiters.isEmpty())
             {
@@ -290,10 +291,10 @@ public class SimpleAI extends AbstractAI
         client.doRecruit(legion, recruitName, recruiterName);
     }
 
-    CreatureType chooseRecruit(LegionClientSide legion, MasterHex hex,
+    @RUntainted CreatureType chooseRecruit(LegionClientSide legion, MasterHex hex,
         boolean considerReservations)
     {
-        List<CreatureType> recruits = client.findEligibleRecruits(legion, hex,
+        List<@RUntainted CreatureType> recruits = client.findEligibleRecruits(legion, hex,
             considerReservations);
         if (recruits.size() == 0)
         {
@@ -333,13 +334,13 @@ public class SimpleAI extends AbstractAI
     }
 
     /** Unused in this AI; just return true to indicate done. */
-    public boolean splitCallback(Legion parent, Legion child)
+    public boolean splitCallback(@RUntainted Legion parent, @RUntainted Legion child)
     {
         splitsAcked++;
         return splitsAcked >= splitsDone;
     }
 
-    private void splitOneLegion(Player player, Legion legion)
+    private void splitOneLegion(Player player, @RUntainted Legion legion)
     {
         if (legion.getHeight() < 7)
         {
@@ -362,7 +363,7 @@ public class SimpleAI extends AbstractAI
             boolean goodRecruit = false;
             for (int roll = 1; roll <= 6; roll++)
             {
-                Set<MasterHex> moves = client.getMovement().listAllMoves(
+                Set<@RUntainted MasterHex> moves = client.getMovement().listAllMoves(
                     legion, legion.getCurrentHex(), roll);
                 int safeMoves = 0;
                 for (MasterHex hex : moves)
@@ -905,7 +906,7 @@ public class SimpleAI extends AbstractAI
     {
         for (Legion legion : player.getLegions())
         {
-            List<Legion> friendlyLegions = client.getGameClientSide()
+            List<@RUntainted Legion> friendlyLegions = client.getGameClientSide()
                 .getFriendlyLegions(legion.getCurrentHex(), player);
 
             if (friendlyLegions.size() > 1
@@ -1031,7 +1032,7 @@ public class SimpleAI extends AbstractAI
         return false;
     }
 
-    private boolean doMove(Legion legion, MasterHex hex)
+    private boolean doMove(@RUntainted Legion legion, @RUntainted MasterHex hex)
     {
         return client.doMove(legion, hex);
     }
@@ -1585,9 +1586,9 @@ public class SimpleAI extends AbstractAI
         return null;
     }
 
-    public MasterHex pickEngagement()
+    public @RUntainted MasterHex pickEngagement()
     {
-        Set<MasterHex> hexes = client.getGameClientSide().findEngagements();
+        Set<@RUntainted MasterHex> hexes = client.getGameClientSide().findEngagements();
 
         // Bail out early if we have no real choice.
         int numChoices = hexes.size();
@@ -1615,7 +1616,7 @@ public class SimpleAI extends AbstractAI
         return bestChoice;
     }
 
-    private int evaluateEngagement(MasterHex hex)
+    private int evaluateEngagement(@RUntainted MasterHex hex)
     {
         // Fight losing battles last, so that we don't give away
         //    points while they may be used against us this turn.
@@ -1680,7 +1681,7 @@ public class SimpleAI extends AbstractAI
         return value;
     }
 
-    public boolean flee(Legion legion, Legion enemy)
+    public @RUntainted boolean flee(@RUntainted Legion legion, @RUntainted Legion enemy)
     {
         if ((legion).hasTitan())
         {
@@ -1724,7 +1725,7 @@ public class SimpleAI extends AbstractAI
                 }
                 if ((enemy).getHeight() == 7)
                 {
-                    List<CreatureType> recruits = client.findEligibleRecruits(
+                    List<@RUntainted CreatureType> recruits = client.findEligibleRecruits(
                         enemy, legion.getCurrentHex());
                     if (recruits.size() > 0)
                     {
@@ -1756,7 +1757,7 @@ public class SimpleAI extends AbstractAI
         return false;
     }
 
-    public boolean concede(Legion legion, Legion enemy)
+    public boolean concede(@RUntainted Legion legion, @RUntainted Legion enemy)
     {
         // Never concede titan legion.
         if ((legion).hasTitan())
@@ -1807,7 +1808,7 @@ public class SimpleAI extends AbstractAI
         // TODO Make this also work for post-battle reinforcements
         if (legion.getHeight() == 6 && client.canRecruit(legion))
         {
-            List<CreatureType> recruits = client.findEligibleRecruits(legion,
+            List<@RUntainted CreatureType> recruits = client.findEligibleRecruits(legion,
                 legion.getCurrentHex());
             CreatureType bestRecruit = recruits.get(recruits.size() - 1);
             if (getKillValue(bestRecruit) > getKillValue(bestAngel))
@@ -1843,7 +1844,7 @@ public class SimpleAI extends AbstractAI
     /**
      * Return a SummonInfo object, containing the summoner, donor and unittype.
      */
-    public SummonInfo summonAngel(Legion summoner, List<Legion> donors)
+    public SummonInfo summonAngel(@RUntainted Legion summoner, List<@RUntainted Legion> donors)
     {
         // Always summon the biggest possible angel, from the least
         // important legion that has one.
@@ -1940,7 +1941,7 @@ public class SimpleAI extends AbstractAI
     /** Apply carries first to the biggest creature that could be killed
      *  with them, then to the biggest creature.  carryTargets are
      *  hexLabel description strings. */
-    public void handleCarries(int carryDamage, Set<String> carryTargets)
+    public void handleCarries(@RUntainted int carryDamage, Set<@RUntainted String> carryTargets)
     {
         MasterBoardTerrain terrain = client.getBattleSite().getTerrain();
         BattleCritter bestTarget = null;
@@ -1986,7 +1987,7 @@ public class SimpleAI extends AbstractAI
     }
 
     /** Pick one of the list of String strike penalty options. */
-    public String pickStrikePenalty(List<String> choices)
+    public @RUntainted String pickStrikePenalty(List<@RUntainted String> choices)
     {
         // XXX Stupid placeholder.
         return choices.get(choices.size() - 1);
@@ -1994,7 +1995,7 @@ public class SimpleAI extends AbstractAI
 
     /** Simple one-ply group strike algorithm.  Return false if there were
      *  no strike targets. */
-    public boolean strike(Legion legion)
+    public boolean strike(@RUntainted Legion legion)
     {
         LOGGER.finest("Called ai.strike() for " + legion);
         // PRE: Caller handles forced strikes before calling this.
@@ -2034,7 +2035,7 @@ public class SimpleAI extends AbstractAI
         return true;
     }
 
-    private static int getCombatValue(BattleCritter battleUnit,
+    private static @RUntainted int getCombatValue(BattleCritter battleUnit,
         MasterBoardTerrain terrain)
     {
         int val = battleUnit.getPointValue();
@@ -2126,14 +2127,14 @@ public class SimpleAI extends AbstractAI
     protected class PowerSkill
     {
         private final String name;
-        private final int power_attack;
-        private final int power_defend; // how many dice attackers lose
-        private final int skill_attack;
-        private final int skill_defend;
+        private final @RUntainted int power_attack;
+        private final @RUntainted int power_defend; // how many dice attackers lose
+        private final @RUntainted int skill_attack;
+        private final @RUntainted int skill_defend;
         private double hp; // how many hit points or power left
-        private final double value;
+        private final @RUntainted double value;
 
-        public PowerSkill(String nm, int p, int pa, int pd, int sa, int sd)
+        public PowerSkill(String nm, @RUntainted int p, @RUntainted int pa, @RUntainted int pd, @RUntainted int sa, @RUntainted int sd)
         {
             name = nm;
             power_attack = pa;
@@ -2144,27 +2145,27 @@ public class SimpleAI extends AbstractAI
             value = p * Math.min(sa, sd);
         }
 
-        public PowerSkill(String nm, int pa, int sa)
+        public PowerSkill(String nm, @RUntainted int pa, @RUntainted int sa)
         {
             this(nm, pa, pa, 0, sa, sa);
         }
 
-        public int getPowerAttack()
+        public @RUntainted int getPowerAttack()
         {
             return power_attack;
         }
 
-        public int getPowerDefend()
+        public @RUntainted int getPowerDefend()
         {
             return power_defend;
         }
 
-        public int getSkillAttack()
+        public @RUntainted int getSkillAttack()
         {
             return skill_attack;
         }
 
-        public int getSkillDefend()
+        public @RUntainted int getSkillDefend()
         {
             return skill_defend;
         }
@@ -2184,7 +2185,7 @@ public class SimpleAI extends AbstractAI
             hp -= d;
         }
 
-        public double getPointValue()
+        public @RUntainted double getPointValue()
         {
             return value;
         }
@@ -2413,7 +2414,7 @@ public class SimpleAI extends AbstractAI
      *  scaled by the importance of each critter.
      *  In newOrder, if not null, place the moves that are valid.
      */
-    private int testMoveOrder(List<CritterMove> order,
+    private @RUntainted int testMoveOrder(List<CritterMove> order,
         List<CritterMove> newOrder)
     {
         boolean allOK = true;
@@ -2487,7 +2488,7 @@ public class SimpleAI extends AbstractAI
         // has room to enter.
 
         // The caller is responsible for actually making the moves.
-        final List<List<CritterMove>> allCritterMoves = new ArrayList<List<CritterMove>>();
+        final List<@RUntainted List<CritterMove>> allCritterMoves = new ArrayList<@RUntainted List<CritterMove>>();
 
         for (BattleCritter critter : client.getActiveBattleUnits())
         {
@@ -2497,7 +2498,7 @@ public class SimpleAI extends AbstractAI
             allCritterMoves.add(moveList);
 
             // Put all critters back where they started.
-            Iterator<List<CritterMove>> it2 = allCritterMoves.iterator();
+            Iterator<@RUntainted List<CritterMove>> it2 = allCritterMoves.iterator();
             while (it2.hasNext())
             {
                 moveList = it2.next();
@@ -2511,7 +2512,7 @@ public class SimpleAI extends AbstractAI
         return legionMoves;
     }
 
-    private List<CritterMove> findBattleMovesOneCritter(BattleCritter critter)
+    private @RUntainted List<CritterMove> findBattleMovesOneCritter(BattleCritter critter)
     {
         BattleHex currentHex = critter.getCurrentHex();
 
@@ -2522,7 +2523,7 @@ public class SimpleAI extends AbstractAI
         // moves that the critter could make, disregarding mobile allies.
 
         // XXX Should show moves including moving through mobile allies.
-        Set<BattleHex> moves = client.showBattleMoves(critter);
+        Set<@RUntainted BattleHex> moves = client.showBattleMoves(critter);
 
         // TODO Make less important creatures get out of the way.
 
@@ -2648,13 +2649,13 @@ public class SimpleAI extends AbstractAI
      *  same hex.
      */
     Collection<LegionMove> findLegionMoves(
-        final List<List<CritterMove>> allCritterMoves)
+        final List<@RUntainted List<CritterMove>> allCritterMoves)
     {
         return generateLegionMoves(allCritterMoves, false);
     }
 
     @SuppressWarnings("unused")
-    protected int evaluateLegionBattleMoveAsAWhole(LegionMove lm,
+    protected @RUntainted int evaluateLegionBattleMoveAsAWhole(LegionMove lm,
         Map<BattleHex, Integer> strikeMap, ValueRecorder value)
     {
         // This is empty, to be overidden by subclasses.
@@ -2664,7 +2665,7 @@ public class SimpleAI extends AbstractAI
     /** this compute the special case of the Titan critter */
     protected void evaluateCritterMove_Titan(final BattleCritter critter,
         ValueRecorder value, final MasterBoardTerrain terrain,
-        final BattleHex hex, final Legion legion, final int turn)
+        final BattleHex hex, final Legion legion, final @RUntainted int turn)
     {
         if (hex.isEntrance())
         {
@@ -2720,7 +2721,7 @@ public class SimpleAI extends AbstractAI
     private void evaluateCritterMove_Terrain(
         final BattleCritter critter, // NO_UCD
         ValueRecorder value, final MasterBoardTerrain terrain,
-        final BattleHex hex, final int power, final int skill)
+        final BattleHex hex, final @RUntainted int power, final @RUntainted int skill)
     {
         if (hex.isEntrance())
         {
@@ -2863,7 +2864,7 @@ public class SimpleAI extends AbstractAI
         ValueRecorder value, final MasterBoardTerrain terrain,
         final BattleHex hex, final int power, final int skill,
         final LegionClientSide legion, final int turn,
-        final Set<BattleHex> targetHexes)
+        final Set<@RUntainted BattleHex> targetHexes)
     {
         if (hex.isEntrance())
         {
@@ -2922,7 +2923,7 @@ public class SimpleAI extends AbstractAI
         final Map<BattleHex, Integer> strikeMap, ValueRecorder value,
         final MasterBoardTerrain terrain, final BattleHex hex,
         final int power, final int skill, final LegionClientSide legion,
-        final int turn, final Set<BattleHex> targetHexes)
+        final int turn, final Set<@RUntainted BattleHex> targetHexes)
     {
         if (hex.isEntrance())
         {
@@ -3062,7 +3063,7 @@ public class SimpleAI extends AbstractAI
     }
 
     /** strikeMap is optional */
-    private int evaluateCritterMove(BattleCritter critter,
+    private @RUntainted int evaluateCritterMove(BattleCritter critter,
         Map<BattleHex, Integer> strikeMap, ValueRecorder value)
     {
         final MasterBoardTerrain terrain = client.getBattleSite().getTerrain();
@@ -3086,7 +3087,7 @@ public class SimpleAI extends AbstractAI
             return value.getValue();
         }
 
-        Set<BattleHex> targetHexes = client.findStrikes(critter.getTag());
+        Set<@RUntainted BattleHex> targetHexes = client.findStrikes(critter.getTag());
         int numTargets = targetHexes.size();
 
         if (numTargets >= 1)
@@ -3154,7 +3155,7 @@ public class SimpleAI extends AbstractAI
         return value.getValue();
     }
 
-    protected int evaluateLegionBattleMove(LegionMove lm)
+    protected @RUntainted int evaluateLegionBattleMove(LegionMove lm)
     {
         lm.resetEvaluate();
 

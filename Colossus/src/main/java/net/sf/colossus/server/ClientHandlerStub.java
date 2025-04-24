@@ -20,6 +20,7 @@ import net.sf.colossus.util.InstanceTracker;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class ClientHandlerStub implements IClient
@@ -29,33 +30,33 @@ public class ClientHandlerStub implements IClient
 
     protected static final String sep = Constants.protocolTermSeparator;
 
-    private static int TRUNC_LENGTH = 8;
-    private static String TRUNC_FILLER = "        ";
+    private static @RUntainted int TRUNC_LENGTH = 8;
+    private static @RUntainted String TRUNC_FILLER = "        ";
 
     protected Server server;
 
-    protected static int counter = 0;
+    protected static @RUntainted int counter = 0;
 
     protected boolean isGone = false;
-    protected String isGoneReason = "";
+    protected @RUntainted String isGoneReason = "";
 
-    protected String signonName;
-    protected String playerName;
+    protected @RUntainted String signonName;
+    protected @RUntainted String playerName;
     // NOTE: this "default" truncated name here should be TRUNC_LENGTH chars
-    protected String truncatedPlayerName = "<notset>";
-    protected int connectionId;
+    protected @RUntainted String truncatedPlayerName = "<notset>";
+    protected @RUntainted int connectionId;
 
     // sync-when-disconnected stuff
-    protected int messageCounter = 0;
+    protected @RUntainted int messageCounter = 0;
     protected boolean isCommitPoint = false;
 
-    protected long pingRequestCounter = 0;
+    protected @RUntainted long pingRequestCounter = 0;
 
     /**
      * Messages sent since last commit, that would need to be resent after a reconnect
      * Should perhaps be rather called "resendQueue"
      */
-    protected final ArrayList<MessageForClient> resendQueue = new ArrayList<MessageForClient>(
+    protected final @RUntainted ArrayList<MessageForClient> resendQueue = new ArrayList<MessageForClient>(
         100);
 
     /**
@@ -85,7 +86,7 @@ public class ClientHandlerStub implements IClient
         InstanceTracker.register(this, tempId);
     }
 
-    public ClientHandlerStub(Server server, String clientName)
+    public ClientHandlerStub(Server server, @RUntainted String clientName)
     {
         LOGGER.finest("ClientHandlerStub instantiated");
         this.server = server;
@@ -138,18 +139,18 @@ public class ClientHandlerStub implements IClient
         return true;
     }
 
-    public void setConnectionId(int id)
+    public void setConnectionId(@RUntainted int id)
     {
         this.connectionId = id;
         sendToClient(Constants.setConnectionId + sep + id);
     }
 
-    int getConnectionId()
+    @RUntainted int getConnectionId()
     {
         return this.connectionId;
     }
 
-    public void setIsGone(String reason)
+    public void setIsGone(@RUntainted String reason)
     {
         LOGGER.info("Setting isGone to true in CH for '" + getClientName()
             + "' (reason: " + reason + ")");
@@ -172,7 +173,7 @@ public class ClientHandlerStub implements IClient
         // not needed here
     }
 
-    protected void enqueueToRedoQueue(int messageNr, String message)
+    protected void enqueueToRedoQueue(@RUntainted int messageNr, @RUntainted String message)
     {
         resendQueue.add(new MessageForClient(messageNr, 0, message));
         messageCounter++;
@@ -266,7 +267,7 @@ public class ClientHandlerStub implements IClient
         sendToClient(Constants.syncOption + sep + optname + sep + value);
     }
 
-    public void updatePlayerInfo(List<String> infoStrings)
+    public void updatePlayerInfo(List<@RUntainted String> infoStrings)
     {
         String infoStringsString = Glob.glob(infoStrings);
         if (previousInfoStringsString.equals(infoStringsString))
@@ -378,33 +379,33 @@ public class ClientHandlerStub implements IClient
         sendToClient(Constants.initBoard);
     }
 
-    public void setPlayerName(String playerName)
+    public void setPlayerName(@RUntainted String playerName)
     {
         setPlayerNameNoSend(playerName);
         sendToClient(Constants.setPlayerName + sep + playerName);
     }
 
-    public void setPlayerNameNoSend(String playerName)
+    public void setPlayerNameNoSend(@RUntainted String playerName)
     {
         this.playerName = playerName;
         this.truncatedPlayerName = (playerName + TRUNC_FILLER).substring(0,
             TRUNC_LENGTH);
     }
 
-    public String getSignonName()
+    public @RUntainted String getSignonName()
     {
         return this.signonName;
     }
 
     // silently choose whatever useful, mostly for logging
     @Override
-    public String getClientName()
+    public @RUntainted String getClientName()
     {
         return playerName != null ? playerName
             : (signonName != null ? signonName : "ClientNameNotSet");
     }
 
-    public String getPlayerName()
+    public @RUntainted String getPlayerName()
     {
         if (this.playerName == null)
         {
@@ -415,7 +416,7 @@ public class ClientHandlerStub implements IClient
         return this.playerName;
     }
 
-    public String getTruncatedPlayerName()
+    public @RUntainted String getTruncatedPlayerName()
     {
         return this.truncatedPlayerName;
     }
@@ -698,7 +699,7 @@ public class ClientHandlerStub implements IClient
     /* One client has asked for connnection confirmation; here server
      * relays this to each client.
      */
-    public void relayedPeerRequest(String requestingClientName)
+    public void relayedPeerRequest(@RUntainted String requestingClientName)
     {
         LOGGER.info("Relaying peerRequest from client " + requestingClientName
             + " to client " + getClientName());
@@ -706,7 +707,7 @@ public class ClientHandlerStub implements IClient
     }
 
     /* Relay the "received" response back to requester */
-    public void peerRequestReceivedBy(String respondingClientName, int queueLen)
+    public void peerRequestReceivedBy(@RUntainted String respondingClientName, int queueLen)
     {
         LOGGER.info("Relaying back the received message of client "
             + getClientName() + " to " + respondingClientName);
@@ -715,7 +716,7 @@ public class ClientHandlerStub implements IClient
     }
 
     /* Relay the "processed" response back to requester */
-    public void peerRequestProcessedBy(String respondingClientName)
+    public void peerRequestProcessedBy(@RUntainted String respondingClientName)
     {
         LOGGER.info("Relaying back the processed message of client "
             + getClientName() + " to " + respondingClientName);
@@ -733,7 +734,7 @@ public class ClientHandlerStub implements IClient
         }
     }
 
-    public long getLastUsedPingRequestCounter()
+    public @RUntainted long getLastUsedPingRequestCounter()
     {
         return pingRequestCounter;
     }

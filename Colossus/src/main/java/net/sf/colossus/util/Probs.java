@@ -3,6 +3,7 @@ package net.sf.colossus.util;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -65,7 +66,7 @@ public final class Probs
     }
 
     /** Return the unrounded mean number of hits. */
-    public static double meanHits(int dice, int strikeNumber)
+    public static @RUntainted double meanHits(@RUntainted int dice, @RUntainted int strikeNumber)
     {
         return dice * (7 - strikeNumber) / 6.0;
     }

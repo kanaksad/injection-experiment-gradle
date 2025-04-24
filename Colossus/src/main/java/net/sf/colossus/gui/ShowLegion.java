@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 
 import net.sf.colossus.client.LegionClientSide;
 import net.sf.colossus.guiutil.KDialog;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -23,7 +24,7 @@ import net.sf.colossus.guiutil.KDialog;
 final class ShowLegion extends KDialog
 {
     ShowLegion(JFrame parentFrame, LegionClientSide legion, Point point,
-        JScrollPane pane, int scale, int viewMode, boolean isMyLegion,
+        JScrollPane pane, @RUntainted int scale, int viewMode, boolean isMyLegion,
         boolean dubiousAsBlanks, boolean showMarker)
     {
         super(parentFrame, legion.getMarkerId(), false);

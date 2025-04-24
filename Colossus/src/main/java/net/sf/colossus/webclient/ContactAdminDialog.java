@@ -26,6 +26,7 @@ import javax.swing.text.JTextComponent;
 import net.sf.colossus.common.IOptions;
 import net.sf.colossus.common.WhatNextManager;
 import net.sf.colossus.guiutil.KDialog;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class ContactAdminDialog extends KDialog implements ActionListener,
@@ -36,16 +37,16 @@ public class ContactAdminDialog extends KDialog implements ActionListener,
 
     private final WebClient webClient;
 
-    private final JTextArea textArea;
+    private final @RUntainted JTextArea textArea;
 
     private final JButton submitButton;
     private final JButton cancelButton;
 
-    private final JTextField nameField;
-    private final JTextField mailField;
+    private final @RUntainted JTextField nameField;
+    private final @RUntainted JTextField mailField;
 
     public ContactAdminDialog(WebClient webClient, IOptions options,
-        String initialName, String initialMail)
+        @RUntainted String initialName, @RUntainted String initialMail)
     {
         super(webClient, "Contact the administrator", false);
         this.webClient = webClient;
@@ -104,8 +105,8 @@ public class ContactAdminDialog extends KDialog implements ActionListener,
         this.setVisible(true);
     }
 
-    private JTextField addTextField(Box topPanel, String titleText,
-        String defaultText)
+    private @RUntainted JTextField addTextField(Box topPanel, String titleText,
+        @RUntainted String defaultText)
     {
         Box line = new Box(BoxLayout.X_AXIS);
         line.add(new JLabel(titleText));

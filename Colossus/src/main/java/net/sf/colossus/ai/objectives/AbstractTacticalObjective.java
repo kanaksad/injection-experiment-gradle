@@ -1,4 +1,5 @@
 package net.sf.colossus.ai.objectives;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /** Abstract implementation of @TacticalObjective, handling the priority
@@ -8,19 +9,19 @@ package net.sf.colossus.ai.objectives;
  */
 public abstract class AbstractTacticalObjective implements TacticalObjective
 {
-    private float priority;
+    private @RUntainted float priority;
 
-    public AbstractTacticalObjective(float priority)
+    public AbstractTacticalObjective(@RUntainted float priority)
     {
         this.priority = priority;
     }
 
-    public float getPriority()
+    public @RUntainted float getPriority()
     {
         return priority;
     }
 
-    public float changePriority(float newPriority)
+    public float changePriority(@RUntainted float newPriority)
     {
         float oldPriority = priority;
         priority = newPriority;

@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import net.sf.colossus.webcommon.GameInfo;
 import net.sf.colossus.webcommon.IPortProvider;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -23,13 +24,13 @@ public class PortBookKeeper implements IPortProvider
     private static final Logger LOGGER = Logger.getLogger(PortBookKeeper.class
         .getName());
 
-    private final int portRangeFrom;
+    private final @RUntainted int portRangeFrom;
 
     /**
      * total nr of ports we are allowed to use according to options file;
      * but only every 2nd is used as a game port
      */
-    private final int totalPorts;
+    private final @RUntainted int totalPorts;
 
     /** Nr of ports that are actually available for game serving
      *  (so, this value == 5 means there can be 5 games)
@@ -46,7 +47,7 @@ public class PortBookKeeper implements IPortProvider
      */
     private final GameInfo NOT_A_REAL_GAME = new GameInfo("00000", true);
 
-    public PortBookKeeper(int portRangeStart, int availablePorts)
+    public PortBookKeeper(@RUntainted int portRangeStart, @RUntainted int availablePorts)
     {
         this.portRangeFrom = portRangeStart;
         this.totalPorts = availablePorts;
@@ -78,32 +79,32 @@ public class PortBookKeeper implements IPortProvider
         this.gamePorts = freePorts;
     }
 
-    private int realPortForIndex(int portIndex)
+    private @RUntainted int realPortForIndex(@RUntainted int portIndex)
     {
         return portRangeFrom + portIndex;
     }
 
-    private int indexForRealPort(int portNumber)
+    private @RUntainted int indexForRealPort(@RUntainted int portNumber)
     {
         return portNumber - portRangeFrom;
     }
 
-    private void markPortUsed(int portNr, GameInfo gi)
+    private void markPortUsed(@RUntainted int portNr, GameInfo gi)
     {
         portInUse.set(indexForRealPort(portNr), gi);
     }
 
-    private void markPortFree(int portNr)
+    private void markPortFree(@RUntainted int portNr)
     {
         portInUse.set(indexForRealPort(portNr), null);
     }
 
-    private GameInfo getGameAtPort(int portNr)
+    private GameInfo getGameAtPort(@RUntainted int portNr)
     {
         return portInUse.get(indexForRealPort(portNr));
     }
 
-    private boolean isPortInUse(int portNr)
+    private boolean isPortInUse(@RUntainted int portNr)
     {
         return getGameAtPort(portNr) != null;
     }
@@ -113,7 +114,7 @@ public class PortBookKeeper implements IPortProvider
      * that a resumed game gets same port => clients from suspended
      * game trying to connect to this new one.
      */
-    public int getFreePort(GameInfo gi)
+    public @RUntainted int getFreePort(GameInfo gi)
     {
         Random rand = new Random();
         int offset = rand.nextInt(totalPorts) * 2;
@@ -160,7 +161,7 @@ public class PortBookKeeper implements IPortProvider
         return totalPorts / 2 - countFreePorts();
     }
 
-    public int countFreePorts()
+    public @RUntainted int countFreePorts()
     {
         int free = 0;
         synchronized (portInUse)
@@ -188,7 +189,7 @@ public class PortBookKeeper implements IPortProvider
     }
 
     /** Check that it's really free, as expected, log a warning if not */
-    private boolean testThatPortReallyFree(int port)
+    private boolean testThatPortReallyFree(@RUntainted int port)
     {
         if (!testWhetherPortFree(port))
         {
@@ -204,7 +205,7 @@ public class PortBookKeeper implements IPortProvider
     }
 
     /** Just check it, whether it's free or not */
-    private boolean testWhetherPortFree(int port)
+    private boolean testWhetherPortFree(@RUntainted int port)
     {
         boolean ok = false;
         ServerSocket serverSocket = null;
@@ -349,7 +350,7 @@ public class PortBookKeeper implements IPortProvider
         return sb.toString();
     }
 
-    public String getStatus()
+    public @RUntainted String getStatus()
     {
         StringBuilder st = new StringBuilder();
         st.append("Ports configured/available for games: " + totalPorts + "/"

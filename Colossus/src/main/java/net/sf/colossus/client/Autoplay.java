@@ -7,6 +7,7 @@ package net.sf.colossus.client;
 import java.util.logging.Logger;
 
 import net.sf.colossus.common.Options;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -29,7 +30,7 @@ public class Autoplay
 
     private final Options options;
 
-    private boolean originalAutoplayValue = false;
+    private @RUntainted boolean originalAutoplayValue = false;
 
     private boolean originalAutoplayOverridden = false;
 

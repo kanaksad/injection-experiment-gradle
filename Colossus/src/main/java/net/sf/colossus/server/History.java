@@ -20,6 +20,7 @@ import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
 
 import org.jdom.Element;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -40,7 +41,7 @@ public class History
     /**
      * History elements/events that happened since the last commit/"snapshot".
      */
-    private final List<Element> recentEvents = new LinkedList<Element>();
+    private final List<@RUntainted Element> recentEvents = new LinkedList<@RUntainted Element>();
 
     /**
      * Set to true during the processing of {@link #fireEventsFromXML(Server)}
@@ -247,8 +248,8 @@ public class History
         recentEvents.add(event);
     }
 
-    void revealEvent(boolean allPlayers, List<Player> players, Legion legion,
-        List<CreatureType> creatures, int turn, String reason)
+    void revealEvent(@RUntainted boolean allPlayers, @RUntainted List<Player> players, @RUntainted Legion legion,
+        @RUntainted List<@RUntainted CreatureType> creatures, @RUntainted int turn, String reason)
     {
         if (loading)
         {
@@ -427,8 +428,8 @@ public class History
         assert root != null : "History should always have a "
             + " JDOM root element as backing store";
 
-        List<Element> kids = root.getChildren();
-        Iterator<Element> it = kids.iterator();
+        List<@RUntainted Element> kids = root.getChildren();
+        Iterator<@RUntainted Element> it = kids.iterator();
         while (it.hasNext())
         {
             Element el = it.next();
@@ -439,7 +440,7 @@ public class History
 
     // unchecked conversions from JDOM
     @SuppressWarnings("unchecked")
-    void fireEventFromElement(Server server, Element el)
+    void fireEventFromElement(Server server, @RUntainted Element el)
     {
         GameServerSide game = server.getGame();
         String eventName = el.getName();
@@ -479,7 +480,7 @@ public class History
             String playerName = null;
             if (viewEl != null)
             {
-                List<Element> viewers = viewEl.getChildren();
+                List<@RUntainted Element> viewers = viewEl.getChildren();
                 Iterator<Element> it = viewers.iterator();
                 while (it.hasNext())
                 {
@@ -488,9 +489,9 @@ public class History
                     playerNames.add(playerName);
                 }
             }
-            List<Element> creatureElements = el.getChild("creatures")
+            List<@RUntainted Element> creatureElements = el.getChild("creatures")
                 .getChildren();
-            List<CreatureType> creatures = new ArrayList<CreatureType>();
+            List<@RUntainted CreatureType> creatures = new ArrayList<@RUntainted CreatureType>();
             for (Element creature : creatureElements)
             {
                 String creatureName = creature.getTextNormalize();
@@ -539,8 +540,8 @@ public class History
             int turn = Integer.parseInt(turnString);
             List<String> creatureNames = new ArrayList<String>();
             List<CreatureType> creatures = new ArrayList<CreatureType>();
-            List<Element> splitoffs = el.getChild("splitoffs").getChildren();
-            Iterator<Element> it = splitoffs.iterator();
+            List<@RUntainted Element> splitoffs = el.getChild("splitoffs").getChildren();
+            Iterator<@RUntainted Element> it = splitoffs.iterator();
             while (it.hasNext())
             {
                 Element creature = it.next();

@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 
 import net.sf.colossus.common.Constants;
 import net.sf.colossus.guiutil.KDialog;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -42,7 +43,7 @@ final class PickStrikePenalty extends KDialog
             JButton button = new JButton(choice);
             button.addActionListener(new ActionListener()
             {
-                public void actionPerformed(ActionEvent e)
+                public void actionPerformed(@RUntainted ActionEvent e)
                 {
                     // TODO via some other way than getClient() ?
                     PickStrikePenalty.this.gui.getClient()

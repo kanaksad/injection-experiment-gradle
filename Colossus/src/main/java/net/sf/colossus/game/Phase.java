@@ -1,4 +1,5 @@
 package net.sf.colossus.game;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -22,7 +23,7 @@ public enum Phase
      *
      * @throws ArrayOutOfBoundsException iff the number is not valid.
      */
-    public static Phase fromInt(int i)
+    public static @RUntainted Phase fromInt(int i)
     {
         return values()[i];
     }
@@ -43,7 +44,7 @@ public enum Phase
      * Returns a non-localized UI string for the phase.
      */
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         return name;
     }
@@ -53,10 +54,10 @@ public enum Phase
         return doesWhat;
     }
 
-    private final String name;
+    private final @RUntainted String name;
     private final String doesWhat;
 
-    private Phase(String name, String doesWhat)
+    private Phase(@RUntainted String name, String doesWhat)
     {
         this.name = name;
         this.doesWhat = doesWhat;

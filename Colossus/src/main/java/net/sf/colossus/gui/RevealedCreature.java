@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import net.sf.colossus.common.Constants;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -19,7 +20,7 @@ public class RevealedCreature
         .getLogger(RevealedCreature.class.getName());
 
     private final CreatureType creatureType;
-    private String titanBaseName = null;
+    private @RUntainted String titanBaseName = null;
     private boolean dead = false;
 
     // possible reasons why this creature was revealed:
@@ -48,12 +49,12 @@ public class RevealedCreature
     // if our own constructor does this checking, but to construct
     // the basename needs the client and the marker, which in 95%
     // of the cases are not needed here in the RevealedCreature.
-    public void setTitanBaseName(String tbName)
+    public void setTitanBaseName(@RUntainted String tbName)
     {
         titanBaseName = tbName;
     }
 
-    public String getName()
+    public @RUntainted String getName()
     {
         return titanBaseName != null ? titanBaseName : creatureType.getName();
     }
@@ -94,7 +95,7 @@ public class RevealedCreature
         return infoString;
     }
 
-    public Chit toChit(int scale)
+    public Chit toChit(@RUntainted int scale)
     {
         String name = getName();
         if (name == null)
@@ -207,7 +208,7 @@ public class RevealedCreature
     }
 
     // Reason why this creature was added to the legion
-    public void setReason(String reason)
+    public void setReason(@RUntainted String reason)
     {
         if (reason == null)
         {

@@ -11,6 +11,7 @@ import net.sf.colossus.server.CustomRecruitBase;
 import net.sf.colossus.util.InstanceTracker;
 import net.sf.colossus.util.Split;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -28,7 +29,7 @@ public final class PlayerClientSide extends Player
      *
      * TODO: the object should be properly initialized in the constructor
      */
-    PlayerClientSide(Game game, String playerName, int number)
+    PlayerClientSide(Game game, @RUntainted String playerName, int number)
     {
         super(game, playerName, number);
         CustomRecruitBase.addPlayerClientSide(this);
@@ -37,7 +38,7 @@ public final class PlayerClientSide extends Player
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<LegionClientSide> getLegions()
+    public @RUntainted List<@RUntainted LegionClientSide> getLegions()
     {
         return (List<LegionClientSide>)super.getLegions();
     }
@@ -47,9 +48,9 @@ public final class PlayerClientSide extends Player
      *
      *  TODO this is part of the network protocol and should be somewhere in there
      */
-    void update(String infoString)
+    void update(@RUntainted String infoString)
     {
-        List<String> data = Split.split(":", infoString);
+        List<@RUntainted String> data = Split.split(":", infoString);
         String buf;
 
         buf = data.remove(0);
@@ -100,15 +101,15 @@ public final class PlayerClientSide extends Player
         }
     }
 
-    public void updateValues(boolean isDead, String eliminatedPlayers,
-        int score, int mulligansLeft, String freeMarkers)
+    public void updateValues(boolean isDead, @RUntainted String eliminatedPlayers,
+        @RUntainted int score, int mulligansLeft, @RUntainted String freeMarkers)
     {
         setDead(isDead);
         setPlayersElim(eliminatedPlayers);
         setScore(score);
         setMulligansLeft(mulligansLeft);
         clearMarkersAvailable();
-        List<String> markerIds = Split.split(",", freeMarkers);
+        List<@RUntainted String> markerIds = Split.split(",", freeMarkers);
         if (!freeMarkers.equals(""))
         {
             for (String markerId : markerIds)
@@ -131,7 +132,7 @@ public final class PlayerClientSide extends Player
     }
 
     @Override
-    public LegionClientSide getLegionByMarkerId(String markerId)
+    public @RUntainted LegionClientSide getLegionByMarkerId(String markerId)
     {
         return (LegionClientSide)super.getLegionByMarkerId(markerId);
     }

@@ -4,6 +4,7 @@ package net.sf.colossus.util;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public final class Combos<T>
 {
-    private final List<List<T>> retlist;
+    private final List<@RUntainted List<T>> retlist;
 
     public Combos(List<T> list, int n)
     {
@@ -45,7 +46,7 @@ public final class Combos<T>
         }
     }
 
-    public Iterator<List<T>> iterator()
+    public Iterator<@RUntainted List<T>> iterator()
     {
         return retlist.iterator();
     }

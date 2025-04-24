@@ -18,6 +18,7 @@ import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.webclient.WebClient;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -307,7 +308,7 @@ public class NullClientGUI implements IClientGUI
 
     }
 
-    public boolean chooseWhetherToTeleport()
+    public @RUntainted boolean chooseWhetherToTeleport()
     {
         // TODO Auto-generated method stub
         return false;
@@ -386,7 +387,7 @@ public class NullClientGUI implements IClientGUI
         return null;
     }
 
-    public CreatureType doPickLord(List<CreatureType> lords)
+    public @RUntainted CreatureType doPickLord(List<CreatureType> lords)
     {
         // TODO Auto-generated method stub
         return null;
@@ -410,7 +411,7 @@ public class NullClientGUI implements IClientGUI
         return null;
     }
 
-    public String doPickRecruiter(List<String> recruiters,
+    public @RUntainted String doPickRecruiter(List<String> recruiters,
         String hexDescription, Legion legion)
     {
         // TODO Auto-generated method stub

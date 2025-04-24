@@ -20,6 +20,7 @@ import net.sf.colossus.common.Options;
 import net.sf.colossus.util.DevRandom;
 import net.sf.colossus.util.ErrorUtils;
 import net.sf.colossus.variant.BattleHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -76,10 +77,10 @@ public class OnTheFlyLegionMove implements Collection<LegionMove>
     final static private long MIN_MEMORY_REFILL = 10 * 1024 * REFILL_SIZE;
     private static final Logger LOGGER = Logger
         .getLogger(OnTheFlyLegionMove.class.getName());
-    private final List<List<CritterMove>> allCritterMoves;
-    private final int mysize;
+    private final List<@RUntainted List<CritterMove>> allCritterMoves;
+    private final @RUntainted int mysize;
 
-    public OnTheFlyLegionMove(final List<List<CritterMove>> acm)
+    public OnTheFlyLegionMove(final List<@RUntainted List<CritterMove>> acm)
     {
         allCritterMoves = acm;
 
@@ -236,12 +237,12 @@ public class OnTheFlyLegionMove implements Collection<LegionMove>
         private final SortedMap<int[], LegionMove> alreadydone = new TreeMap<int[], LegionMove>(
             new myIntArrayComparator());
         /** already done & evaluated, sorted by legion value */
-        private final List<int[]> byValues = new ArrayList<int[]>();
+        private final @RUntainted List<int[]> byValues = new ArrayList<int[]>();
         private final myIntArrayLegionValueComparator byValuesComparator = new myIntArrayLegionValueComparator();
         /** the previously returned object */
         private int[] lastone = null;
         /** map from indexes to LegionMove, the next batch to send to the AI */
-        private final SortedMap<int[], LegionMove> beingdone = new TreeMap<int[], LegionMove>(
+        private final @RUntainted SortedMap<int[], LegionMove> beingdone = new TreeMap<int[], LegionMove>(
             new myIntArrayComparator());
         private final OnTheFlyLegionMove daddy;
         private final Random rand = new DevRandom();
@@ -397,7 +398,7 @@ public class OnTheFlyLegionMove implements Collection<LegionMove>
         }
 
         /** full recursive generation */
-        private int recurseGenerate(int index, int[] counts, int[] actual)
+        private @RUntainted int recurseGenerate(int index, int[] counts, int[] actual)
         {
             int total = 0;
             if (index < dim)
@@ -638,7 +639,7 @@ public class OnTheFlyLegionMove implements Collection<LegionMove>
          * @param n The number of requeste combinations.
          * @return The number of combinations generated.
          */
-        private int refill(int n)
+        private int refill(@RUntainted int n)
         {
             if (beingdone.size() > 0)
             {

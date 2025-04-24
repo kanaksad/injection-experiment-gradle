@@ -13,6 +13,7 @@ import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.ICustomRecruitBase;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -106,7 +107,7 @@ abstract public class CustomRecruitBase implements ICustomRecruitBase
     }
 
     synchronized protected final void setCount(CreatureType type,
-        int newCount, boolean reset)
+        @RUntainted int newCount, boolean reset)
     {
         // TODO Should only update server side, and propagate to all
         // clients via messages.
@@ -242,7 +243,7 @@ abstract public class CustomRecruitBase implements ICustomRecruitBase
      * @param hex The specific MasterHex considered for recruiting.
      * @return A List of possible special Recruiters in this hex.
      */
-    abstract public List<CreatureType> getPossibleSpecialRecruiters(
+    abstract public List<@RUntainted CreatureType> getPossibleSpecialRecruiters(
         MasterHex hex);
 
     /**
@@ -259,7 +260,7 @@ abstract public class CustomRecruitBase implements ICustomRecruitBase
      * Number of recruiters needed to get a recruit
      * in a special way in this terrain now.
      */
-    abstract public int numberOfRecruiterNeeded(CreatureType recruiter,
+    abstract public @RUntainted int numberOfRecruiterNeeded(CreatureType recruiter,
         CreatureType recruit, MasterHex hex);
 
     /**

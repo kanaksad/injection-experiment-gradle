@@ -62,6 +62,7 @@ import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
 import net.sf.colossus.webclient.WebClient;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 @SuppressWarnings("serial")
@@ -88,7 +89,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
 
     // TODO the naming of these classes is confusing, they should be clearly named
     // as dialogs
-    private MasterBoard board;
+    private @RUntainted MasterBoard board;
     private StatusScreen statusScreen;
     private CreatureCollectionView caretakerDisplay;
     private MovementDie movementDie;
@@ -110,13 +111,13 @@ public class ClientGUI implements IClientGUI, GUICallbacks
     private boolean startedByWebClient = false;
     private String gameId = null;
     // for the case if we have to restore the webclient
-    private String wcUsername = null;
-    private String wcPassword = null;
+    private @RUntainted String wcUsername = null;
+    private @RUntainted String wcPassword = null;
 
     /**
      * The object which handles what to do next when a game is going to end
      */
-    private final WhatNextManager whatNextManager;
+    private final @RUntainted WhatNextManager whatNextManager;
 
     /**
      * Stack of legion marker ID's, to allow multiple levels of undo for
@@ -129,16 +130,16 @@ public class ClientGUI implements IClientGUI, GUICallbacks
      * probably just use that. A list of objects (which are mostly the string
      * identifiers of something) isn't that safe.
      */
-    private final LinkedList<Object> undoStack = new LinkedList<Object>();
+    private final LinkedList<@RUntainted Object> undoStack = new LinkedList<@RUntainted Object>();
 
     private final LinkedList<PendingMove> pendingMoves = new LinkedList<PendingMove>();
-    private final Set<MasterHex> pendingMoveHexes = new HashSet<MasterHex>();
+    private final Set<@RUntainted MasterHex> pendingMoveHexes = new HashSet<@RUntainted MasterHex>();
     private boolean recoveredFromMoveNak = false;
 
-    private final List<GUIBattleChit> battleChits = new ArrayList<GUIBattleChit>();
+    private final List<@RUntainted GUIBattleChit> battleChits = new ArrayList<@RUntainted GUIBattleChit>();
 
     /** Information on the current moving legion. */
-    private Legion mover;
+    private @RUntainted Legion mover;
 
     /** the parent frame for secondary windows */
     private JFrame secondaryParent = null;
@@ -154,11 +155,11 @@ public class ClientGUI implements IClientGUI, GUICallbacks
 
     private boolean gameOverMessageAlreadyShown = false;
 
-    protected final Client client;
+    protected final @RUntainted Client client;
 
     private InactivityWatchdog watchdog = null;
 
-    private int inactivityWarningInterval = -1;
+    private @RUntainted int inactivityWarningInterval = -1;
 
     // for things other GUI components need to inquire,
     // use the Oracle (on the long run, I guess there will be the
@@ -168,8 +169,8 @@ public class ClientGUI implements IClientGUI, GUICallbacks
     // Per-client and per-player options.
     private final Options options;
 
-    public ClientGUI(Client client, Options options,
-        WhatNextManager whatNextMgr)
+    public ClientGUI(@RUntainted Client client, Options options,
+        @RUntainted WhatNextManager whatNextMgr)
     {
         this.client = client;
         this.oracle = client;
@@ -187,8 +188,8 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         return this.startedByWebClient;
     }
 
-    public void setWebClient(WebClient wc, int inactivityWarningInterval,
-        String gameId, String username, String password)
+    public void setWebClient(WebClient wc, @RUntainted int inactivityWarningInterval,
+        String gameId, @RUntainted String username, @RUntainted String password)
     {
         this.webClient = wc;
         this.inactivityWarningInterval = inactivityWarningInterval;
@@ -227,7 +228,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         return board != null;
     }
 
-    public Client getClient()
+    public @RUntainted Client getClient()
     {
         return client;
     }
@@ -252,12 +253,12 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         return options;
     }
 
-    boolean isReplayOngoing()
+    @RUntainted boolean isReplayOngoing()
     {
         return getClient().isReplayOngoing();
     }
 
-    boolean isRedoOngoing()
+    @RUntainted boolean isRedoOngoing()
     {
         return getClient().isRedoOngoing();
     }
@@ -299,7 +300,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         }
     }
 
-    public void logPerhaps(String message)
+    public void logPerhaps(@RUntainted String message)
     {
         if (LOG_CG)
         {
@@ -704,7 +705,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         WhatNextManager.sleepFor(2000);
     }
 
-    public void setStrikeNumbers(BattleUnit striker, Set<BattleHex> targetHexes)
+    public void setStrikeNumbers(BattleUnit striker, Set<@RUntainted BattleHex> targetHexes)
     {
         logPerhaps("setStrikeNumbers(BattleUnit striker, "
             + "Set<BattleHex> targetHexes)");
@@ -1024,7 +1025,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         client.doCheckAllConnections(getOwningPlayerName());
     }
 
-    private void doSetWhatToDoNext(WhatToDoNext whatToDoNext,
+    private void doSetWhatToDoNext(@RUntainted WhatToDoNext whatToDoNext,
         boolean triggerQuitTimer)
     {
         logPerhaps("doSetWhatToDoNext(WhatToDoNext whatToDoNext, "
@@ -1032,7 +1033,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         whatNextManager.setWhatToDoNext(whatToDoNext, triggerQuitTimer);
     }
 
-    private void doSetWhatToDoNext(WhatToDoNext whatToDoNext, String loadFile)
+    private void doSetWhatToDoNext(@RUntainted WhatToDoNext whatToDoNext, String loadFile)
     {
         logPerhaps("doSetWhatToDoNext(WhatToDoNext whatToDoNext, "
             + "String loadFile)");
@@ -1082,7 +1083,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         client.notifyServer();
     }
 
-    void menuSaveGame(String filename)
+    void menuSaveGame(@RUntainted String filename)
     {
         if (client.isRemote())
         {
@@ -1368,7 +1369,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         {
             @Override
             public void stringOptionChanged(String optname, String oldValue,
-                String newValue)
+                @RUntainted String newValue)
             {
                 setLookAndFeel(newValue);
             }
@@ -1378,7 +1379,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
             // TODO check if we could use the intOptionChanged callback here
             @Override
             public void stringOptionChanged(String optname, String oldValue,
-                String newValue)
+                @RUntainted String newValue)
             {
                 int scale = Integer.parseInt(newValue);
                 if (scale > 0)
@@ -1477,7 +1478,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
      * (for all others it was enabled at begin of the phase)
 
      */
-    public void actOnDidSplit(int turn, Legion parent, Legion child,
+    public void actOnDidSplit(@RUntainted int turn, Legion parent, Legion child,
         MasterHex hex)
     {
         LOGGER
@@ -1576,7 +1577,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         }
     }
 
-    public void actOnRemoveCreature(Legion legion, CreatureType type,
+    public void actOnRemoveCreature(@RUntainted Legion legion, @RUntainted CreatureType type,
         String reason)
     {
         LOGGER
@@ -1611,8 +1612,8 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         board.actOnEditLegionMaybe(legion);
     }
 
-    public void actOnAddCreature(Legion legion, CreatureType creature,
-        String reason)
+    public void actOnAddCreature(Legion legion, @RUntainted CreatureType creature,
+        @RUntainted String reason)
     {
         LOGGER
             .fine("CG: actOnAddCreature(Legion legion, CreatureType creature,");
@@ -1656,7 +1657,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
     }
 
     public void actOnUndidRecruitPart(Legion legion, boolean wasReinforcement,
-        int turnNumber)
+        @RUntainted int turnNumber)
     {
         LOGGER
             .fine("CG: actOnUndidRecruitPart(Legion legion, boolean wasReinforcement,");
@@ -1676,9 +1677,9 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         eventViewer.undoEvent(eventType, legion, null, turnNumber);
     }
 
-    public boolean chooseWhetherToTeleport()
+    public @RUntainted boolean chooseWhetherToTeleport()
     {
-        String[] dialogOptions = new String[2];
+        @RUntainted String[] dialogOptions = new String[2];
         dialogOptions[0] = "Teleport";
         dialogOptions[1] = "Move Normally";
         int answer = JOptionPane.showOptionDialog(board, "Teleport?",
@@ -1689,8 +1690,8 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         return (answer == JOptionPane.YES_OPTION);
     }
 
-    public void actOnDidMove(Legion legion, MasterHex startingHex,
-        MasterHex currentHex, boolean teleport, CreatureType teleportingLord,
+    public void actOnDidMove(@RUntainted Legion legion, @RUntainted MasterHex startingHex,
+        @RUntainted MasterHex currentHex, boolean teleport, @RUntainted CreatureType teleportingLord,
         boolean splitLegionHasForcedMove)
     {
         logPerhaps("actOnDidMove(Legion legion, MasterHex startingHex,");
@@ -1788,7 +1789,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         board.repaint();
     }
 
-    public void setLookAndFeel(String lfName)
+    public void setLookAndFeel(@RUntainted String lfName)
     {
         logPerhaps("setLookAndFeel(String lfName)");
         try
@@ -1945,12 +1946,12 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         undoStack.clear();
     }
 
-    private Object popUndoStack()
+    private @RUntainted Object popUndoStack()
     {
         return undoStack.removeFirst();
     }
 
-    void pushUndoStack(Object object)
+    void pushUndoStack(@RUntainted Object object)
     {
         undoStack.addFirst(object);
     }
@@ -1970,12 +1971,12 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         eventViewer.setCreatureDead(battleUnit);
     }
 
-    public void eventViewerNewSplitEvent(int turn, Legion parent, Legion child)
+    public void eventViewerNewSplitEvent(@RUntainted int turn, Legion parent, Legion child)
     {
         eventViewer.newSplitEvent(turn, parent, null, child);
     }
 
-    public void eventViewerUndoEvent(Legion splitoff, Legion survivor, int turn)
+    public void eventViewerUndoEvent(Legion splitoff, Legion survivor, @RUntainted int turn)
     {
         eventViewer
             .undoEvent(RevealEvent.eventSplit, survivor, splitoff, turn);
@@ -2074,7 +2075,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         }
     }
 
-    public void didSummon(Legion summoner, Legion donor, CreatureType summon)
+    public void didSummon(Legion summoner, Legion donor, @RUntainted CreatureType summon)
     {
         eventViewer.newCreatureRevealEvent(RevealEvent.eventSummon, donor,
             summon, summoner);
@@ -2275,7 +2276,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         }
     }
 
-    public void showNegotiate(Legion attacker, Legion defender)
+    public void showNegotiate(@RUntainted Legion attacker, @RUntainted Legion defender)
     {
         dueOrNotChangesActions(false, "showNegotiate");
         logPerhaps("showNegotiate(Legion attacker, Legion defender)");
@@ -2294,7 +2295,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
             client.getDefender());
     }
 
-    public void showConcede(Client client, Legion ally, Legion enemy)
+    public void showConcede(Client client, @RUntainted Legion ally, Legion enemy)
     {
         LOGGER.fine("CG: showConcede(client, ally " + ally.getMarkerId()
             + ", enemy " + enemy.getMarkerId());
@@ -2311,7 +2312,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         Concede.concede(this, board.getFrame(), ally, enemy);
     }
 
-    public void showFlee(Client client, Legion ally, Legion enemy)
+    public void showFlee(Client client, @RUntainted Legion ally, Legion enemy)
     {
         LOGGER.fine("CG: showFlee(client, ally " + ally.getMarkerId()
             + ", enemy " + enemy.getMarkerId());
@@ -2327,13 +2328,13 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         Concede.flee(this, board.getFrame(), ally, enemy);
     }
 
-    public void inactivityAutoFleeOrConcede(boolean reply)
+    public void inactivityAutoFleeOrConcede(@RUntainted boolean reply)
     {
         Concede.inactivityAutoFleeOrConcede(reply);
     }
 
     public void askExtraRollApproval(String requestorName, boolean ourself,
-        final int requestId)
+        final @RUntainted int requestId)
     {
         final String message = "Player " + requestorName
             + " asks for an extra roll. Pleave approve or deny.";
@@ -2347,7 +2348,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
     }
 
     private void showExtraRollApprovalDialog(final String message,
-        int requestId)
+        @RUntainted int requestId)
     {
         String[] options = new String[2];
         options[0] = new String("Approve");
@@ -2389,7 +2390,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         suspendResponse(approved);
     }
 
-    public void suspendResponse(boolean approve)
+    public void suspendResponse(@RUntainted boolean approve)
     {
         client.suspendResponse(approve);
     }
@@ -2408,7 +2409,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         engagementResults.maybeShow();
     }
 
-    public void tellEngagement(Legion attacker, Legion defender, int turnNumber)
+    public void tellEngagement(Legion attacker, Legion defender, @RUntainted int turnNumber)
     {
         LOGGER
             .fine("CG: tellEngagement(Legion attacker, Legion defender, int turnNumber)");
@@ -2441,7 +2442,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         return watchdog != null;
     }
 
-    private void dueOrNotChangesActions(boolean isDue, String reason)
+    private void dueOrNotChangesActions(@RUntainted boolean isDue, @RUntainted String reason)
     {
         // if (client.getOwningPlayer().getName().equals("localwatchdogtest")
         //    || client.getOwningPlayer().getName().equals("Blue"))
@@ -2459,7 +2460,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
     /* This sets or stops inactivityWatchdog ticking, based on the shouldRun
      * argument. If the state is already as requested, does nothing.
      */
-    private void updateClockTicking(boolean shouldRun, String reason)
+    private void updateClockTicking(@RUntainted boolean shouldRun, @RUntainted String reason)
     {
         boolean isTicking = watchdog.isClockTicking();
         LOGGER.finest("UPDATE CLOCK (reason " + reason
@@ -2498,7 +2499,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         }
     }
 
-    public void actOnTellEngagementResults(Legion winner, String method,
+    public void actOnTellEngagementResults(@RUntainted Legion winner, String method,
         int points, int turns)
     {
         LOGGER
@@ -2546,7 +2547,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         board.setPhaseInfo(message);
     }
 
-    public void actOnTellMovementRoll(int roll, String reason)
+    public void actOnTellMovementRoll(@RUntainted int roll, @RUntainted String reason)
     {
         if (client.isReplayBeforeRedo())
         {
@@ -2573,8 +2574,8 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         }
     }
 
-    private List<String> tellEngagementResultsAttackerStartingContents = null;
-    private List<String> tellEngagementResultsDefenderStartingContents = null;
+    private List<@RUntainted String> tellEngagementResultsAttackerStartingContents = null;
+    private List<@RUntainted String> tellEngagementResultsDefenderStartingContents = null;
     private List<Boolean> tellEngagementResultsAttackerLegionCertainities = null;
     private List<Boolean> tellEngagementResultsDefenderLegionCertainities = null;
 
@@ -2582,7 +2583,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
      * additionally remember the images list for later, the engagement report
      */
     public void revealEngagedCreatures(Legion legion,
-        final List<CreatureType> creatures, boolean isAttacker, String reason)
+        final List<CreatureType> creatures, boolean isAttacker, @RUntainted String reason)
     {
         logPerhaps("revealEngagedCreatures(Legion legion,");
         // in engagement we need to update the remembered list, too.
@@ -2703,7 +2704,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
 
     public void syncCheckboxes()
     {
-        Enumeration<String> en = options.propertyNames();
+        Enumeration<@RUntainted String> en = options.propertyNames();
         while (en.hasMoreElements())
         {
             String name = en.nextElement();
@@ -2729,7 +2730,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         board.setBoardActive(val);
     }
 
-    public void doPickSummonAngel(Legion legion, List<Legion> possibleDonors)
+    public void doPickSummonAngel(@RUntainted Legion legion, List<@RUntainted Legion> possibleDonors)
     {
         dueOrNotChangesActions(true, "dopicksummonangel");
         logPerhaps("doPickSummonAngel(Legion legion,");
@@ -2737,7 +2738,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
     }
 
     public List<CreatureType> doPickSplitLegion(Legion parent,
-        String childMarker)
+        @RUntainted String childMarker)
     {
         List<CreatureType> creaturesToSplit = SplitLegion.splitLegion(this,
             parent, childMarker);
@@ -2776,10 +2777,10 @@ public class ClientGUI implements IClientGUI, GUICallbacks
     }
 
     public void doPickCarries(Client client, int carryDamage,
-        Set<String> carryTargetDescriptions)
+        Set<@RUntainted String> carryTargetDescriptions)
     {
         logPerhaps("doPickCarries(Client client, int carryDamage,");
-        Set<BattleHex> carryTargetHexes = new HashSet<BattleHex>();
+        Set<@RUntainted BattleHex> carryTargetHexes = new HashSet<@RUntainted BattleHex>();
         for (String desc : carryTargetDescriptions)
         {
             carryTargetHexes.add(battleBoard.getBattleHexByLabel(desc
@@ -2855,12 +2856,12 @@ public class ClientGUI implements IClientGUI, GUICallbacks
             callback, false);
     }
 
-    public void doPickSplitMarker(Legion parent, Set<String> markersAvailable)
+    public void doPickSplitMarker(@RUntainted Legion parent, Set<@RUntainted String> markersAvailable)
     {
         createPickMarkerDialog(this, markersAvailable, parent);
     }
 
-    public void doPickInitialMarker(Set<String> markersAvailable)
+    public void doPickInitialMarker(Set<@RUntainted String> markersAvailable)
     {
         dueOrNotChangesActions(true, "dopickinitialmarker");
         board.setPhaseInfo("Pick initial marker!");
@@ -2868,7 +2869,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
     }
 
     public void createPickMarkerDialog(final ClientGUI gui,
-        final Set<String> markerIds, final Legion parent)
+        final Set<@RUntainted String> markerIds, final @RUntainted Legion parent)
     {
         if (SwingUtilities.isEventDispatchThread())
         {
@@ -2888,7 +2889,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
 
     public CreatureType doPickRecruit(Legion legion, String hexDescription)
     {
-        List<CreatureType> recruits = client.findEligibleRecruits(legion,
+        List<@RUntainted CreatureType> recruits = client.findEligibleRecruits(legion,
             legion.getCurrentHex());
 
         return PickRecruit.pickRecruit(board.getFrame(), recruits,
@@ -2916,7 +2917,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         board.highlightPossibleRecruitLegionHexes();
     }
 
-    public String doPickRecruiter(List<String> recruiters,
+    public @RUntainted String doPickRecruiter(List<@RUntainted String> recruiters,
         String hexDescription, Legion legion)
     {
         String recruiterName = null;
@@ -2939,7 +2940,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         return PickEntrySide.pickEntrySide(board.getFrame(), hex, entrySides);
     }
 
-    public CreatureType doPickLord(List<CreatureType> lords)
+    public @RUntainted CreatureType doPickLord(List<@RUntainted CreatureType> lords)
     {
         return PickLord.pickLord(options, board.getFrame(), lords);
     }
@@ -2949,7 +2950,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         new PickStrikePenalty(battleBoard, this, choices);
     }
 
-    public void tellProposal(String proposalString)
+    public void tellProposal(@RUntainted String proposalString)
     {
         logPerhaps("tellProposal(String proposalString)");
         Proposal proposal = Proposal.makeFromString(proposalString,
@@ -2978,7 +2979,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         }
     }
 
-    public void actOnTurnOrPlayerChange(Client client, int turnNr,
+    public void actOnTurnOrPlayerChange(Client client, @RUntainted int turnNr,
         Player player)
     {
         logPerhaps("actOnTurnOrPlayerChange(Client client, int turnNr,");
@@ -3295,7 +3296,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         updateStatusScreen();
     }
 
-    private void addBattleChit(GUIBattleChit battleChit)
+    private void addBattleChit(@RUntainted GUIBattleChit battleChit)
     {
         logPerhaps("addBattleChit(GUIBattleChit battleChit)");
         battleChits.add(battleChit);
@@ -3342,7 +3343,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         return null;
     }
 
-    public void actOnPlaceNewChit(String imageName, BattleUnit battleUnit,
+    public void actOnPlaceNewChit(@RUntainted String imageName, @RUntainted BattleUnit battleUnit,
         BattleHex hex)
     {
         LOGGER
@@ -3745,7 +3746,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
      *  @param message         The message ("XXXX wins", or "Draw")
      *  @param disposeFollows  If true, server will send a dispose message soon
      */
-    public void actOnTellGameOver(String message, boolean disposeFollows, boolean suspended)
+    public void actOnTellGameOver(@RUntainted String message, @RUntainted boolean disposeFollows, @RUntainted boolean suspended)
     {
         LOGGER.fine("CG: actOnTellGameOver('" + message + "', dispose="
             + disposeFollows + ", suspended=" + suspended);
@@ -3785,7 +3786,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         }
     }
 
-    public void showMessageDialogAndWait(final String message)
+    public void showMessageDialogAndWait(final @RUntainted String message)
     {
         logPerhaps("showMessageDialogAndWait(String message)");
         // Don't bother showing messages to AI players.
@@ -3953,12 +3954,12 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         return client.getOwningPlayer();
     }
 
-    public String getOwningPlayerName()
+    public @RUntainted String getOwningPlayerName()
     {
         return getOwningPlayer().getName();
     }
 
-    public boolean isMyTurn()
+    public @RUntainted boolean isMyTurn()
     {
         return client.isMyTurn();
     }
@@ -3968,13 +3969,13 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         return mover;
     }
 
-    public void setMover(Legion legion)
+    public void setMover(@RUntainted Legion legion)
     {
         logPerhaps("setMover(Legion legion)");
         this.mover = legion;
     }
 
-    public boolean doMove(MasterHex hex)
+    public boolean doMove(@RUntainted MasterHex hex)
     {
         for (PendingMove pendingMove : pendingMoves)
         {
@@ -4031,7 +4032,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
 
     // doMove was sent to server, store it in list
     public void setMovePending(Legion mover, MasterHex currentHex,
-        MasterHex targetHex)
+        @RUntainted MasterHex targetHex)
     {
         logPerhaps("setMovePending(Legion mover, MasterHex currentHex,");
         // board.visualizeMoveTarget(mover, currentHex, targetHex);
@@ -4105,9 +4106,9 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         }
     }
 
-    public Set<MasterHex> getPendingMoveHexes()
+    public Set<@RUntainted MasterHex> getPendingMoveHexes()
     {
-        Set<MasterHex> hexes = new HashSet<MasterHex>();
+        Set<@RUntainted MasterHex> hexes = new HashSet<@RUntainted MasterHex>();
         synchronized (pendingMoves)
         {
             hexes.addAll(pendingMoveHexes);
@@ -4116,7 +4117,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         return hexes;
     }
 
-    public Set<MasterHex> getStillToMoveHexes()
+    public Set<@RUntainted MasterHex> getStillToMoveHexes()
     {
         HashSet<Legion> pendingLegions = new HashSet<Legion>();
         synchronized (pendingMoves)
@@ -4130,8 +4131,8 @@ public class ClientGUI implements IClientGUI, GUICallbacks
     }
 
     // Search and remove this pendingMove from list
-    public void setMoveCompleted(Legion mover, MasterHex current,
-        MasterHex target)
+    public void setMoveCompleted(@RUntainted Legion mover, @RUntainted MasterHex current,
+        @RUntainted MasterHex target)
     {
         logPerhaps("setMoveCompleted(Legion mover, MasterHex current,");
         pendingMoveHexes.remove(target);
@@ -4222,7 +4223,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         getClient().acquireAngelCallback(legion, angelType);
     }
 
-    public void answerFlee(Legion ally, boolean answer)
+    public void answerFlee(@RUntainted Legion ally, @RUntainted boolean answer)
     {
         logPerhaps("answerFlee(Legion ally, boolean answer)");
         if (getGame().getDefender().equals(ally))
@@ -4232,14 +4233,14 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         getClient().answerFlee(ally, answer);
     }
 
-    public void answerConcede(Legion legion, boolean answer)
+    public void answerConcede(@RUntainted Legion legion, @RUntainted boolean answer)
     {
         logPerhaps("answerConcede(Legion legion, boolean answer)");
         dueOrNotChangesActions(false, "Concede answered (" + answer + ")");
         getClient().answerConcede(legion, answer);
     }
 
-    public void doBattleMove(int tag, BattleHex hex)
+    public void doBattleMove(@RUntainted int tag, @RUntainted BattleHex hex)
     {
         logPerhaps("doBattleMove(int tag, BattleHex hex)");
         getClient().doBattleMove(tag, hex);
@@ -4251,7 +4252,7 @@ public class ClientGUI implements IClientGUI, GUICallbacks
         getClient().undoBattleMove(hex);
     }
 
-    public void strike(int tag, BattleHex hex)
+    public void strike(@RUntainted int tag, BattleHex hex)
     {
         logPerhaps("strike(int tag, BattleHex hex)");
         getClient().strike(tag, hex);

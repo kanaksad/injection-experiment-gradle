@@ -43,6 +43,8 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
 import org.jdom.Element;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
 
 
 /**
@@ -65,7 +67,7 @@ public final class StaticResourceLoader
      */
     private static class ColossusClassLoader extends ClassLoader
     {
-        private List<String> directories = null;
+        private @RUntainted List<@RUntainted String> directories = null;
 
         ColossusClassLoader(ClassLoader parent)
         {
@@ -73,7 +75,7 @@ public final class StaticResourceLoader
         }
 
         @Override
-        public Class<?> findClass(String className)
+        public Class<?> findClass(@RUntainted String className)
             throws ClassNotFoundException
         {
             try
@@ -111,7 +113,7 @@ public final class StaticResourceLoader
             }
         }
 
-        void setDirectories(List<String> d)
+        void setDirectories(@RUntainted List<@RUntainted String> d)
         {
             directories = d;
         }
@@ -126,12 +128,12 @@ public final class StaticResourceLoader
     // File.separator does not work in jar files, except in Unix.
     // A hardcoded '/' works in Unix, Windows, MacOS X, and jar files.
     private static final String pathSeparator = "/";
-    private static final String[] imageExtension = { ".png", ".gif" };
+    private static final @RUntainted String[] imageExtension = { ".png", ".gif" };
     private static final ClassLoader baseCL = StaticResourceLoader.class
         .getClassLoader();
     private static final ColossusClassLoader cl = new ColossusClassLoader(
         baseCL);
-    private static final Map<String, Object> imageCache = Collections
+    private static final Map<String, @RUntainted Object> imageCache = Collections
         .synchronizedMap(new HashMap<String, Object>());
     private static final Map<String, byte[]> fileCache = Collections
         .synchronizedMap(new HashMap<String, byte[]>());
@@ -142,10 +144,10 @@ public final class StaticResourceLoader
     // to server.Constants.
     public final static String REQUEST_TOKEN_SEPARATOR = " ~ ";
 
-    private static String server = null;
-    private static int serverPort = 0;
+    private static @RUntainted String server = null;
+    private static @RUntainted int serverPort = 0;
 
-    public static void setDataServer(String server, int port)
+    public static void setDataServer(@RUntainted String server, @RUntainted int port)
     {
         StaticResourceLoader.server = server;
         StaticResourceLoader.serverPort = port;
@@ -161,7 +163,7 @@ public final class StaticResourceLoader
      * Give the String to mark directories.
      * @return The String to mark directories.
      */
-    public static String getPathSeparator()
+    public static @RUntainted String getPathSeparator()
     {
         return pathSeparator;
     }
@@ -186,8 +188,8 @@ public final class StaticResourceLoader
      * @param directories List of directories to search (in order).
      * @return The Image, or null if it was not found.
      */
-    public synchronized static Image getImage(String filename,
-        List<String> directories, int width, int height)
+    public synchronized static @RPolyTainted Image getImage(@RPolyTainted @RUntainted String filename,
+        @RPolyTainted @RUntainted List<@RPolyTainted @RUntainted String> directories, @RPolyTainted @RUntainted int width, @RPolyTainted @RUntainted int height)
     {
         Image image = null;
         String mapKey = getMapKey(filename, directories);
@@ -201,7 +203,7 @@ public final class StaticResourceLoader
         {
             image = ((ImageIcon)cached).getImage();
         }
-        Iterator<String> it = directories.iterator();
+        Iterator<@RUntainted String> it = directories.iterator();
         while (it.hasNext() && (image == null))
         {
             String path = it.next();
@@ -237,8 +239,8 @@ public final class StaticResourceLoader
      * @param directories List of directories to search (in order).
      * @return The ImageIcon, or null if it was not found.
      */
-    public synchronized static ImageIcon getImageIcon(String filename,
-        List<String> directories, int width, int height)
+    public synchronized static ImageIcon getImageIcon(@RUntainted String filename,
+        List<@RUntainted String> directories, @RUntainted int width, @RUntainted int height)
     {
         ImageIcon icon = null;
         String mapKey = getMapKey(filename, directories);
@@ -252,7 +254,7 @@ public final class StaticResourceLoader
         {
             icon = (ImageIcon)cached;
         }
-        Iterator<String> it = directories.iterator();
+        Iterator<@RUntainted String> it = directories.iterator();
         while (it.hasNext() && (icon == null))
         {
             String path = it.next();
@@ -291,8 +293,8 @@ public final class StaticResourceLoader
      * @param path Path to search for the file
      * @return Resulting Image, or null if it fails.
      */
-    private static Image tryLoadImageFromFile(String filename, String path,
-        int width, int height)
+    private static @RPolyTainted Image tryLoadImageFromFile(@RPolyTainted @RUntainted String filename, @RPolyTainted @RUntainted String path,
+        @RPolyTainted int width, @RPolyTainted int height)
     {
         Image image = null;
         try
@@ -333,8 +335,8 @@ public final class StaticResourceLoader
      * @param path Path to search for the file
      * @return Resulting ImageIcon, or null if it fails.
      */
-    private static ImageIcon tryLoadImageIconFromResource(String filename,
-        String path, int width, int height)
+    private static @RPolyTainted ImageIcon tryLoadImageIconFromResource(@RPolyTainted String filename,
+        @RPolyTainted String path, @RPolyTainted int width, @RPolyTainted int height)
     {
         ImageIcon icon = null;
         try
@@ -376,8 +378,8 @@ public final class StaticResourceLoader
      * @param directories List of directories to search (in order).
      * @return The InputStream, or null if it was not found.
      */
-    public static InputStream getInputStreamIgnoreFail(String filename,
-        List<String> directories)
+    public static InputStream getInputStreamIgnoreFail(@RUntainted String filename,
+        @RUntainted List<@RUntainted String> directories)
     {
         return getInputStream(filename, directories, server != null, false,
             true);
@@ -390,8 +392,8 @@ public final class StaticResourceLoader
      * @param directories List of directories to search (in order).
      * @return The InputStream, or null if it was not found.
      */
-    public static InputStream getInputStream(String filename,
-        List<String> directories)
+    public static @RUntainted InputStream getInputStream(@RUntainted String filename,
+        @RUntainted List<@RUntainted String> directories)
     {
         return getInputStream(filename, directories, server != null, false,
             false);
@@ -408,13 +410,13 @@ public final class StaticResourceLoader
      * @param ignoreFail (=don't complain) if file not found
      * @return The InputStream, or null if it was not found.
      */
-    private static InputStream getInputStream(String filename,
-        List<String> directories, boolean remote, boolean cachedOnly,
+    private static @RUntainted InputStream getInputStream(@RUntainted String filename,
+        @RUntainted List<@RUntainted String> directories, boolean remote, boolean cachedOnly,
         boolean ignoreFail)
     {
         String mapKey = getMapKey(filename, directories);
         Object cached = fileCache.get(mapKey);
-        byte[] data = null;
+        @RUntainted byte[] data = null;
 
         if ((cached == null) && cachedOnly)
         {
@@ -431,7 +433,7 @@ public final class StaticResourceLoader
             synchronized (fileCache)
             {
                 InputStream stream = null;
-                Iterator<String> it = directories.iterator();
+                Iterator<@RUntainted String> it = directories.iterator();
                 while (it.hasNext() && (stream == null))
                 {
                     String path = it.next();
@@ -552,8 +554,8 @@ public final class StaticResourceLoader
      * @return An array of byte representing the content of the file,
      *     or null if it fails.
      */
-    public static byte[] getBytesFromFile(String filename,
-        List<String> directories, boolean cachedOnly, boolean ignoreFail)
+    public static byte[] getBytesFromFile(@RUntainted String filename,
+        @RUntainted List<@RUntainted String> directories, boolean cachedOnly, boolean ignoreFail)
     {
         InputStream is = getInputStream(filename, directories, server != null,
             cachedOnly, ignoreFail);
@@ -578,17 +580,17 @@ public final class StaticResourceLoader
      * @return An array of byte representing the content
      *     of the InputStream, or null if it fails.
      */
-    private static byte[] getBytesFromInputStream(InputStream is)
+    private static @RUntainted byte[] getBytesFromInputStream(@RUntainted InputStream is)
     {
-        byte[] all = new byte[0];
+        @RUntainted byte[] all = new byte[0];
 
         try
         {
-            byte[] data = new byte[1024 * 64];
+            @RUntainted byte[] data = new byte[1024 * 64];
             int r = is.read(data);
             while (r > 0)
             {
-                byte[] temp = new byte[all.length + r];
+                @RUntainted byte[] temp = new byte[all.length + r];
                 for (int i = 0; i < all.length; i++)
                 {
                     temp[i] = all[i];
@@ -613,7 +615,7 @@ public final class StaticResourceLoader
      * @param data The byte array to convert.
      * @return An InputStream whose content is the data byte array.
      */
-    private static InputStream getInputStreamFromBytes(byte[] data)
+    private static @RPolyTainted InputStream getInputStreamFromBytes(@RPolyTainted byte[] data)
     {
         if (data == null)
         {
@@ -631,8 +633,8 @@ public final class StaticResourceLoader
      * @param directories List of directories to search (in order).
      * @return The OutputStream, or null if it was not found.
      */
-    public static OutputStream getOutputStream(String filename,
-        List<String> directories)
+    public static OutputStream getOutputStream(@RUntainted String filename,
+        @RUntainted List<String> directories)
     {
         OutputStream stream = null;
         Iterator<String> it = directories.iterator();
@@ -664,8 +666,8 @@ public final class StaticResourceLoader
      * @param directories List of directories to search (in order).
      * @return The Document, or null if it was not found.
      */
-    public static Document getDocument(String filename,
-        List<String> directories)
+    public static @RUntainted Document getDocument(@RUntainted String filename,
+        @RUntainted List<@RUntainted String> directories)
     {
         InputStream htmlIS = getInputStreamIgnoreFail(filename + ".html",
             directories);
@@ -738,7 +740,7 @@ public final class StaticResourceLoader
      * @return A String to use as a key when storing/loading in a cache
      *   the specified file from the specified list of directories.
      */
-    private static String getMapKey(String filename, List<String> directories)
+    private static String getMapKey(String filename, List<@RUntainted String> directories)
     {
         String[] filenames = new String[1];
         filenames[0] = filename;
@@ -753,8 +755,8 @@ public final class StaticResourceLoader
      *   the specified array of name of files from the specified
      *   list of directories.
      */
-    private static String getMapKey(String[] filenames,
-        List<String> directories)
+    private static @RPolyTainted String getMapKey(@RPolyTainted String[] filenames,
+        List<@RUntainted String> directories)
     {
         StringBuilder buf = new StringBuilder(filenames[0]);
         for (int i = 1; i < filenames.length; i++)
@@ -779,8 +781,8 @@ public final class StaticResourceLoader
      * @param directories List of directories to search (in order).
      * @return The composite Image, or null if any part was not found.
      */
-    public synchronized static Image getCompositeImage(String[] filenames,
-        List<String> directories, int width, int height)
+    public synchronized static Image getCompositeImage(@RUntainted String[] filenames,
+        List<@RUntainted String> directories, @RUntainted int width, @RUntainted int height)
     {
         BufferedImage bi;
         String mapKey = getMapKey(filenames, directories);
@@ -835,7 +837,7 @@ public final class StaticResourceLoader
      * @return The generated Image.
      */
     private synchronized static Image tryBuildingNonexistentImage(
-        String filename, int width, int height, List<String> directories)
+        @RUntainted String filename, @RUntainted int width, @RUntainted int height, @RUntainted List<@RUntainted String> directories)
     {
         Image tempImage = null;
 
@@ -903,7 +905,7 @@ public final class StaticResourceLoader
      * @param color The color to use to draw the number.
      * @return The generated Image.
      */
-    private static Image createNumberImage(int width, int height, int value,
+    private static @RPolyTainted Image createNumberImage(@RPolyTainted @RUntainted int width, @RPolyTainted @RUntainted int height, int value,
         boolean right, Color color)
     {
         BufferedImage bi = new BufferedImage(width, height,
@@ -942,7 +944,7 @@ public final class StaticResourceLoader
      * @param color The color to use to draw the String.
      * @return The generated Image.
      */
-    private static Image createNameImage(int width, int height, String name,
+    private static @RPolyTainted Image createNameImage(@RPolyTainted @RUntainted int width, @RPolyTainted @RUntainted int height, String name,
         boolean down, Color color)
     {
         BufferedImage bi = new BufferedImage(width, height,
@@ -982,7 +984,7 @@ public final class StaticResourceLoader
      * @param color The color to use to fill the rectangle.
      * @return The generated Image.
      */
-    private static Image createPlainImage(int width, int height, Color color)
+    private static @RPolyTainted Image createPlainImage(@RPolyTainted int width, @RPolyTainted int height, Color color)
     {
         return createPlainImage(width, height, color, 0, 0, width, height,
             false);
@@ -1016,7 +1018,7 @@ public final class StaticResourceLoader
      * @param border Whether to add a black border.
      * @return The generated Image.
      */
-    private static Image createPlainImage(int width, int height, Color color,
+    private static @RPolyTainted Image createPlainImage(@RPolyTainted @RUntainted int width, @RPolyTainted @RUntainted int height, Color color,
         int t_x, int t_y, int t_w, int t_h, boolean border)
     {
         BufferedImage bi = new BufferedImage(width, height,
@@ -1045,8 +1047,8 @@ public final class StaticResourceLoader
      *     with the opaque part filled the the given color, and everythin else
      *     white. The alpha channel (aka transparency) is untouched.
      */
-    private static Image createColorizedImage(String filename, Color color,
-        List<String> directories, int width, int height)
+    private static @RPolyTainted @RUntainted Image createColorizedImage(@RUntainted String filename, Color color,
+        @RUntainted List<@RUntainted String> directories, @RPolyTainted @RUntainted int width, @RPolyTainted @RUntainted int height)
     {
         Image temp = getImage(filename, directories, width, height);
         ImageIcon tempIcon = new ImageIcon(temp);
@@ -1100,7 +1102,7 @@ public final class StaticResourceLoader
      * Wait until the Image in parameter is fully drawn.
      * @param image Image to wait upon.
      */
-    private static void waitOnImage(Image image)
+    private static void waitOnImage(@RUntainted Image image)
     {
         ImageIcon icon = new ImageIcon(image);
         while (icon.getImageLoadStatus() == MediaTracker.LOADING)
@@ -1121,7 +1123,7 @@ public final class StaticResourceLoader
      *        0 will be returned.
      * @return The extracted number.
      */
-    private static int numberFromFilename(String filename, String prefix)
+    private static int numberFromFilename(@RUntainted String filename, @RUntainted String prefix)
     {
         if (!(filename.startsWith(prefix)))
         {
@@ -1183,7 +1185,7 @@ public final class StaticResourceLoader
      * name, otherwise "black" will be used as default value.
      * @return The extracted color name.
      */
-    private static String colorNameFromFilename(String filename, String prefix)
+    private static @RPolyTainted String colorNameFromFilename(@RPolyTainted @RUntainted String filename, @RPolyTainted @RUntainted String prefix)
     {
         if (!(filename.startsWith(prefix)))
         {
@@ -1242,7 +1244,7 @@ public final class StaticResourceLoader
      * @param prefix Prefix to ignore.
      * @return The extracted Color.
      */
-    private static Color colorFromFilename(String filename, String prefix)
+    private static Color colorFromFilename(@RUntainted String filename, @RUntainted String prefix)
     {
         return HTMLColor
             .stringToColor(colorNameFromFilename(filename, prefix));
@@ -1253,7 +1255,7 @@ public final class StaticResourceLoader
      * @param filename Filename to fix.
      * @return The fixed filename.
      */
-    private static String fixFilename(String filename)
+    private static @RPolyTainted String fixFilename(@RPolyTainted String filename)
     {
         return filename.replace(' ', '_');
     }
@@ -1266,8 +1268,8 @@ public final class StaticResourceLoader
      * @return A new object, instance from the given class.
      * @throws ObjectCreationException iff the object could not be created
      */
-    public static Object getNewObject(String className,
-        List<String> directories) throws ObjectCreationException
+    public static @RUntainted Object getNewObject(@RUntainted String className,
+        List<@RUntainted String> directories) throws ObjectCreationException
     {
         return getNewObject(className, directories, null);
     }
@@ -1285,8 +1287,8 @@ public final class StaticResourceLoader
      *         instantiation failed.
      * @throws ObjectCreationException iff the object could not be created for some reason
      */
-    public static Object getNewObject(String className,
-        List<String> directories, Object[] parameter)
+    public static @RUntainted Object getNewObject(@RUntainted String className,
+        @RUntainted List<@RUntainted String> directories, Object[] parameter)
         throws ObjectCreationException
     {
         Class<?> theClass = null;
@@ -1317,7 +1319,7 @@ public final class StaticResourceLoader
                 LOGGER.log(Level.INFO,
                     "Loading or instantiating class' constructor for \""
                         + className + "\" failed", e);
-                Constructor<?>[] constructors = theClass.getConstructors();
+                @RUntainted Constructor<?>[] constructors = theClass.getConstructors();
                 for (int i = 0; i < constructors.length; i++)
                 {
                     LOGGER.log(Level.INFO, "I have access to: "

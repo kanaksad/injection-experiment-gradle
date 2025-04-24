@@ -23,6 +23,7 @@ import net.sf.colossus.util.Predicate;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -50,11 +51,11 @@ public class BattleClientSide extends Battle
         .getLogger(BattleClientSide.class.getName());
 
     private BattlePhase battlePhase;
-    private Player battleActivePlayer;
+    private @RUntainted Player battleActivePlayer;
 
-    private final List<BattleUnit> battleUnits = new ArrayList<BattleUnit>();
+    private final List<@RUntainted BattleUnit> battleUnits = new ArrayList<@RUntainted BattleUnit>();
 
-    public BattleClientSide(Game game, Legion attacker, Legion defender,
+    public BattleClientSide(Game game, @RUntainted Legion attacker, @RUntainted Legion defender,
         MasterHex location)
     {
         super(game, attacker, defender, location);
@@ -64,7 +65,7 @@ public class BattleClientSide extends Battle
             + " in land " + location.getTerrain().getDisplayName());
     }
 
-    public void init(int battleTurnNumber, Player battleActivePlayer,
+    public void init(@RUntainted int battleTurnNumber, @RUntainted Player battleActivePlayer,
         BattlePhase battlePhase)
     {
         this.battleTurnNumber = battleTurnNumber;
@@ -81,7 +82,7 @@ public class BattleClientSide extends Battle
         return (GameClientSide)game;
     }
 
-    public Player getBattleActivePlayer()
+    public @RUntainted Player getBattleActivePlayer()
     {
         return battleActivePlayer;
     }
@@ -96,7 +97,7 @@ public class BattleClientSide extends Battle
     }
 
     @Override
-    public Legion getBattleActiveLegion()
+    public @RUntainted Legion getBattleActiveLegion()
     {
         if (battleActivePlayer.equals(getDefendingLegion().getPlayer()))
         {
@@ -123,8 +124,8 @@ public class BattleClientSide extends Battle
         return this.battlePhase == phase;
     }
 
-    public void setupPhase(BattlePhase phase, Player battleActivePlayer,
-        int battleTurnNumber)
+    public void setupPhase(BattlePhase phase, @RUntainted Player battleActivePlayer,
+        @RUntainted int battleTurnNumber)
     {
         setBattlePhase(phase);
         setBattleActivePlayer(battleActivePlayer);
@@ -144,13 +145,13 @@ public class BattleClientSide extends Battle
         return "";
     }
 
-    public void setBattleActivePlayer(Player battleActivePlayer)
+    public void setBattleActivePlayer(@RUntainted Player battleActivePlayer)
     {
         this.battleActivePlayer = battleActivePlayer;
     }
 
     public void setupBattleFight(BattlePhase battlePhase,
-        Player battleActivePlayer)
+        @RUntainted Player battleActivePlayer)
     {
         setBattlePhase(battlePhase);
         setBattleActivePlayer(battleActivePlayer);
@@ -160,8 +161,8 @@ public class BattleClientSide extends Battle
         }
     }
 
-    public BattleUnit createBattleUnit(String imageName, boolean isDefender,
-        int tag, BattleHex hex, CreatureType type, Legion legion)
+    public @RUntainted BattleUnit createBattleUnit(@RUntainted String imageName, @RUntainted boolean isDefender,
+        @RUntainted int tag, @RUntainted BattleHex hex, @RUntainted CreatureType type, @RUntainted Legion legion)
     {
         BattleUnit battleUnit = new BattleUnit(imageName, isDefender, tag,
             hex, type, legion);
@@ -231,9 +232,9 @@ public class BattleClientSide extends Battle
     }
 
     @Override
-    public List<BattleCritter> getAllCritters()
+    public List<@RUntainted BattleCritter> getAllCritters()
     {
-        List<BattleCritter> critters = new ArrayList<BattleCritter>();
+        List<@RUntainted BattleCritter> critters = new ArrayList<@RUntainted BattleCritter>();
         for (BattleCritter critter : getBattleUnits())
         {
             critters.add(critter);
@@ -241,7 +242,7 @@ public class BattleClientSide extends Battle
         return critters;
     }
 
-    public List<BattleUnit> getBattleUnits()
+    public List<@RUntainted BattleUnit> getBattleUnits()
     {
         return Collections.unmodifiableList(battleUnits);
     }
@@ -337,9 +338,9 @@ public class BattleClientSide extends Battle
      *  valid strike targets.
      *  @param client The client.
      */
-    Set<BattleHex> findCrittersWithTargets(Client client)
+    Set<@RUntainted BattleHex> findCrittersWithTargets(Client client)
     {
-        Set<BattleHex> set = new HashSet<BattleHex>();
+        Set<@RUntainted BattleHex> set = new HashSet<@RUntainted BattleHex>();
         for (BattleCritter battleUnit : getActiveBattleUnits())
         {
             if (findTargets(battleUnit, true).size() > 0)
@@ -368,7 +369,7 @@ public class BattleClientSide extends Battle
 
     // Not a candidate to pull up: tag-to-BattleUnit resolving is
     // purely a client side issue. Even resolve-data-from-network issue?
-    public Set<BattleHex> findTargets(int tag)
+    public Set<@RUntainted BattleHex> findTargets(int tag)
     {
         BattleCritter battleUnit = getBattleUnit(tag);
         return findTargets(battleUnit, true);
@@ -382,10 +383,10 @@ public class BattleClientSide extends Battle
      *  @param rangestrike Whether to include rangestrike targets
      *  @return a set of hexes containing targets
      */
-    public Set<BattleHex> findTargets(BattleCritter battleUnit,
+    public Set<@RUntainted BattleHex> findTargets(BattleCritter battleUnit,
         boolean rangestrike)
     {
-        Set<BattleHex> set = new HashSet<BattleHex>();
+        Set<@RUntainted BattleHex> set = new HashSet<@RUntainted BattleHex>();
 
         // Each creature may strike only once per turn.
         if (battleUnit.hasStruck())
@@ -508,7 +509,7 @@ public class BattleClientSide extends Battle
      * TODO can they be unified? Or move to e.g. some class in ai.helper package?
      */
     @Deprecated
-    public int minRangeToEnemy(BattleCritter critter)
+    public @RUntainted int minRangeToEnemy(BattleCritter critter)
     {
         BattleHex hex = critter.getCurrentHex();
         int min = Constants.OUT_OF_RANGE;

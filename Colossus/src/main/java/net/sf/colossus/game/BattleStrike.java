@@ -10,6 +10,7 @@ import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.HazardHexside;
 import net.sf.colossus.variant.HazardTerrain;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class BattleStrike
@@ -32,7 +33,7 @@ public class BattleStrike
      * @param striker TODO
      * @param target TODO
      */
-    public int getDice(BattleCritter striker, BattleCritter target)
+    public @RUntainted int getDice(BattleCritter striker, BattleCritter target)
     {
         BattleHex hex = striker.getCurrentHex();
         BattleHex targetHex = target.getCurrentHex();
@@ -98,7 +99,7 @@ public class BattleStrike
      * @param target TODO
      */
     @SuppressWarnings("deprecation")
-    public int getAttackerSkill(BattleCritter striker, BattleCritter target)
+    public @RUntainted int getAttackerSkill(BattleCritter striker, BattleCritter target)
     {
         BattleHex hex = striker.getCurrentHex();
         BattleHex targetHex = target.getCurrentHex();
@@ -188,7 +189,7 @@ public class BattleStrike
      * @param striker TODO
      * @param target TODO
      */
-    public int getStrikeNumber(BattleCritter striker, BattleCritter target)
+    public @RUntainted int getStrikeNumber(BattleCritter striker, BattleCritter target)
     {
         boolean rangestrike = !getBattle().isInContact(striker, true);
 
@@ -237,8 +238,8 @@ public class BattleStrike
         return strikeNumber;
     }
 
-    public int determineProbabilityBasedHits(Creature striker,
-        Creature target, int dice, int strikeNumber, List<String> rolls)
+    public @RUntainted int determineProbabilityBasedHits(Creature striker,
+        Creature target, @RUntainted int dice, @RUntainted int strikeNumber, List<@RUntainted String> rolls)
     {
         // for logging
         StringBuilder rollString = new StringBuilder(36);
@@ -312,8 +313,8 @@ public class BattleStrike
         return damage;
     }
 
-    public int rollDice(Creature striker, Creature target, int dice,
-        int strikeNumber, List<String> rolls, boolean randomized)
+    public @RUntainted int rollDice(Creature striker, Creature target, int dice,
+        @RUntainted int strikeNumber, List<@RUntainted String> rolls, boolean randomized)
     {
         // for logging
         StringBuilder rollString = new StringBuilder(36);
@@ -348,7 +349,7 @@ public class BattleStrike
      * @return a battle roll
      */
 
-    private int rollPlayersBattleDice(Creature striker)
+    private @RUntainted int rollPlayersBattleDice(Creature striker)
     {
         return striker.getPlayer().makeBattleRoll();
     }

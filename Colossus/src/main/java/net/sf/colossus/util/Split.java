@@ -3,6 +3,7 @@ package net.sf.colossus.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -20,14 +21,14 @@ public final class Split
 {
 
     /** Split the string into a list of substrings delimited by sep. */
-    public static List<String> split(final char sep, final String s)
+    public static List<@RUntainted String> split(final @RUntainted char sep, final @RUntainted String s)
     {
         return split("" + sep, s);
     }
 
-    public static List<String> split(final String sep, final String s)
+    public static @RUntainted List<@RUntainted String> split(final @RUntainted String sep, final @RUntainted String s)
     {
-        List<String> list = new ArrayList<String>();
+        List<@RUntainted String> list = new ArrayList<@RUntainted String>();
 
         int pos = 0;
         int len = s.length();

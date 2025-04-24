@@ -2,6 +2,7 @@ package net.sf.colossus.common;
 
 
 import java.beans.PropertyChangeListener;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -65,7 +66,7 @@ public interface IOptions
         public void stringOptionChanged(
             @SuppressWarnings("unused") String optname,
             @SuppressWarnings("unused") String oldValue,
-            @SuppressWarnings("unused") String newValue)
+            @SuppressWarnings("unused") @RUntainted String newValue)
         {
             // default does nothing
         }
@@ -87,17 +88,17 @@ public interface IOptions
      */
     void removeListener(Listener listener);
 
-    boolean getOption(String optname);
+    boolean getOption(@RUntainted String optname);
 
-    boolean getOption(String optname, boolean defaultValue);
+    boolean getOption(@RUntainted String optname, boolean defaultValue);
 
-    String getStringOption(String optname);
+    @RUntainted String getStringOption(@RUntainted String optname);
 
-    int getIntOption(String optname);
+    int getIntOption(@RUntainted String optname);
 
-    void setOption(String optname, String value);
+    void setOption(@RUntainted String optname, String value);
 
-    void setOption(String optname, boolean value);
+    void setOption(@RUntainted String optname, boolean value);
 
-    void setOption(String optname, int value);
+    void setOption(@RUntainted String optname, int value);
 }

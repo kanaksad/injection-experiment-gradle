@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.sf.colossus.util.Glob;
 import net.sf.colossus.util.Split;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -16,17 +17,17 @@ import net.sf.colossus.util.Split;
  */
 public final class Proposal
 {
-    private final Legion attacker;
-    private final Legion defender;
+    private final @RUntainted Legion attacker;
+    private final @RUntainted Legion defender;
     private final boolean fight;
     private final boolean mutual;
-    private final Legion winner;
-    private final List<String> winnerLosses;
+    private final @RUntainted Legion winner;
+    private final List<@RUntainted String> winnerLosses;
 
     private static final String sep = Glob.sep;
 
-    public Proposal(Legion attacker, Legion defender, boolean fight,
-        boolean mutual, Legion winner, List<String> winnerLosses)
+    public Proposal(@RUntainted Legion attacker, @RUntainted Legion defender, boolean fight,
+        boolean mutual, @RUntainted Legion winner, List<@RUntainted String> winnerLosses)
     {
         this.attacker = attacker;
         this.defender = defender;
@@ -40,17 +41,17 @@ public final class Proposal
         }
     }
 
-    public Legion getAttacker()
+    public @RUntainted Legion getAttacker()
     {
         return attacker;
     }
 
-    public Legion getDefender()
+    public @RUntainted Legion getDefender()
     {
         return defender;
     }
 
-    public Legion getWinner()
+    public @RUntainted Legion getWinner()
     {
         return winner;
     }
@@ -81,7 +82,7 @@ public final class Proposal
         return mutual;
     }
 
-    public List<String> getWinnerLosses()
+    public List<@RUntainted String> getWinnerLosses()
     {
         return winnerLosses;
     }
@@ -139,7 +140,7 @@ public final class Proposal
     }
 
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         StringBuilder sb = new StringBuilder();
         sb.append(fight);
@@ -170,9 +171,9 @@ public final class Proposal
     }
 
     /** Create a Proposal from a {sep}-separated list of fields. */
-    public static Proposal makeFromString(String s, Game game)
+    public static Proposal makeFromString(@RUntainted String s, Game game)
     {
-        List<String> li = Split.split(sep, s);
+        List<@RUntainted String> li = Split.split(sep, s);
 
         boolean fight = Boolean.valueOf(li.remove(0)).booleanValue();
         boolean mutual = Boolean.valueOf(li.remove(0)).booleanValue();
@@ -186,7 +187,7 @@ public final class Proposal
         {
             winner = game.getLegionByMarkerId(winnerId);
         }
-        List<String> winnerLosses = li;
+        List<@RUntainted String> winnerLosses = li;
 
         return new Proposal(attacker, defender, fight, mutual, winner,
             winnerLosses);

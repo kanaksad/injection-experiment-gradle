@@ -53,6 +53,8 @@ import net.sf.colossus.xmlparser.TerrainRecruitLoader;
 
 import org.jdom.DataConversionException;
 import org.jdom.Element;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
 
 
 /**
@@ -80,13 +82,13 @@ public class GameServerSide extends Game
     private boolean acquiring;
     private int pointsScored;
     private int turnCombatFinished;
-    private Legion winner;
+    private @RUntainted Legion winner;
     private String engagementResult;
     private boolean pendingAdvancePhase;
 
     private boolean loadingGame;
     private boolean replayOngoing = false;
-    private Server server;
+    private @RUntainted Server server;
     private boolean wasLoaded = false;
 
     // Negotiation
@@ -99,11 +101,11 @@ public class GameServerSide extends Game
     private final Options options;
 
     private String hostingPlayerName = null;
-    private String flagFilename = null;
+    private @RUntainted String flagFilename = null;
     private INotifyWebServer notifyWebServer = null;
     private WebClient startingWebClient = null;
 
-    private final WhatNextManager whatNextManager;
+    private final @RUntainted WhatNextManager whatNextManager;
     private History history;
 
     private final BattleStrikeServerSide battleStrikeSS;
@@ -139,7 +141,7 @@ public class GameServerSide extends Game
     /** Shortcut for UnitTests,
      *  to create a Game with dummy input objects on the fly.
      */
-    static GameServerSide makeNewGameServerSide(Variant variant)
+    static GameServerSide makeNewGameServerSide(@RUntainted Variant variant)
     {
         Options startOptions = new Options(Constants.OPTIONS_START);
         WhatNextManager whatNextManager = new WhatNextManager(startOptions);
@@ -156,7 +158,7 @@ public class GameServerSide extends Game
      * @return
      */
     static public GameServerSide newGameServerSide(
-        WhatNextManager whatNextMgr, Options serverOptions, Variant variant)
+        @RUntainted WhatNextManager whatNextMgr, Options serverOptions, @RUntainted Variant variant)
     {
         if (Options.isFunctionalTest())
         {
@@ -177,8 +179,8 @@ public class GameServerSide extends Game
      *        GetPlayers dialog and/or command line options.
      * @param variant Variant of this game
      */
-    public GameServerSide(WhatNextManager whatNextMgr, Options serverOptions,
-        Variant variant)
+    public GameServerSide(@RUntainted WhatNextManager whatNextMgr, Options serverOptions,
+        @RUntainted Variant variant)
     {
         super(variant, new String[0]);
         // later perhaps from command line, GUI, or WebServer set it?
@@ -230,7 +232,7 @@ public class GameServerSide extends Game
         });
     }
 
-    public void setFlagFilename(String flagFilename)
+    public void setFlagFilename(@RUntainted String flagFilename)
     {
         this.flagFilename = flagFilename;
     }
@@ -250,7 +252,7 @@ public class GameServerSide extends Game
         return hostingPlayerName;
     }
 
-    private int getPort()
+    private @RUntainted int getPort()
     {
         int port = options.getIntOption(Options.serveAtPort);
         if (port < 0)
@@ -436,8 +438,8 @@ public class GameServerSide extends Game
         }
     }
 
-    private void createLocalClient(PlayerServerSide player, boolean createGUI,
-        String type)
+    private void createLocalClient(PlayerServerSide player, @RUntainted boolean createGUI,
+        @RUntainted String type)
     {
         String playerName = player.getName();
         boolean dontUseOptionsFile = player.isAI();
@@ -476,7 +478,7 @@ public class GameServerSide extends Game
         }
     }
 
-    protected void storeLocalClient(String playerName, Client c)
+    protected void storeLocalClient(@RUntainted String playerName, @RUntainted Client c)
     {
         LOGGER.finest("Created local client with name " + playerName
             + ", isNull: " + (c == null));
@@ -664,7 +666,7 @@ public class GameServerSide extends Game
      */
     private void sortPlayersDescendingTower()
     {
-        List<PlayerServerSide> playersSS = new ArrayList<PlayerServerSide>();
+        List<@RUntainted PlayerServerSide> playersSS = new ArrayList<@RUntainted PlayerServerSide>();
         for (Player p : getPlayers())
         {
             playersSS.add((PlayerServerSide)p);
@@ -691,7 +693,7 @@ public class GameServerSide extends Game
     }
 
     /** If the name is taken, add random digits to the end. */
-    String getUniqueName(final String name, Player player)
+    @RUntainted String getUniqueName(final @RUntainted String name, Player player)
     {
         if (!nameIsTaken(name, player))
         {
@@ -709,7 +711,7 @@ public class GameServerSide extends Game
      *
      * @param mustAlreadyExist Do not consider <By client> matching.
      */
-    Player findNetworkPlayer(final String playerName, boolean mustAlreadyExist)
+    Player findNetworkPlayer(final @RUntainted String playerName, boolean mustAlreadyExist)
     {
         for (int i = 0; i < getNumPlayers(); i++)
         {
@@ -741,7 +743,7 @@ public class GameServerSide extends Game
     /** Send all current game option values to all clients. */
     private void syncOptions()
     {
-        Enumeration<String> en = options.propertyNames();
+        Enumeration<@RUntainted String> en = options.propertyNames();
 
         while (en.hasMoreElements())
         {
@@ -826,7 +828,7 @@ public class GameServerSide extends Game
         }
     }
 
-    private String makeNameByType(String templateName, String type)
+    private @RUntainted String makeNameByType(@RUntainted String templateName, String type)
     {
         String number = templateName.substring(Constants.byType.length());
         // type is the full class name of client, e.g.
@@ -876,7 +878,7 @@ public class GameServerSide extends Game
         return newName;
     }
 
-    void assignColor(Player player, PlayerColor color)
+    void assignColor(@RUntainted Player player, @RUntainted PlayerColor color)
     {
         colorPickOrder.remove(player);
         colorsLeft.remove(color);
@@ -947,11 +949,11 @@ public class GameServerSide extends Game
     private void assignTowers()
     {
         int numPlayers = getNumPlayers();
-        MasterHex[] playerTower = new MasterHex[numPlayers];
-        Set<MasterHex> towerSet = getVariant().getMasterBoard().getTowerSet();
+        @RUntainted MasterHex[] playerTower = new MasterHex[numPlayers];
+        Set<@RUntainted MasterHex> towerSet = getVariant().getMasterBoard().getTowerSet();
 
         // first create a list with all tower hexes
-        List<MasterHex> towerList = new ArrayList<MasterHex>(towerSet);
+        List<@RUntainted MasterHex> towerList = new ArrayList<@RUntainted MasterHex>(towerSet);
 
         if (getOption(Options.balancedTowers))
         {
@@ -977,8 +979,8 @@ public class GameServerSide extends Game
 
     /** Return a list with a balanced order of numPlayer towers chosen
      from towerList, which must hold numeric strings. */
-    static List<MasterHex> getBalancedTowers(int numPlayers,
-        final List<MasterHex> towerList)
+    static List<@RPolyTainted MasterHex> getBalancedTowers(int numPlayers,
+        final List<@RPolyTainted MasterHex> towerList)
     {
         int numTowers = towerList.size();
 
@@ -1042,7 +1044,7 @@ public class GameServerSide extends Game
         return server;
     }
 
-    PlayerServerSide createAndAddPlayer(String name, String shortTypeName)
+    @RUntainted PlayerServerSide createAndAddPlayer(@RUntainted String name, @RUntainted String shortTypeName)
     {
         PlayerServerSide player = new PlayerServerSide(name, this,
             shortTypeName);
@@ -1057,7 +1059,7 @@ public class GameServerSide extends Game
         return activePlayerNum;
     }
 
-    Player getActivePlayer()
+    @RUntainted Player getActivePlayer()
     {
         // Sanity check in case called before all players are loaded.
         if (activePlayerNum < players.size())
@@ -1071,7 +1073,7 @@ public class GameServerSide extends Game
     }
 
     // TODO store only in GameSS, not in PlayerSS
-    private void makeMovementRoll(String reason)
+    private void makeMovementRoll(@RUntainted String reason)
     {
         Player player = getActivePlayer();
         int roll = ((PlayerServerSide)player).rollMovement(reason);
@@ -1082,7 +1084,7 @@ public class GameServerSide extends Game
     }
 
     @Override
-    public int getMovementRoll()
+    public @RUntainted int getMovementRoll()
     {
         return ((PlayerServerSide)getActivePlayer()).getMovementRoll();
     }
@@ -1093,7 +1095,7 @@ public class GameServerSide extends Game
      * @param playerName
      * @return The player object for given player name, null if name was null
      */
-    Player getPlayerByNameIgnoreNull(String playerName)
+    @RUntainted Player getPlayerByNameIgnoreNull(@RUntainted String playerName)
     {
         if (playerName == null)
         {
@@ -1114,7 +1116,7 @@ public class GameServerSide extends Game
      * @param playerName
      * @return Player object for given name.
      */
-    Player getPlayerByName(String playerName)
+    @RUntainted Player getPlayerByName(@RUntainted String playerName)
     {
         assert playerName != null : "Name for player to find must not be null!";
 
@@ -1161,7 +1163,7 @@ public class GameServerSide extends Game
      *
      * TODO Notify all players.
      */
-    void handlePlayerWithdrawal(Player player)
+    void handlePlayerWithdrawal(@RUntainted Player player)
     {
         String name = player.getName();
 
@@ -1252,7 +1254,7 @@ public class GameServerSide extends Game
         }
     }
 
-    private void announceGameOver(boolean disposeFollows, boolean suspended)
+    private void announceGameOver(@RUntainted boolean disposeFollows, @RUntainted boolean suspended)
     {
         server.allFullyUpdateAllLegionContents(Constants.reasonGameOver);
         LOGGER.info("Announcing: Game over -- " + getGameOverMessage());
@@ -1307,7 +1309,7 @@ public class GameServerSide extends Game
      * Advance to the next phase, only if the passed oldPhase and playerName
      * are current.
      */
-    void advancePhase(final Phase oldPhase, final Player player)
+    void advancePhase(final @RUntainted Phase oldPhase, final @RUntainted Player player)
     {
         if (oldPhase != phase)
         {
@@ -1351,7 +1353,7 @@ public class GameServerSide extends Game
     }
 
     @Override
-    public void setGameOver(boolean gameOver, String message)
+    public void setGameOver(boolean gameOver, @RUntainted String message)
     {
         super.setGameOver(gameOver, message);
         if (startingWebClient != null)
@@ -1613,12 +1615,12 @@ public class GameServerSide extends Game
         return iscMessages;
     }
 
-    void saveGameWithErrorHandling(String filename, boolean autoSave)
+    void saveGameWithErrorHandling(@RUntainted String filename, boolean autoSave)
     {
         gameSaver.saveGameWithErrorHandling(filename, autoSave);
     }
 
-    public boolean loadGameAndWaitUntilOver(Element root)
+    public boolean loadGameAndWaitUntilOver(@RUntainted Element root)
     {
         boolean ok = loadGame(root);
         if (ok)
@@ -1634,7 +1636,7 @@ public class GameServerSide extends Game
 
     // JDOM lacks generics, so we need casts
     @SuppressWarnings("unchecked")
-    public boolean loadGame(Element root)
+    public boolean loadGame(@RUntainted Element root)
     {
         CustomRecruitBase.resetAllInstances();
         CustomRecruitBase.setGame(this);
@@ -1658,8 +1660,8 @@ public class GameServerSide extends Game
             setPhase(Phase.fromInt(Integer.parseInt(el.getTextTrim())));
 
             Element ct = root.getChild("Caretaker");
-            List<Element> kids = ct.getChildren();
-            Iterator<Element> it = kids.iterator();
+            List<@RUntainted Element> kids = ct.getChildren();
+            Iterator<@RUntainted Element> it = kids.iterator();
 
             while (it.hasNext())
             {
@@ -1680,7 +1682,7 @@ public class GameServerSide extends Game
             }
 
             // Players
-            List<Element> playerElements = root.getChildren("Player");
+            List<@RUntainted Element> playerElements = root.getChildren("Player");
 
             for (Element pla : playerElements)
             {
@@ -1724,7 +1726,7 @@ public class GameServerSide extends Game
                 }
                 player.setPlayersElim(playersElim);
 
-                List<Element> legionElements = pla.getChildren("Legion");
+                List<@RUntainted Element> legionElements = pla.getChildren("Legion");
                 Iterator<Element> it2 = legionElements.iterator();
                 while (it2.hasNext())
                 {
@@ -1757,9 +1759,9 @@ public class GameServerSide extends Game
                 boolean preStrikeEffectsApplied = bat.getAttribute(
                     "preStrikeEffectsApplied").getBooleanValue();
 
-                List<Element> cts = bat.getChildren("CarryTarget");
+                List<@RUntainted Element> cts = bat.getChildren("CarryTarget");
                 Set<BattleHex> carryTargets = new HashSet<BattleHex>();
-                Iterator<Element> it2 = cts.iterator();
+                Iterator<@RUntainted Element> it2 = cts.iterator();
                 while (it2.hasNext())
                 {
                     Element cart = it2.next();
@@ -1832,8 +1834,8 @@ public class GameServerSide extends Game
         }
     }
 
-    public void createBattle(Legion attacker, Legion defender,
-        BattleServerSide.LegionTags activeLegionTag, MasterHex engagementHex,
+    public void createBattle(@RUntainted Legion attacker, @RUntainted Legion defender,
+        BattleServerSide.LegionTags activeLegionTag, @RUntainted MasterHex engagementHex,
         BattlePhase battlePhase)
     {
         battle = new BattleServerSide(this, attacker, defender,
@@ -1842,7 +1844,7 @@ public class GameServerSide extends Game
 
     // JDOM lacks generics, so we need casts
     @SuppressWarnings("unchecked")
-    private void readLegion(Element leg, PlayerServerSide player)
+    private void readLegion(@RUntainted Element leg, @RUntainted PlayerServerSide player)
         throws DataConversionException
     {
         String markerId = leg.getAttribute("name").getValue();
@@ -1888,7 +1890,7 @@ public class GameServerSide extends Game
             LOGGER.warning("Legion for marker does already exist?");
         }
 
-        List<Element> creatureElements = leg.getChildren("Creature");
+        List<@RUntainted Element> creatureElements = leg.getChildren("Creature");
         for (Element cre : creatureElements)
         {
             String name = cre.getAttribute("name").getValue();
@@ -2003,7 +2005,7 @@ public class GameServerSide extends Game
         return ok;
     }
 
-    private boolean resyncBackupData()
+    private @RUntainted boolean resyncBackupData()
     {
         boolean allOk = true;
         for (Player player : getPlayers())
@@ -2059,7 +2061,7 @@ public class GameServerSide extends Game
 
     /** Return a list of eligible recruiter creatures. */
     private List<CreatureType> findEligibleRecruiters(Legion legion,
-        String recruitName)
+        @RUntainted String recruitName)
     {
         List<CreatureType> recruiters;
         CreatureType recruit = getVariant().getCreatureByName(recruitName);
@@ -2100,7 +2102,7 @@ public class GameServerSide extends Game
     }
 
     /** Add recruit to legion. */
-    void doRecruit(Legion legion, CreatureType recruit, CreatureType recruiter)
+    void doRecruit(@RUntainted Legion legion, @RUntainted CreatureType recruit, CreatureType recruiter)
     {
         if (recruit == null)
         {
@@ -2171,7 +2173,7 @@ public class GameServerSide extends Game
         }
     }
 
-    public void editModeAddCreature(String markerId, String creatureName)
+    public void editModeAddCreature(String markerId, @RUntainted String creatureName)
     {
         CreatureType creature = getVariant().getCreatureByName(creatureName);
         Player player = getPlayerByMarkerId(markerId);
@@ -2183,7 +2185,7 @@ public class GameServerSide extends Game
         server.allTellAddCreature(event, true, Constants.reasonEdit);
     }
 
-    public void editModeRemoveCreature(String markerId, String creatureName)
+    public void editModeRemoveCreature(String markerId, @RUntainted String creatureName)
     {
         CreatureType creature = getVariant().getCreatureByName(creatureName);
         Player player = getPlayerByMarkerId(markerId);
@@ -2260,7 +2262,7 @@ public class GameServerSide extends Game
         }
     }
 
-    private void placeInitialLegion(PlayerServerSide player, String markerId)
+    private void placeInitialLegion(@RUntainted PlayerServerSide player, @RUntainted String markerId)
     {
         String name = player.getName();
         player.selectMarkerId(markerId);
@@ -2273,13 +2275,13 @@ public class GameServerSide extends Game
     }
 
     public boolean hasConventionalMove(LegionServerSide legion, MasterHex hex,
-        int roll, boolean ignoreFriends)
+        @RUntainted int roll, boolean ignoreFriends)
     {
         return !movementSS.listNormalMoves(legion, hex, roll, ignoreFriends,
             null, false).isEmpty();
     }
 
-    void createSummonAngel(Legion attacker)
+    void createSummonAngel(@RUntainted Legion attacker)
     {
         if (!isGameOver())
         {
@@ -2289,7 +2291,7 @@ public class GameServerSide extends Game
     }
 
     /** Called locally and from Battle. */
-    void reinforce(Legion legion)
+    void reinforce(@RUntainted Legion legion)
     {
         reinforcing = true;
         server.reinforce(legion);
@@ -2412,8 +2414,8 @@ public class GameServerSide extends Game
 
     /** Return true and call Server.didSplit() if the split succeeded.
      *  Return false if it failed. */
-    boolean doSplit(Legion parent, String childId,
-        List<CreatureType> creaturesToSplit)
+    boolean doSplit(@RUntainted Legion parent, @RUntainted String childId,
+        List<@RUntainted CreatureType> creaturesToSplit)
     {
         PlayerServerSide player = (PlayerServerSide)parent.getPlayer();
 
@@ -2534,8 +2536,8 @@ public class GameServerSide extends Game
     /** Move the legion to the hex if legal.  Return a string telling
      *  the reason why it is illegal, or null if ok and move was done.
      */
-    String doMove(Legion legion, MasterHex hex, EntrySide entrySide,
-        boolean teleport, CreatureType teleportingLord)
+    @RUntainted String doMove(@RUntainted Legion legion, @RUntainted MasterHex hex, @RUntainted EntrySide entrySide,
+        boolean teleport, @RUntainted CreatureType teleportingLord)
     {
         assert legion != null : "Legion must not be null";
 
@@ -2600,7 +2602,7 @@ public class GameServerSide extends Game
                         .toString() + " does not contain '" + teleportingLord
                     + "'";
             }
-            List<CreatureType> creatures = new ArrayList<CreatureType>();
+            List<@RUntainted CreatureType> creatures = new ArrayList<@RUntainted CreatureType>();
             creatures.add(teleportingLord);
             server.allRevealCreatures(legion, creatures,
                 Constants.reasonTeleport);
@@ -2629,7 +2631,7 @@ public class GameServerSide extends Game
             splitLegionHasForcedMove);
     }
 
-    void engage(MasterHex hex)
+    void engage(@RUntainted MasterHex hex)
     {
         // Do not allow clicking on engagements if one is
         // already being resolved.
@@ -2679,7 +2681,7 @@ public class GameServerSide extends Game
     }
 
     // Defender did not flee; attacker may concede early.
-    private void engage2(MasterHex hex)
+    private void engage2(@RUntainted MasterHex hex)
     {
         Player player = getActivePlayer();
         Legion attacker = getFirstFriendlyLegion(hex, player);
@@ -2689,7 +2691,7 @@ public class GameServerSide extends Game
     }
 
     // Attacker did not concede early; negotiate.
-    private void engage3(MasterHex hex)
+    private void engage3(@RUntainted MasterHex hex)
     {
         Player player = getActivePlayer();
         Legion attacker = getFirstFriendlyLegion(hex, player);
@@ -2700,7 +2702,7 @@ public class GameServerSide extends Game
         server.twoNegotiate(attacker, defender);
     }
 
-    void flee(Legion legion)
+    void flee(@RUntainted Legion legion)
     {
         Legion attacker = getFirstEnemyLegion(legion.getCurrentHex(),
             legion.getPlayer());
@@ -2708,7 +2710,7 @@ public class GameServerSide extends Game
         handleConcession(legion, attacker, true);
     }
 
-    void concede(Legion attacker)
+    void concede(@RUntainted Legion attacker)
     {
         if (battleInProgress)
         {
@@ -2739,7 +2741,7 @@ public class GameServerSide extends Game
     }
 
     /** playerName offers proposal. */
-    void makeProposal(String playerName, String proposalString)
+    void makeProposal(String playerName, @RUntainted String proposalString)
     {
         // If it's too late to negotiate, just throw this away.
         if (battleInProgress)
@@ -2797,7 +2799,7 @@ public class GameServerSide extends Game
         }
     }
 
-    void fight(MasterHex hex)
+    void fight(@RUntainted MasterHex hex)
     {
         if (!battleInProgress)
         {
@@ -2826,7 +2828,7 @@ public class GameServerSide extends Game
         }
     }
 
-    private void handleConcession(Legion loser, Legion winner, boolean fled)
+    private void handleConcession(@RUntainted Legion loser, @RUntainted Legion winner, boolean fled)
     {
         // Figure how many points the victor receives.
         int points = ((LegionServerSide)loser).getPointValue();
@@ -2947,8 +2949,8 @@ public class GameServerSide extends Game
             log.append(" loses creatures ");
 
             // Remove all dead creatures from the winning legion.
-            List<String> winnerLosses = results.getWinnerLosses();
-            Iterator<String> it = winnerLosses.iterator();
+            List<@RUntainted String> winnerLosses = results.getWinnerLosses();
+            Iterator<@RUntainted String> it = winnerLosses.iterator();
             while (it.hasNext())
             {
                 String creatureName = it.next();
@@ -3039,7 +3041,7 @@ public class GameServerSide extends Game
         checkEngagementDone();
     }
 
-    private void setEngagementResult(String aResult, Legion winner,
+    private void setEngagementResult(String aResult, @RUntainted Legion winner,
         int aPoints, int aTurn)
     {
         engagementResult = aResult;
@@ -3135,7 +3137,7 @@ public class GameServerSide extends Game
     }
 
     @Override
-    public LegionServerSide getLegionByMarkerId(String markerId)
+    public @RUntainted LegionServerSide getLegionByMarkerId(@RUntainted String markerId)
     {
         for (Player player : players)
         {
@@ -3152,7 +3154,7 @@ public class GameServerSide extends Game
     }
 
     // TODO copy and paste from Client class
-    public Player getPlayerByMarkerId(String markerId)
+    public @RUntainted Player getPlayerByMarkerId(String markerId)
     {
         assert markerId != null : "Parameter must not be null";
 
@@ -3161,7 +3163,7 @@ public class GameServerSide extends Game
     }
 
     // TODO copy and paste from Client class
-    private Player getPlayerUsingColor(String shortColor)
+    private @RUntainted Player getPlayerUsingColor(String shortColor)
     {
         assert players != null : "Game not yet initialized";
         assert shortColor != null : "Parameter must not be null";
@@ -3194,10 +3196,10 @@ public class GameServerSide extends Game
         return null;
     }
 
-    private LegionServerSide getStartingLegion(String markerId, MasterHex hex,
-        Player player)
+    private @RUntainted LegionServerSide getStartingLegion(@RUntainted String markerId, @RUntainted MasterHex hex,
+        @RUntainted Player player)
     {
-        CreatureType[] startCre = TerrainRecruitLoader
+        @RUntainted CreatureType[] startCre = TerrainRecruitLoader
             .getStartingCreatures(hex);
         LegionServerSide legion = new LegionServerSide(markerId, null, hex,
             hex, player, this, VariantSupport.getCurrentVariant()
@@ -3213,7 +3215,7 @@ public class GameServerSide extends Game
         return legion;
     }
 
-    int mulligan()
+    @RUntainted int mulligan()
     {
         if (getPhase() != Phase.MOVE)
         {
@@ -3231,7 +3233,7 @@ public class GameServerSide extends Game
         return player.getMovementRoll();
     }
 
-    int makeExtraRoll()
+    @RUntainted int makeExtraRoll()
     {
         if (getPhase() != Phase.MOVE)
         {
@@ -3254,12 +3256,12 @@ public class GameServerSide extends Game
         return options;
     }
 
-    boolean getOption(String optname)
+    @RUntainted boolean getOption(@RUntainted String optname)
     {
         return options.getOption(optname);
     }
 
-    int getIntOption(String optname)
+    int getIntOption(@RUntainted String optname)
     {
         return options.getIntOption(optname);
     }
@@ -3287,8 +3289,8 @@ public class GameServerSide extends Game
         history.mergeEvent(splitoffId, survivorId, turnNumber);
     }
 
-    void revealEvent(boolean allPlayers, List<Player> players, Legion legion,
-        List<CreatureType> creatureNames, String reason)
+    void revealEvent(@RUntainted boolean allPlayers, @RUntainted List<Player> players, @RUntainted Legion legion,
+        @RUntainted List<@RUntainted CreatureType> creatureNames, String reason)
     {
         history.revealEvent(allPlayers, players, legion, creatureNames,
             turnNumber, reason);

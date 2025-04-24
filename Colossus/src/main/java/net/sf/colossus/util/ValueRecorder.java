@@ -3,6 +3,7 @@ package net.sf.colossus.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -13,8 +14,8 @@ import java.util.List;
 public class ValueRecorder implements IValueRecorderItem
 {
     /** The current value */
-    private int value = 0;
-    private float scale = 1;
+    private @RUntainted int value = 0;
+    private @RUntainted float scale = 1;
     private final String desc;
     /** All the explanations and value changes */
     private final List<IValueRecorderItem> items = new ArrayList<IValueRecorderItem>();
@@ -85,7 +86,7 @@ public class ValueRecorder implements IValueRecorderItem
      * @param v By how much the value change.
      * @param r The reason of the change.
      */
-    public void add(int v, String r)
+    public void add(@RUntainted int v, String r)
     {
         items.add(new TrivialValueRecorderItem(v, r, false));
 
@@ -108,7 +109,7 @@ public class ValueRecorder implements IValueRecorderItem
      * @param v The new value to use.
      * @param r The reason of the change.
      */
-    public void resetTo(int v, String r)
+    public void resetTo(@RUntainted int v, String r)
     {
         items.add(new TrivialValueRecorderItem(v, r, true));
 
@@ -118,12 +119,12 @@ public class ValueRecorder implements IValueRecorderItem
     /** Get the value.
      * @return The current value.
      */
-    public int getValue()
+    public @RUntainted int getValue()
     {
         return Math.round(value * scale);
     }
 
-    public void setScale(float scale)
+    public void setScale(@RUntainted float scale)
     {
         this.scale = scale;
     }
@@ -133,7 +134,7 @@ public class ValueRecorder implements IValueRecorderItem
         return items.isEmpty();
     }
 
-    public String getWhy(String prefix)
+    public @RUntainted String getWhy(String prefix)
     {
         StringBuffer buf = new StringBuffer();
         for (IValueRecorderItem item : items)
@@ -171,7 +172,7 @@ public class ValueRecorder implements IValueRecorderItem
      * @return The detailed explanations and final value.
      */
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         return getWhy("") + " = " + getValue();
     }

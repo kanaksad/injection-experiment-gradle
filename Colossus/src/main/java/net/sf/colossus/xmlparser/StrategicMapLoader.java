@@ -15,6 +15,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -28,13 +29,13 @@ public class StrategicMapLoader
         .getLogger(StrategicMapLoader.class.getName());
 
     private boolean[][] show = null;
-    private int horizSize = -1;
-    private int vertSize = -1;
+    private @RUntainted int horizSize = -1;
+    private @RUntainted int vertSize = -1;
     private MasterHex[][] hexes = null;
 
     // we need to cast since JDOM is not generified
     @SuppressWarnings("unchecked")
-    public StrategicMapLoader(InputStream mapIS)
+    public StrategicMapLoader(@RUntainted InputStream mapIS)
     {
         SAXBuilder builder = new SAXBuilder();
         try
@@ -46,7 +47,7 @@ public class StrategicMapLoader
             hexes = new MasterHex[this.horizSize][this.vertSize];
             show = new boolean[this.horizSize][this.vertSize];
 
-            List<Element> hexlist = root.getChildren("hex");
+            List<@RUntainted Element> hexlist = root.getChildren("hex");
             for (Element el : hexlist)
             {
                 handleHex(el);
@@ -64,7 +65,7 @@ public class StrategicMapLoader
 
     // we need to cast since JDOM is not generified
     @SuppressWarnings("unchecked")
-    private void handleHex(Element el) throws JDOMException
+    private void handleHex(@RUntainted Element el) throws JDOMException
     {
         String label = el.getAttributeValue("label");
         String terrainId = el.getAttributeValue("terrain");
@@ -98,12 +99,12 @@ public class StrategicMapLoader
         this.hexes[xpos][ypos] = hex;
     }
 
-    public int getHorizSize()
+    public @RUntainted int getHorizSize()
     {
         return horizSize;
     }
 
-    public int getVertSize()
+    public @RUntainted int getVertSize()
     {
         return vertSize;
     }

@@ -8,6 +8,7 @@ import net.sf.colossus.client.Client;
 import net.sf.colossus.common.Options;
 import net.sf.colossus.common.WhatNextManager;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class GameServerSideTestAccess extends GameServerSide
@@ -27,8 +28,8 @@ public class GameServerSideTestAccess extends GameServerSide
      *        GetPlayers dialog and/or command line options.
      * @param variant Variant of this game
      */
-    public GameServerSideTestAccess(WhatNextManager whatNextMgr,
-        Options serverOptions, Variant variant)
+    public GameServerSideTestAccess(@RUntainted WhatNextManager whatNextMgr,
+        Options serverOptions, @RUntainted Variant variant)
     {
         super(whatNextMgr, serverOptions, variant);
 
@@ -37,7 +38,7 @@ public class GameServerSideTestAccess extends GameServerSide
     }
 
     @Override
-    protected void storeLocalClient(String playerName, Client c)
+    protected void storeLocalClient(@RUntainted String playerName, @RUntainted Client c)
     {
         LOGGER.finest("GSSTestAccess: Created local client with name "
             + playerName + ", isNull: " + (c == null));

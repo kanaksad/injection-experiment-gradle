@@ -9,6 +9,7 @@ import net.sf.colossus.common.Options;
 import net.sf.colossus.game.Game;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.MasterBoardTerrain;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**

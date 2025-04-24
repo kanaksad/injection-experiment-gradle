@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.colossus.util.RandomDotOrgFileReader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -25,11 +26,11 @@ public class PlayerSpecificDice
 
     private final RandomDotOrgFileReader randomSource;
 
-    private final int[] MovementStats = new int[6];
-    private int mmCount = 0;
+    private final @RUntainted int[] MovementStats = new int[6];
+    private @RUntainted int mmCount = 0;
 
-    private final int[] BattleStats = new int[6];
-    private int bsCount = 0;
+    private final @RUntainted int[] BattleStats = new int[6];
+    private @RUntainted int bsCount = 0;
 
     public PlayerSpecificDice()
     {
@@ -41,7 +42,7 @@ public class PlayerSpecificDice
         }
     }
 
-    public int rollMovementDie()
+    public @RUntainted int rollMovementDie()
     {
         // compared to "Dice", we omit the synchronized here: on server
         // side, there is always only one thread doing something.
@@ -51,7 +52,7 @@ public class PlayerSpecificDice
         return roll;
     }
 
-    public int rollBattleDie()
+    public @RUntainted int rollBattleDie()
     {
         int roll = randomSource.nextRoll();
         BattleStats[roll - 1]++;
@@ -69,7 +70,7 @@ public class PlayerSpecificDice
         printRollStats("Battle rolls", bsCount, BattleStats);
     }
 
-    private void printRollStats(String what, int rcount, int[] stats)
+    private void printRollStats(@RUntainted String what, @RUntainted int rcount, @RUntainted int[] stats)
     {
         LOGGER.log(Level.FINEST, "[rstats] Current D6 distribution for "
             + what + " (" + rcount + " rolls, " + (rcount / 6) + " each):\n"

@@ -16,6 +16,7 @@ import net.sf.colossus.webcommon.GameInfo;
 import net.sf.colossus.webcommon.IWebClient;
 import net.sf.colossus.webcommon.IWebServer;
 import net.sf.colossus.webcommon.User;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -48,7 +49,7 @@ public class WebServerClient implements IWebClient
     private final static String sep = IWebServer.WebProtocolSeparator;
 
     /** The client socket thread that handled the low-level connection stuff */
-    private final WebServerClientSocketThread cst;
+    private final @RUntainted WebServerClientSocketThread cst;
 
     /** The web server object that is managing all WebServerClients */
     private WebServer server;
@@ -57,7 +58,7 @@ public class WebServerClient implements IWebClient
     private boolean loggedIn = false;
 
     /** Client side version */
-    private int clientVersion;
+    private @RUntainted int clientVersion;
 
     /** The user associated with this WebClient connection */
     private User user = null;
@@ -67,15 +68,15 @@ public class WebServerClient implements IWebClient
      * we do not have a user yet. The parseLine sets then this variable
      * according to the username argument which was send from client.
      */
-    private String unverifiedUsername = null;
+    private @RUntainted String unverifiedUsername = null;
 
     /** Time when last gameStartsNowSent was sent (in ms since epoch) */
-    private long gameStartsNowSent = -1;
+    private @RUntainted long gameStartsNowSent = -1;
 
     /** Time when last gameStartsSoonSent was sent (in ms since epoch) */
-    private long gameStartsSoonSent = -1;
+    private @RUntainted long gameStartsSoonSent = -1;
 
-    public WebServerClient(WebServer server, Socket socket)
+    public WebServerClient(WebServer server, @RUntainted Socket socket)
     {
         // default initialization for clients that do not send this
         setClientVersion(0);
@@ -89,17 +90,17 @@ public class WebServerClient implements IWebClient
         cst.start();
     }
 
-    public WebServerClientSocketThread getWSCSThread()
+    public @RUntainted WebServerClientSocketThread getWSCSThread()
     {
         return cst;
     }
 
-    private void setClientVersion(int version)
+    private void setClientVersion(@RUntainted int version)
     {
         clientVersion = version;
     }
 
-    public int getClientVersion()
+    public @RUntainted int getClientVersion()
     {
         return clientVersion;
     }
@@ -114,7 +115,7 @@ public class WebServerClient implements IWebClient
         return this.user;
     }
 
-    String getUsername()
+    @RUntainted String getUsername()
     {
         if (user != null)
         {
@@ -126,12 +127,12 @@ public class WebServerClient implements IWebClient
         }
     }
 
-    public void setUnverifiedUsername(String name)
+    public void setUnverifiedUsername(@RUntainted String name)
     {
         this.unverifiedUsername = name;
     }
 
-    public String getUnverifiedUsername()
+    public @RUntainted String getUnverifiedUsername()
     {
         return unverifiedUsername;
     }
@@ -195,7 +196,7 @@ public class WebServerClient implements IWebClient
         }
     }
 
-    public boolean parseLine(String fromClient)
+    public @RUntainted boolean parseLine(@RUntainted String fromClient)
     {
         boolean done = false;
         boolean ok = true;
@@ -203,7 +204,7 @@ public class WebServerClient implements IWebClient
         String reason = null;
         GameInfo gi = null;
 
-        String[] tokens = fromClient.split(sep);
+        @RUntainted String[] tokens = fromClient.split(sep);
         String command = tokens[0];
 
         if (!command.equals(IWebServer.PingResponse))
@@ -369,8 +370,8 @@ public class WebServerClient implements IWebClient
             int ntarget = Integer.parseInt(tokens[11]);
             int nmax = Integer.parseInt(tokens[12]);
 
-            List<String> gameOptions = new ArrayList<String>();
-            List<String> teleportOptions = new ArrayList<String>();
+            List<@RUntainted String> gameOptions = new ArrayList<@RUntainted String>();
+            List<@RUntainted String> teleportOptions = new ArrayList<@RUntainted String>();
 
             if (getClientVersion() >= WebClient.WC_VERSION_SUPPORTS_EXTRA_OPTIONS)
             {
@@ -744,7 +745,7 @@ public class WebServerClient implements IWebClient
             if (user.getName().equalsIgnoreCase(unverifiedUsername)
                 && !user.getName().equals(unverifiedUsername))
             {
-                List<String> lines = makeCaseMismatchWarning(unverifiedUsername);
+                List<@RUntainted String> lines = makeCaseMismatchWarning(unverifiedUsername);
                 String message = "NOTE: Login name case (upper/lower) mismatch. See explanation in chat window!";
                 long when = new Date().getTime();
                 server.requestUserAttention(when, "SYSTEM", false,
@@ -759,9 +760,9 @@ public class WebServerClient implements IWebClient
         return done;
     }
 
-    private List<String> makeCaseMismatchWarning(String name)
+    private List<@RUntainted String> makeCaseMismatchWarning(@RUntainted String name)
     {
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<@RUntainted String> lines = new ArrayList<@RUntainted String>();
         lines.add("NOTE:");
         lines.add("Currently you are logged in as '" + name + "', ");
         lines.add("but the official name with which you registered to "
@@ -777,7 +778,7 @@ public class WebServerClient implements IWebClient
         return lines;
     }
 
-    public void processChatLine(String chatId, String sender, String message)
+    public void processChatLine(@RUntainted String chatId, @RUntainted String sender, @RUntainted String message)
     {
         if (!chatId.equals(IWebServer.generalChatName))
         {
@@ -841,7 +842,7 @@ public class WebServerClient implements IWebClient
      * message, this time with force flag set.
      */
 
-    private String ensureNotAlreadyLoggedIn(String username, boolean force)
+    private @RUntainted String ensureNotAlreadyLoggedIn(@RUntainted String username, boolean force)
     {
         String reason = null;
         // Do not set the real user here, otherwise in the re-login case
@@ -879,7 +880,7 @@ public class WebServerClient implements IWebClient
         return reason;
     }
 
-    public void systemMessage(long now, String message)
+    public void systemMessage(@RUntainted long now, @RUntainted String message)
     {
         if (getClientVersion() >= WebClient.WC_VERSION_GENERAL_MESSAGE)
         {
@@ -896,7 +897,7 @@ public class WebServerClient implements IWebClient
         }
     }
 
-    private void sendToClient(String s)
+    private void sendToClient(@RUntainted String s)
     {
         cst.sendToClient(s);
     }
@@ -906,29 +907,29 @@ public class WebServerClient implements IWebClient
         sendToClient(grantAdmin);
     }
 
-    public void didEnroll(String gameId, String username)
+    public void didEnroll(@RUntainted String gameId, @RUntainted String username)
     {
         sendToClient(didEnroll + sep + gameId + sep + username);
     }
 
-    public void didUnenroll(String gameId, String username)
+    public void didUnenroll(@RUntainted String gameId, @RUntainted String username)
     {
         sendToClient(didUnenroll + sep + gameId + sep + username);
     }
 
-    public void gameCancelled(String gameId, String byUser)
+    public void gameCancelled(@RUntainted String gameId, @RUntainted String byUser)
     {
         sendToClient(gameCancelled + sep + gameId + sep + byUser);
     }
 
-    public void userInfo(int loggedin, int enrolled, int playing, int dead,
-        long ago, String text)
+    public void userInfo(@RUntainted int loggedin, @RUntainted int enrolled, @RUntainted int playing, @RUntainted int dead,
+        @RUntainted long ago, @RUntainted String text)
     {
         sendToClient(userInfo + sep + loggedin + sep + enrolled + sep
             + playing + sep + dead + sep + ago + sep + text);
     }
 
-    public void tellOwnInfo(String email)
+    public void tellOwnInfo(@RUntainted String email)
     {
         sendToClient(tellOwnInfo + sep + email);
     }
@@ -942,7 +943,7 @@ public class WebServerClient implements IWebClient
         sendToClient(gameInfo + sep + giString);
     }
 
-    public void gameStartsSoon(String gameId, String byUser)
+    public void gameStartsSoon(@RUntainted String gameId, @RUntainted String byUser)
     {
         gameStartsSoonSent = new Date().getTime();
         sendToClient(gameStartsSoon + sep + gameId + sep + byUser);
@@ -951,9 +952,9 @@ public class WebServerClient implements IWebClient
         //    + spentTime + " milliseconds.");
     }
 
-    public void gameStartsNow(String gameId, int port, String hostingHost,
-        int inactivityCheckInterval, int inactivityWarningInterval,
-        int inactivityTimeout)
+    public void gameStartsNow(@RUntainted String gameId, @RUntainted int port, @RUntainted String hostingHost,
+        @RUntainted int inactivityCheckInterval, @RUntainted int inactivityWarningInterval,
+        @RUntainted int inactivityTimeout)
     {
         gameStartsNowSent = new Date().getTime();
         sendToClient(gameStartsNow + sep + gameId + sep + port + sep
@@ -964,8 +965,8 @@ public class WebServerClient implements IWebClient
         //    + spentTime + " milliseconds.");
     }
 
-    public void chatDeliver(String chatId, long when, String sender,
-        String message, boolean resent)
+    public void chatDeliver(@RUntainted String chatId, @RUntainted long when, @RUntainted String sender,
+        @RUntainted String message, @RUntainted boolean resent)
     {
         // LOGGER.log(Level.FINEST, "chatDeliver() to client " + user.getName()
         //    + ": " + chatId + ", " + sender + ": " + message);
@@ -973,28 +974,28 @@ public class WebServerClient implements IWebClient
             + sep + message + sep + resent);
     }
 
-    public void deliverGeneralMessage(long when, boolean error, String title,
-        String message)
+    public void deliverGeneralMessage(@RUntainted long when, @RUntainted boolean error, @RUntainted String title,
+        @RUntainted String message)
     {
         sendToClient(generalMessage + sep + when + sep + error + sep + title
             + sep + message);
     }
 
-    public void requestAttention(long when, String byUser, boolean byAdmin,
-        String message, int beepCount, long beepInterval, boolean windows)
+    public void requestAttention(@RUntainted long when, @RUntainted String byUser, @RUntainted boolean byAdmin,
+        @RUntainted String message, @RUntainted int beepCount, @RUntainted long beepInterval, @RUntainted boolean windows)
     {
         sendToClient(requestAttention + sep + when + sep + byUser + sep
             + byAdmin + sep + message + sep + beepCount + sep + beepInterval
             + sep + windows);
     }
 
-    public void watchGameInfo(String gameId, String host, int port)
+    public void watchGameInfo(@RUntainted String gameId, @RUntainted String host, @RUntainted int port)
     {
         sendToClient(watchGameInfo + sep + gameId + sep + host + sep + port);
     }
 
     // TODO should this be rather totally in clientsocketthread?
-    public void requestPing(String arg1, String arg2, String arg3)
+    public void requestPing(@RUntainted String arg1, @RUntainted String arg2, @RUntainted String arg3)
     {
         sendToClient(pingRequest + sep + arg1 + sep + arg2 + sep + arg3);
     }

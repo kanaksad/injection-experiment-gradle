@@ -1,4 +1,5 @@
 package net.sf.colossus.util;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 
@@ -9,12 +10,12 @@ package net.sf.colossus.util;
 public class SystemInfo
 {
 
-    private static String osName;
-    private static String osVersion;
+    private static @RUntainted String osName;
+    private static @RUntainted String osVersion;
 
-    private static String runtimeName;
-    private static String vmName;
-    private static String javaVersion;
+    private static @RUntainted String runtimeName;
+    private static @RUntainted String vmName;
+    private static @RUntainted String javaVersion;
 
     static
     {
@@ -26,12 +27,12 @@ public class SystemInfo
         javaVersion = System.getProperty("java.version", "unknown");
     }
 
-    public static String getOsInfo()
+    public static @RUntainted String getOsInfo()
     {
         return osName + " " + osVersion;
     }
 
-    public static String getFullJavaInfo()
+    public static @RUntainted String getFullJavaInfo()
     {
         return runtimeName + "/" + vmName + " " + javaVersion;
     }

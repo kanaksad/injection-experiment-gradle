@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import net.sf.colossus.common.Constants;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -25,8 +26,8 @@ public class RecruitingSubTree implements IRecruiting
     private static class RecruiterAndRecruit
     {
 
-        final private CreatureType recruiter;
-        final private CreatureType recruit;
+        final private @RUntainted CreatureType recruiter;
+        final private @RUntainted CreatureType recruit;
 
         RecruiterAndRecruit(CreatureType recruiter, CreatureType recruit)
         {
@@ -71,7 +72,7 @@ public class RecruitingSubTree implements IRecruiting
         /**
          * @return the recruiter
          */
-        public CreatureType getRecruiter()
+        public @RUntainted CreatureType getRecruiter()
         {
             return recruiter;
         }
@@ -79,18 +80,18 @@ public class RecruitingSubTree implements IRecruiting
         /**
          * @return the recruit
          */
-        public CreatureType getRecruit()
+        public @RUntainted CreatureType getRecruit()
         {
             return recruit;
         }
     }
 
-    private final Map<RecruiterAndRecruit, Integer> regular = new HashMap<RecruiterAndRecruit, Integer>();
-    private final Map<CreatureType, Integer> any = new HashMap<CreatureType, Integer>();
-    private final Map<CreatureType, Integer> anyNonLord = new HashMap<CreatureType, Integer>();
-    private final Map<CreatureType, Integer> anyLord = new HashMap<CreatureType, Integer>();
-    private final Map<CreatureType, Integer> anyDemiLord = new HashMap<CreatureType, Integer>();
-    private final Set<ICustomRecruitBase> allCustom = new HashSet<ICustomRecruitBase>();
+    private final Map<RecruiterAndRecruit, @RUntainted Integer> regular = new HashMap<RecruiterAndRecruit, @RUntainted Integer>();
+    private final Map<CreatureType, @RUntainted Integer> any = new HashMap<CreatureType, @RUntainted Integer>();
+    private final Map<CreatureType, @RUntainted Integer> anyNonLord = new HashMap<CreatureType, @RUntainted Integer>();
+    private final Map<CreatureType, @RUntainted Integer> anyLord = new HashMap<CreatureType, @RUntainted Integer>();
+    private final Map<CreatureType, @RUntainted Integer> anyDemiLord = new HashMap<CreatureType, @RUntainted Integer>();
+    private final Set<@RUntainted ICustomRecruitBase> allCustom = new HashSet<@RUntainted ICustomRecruitBase>();
     private final Set<CreatureType> allRecruits = new TreeSet<CreatureType>();
     private boolean completed = false;
     private final AllCreatureType creatureTypes;
@@ -101,7 +102,7 @@ public class RecruitingSubTree implements IRecruiting
     }
 
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         StringBuffer buf = new StringBuffer();
         for (RecruiterAndRecruit rar : regular.keySet())
@@ -233,7 +234,7 @@ public class RecruitingSubTree implements IRecruiting
     }
 
     public void addRegular(CreatureType recruiter, CreatureType recruit,
-        int number)
+        @RUntainted int number)
     {
         assert recruit != null : "Oups, recruit must not be null";
         assert recruiter != null : "Oups, recruiter must not be null";
@@ -246,7 +247,7 @@ public class RecruitingSubTree implements IRecruiting
     }
 
     @SuppressWarnings("boxing")
-    public void addAny(CreatureType recruit, int number)
+    public void addAny(CreatureType recruit, @RUntainted int number)
     {
         assert completed == false : "Oups, can't add after being completed";
         assert recruit != null : "Oups, recruit must not be null";
@@ -257,7 +258,7 @@ public class RecruitingSubTree implements IRecruiting
     }
 
     @SuppressWarnings("boxing")
-    public void addNonLord(CreatureType recruit, int number)
+    public void addNonLord(CreatureType recruit, @RUntainted int number)
     {
         assert completed == false : "Oups, can't add after being completed";
         assert recruit != null : "Oups, recruit must not be null";
@@ -268,7 +269,7 @@ public class RecruitingSubTree implements IRecruiting
     }
 
     @SuppressWarnings("boxing")
-    public void addLord(CreatureType recruit, int number)
+    public void addLord(CreatureType recruit, @RUntainted int number)
     {
         assert completed == false : "Oups, can't add after being completed";
         assert recruit != null : "Oups, recruit must not be null";
@@ -279,7 +280,7 @@ public class RecruitingSubTree implements IRecruiting
     }
 
     @SuppressWarnings("boxing")
-    public void addDemiLord(CreatureType recruit, int number)
+    public void addDemiLord(CreatureType recruit, @RUntainted int number)
     {
         assert completed == false : "Oups, can't add after being completed";
         assert recruit != null : "Oups, recruit must not be null";
@@ -289,14 +290,14 @@ public class RecruitingSubTree implements IRecruiting
         allRecruits.add(recruit);
     }
 
-    public void addCustom(ICustomRecruitBase crb)
+    public void addCustom(@RUntainted ICustomRecruitBase crb)
     {
         assert completed == false : "Oups, can't add after being completed";
         assert crb != null : "Oups, ICustomRecruitBase must not be null";
         allCustom.add(crb);
     }
 
-    public int numberOfRecruiterNeeded(CreatureType recruiter,
+    public @RUntainted int numberOfRecruiterNeeded(CreatureType recruiter,
         CreatureType recruit, MasterHex hex)
     {
         int number = Constants.BIGNUM;
@@ -394,13 +395,13 @@ public class RecruitingSubTree implements IRecruiting
         return possibleRecruits;
     }
 
-    public Set<CreatureType> getPossibleRecruiters(MasterHex hex)
+    public Set<@RUntainted CreatureType> getPossibleRecruiters(MasterHex hex)
     {
         if (!any.keySet().isEmpty())
         {
             return creatureTypes.getCreatureTypes();
         }
-        Set<CreatureType> possibleRecruiters = new TreeSet<CreatureType>();
+        Set<@RUntainted CreatureType> possibleRecruiters = new TreeSet<@RUntainted CreatureType>();
         for (RecruiterAndRecruit rar : regular.keySet())
         {
             CreatureType recruit = rar.getRecruit();
@@ -452,13 +453,13 @@ public class RecruitingSubTree implements IRecruiting
          */
         for (ICustomRecruitBase cri : allCustom)
         {
-            List<CreatureType> temp = cri.getPossibleSpecialRecruiters(hex);
+            List<@RUntainted CreatureType> temp = cri.getPossibleSpecialRecruiters(hex);
             possibleRecruiters.addAll(temp);
         }
         return possibleRecruiters;
     }
 
-    public int maximumNumberNeededOf(CreatureType ct, MasterHex hex)
+    public @RUntainted int maximumNumberNeededOf(CreatureType ct, MasterHex hex)
     {
         int max = -1;
         for (CreatureType rec : allRecruits)

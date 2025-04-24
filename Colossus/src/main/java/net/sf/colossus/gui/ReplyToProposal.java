@@ -21,6 +21,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.game.Proposal;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -30,8 +31,8 @@ import net.sf.colossus.guiutil.SaveWindow;
  */
 final class ReplyToProposal extends KDialog implements ActionListener
 {
-    private final Legion attacker;
-    private final Legion defender;
+    private final @RUntainted Legion attacker;
+    private final @RUntainted Legion defender;
     private final List<Chit> attackerChits = new ArrayList<Chit>();
     private final List<Chit> defenderChits = new ArrayList<Chit>();
     private final Marker attackerMarker;
@@ -66,9 +67,9 @@ final class ReplyToProposal extends KDialog implements ActionListener
             attacker.getLongMarkerId(), gui.getClient(), true);
         attackerPane.add(attackerMarker);
 
-        List<String> attackerImageNames = gui.getOracle().getLegionImageNames(
+        List<@RUntainted String> attackerImageNames = gui.getOracle().getLegionImageNames(
             attacker);
-        Iterator<String> it = attackerImageNames.iterator();
+        Iterator<@RUntainted String> it = attackerImageNames.iterator();
         while (it.hasNext())
         {
             String imageName = it.next();
@@ -84,7 +85,7 @@ final class ReplyToProposal extends KDialog implements ActionListener
             defender.getLongMarkerId(), gui.getClient(), true);
         defenderPane.add(defenderMarker);
 
-        List<String> defenderImageNames = gui.getOracle().getLegionImageNames(
+        List<@RUntainted String> defenderImageNames = gui.getOracle().getLegionImageNames(
             defender);
         it = defenderImageNames.iterator();
         while (it.hasNext())
@@ -162,10 +163,10 @@ final class ReplyToProposal extends KDialog implements ActionListener
         }
     }
 
-    private void markSomeDead(Legion legion, List<String> losses)
+    private void markSomeDead(Legion legion, List<@RUntainted String> losses)
     {
         // Don't mess with the original list.
-        List<String> creatures = new ArrayList<String>(losses);
+        List<@RUntainted String> creatures = new ArrayList<@RUntainted String>(losses);
 
         Iterator<Chit> it = null;
         if (legion.equals(attacker))

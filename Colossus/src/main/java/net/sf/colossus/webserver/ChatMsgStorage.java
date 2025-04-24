@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.colossus.webcommon.ChatMessage;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class ChatMsgStorage
@@ -26,7 +27,7 @@ public class ChatMsgStorage
 
     private final WebServerOptions options;
     private final ChatChannel channel;
-    private final List<ChatMessage> lastNChatMessages;
+    private final @RUntainted List<ChatMessage> lastNChatMessages;
 
     /** Just by coincidence, we use the same separator as for the network
      *  transmissions, so then there is no risk of "can't be unambiguely
@@ -163,15 +164,15 @@ public class ChatMsgStorage
         }
     }
 
-    public String makeLine(ChatMessage msg)
+    public @RUntainted String makeLine(ChatMessage msg)
     {
         return msg.getChatId() + SEP + msg.getWhen() + SEP + msg.getSender()
             + SEP + msg.getMessage();
     }
 
-    private void parseMsgLine(String line)
+    private void parseMsgLine(@RUntainted String line)
     {
-        String[] tokens = line.split(SEP, 4);
+        @RUntainted String[] tokens = line.split(SEP, 4);
         if (tokens.length != 4)
         {
             LOGGER.log(Level.WARNING, "invalid line '" + line

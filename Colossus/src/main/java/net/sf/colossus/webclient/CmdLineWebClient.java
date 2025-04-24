@@ -13,6 +13,7 @@ import net.sf.colossus.webclient.WebClientSocketThread.WcstException;
 import net.sf.colossus.webcommon.GameInfo;
 import net.sf.colossus.webcommon.IWebClient;
 import net.sf.colossus.webcommon.IWebServer;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -40,7 +41,7 @@ public class CmdLineWebClient implements IWebClient
      * NOTE: shared with SocketThread, because WCST needs it to restore
      * game tokens to an GameInfo object
      */
-    private final HashMap<String, GameInfo> gameHash = new HashMap<String, GameInfo>();
+    private final @RUntainted HashMap<String, @RUntainted GameInfo> gameHash = new HashMap<String, @RUntainted GameInfo>();
 
     public CmdLineWebClient()
     {
@@ -48,7 +49,7 @@ public class CmdLineWebClient implements IWebClient
 
     }
 
-    public int getClientVersion()
+    public @RUntainted int getClientVersion()
     {
         return WebClient.WEB_CLIENT_VERSION;
     }
@@ -122,7 +123,7 @@ public class CmdLineWebClient implements IWebClient
                     String usernameToUse = DEFAULT_USERNAME;
                     String passwordToUse = DEFAULT_PASSWORD;
 
-                    String[] tokens = line.split(" +");
+                    @RUntainted String[] tokens = line.split(" +");
                     if (tokens.length >= 3)
                     {
                         passwordToUse = tokens[2];
@@ -186,7 +187,7 @@ public class CmdLineWebClient implements IWebClient
         System.out.println("Outside loop...");
     }
 
-    private static String getOneLineFromStdin(BufferedReader br)
+    private static @RUntainted String getOneLineFromStdin(BufferedReader br)
         throws IOException
     {
         // give some time to process possible reply from server, so that
@@ -219,7 +220,7 @@ public class CmdLineWebClient implements IWebClient
      * @param password
      * @return
      */
-    public String login(boolean force, String username, String password)
+    public String login(@RUntainted boolean force, @RUntainted String username, @RUntainted String password)
     {
         String reason = null;
 
@@ -291,7 +292,7 @@ public class CmdLineWebClient implements IWebClient
         return wcst != null;
     }
 
-    private String getUsername()
+    private @RUntainted String getUsername()
     {
         if (wcst != null)
         {
@@ -305,7 +306,7 @@ public class CmdLineWebClient implements IWebClient
         server.shutdownServer();
     }
 
-    private void typedInChat(String message)
+    private void typedInChat(@RUntainted String message)
     {
         String chatId = IWebServer.generalChatName;
         server.chatSubmit(chatId, getUsername(), message);

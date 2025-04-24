@@ -28,6 +28,7 @@ import net.sf.colossus.util.HTMLColor;
 import net.sf.colossus.util.StaticResourceLoader;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.HazardHexside;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -36,7 +37,7 @@ import net.sf.colossus.variant.HazardHexside;
  * @author David Ripton
  * @author Romain Dolbeau
  */
-public class GUIBattleHex extends GUIHex<BattleHex>
+public class GUIBattleHex extends GUIHex<@RUntainted BattleHex>
 {
     private static final Logger LOGGER = Logger.getLogger(GUIBattleHex.class
         .getName());
@@ -70,8 +71,8 @@ public class GUIBattleHex extends GUIHex<BattleHex>
     // Hex labels are:
     // A1-A3, B1-B4, C1-C5, D1-D6, E1-E5, F1-F4.
     // Letters increase left to right; numbers increase bottom to top.
-    public GUIBattleHex(int cx, int cy, int scale, Component map, int xCoord,
-        int yCoord)
+    public GUIBattleHex(int cx, int cy, int scale, Component map, @RUntainted int xCoord,
+        @RUntainted int yCoord)
     {
         super(new BattleHex(xCoord, yCoord));
         this.cx = cx;
@@ -84,7 +85,7 @@ public class GUIBattleHex extends GUIHex<BattleHex>
     }
 
     /* constructs a dummy with Battle map Coords */
-    public GUIBattleHex(int xCoord, int yCoord)
+    public GUIBattleHex(@RUntainted int xCoord, @RUntainted int yCoord)
     {
         super(new BattleHex(xCoord, yCoord));
     }
@@ -371,12 +372,12 @@ public class GUIBattleHex extends GUIHex<BattleHex>
         return getInnerHexagon().contains(point);
     }
 
-    private static String imagePostfix = "_Hazard";
+    private static @RUntainted String imagePostfix = "_Hazard";
 
-    private static Image loadOneOverlay(String name, int width, int height)
+    private static Image loadOneOverlay(@RUntainted String name, int width, int height)
     {
         Image overlay = null;
-        List<String> directories = VariantSupport.getImagesDirectoriesList();
+        List<@RUntainted String> directories = VariantSupport.getImagesDirectoriesList();
         overlay = StaticResourceLoader.getImage(name + imagePostfix,
             directories, width, height);
         return overlay;

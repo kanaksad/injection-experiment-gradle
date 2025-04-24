@@ -28,6 +28,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.util.HTMLColor;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -46,7 +47,7 @@ final class EditLegion extends KDialog
     private final JLabel infoLabel;
 
     EditLegion(ClientGUI gui, JFrame parentFrame, LegionClientSide legion,
-        Point point, JScrollPane pane, int scale, int viewMode,
+        Point point, JScrollPane pane, @RUntainted int scale, int viewMode,
         boolean isMyLegion, boolean dubiousAsBlanks, boolean showMarker)
     {
         super(parentFrame, "EDIT: " + legion.getMarkerId(), false);
@@ -149,7 +150,7 @@ final class EditLegion extends KDialog
     {
         private String valueText = "";
 
-        public LegionEditPanel(LegionClientSide legion, int scale, int margin,
+        public LegionEditPanel(LegionClientSide legion, @RUntainted int scale, int margin,
             int padding, boolean usePlayerColor, int viewMode,
             boolean isMyLegion, boolean dubiousAsBlanks,
             boolean showLegionValue, boolean showMarker)
@@ -242,7 +243,7 @@ final class EditLegion extends KDialog
         }
 
         private void viewAll(LegionClientSide legion, boolean usePlayerColor,
-            int scale, int margin, int padding, boolean dubiousAsBlanks,
+            @RUntainted int scale, int margin, int padding, boolean dubiousAsBlanks,
             boolean hideAll, boolean showLegionValue, boolean showMarker)
         {
             setLayout(null);
@@ -273,7 +274,7 @@ final class EditLegion extends KDialog
                 i++;
             }
 
-            List<String> imageNames = legion.getImageNames();
+            List<@RUntainted String> imageNames = legion.getImageNames();
             List<Boolean> certain = legion.getCertainties();
             boolean allCertain = !hideAll;
 
@@ -282,11 +283,11 @@ final class EditLegion extends KDialog
             // (just unnecessary work if hideAll is set.)
             if (dubiousAsBlanks && !hideAll)
             {
-                Iterator<String> iIt = imageNames.iterator();
+                Iterator<@RUntainted String> iIt = imageNames.iterator();
                 Iterator<Boolean> cIt = certain.iterator();
-                List<String> cNames = new ArrayList<String>();
+                List<@RUntainted String> cNames = new ArrayList<@RUntainted String>();
                 List<Boolean> cCertain = new ArrayList<Boolean>();
-                List<String> ucNames = new ArrayList<String>();
+                List<@RUntainted String> ucNames = new ArrayList<@RUntainted String>();
                 List<Boolean> ucCertain = new ArrayList<Boolean>();
                 while (iIt.hasNext())
                 {
@@ -317,7 +318,7 @@ final class EditLegion extends KDialog
                 ucCertain.clear();
             }
 
-            Iterator<String> it = imageNames.iterator();
+            Iterator<@RUntainted String> it = imageNames.iterator();
             Iterator<Boolean> it2 = certain.iterator();
 
             // now add the chits one by one to the panel:

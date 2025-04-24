@@ -42,6 +42,7 @@ import net.sf.colossus.game.PlayerColor;
 import net.sf.colossus.guiutil.KFrame;
 import net.sf.colossus.util.HTMLColor;
 import net.sf.colossus.util.Split;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 @SuppressWarnings("serial")
@@ -122,12 +123,12 @@ class PreferencesWindow extends KFrame implements ItemListener, ActionListener
         useSaveWindow(options, "Preferences", null);
     }
 
-    private void addCheckBox(Container pane, String name)
+    private void addCheckBox(Container pane, @RUntainted String name)
     {
         addCheckBox(pane, name, true, false);
     }
 
-    private void addCheckBox(Container pane, String name, boolean enabled,
+    private void addCheckBox(Container pane, @RUntainted String name, boolean enabled,
         boolean defVal)
     {
         JCheckBox cb = new JCheckBox(name);
@@ -497,7 +498,7 @@ class PreferencesWindow extends KFrame implements ItemListener, ActionListener
         setVisible(false);
     }
 
-    public void itemStateChanged(ItemEvent e)
+    public void itemStateChanged(@RUntainted ItemEvent e)
     {
         Object source = e.getSource();
         JComponent sourceJC = (JComponent)source;

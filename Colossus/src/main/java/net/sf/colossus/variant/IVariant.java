@@ -2,6 +2,7 @@ package net.sf.colossus.variant;
 
 
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -17,7 +18,7 @@ public interface IVariant
      *  dependency to static TerrainRecruitLoader access.
      *
      */
-    public List<CreatureType> getPossibleRecruits(MasterBoardTerrain terrain,
+    public List<@RUntainted CreatureType> getPossibleRecruits(MasterBoardTerrain terrain,
         MasterHex hex);
 
     /** TODO get from Variant instead of static TerrainRecruitLoader access

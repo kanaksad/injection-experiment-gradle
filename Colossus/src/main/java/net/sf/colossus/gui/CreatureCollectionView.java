@@ -28,6 +28,7 @@ import javax.swing.WindowConstants;
 import net.sf.colossus.common.Options;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -50,7 +51,7 @@ class CreatureCollectionView extends KDialog
     /**
      * Maps each creature type to the bottom label with all counts.
      */
-    Map<CreatureType, JLabel> countMap = new HashMap<CreatureType, JLabel>();
+    Map<@RUntainted CreatureType, JLabel> countMap = new HashMap<@RUntainted CreatureType, JLabel>();
 
     /**
      * Maps each creature type to the top label with the total count.
@@ -138,7 +139,7 @@ class CreatureCollectionView extends KDialog
         private final JLabel topLabel;
         private final Chit chit;
 
-        CreatureCount(final CreatureType type)
+        CreatureCount(final @RUntainted CreatureType type)
         {
             super(new BorderLayout());
 
@@ -223,7 +224,7 @@ class CreatureCollectionView extends KDialog
     {
         try
         {
-            for (Entry<CreatureType, JLabel> entry : countMap.entrySet())
+            for (Entry<@RUntainted CreatureType, JLabel> entry : countMap.entrySet())
             {
                 CreatureType type = entry.getKey();
                 JLabel label = entry.getValue();

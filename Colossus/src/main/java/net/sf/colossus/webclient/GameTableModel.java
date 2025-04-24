@@ -13,6 +13,7 @@ import javax.swing.table.AbstractTableModel;
 import net.sf.colossus.webcommon.GameInfo;
 import net.sf.colossus.webcommon.GameInfo.GameState;
 import net.sf.colossus.webcommon.User;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class GameTableModel extends AbstractTableModel
@@ -186,7 +187,7 @@ public class GameTableModel extends AbstractTableModel
     // TableModel forces us into casting
     @SuppressWarnings("unchecked")
     @Override
-    public void setValueAt(Object value, int row, int col)
+    public void setValueAt(@RUntainted Object value, int row, int col)
     {
         if (col == -1)
         {

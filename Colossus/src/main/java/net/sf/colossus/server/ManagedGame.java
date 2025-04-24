@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import net.sf.colossus.webcommon.IGameManager;
 import net.sf.colossus.webcommon.IManagedGame;
 import net.sf.colossus.webserver.GameManager;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class ManagedGame implements IManagedGame
@@ -22,7 +23,7 @@ public class ManagedGame implements IManagedGame
     private static final Logger LOGGER = Logger.getLogger(ManagedGame.class
         .getName());
 
-    private final String id;
+    private final @RUntainted String id;
 
     private Registry registry;
 
@@ -31,7 +32,7 @@ public class ManagedGame implements IManagedGame
     /** True if registration to registry was successful */
     private boolean bound = false;
 
-    public ManagedGame(String id) throws RemoteException
+    public ManagedGame(@RUntainted String id) throws RemoteException
     {
         this.id = id;
         LOGGER.info("ManagedGame for id " + id + " instantiated.");
@@ -53,7 +54,7 @@ public class ManagedGame implements IManagedGame
 
     }
 
-    public String getRegistryId()
+    public @RUntainted String getRegistryId()
     {
         return "ManagedGame-" + id;
     }

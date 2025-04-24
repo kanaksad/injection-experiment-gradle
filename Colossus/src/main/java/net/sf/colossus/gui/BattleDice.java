@@ -17,6 +17,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import net.sf.colossus.util.HTMLColor;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -103,7 +104,7 @@ final class BattleDice extends Box
         diceResults.add(entry);
     }
 
-    private String getDieImageName(String rollString)
+    private @RUntainted String getDieImageName(String rollString)
     {
         int roll;
         try

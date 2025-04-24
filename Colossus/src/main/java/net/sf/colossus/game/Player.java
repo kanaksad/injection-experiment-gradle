@@ -13,6 +13,7 @@ import net.sf.colossus.common.Constants;
 import net.sf.colossus.server.PlayerServerSide;
 import net.sf.colossus.server.VariantSupport;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -34,12 +35,12 @@ public class Player
     /**
      * A name for this player for UI purposes and as identifier.
      */
-    private String name;
+    private @RUntainted String name;
 
     /**
      * The current legions owned by this player.
      */
-    private final List<Legion> legions = new ArrayList<Legion>();
+    private final @RUntainted List<@RUntainted Legion> legions = new ArrayList<@RUntainted Legion>();
 
     /**
      * The number of the player in the game.
@@ -70,7 +71,7 @@ public class Player
      *      after all players are created. We could at least at an assertion into the
      *      setter that it is allowed to change the value only if it was not set before.
      */
-    private MasterHex startingTower;
+    private @RUntainted MasterHex startingTower;
 
     /**
      * The label of the color we use.
@@ -79,7 +80,7 @@ public class Player
      * TODO similar to {@link #startingTower} this should be set only once but probably
      *      can't be set in the constructor.
      */
-    private PlayerColor color;
+    private @RUntainted PlayerColor color;
 
     /**
      * The type of player: local human, AI or network.
@@ -89,7 +90,7 @@ public class Player
      *      Unless we have to allow changes e.g. for humans dropping out of the game (in
      *      which case the todo should be read as "add some documentation regarding that ;-) ).
      */
-    private String type;
+    private @RUntainted String type;
 
     /**
      * A string representing all players eliminated by this player.
@@ -99,19 +100,19 @@ public class Player
      *
      * TODO this should really be a List<Player>
      */
-    private String playersEliminated = "";
+    private @RUntainted String playersEliminated = "";
 
     private int mulligansLeft;
 
-    private int score;
+    private @RUntainted int score;
 
     /**
      * Sorted set of available legion markers for this player.
      */
-    private final SortedSet<String> markersAvailable = new TreeSet<String>(
+    private final @RUntainted SortedSet<@RUntainted String> markersAvailable = new TreeSet<@RUntainted String>(
         new MarkerComparator(getShortColor()));
 
-    public Player(Game game, String playerName, int number)
+    public Player(Game game, @RUntainted String playerName, int number)
     {
         assert game != null : "No game without Game";
         assert playerName != null : "Player needs a name";
@@ -134,7 +135,7 @@ public class Player
      * TODO should be unmodifiable, but at least {@link PlayerServerSide#die(Player)} still
      *      removes items
      */
-    public List<? extends Legion> getLegions()
+    public @RUntainted List<? extends @RUntainted Legion> getLegions()
     {
         return this.legions;
     }
@@ -144,12 +145,12 @@ public class Player
         return number;
     }
 
-    public String getName()
+    public @RUntainted String getName()
     {
         return name;
     }
 
-    public void setName(String name)
+    public void setName(@RUntainted String name)
     {
         this.name = name;
     }
@@ -181,12 +182,12 @@ public class Player
         this.deadBeforeSave = val;
     }
 
-    public void setType(String type)
+    public void setType(@RUntainted String type)
     {
         this.type = type;
     }
 
-    public String getType()
+    public @RUntainted String getType()
     {
         return type;
     }
@@ -211,32 +212,32 @@ public class Player
         return getType().endsWith(Constants.none);
     }
 
-    public boolean isAI()
+    public @RUntainted boolean isAI()
     {
         return type.endsWith(Constants.ai);
     }
 
-    public void setStartingTower(MasterHex startingTower)
+    public void setStartingTower(@RUntainted MasterHex startingTower)
     {
         this.startingTower = startingTower;
     }
 
-    public MasterHex getStartingTower()
+    public @RUntainted MasterHex getStartingTower()
     {
         return startingTower;
     }
 
-    public void setColor(PlayerColor color)
+    public void setColor(@RUntainted PlayerColor color)
     {
         this.color = color;
     }
 
-    public PlayerColor getColor()
+    public @RUntainted PlayerColor getColor()
     {
         return color;
     }
 
-    public String getShortColor()
+    public @RUntainted String getShortColor()
     {
         if (color == null)
         {
@@ -248,12 +249,12 @@ public class Player
         }
     }
 
-    public String getPlayersElim()
+    public @RUntainted String getPlayersElim()
     {
         return playersEliminated;
     }
 
-    public void setPlayersElim(String playersEliminated)
+    public void setPlayersElim(@RUntainted String playersEliminated)
     {
         this.playersEliminated = playersEliminated;
     }
@@ -263,7 +264,7 @@ public class Player
         playersEliminated = playersEliminated + player.getShortColor();
     }
 
-    public Legion getLegionByMarkerId(String markerId)
+    public @RUntainted Legion getLegionByMarkerId(String markerId)
     {
         for (Legion legion : getLegions())
         {
@@ -299,7 +300,7 @@ public class Player
         return null;
     }
 
-    public void addLegion(Legion legion)
+    public void addLegion(@RUntainted Legion legion)
     {
         legions.add(legion);
     }
@@ -314,7 +315,7 @@ public class Player
         legions.clear();
     }
 
-    public void addMarkerAvailable(String markerId)
+    public void addMarkerAvailable(@RUntainted String markerId)
     {
         markersAvailable.add(markerId);
     }
@@ -339,7 +340,7 @@ public class Player
         return Collections.unmodifiableSortedSet(used);
     }
 
-    public Set<String> getMarkersAvailable()
+    public @RUntainted Set<@RUntainted String> getMarkersAvailable()
     {
         return Collections.unmodifiableSortedSet(markersAvailable);
     }
@@ -419,17 +420,17 @@ public class Player
         return mulligansLeft;
     }
 
-    public void setScore(int score)
+    public void setScore(@RUntainted int score)
     {
         this.score = score;
     }
 
-    public int getScore()
+    public @RUntainted int getScore()
     {
         return score;
     }
 
-    public int getTitanPower()
+    public @RUntainted int getTitanPower()
     {
         return 6 + getScore()
             / getGame().getVariant().getTitanImprovementValue();
@@ -490,7 +491,7 @@ public class Player
     /**
      * Return the full basename for the titan of this player.
      */
-    public String getTitanBasename()
+    public @RUntainted String getTitanBasename()
     {
         try
         {
@@ -505,7 +506,7 @@ public class Player
     /**
      * Return the full basename for an angel of this player.
      */
-    public String getAngelBasename()
+    public @RUntainted String getAngelBasename()
     {
         try
         {
@@ -543,7 +544,7 @@ public class Player
     }
 
     // PlayerServerSide overrides this to use a better random source
-    public int makeBattleRoll()
+    public @RUntainted int makeBattleRoll()
     {
         return Dice.rollDie();
     }

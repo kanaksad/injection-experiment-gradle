@@ -19,6 +19,7 @@ import net.sf.colossus.webcommon.FormatWhen;
 import net.sf.colossus.webcommon.IWebClient;
 import net.sf.colossus.webcommon.User;
 import net.sf.colossus.webcommon.UserDB;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class ChatChannel
@@ -27,7 +28,7 @@ public class ChatChannel
         .getName());
 
     private final UserDB userDB;
-    private final String chatId;
+    private final @RUntainted String chatId;
     private final ChatMsgStorage storage;
     private final PrintWriter chatLog;
     private final FormatWhen whenFormatter;
@@ -78,7 +79,7 @@ public class ChatChannel
         "request tracker on our project page on Sourceforge:",
         "  http://sourceforge.net/projects/colossus/" };
 
-    public ChatChannel(String id, WebServerOptions options, UserDB userDB)
+    public ChatChannel(@RUntainted String id, WebServerOptions options, UserDB userDB)
     {
         this.userDB = userDB;
         this.chatId = id;
@@ -87,7 +88,7 @@ public class ChatChannel
         this.whenFormatter = new FormatWhen();
     }
 
-    public String getChannelId()
+    public @RUntainted String getChannelId()
     {
         return chatId;
     }
@@ -109,13 +110,13 @@ public class ChatChannel
     }
 
     /** Send message of the day lines to one client. */
-    public void deliverMessageOfTheDayToClient(String chatId,
-        IWebClient client, List<String> lines)
+    public void deliverMessageOfTheDayToClient(@RUntainted String chatId,
+        IWebClient client, List<@RUntainted String> lines)
     {
         sendLinesToClient(chatId, client, lines, false, "SYSTEM");
     }
 
-    public void handleUnknownCommand(String msgAllLower, String chatId,
+    public void handleUnknownCommand(String msgAllLower, @RUntainted String chatId,
         IWebClient client, String originalMessage)
     {
         String[] lines = new String[] {
@@ -127,7 +128,7 @@ public class ChatChannel
         // client.systemMessage(now, "Your text was: " + originalMessage);
     }
 
-    public void sendHelpToClient(String msgAllLower, String chatId,
+    public void sendHelpToClient(String msgAllLower, @RUntainted String chatId,
         IWebClient client)
     {
         List<String> words = Arrays.asList(msgAllLower.split(" +"));
@@ -171,14 +172,14 @@ public class ChatChannel
      * @param chatId Id of the chat
      * @param client WebClient connection who requested the contact help
      */
-    public void showContactHelp(String chatId, IWebClient client)
+    public void showContactHelp(@RUntainted String chatId, IWebClient client)
     {
         sendLinesToClient(chatId, client, Arrays.asList(contactHelp), true, "");
     }
 
     /** Send an arraylist full of lines to one client. */
-    public void sendLinesToClient(String chatId, IWebClient client,
-        List<String> lines, boolean spacer, String sender)
+    public void sendLinesToClient(@RUntainted String chatId, IWebClient client,
+        List<@RUntainted String> lines, boolean spacer, @RUntainted String sender)
     {
         long when = new Date().getTime();
         boolean isResent = false;
@@ -201,7 +202,7 @@ public class ChatChannel
     // handleShowInfo(sender, message, this);
     public void handleShowInfo(IWebClient client, User user)
     {
-        List<String> lines = new ArrayList<String>();
+        List<@RUntainted String> lines = new ArrayList<@RUntainted String>();
         lines.add("Server has following information about you:");
         lines.add("      Name: " + user.getName());
         lines.add("      Email: " + user.getEmail());
@@ -213,9 +214,9 @@ public class ChatChannel
         sendLinesToClient(chatId, client, lines, true, "SYSTEM");
     }
 
-    public void handleIgnore(String msgAllLower, User ignoringUser)
+    public void handleIgnore(@RUntainted String msgAllLower, User ignoringUser)
     {
-        List<String> words = Arrays.asList(msgAllLower.split(" +", 2));
+        List<@RUntainted String> words = Arrays.asList(msgAllLower.split(" +", 2));
         if (words.size() == 1)
         {
             tellListOfIgnoredUsers(ignoringUser, null);
@@ -232,7 +233,7 @@ public class ChatChannel
             }
             else
             {
-                List<String> lines = new ArrayList<String>();
+                List<@RUntainted String> lines = new ArrayList<@RUntainted String>();
                 lines.add("ERROR: Unknown user '" + ignoredUserName + " '!");
                 sendLinesToClient(chatId, ignoringUser.getWebserverClient(), lines,
                     true, "SYSTEM");
@@ -245,7 +246,7 @@ public class ChatChannel
         List<String> words = Arrays.asList(msgAllLower.split(" +", 2));
         if (words.size() == 1)
         {
-            List<String> lines = new ArrayList<String>();
+            List<@RUntainted String> lines = new ArrayList<@RUntainted String>();
             lines.add("The command /unignore needs an user "
                 + "name argument (no quotes needed).");
             sendLinesToClient(chatId, user.getWebserverClient(), lines, true,
@@ -271,9 +272,9 @@ public class ChatChannel
         }
     }
 
-    private void tellListOfIgnoredUsers(User user, String change)
+    private void tellListOfIgnoredUsers(User user, @RUntainted String change)
     {
-        List<String> lines = new ArrayList<String>();
+        List<@RUntainted String> lines = new ArrayList<@RUntainted String>();
         if (change != null)
         {
             lines.add(change);
@@ -293,7 +294,7 @@ public class ChatChannel
     }
 
     @SuppressWarnings("boxing")
-    private String onlineTimeFromSeconds(long totalsecs)
+    private @RUntainted String onlineTimeFromSeconds(@RUntainted long totalsecs)
     {
         long total = totalsecs;
         long secs = total % 60;
@@ -315,14 +316,14 @@ public class ChatChannel
 
     // TODO is this perhaps obsolete nowadays?
     /** Send message of the day lines to one client. */
-    public void deliverOldVersionWarning(String chatId, String userName,
+    public void deliverOldVersionWarning(@RUntainted String chatId, @RUntainted String userName,
         IWebClient client)
     {
         long when = new Date().getTime();
         String sender = "SYSTEM";
         boolean isResent = false;
 
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<@RUntainted String> lines = new ArrayList<@RUntainted String>();
         lines.add("");
         lines.add("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         lines.add("");
@@ -347,7 +348,7 @@ public class ChatChannel
         }
     }
 
-    public void createStoreAndDeliverMessage(String sender, String message)
+    public void createStoreAndDeliverMessage(@RUntainted String sender, @RUntainted String message)
     {
         long now = new Date().getTime();
         ChatMessage msg = new ChatMessage(this.chatId, now, sender, message);
@@ -359,7 +360,7 @@ public class ChatChannel
         deliverMessage(msg, userDB);
     }
 
-    private void deliverMessage(ChatMessage msg, UserDB userDB)
+    private void deliverMessage(@RUntainted ChatMessage msg, UserDB userDB)
     {
         LOGGER.fine("Delivering message " + msg
             + " to clients; checking ignore list:");
@@ -376,7 +377,7 @@ public class ChatChannel
     }
 
     private void deliverMessageToClient(ChatMessage msg, IWebClient client,
-        boolean isResent)
+        @RUntainted boolean isResent)
     {
         client.chatDeliver(msg.getChatId(), msg.getWhen(), msg.getSender(),
             msg.getMessage(), isResent);
@@ -439,8 +440,8 @@ public class ChatChannel
         chatLog.flush();
     }
 
-    public void writeMessageToAdminToChatlog(long when, String fromUser,
-        String fromMail, List<String> lines)
+    public void writeMessageToAdminToChatlog(@RUntainted long when, @RUntainted String fromUser,
+        @RUntainted String fromMail, List<@RUntainted String> lines)
     {
         String whenTime = whenFormatter.timeAsString(when);
         String dateChange = whenFormatter.hasDateChanged();

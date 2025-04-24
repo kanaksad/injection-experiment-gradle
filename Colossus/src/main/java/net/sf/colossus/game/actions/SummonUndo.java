@@ -4,17 +4,18 @@ package net.sf.colossus.game.actions;
 import net.sf.colossus.common.Constants;
 import net.sf.colossus.game.Legion;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class SummonUndo extends AddCreatureAction
 {
-    public SummonUndo(Legion legion, CreatureType creatureType)
+    public SummonUndo(@RUntainted Legion legion, @RUntainted CreatureType creatureType)
     {
         super(legion, creatureType);
     }
 
     @Override
-    public String getReason()
+    public @RUntainted String getReason()
     {
         return Constants.reasonUndoSummon;
     }

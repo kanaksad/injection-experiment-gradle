@@ -9,6 +9,7 @@ import java.util.Map;
 
 import net.sf.colossus.client.CritterMove;
 import net.sf.colossus.util.Glob;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /** LegionMove has a List of one CritterMove per mobile critter
@@ -21,7 +22,7 @@ public class LegionMove implements Comparable<LegionMove>
     private final List<CritterMove> critterMoves = new ArrayList<CritterMove>();
     private Map<CritterMove, String> evaluation = null;
     private String lmeval = null;
-    private int value;
+    private @RUntainted int value;
 
     public void add(CritterMove cm)
     {
@@ -40,12 +41,12 @@ public class LegionMove implements Comparable<LegionMove>
         value = Integer.MIN_VALUE;
     }
 
-    public int getValue()
+    public @RUntainted int getValue()
     {
         return value;
     }
 
-    public void setValue(int v)
+    public void setValue(@RUntainted int v)
     {
         value = v;
     }
@@ -73,7 +74,7 @@ public class LegionMove implements Comparable<LegionMove>
         return Glob.glob(", ", cmStrings);
     }
 
-    public String getStringWithEvaluation()
+    public @RUntainted String getStringWithEvaluation()
     {
         List<String> cmStrings = new ArrayList<String>();
         for (CritterMove cm : critterMoves)

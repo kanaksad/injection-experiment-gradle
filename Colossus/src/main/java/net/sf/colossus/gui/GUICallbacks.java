@@ -4,6 +4,7 @@ package net.sf.colossus.gui;
 import net.sf.colossus.game.Legion;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -19,15 +20,15 @@ public interface GUICallbacks
 
     public void acquireAngelCallback(Legion legion, CreatureType angelType);
 
-    public void answerFlee(Legion ally, boolean answer);
+    public void answerFlee(@RUntainted Legion ally, @RUntainted boolean answer);
 
-    public void answerConcede(Legion legion, boolean answer);
+    public void answerConcede(@RUntainted Legion legion, @RUntainted boolean answer);
 
-    public void doBattleMove(int tag, BattleHex hex);
+    public void doBattleMove(@RUntainted int tag, @RUntainted BattleHex hex);
 
     public void undoBattleMove(BattleHex hex);
 
-    public void strike(int tag, BattleHex hex);
+    public void strike(@RUntainted int tag, BattleHex hex);
 
     public void doneWithBattleMoves();
 

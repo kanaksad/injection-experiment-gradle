@@ -14,6 +14,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.util.Combos;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -27,9 +28,9 @@ import net.sf.colossus.variant.Variant;
 
 public class PredictSplitNode implements Comparable<PredictSplitNode>
 {
-    private final String markerId; // Not unique!
-    private final int turnCreated;
-    private CreatureInfoList creatures = new CreatureInfoList();
+    private final @RUntainted String markerId; // Not unique!
+    private final @RUntainted int turnCreated;
+    private @RUntainted CreatureInfoList creatures = new CreatureInfoList();
 
     // only if atSplit
     private final CreatureInfoList removed = new CreatureInfoList();
@@ -44,7 +45,7 @@ public class PredictSplitNode implements Comparable<PredictSplitNode>
     private final CreatureType angel;
     private static CreatureInfoComparator cic = new CreatureInfoComparator();
 
-    PredictSplitNode(String markerId, int turnCreated, CreatureInfoList cil,
+    PredictSplitNode(@RUntainted String markerId, @RUntainted int turnCreated, CreatureInfoList cil,
         PredictSplitNode parent, Variant variant)
     {
         this.markerId = markerId;
@@ -69,7 +70,7 @@ public class PredictSplitNode implements Comparable<PredictSplitNode>
         return markerId;
     }
 
-    public String getFullName()
+    public @RUntainted String getFullName()
     {
         return markerId + '(' + turnCreated + ')';
     }
@@ -95,7 +96,7 @@ public class PredictSplitNode implements Comparable<PredictSplitNode>
     }
 
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         StringBuilder sb = new StringBuilder(getFullName() + ":");
         for (CreatureInfo ci : getCreatures())
@@ -136,7 +137,7 @@ public class PredictSplitNode implements Comparable<PredictSplitNode>
         return copy;
     }
 
-    void setCreatures(CreatureInfoList creatures)
+    void setCreatures(@RUntainted CreatureInfoList creatures)
     {
         this.creatures = creatures;
     }
@@ -292,7 +293,7 @@ public class PredictSplitNode implements Comparable<PredictSplitNode>
         }
     }
 
-    int getHeight()
+    @RUntainted int getHeight()
     {
         return creatures.size();
     }
@@ -685,7 +686,7 @@ public class PredictSplitNode implements Comparable<PredictSplitNode>
      * @param otherMarkerId
      * @param turn
      */
-    void split(int childSize, Legion otherLegion, int turn)
+    void split(int childSize, Legion otherLegion, @RUntainted int turn)
     {
         assert creatures.size() <= 8 : "> 8 creatures in legion";
         assert !hasSplit() : "use reSplit to recalculate old splits";
@@ -752,7 +753,7 @@ public class PredictSplitNode implements Comparable<PredictSplitNode>
      *
      * @param newList
      */
-    void updateInitialSplitInfo(CreatureInfoList newList)
+    void updateInitialSplitInfo(@RUntainted CreatureInfoList newList)
     {
         // TODO Check if any new information was gained and stop if not.
         newList.addAll(getAfterSplitCreatures());

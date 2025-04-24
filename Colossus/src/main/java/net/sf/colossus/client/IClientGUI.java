@@ -18,6 +18,7 @@ import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.webclient.WebClient;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public interface IClientGUI
@@ -26,7 +27,7 @@ public interface IClientGUI
     public abstract void setStartedByWebClient(boolean byWebClient);
 
     public abstract void setWebClient(WebClient wc,
-        int inactivityWarningInterval, String gameId, String username, String password);
+        @RUntainted int inactivityWarningInterval, String gameId, @RUntainted String username, @RUntainted String password);
 
     public abstract void clearWebClient();
 
@@ -84,7 +85,7 @@ public interface IClientGUI
 
     public abstract void actOnTellLegionLocation(Legion legion, MasterHex hex);
 
-    public abstract void actOnDidSplit(int turn, Legion parent, Legion child,
+    public abstract void actOnDidSplit(@RUntainted int turn, Legion parent, Legion child,
         MasterHex hex);
 
     public abstract void actOnDoneWithMoves();
@@ -94,25 +95,25 @@ public interface IClientGUI
     public abstract void actOnDidRecruit(Legion legion,
         CreatureType recruitName, List<CreatureType> recruiters, String reason);
 
-    public abstract void actOnRemoveCreature(Legion legion, CreatureType type,
+    public abstract void actOnRemoveCreature(@RUntainted Legion legion, @RUntainted CreatureType type,
         String reason);
 
     public abstract void actOnRemoveCreaturePart2(Legion legion);
 
-    public abstract void actOnAddCreature(Legion legion, CreatureType type,
-        String reason);
+    public abstract void actOnAddCreature(Legion legion, @RUntainted CreatureType type,
+        @RUntainted String reason);
 
     public abstract void actOnUndidSplit(Legion survivor, int turn);
 
     public abstract void actOnUndidRecruitPart(Legion legion,
-        boolean wasReinforcement, int turnNumber);
+        boolean wasReinforcement, @RUntainted int turnNumber);
 
     /** Present a dialog allowing the player to enter via land or teleport.
      *  Return true if the player chooses to teleport. */
-    public abstract boolean chooseWhetherToTeleport();
+    public abstract @RUntainted boolean chooseWhetherToTeleport();
 
-    public abstract void actOnDidMove(Legion legion, MasterHex startingHex,
-        MasterHex currentHex, boolean teleport, CreatureType teleportingLord,
+    public abstract void actOnDidMove(@RUntainted Legion legion, @RUntainted MasterHex startingHex,
+        @RUntainted MasterHex currentHex, boolean teleport, @RUntainted CreatureType teleportingLord,
         boolean splitLegionHasForcedMove);
 
     public void actOnMoveNak();
@@ -142,16 +143,16 @@ public interface IClientGUI
 
     public abstract void eventViewerSetCreatureDead(BattleUnit battleUnit);
 
-    public abstract void eventViewerNewSplitEvent(int turn, Legion parent,
+    public abstract void eventViewerNewSplitEvent(@RUntainted int turn, Legion parent,
         Legion child);
 
     public abstract void eventViewerUndoEvent(Legion splitoff,
-        Legion survivor, int turn);
+        Legion survivor, @RUntainted int turn);
 
     public abstract void setPreferencesWindowVisible(boolean val);
 
     public abstract void didSummon(Legion summoner, Legion donor,
-        CreatureType summon);
+        @RUntainted CreatureType summon);
 
     public abstract void repaintBattleBoard();
 
@@ -170,33 +171,33 @@ public interface IClientGUI
 
     public abstract void disposePickCarryDialog();
 
-    public abstract void showNegotiate(Legion attacker, Legion defender);
+    public abstract void showNegotiate(@RUntainted Legion attacker, @RUntainted Legion defender);
 
     public abstract void respawnNegotiate();
 
-    public abstract void showConcede(Client client, Legion ally, Legion enemy);
+    public abstract void showConcede(Client client, @RUntainted Legion ally, Legion enemy);
 
-    public abstract void showFlee(Client client, Legion ally, Legion enemy);
+    public abstract void showFlee(Client client, @RUntainted Legion ally, Legion enemy);
 
     public abstract void initShowEngagementResults();
 
     public abstract void tellEngagement(Legion attacker, Legion defender,
-        int turnNumber);
+        @RUntainted int turnNumber);
 
-    public abstract void actOnTellEngagementResults(Legion winner,
+    public abstract void actOnTellEngagementResults(@RUntainted Legion winner,
         String method, int points, int turns);
 
     public abstract void actOnEngagementCompleted();
 
     public abstract void tellWhatsHappening(String message);
 
-    public abstract void actOnTellMovementRoll(int roll, String reason);
+    public abstract void actOnTellMovementRoll(@RUntainted int roll, @RUntainted String reason);
 
     /* pass revealed info to EventViewer and
      * additionally remember the images list for later, the engagement report
      */
     public abstract void revealEngagedCreatures(Legion legion,
-        final List<CreatureType> creatures, boolean isAttacker, String reason);
+        final List<CreatureType> creatures, boolean isAttacker, @RUntainted String reason);
 
     public abstract void eventViewerRevealCreatures(Legion legion,
         final List<CreatureType> creatures, String reason);
@@ -206,45 +207,45 @@ public interface IClientGUI
 
     public abstract void setBoardActive(boolean val);
 
-    public abstract void doPickSummonAngel(Legion legion,
-        List<Legion> possibleDonors);
+    public abstract void doPickSummonAngel(@RUntainted Legion legion,
+        @RUntainted List<@RUntainted Legion> possibleDonors);
 
     public abstract List<CreatureType> doPickSplitLegion(Legion parent,
-        String childMarker);
+        @RUntainted String childMarker);
 
     public abstract void doPickCarries(Client client, int carryDamage,
-        Set<String> carryTargetDescriptions);
+        Set<@RUntainted String> carryTargetDescriptions);
 
     public abstract boolean isPickCarryOngoing();
 
     public abstract void doPickColor(String playerName,
         List<PlayerColor> colorsLeft);
 
-    public abstract void doPickInitialMarker(Set<String> markersAvailable);
+    public abstract void doPickInitialMarker(@RUntainted Set<@RUntainted String> markersAvailable);
 
-    public abstract void doPickSplitMarker(Legion parent,
-        Set<String> markersAvailable);
+    public abstract void doPickSplitMarker(@RUntainted Legion parent,
+        @RUntainted Set<@RUntainted String> markersAvailable);
 
     public abstract CreatureType doPickRecruit(Legion legion,
         String hexDescription);
 
-    public abstract String doPickRecruiter(List<String> recruiters,
+    public abstract @RUntainted String doPickRecruiter(@RUntainted List<@RUntainted String> recruiters,
         String hexDescription, Legion legion);
 
     public abstract EntrySide doPickEntrySide(MasterHex hex,
         Set<EntrySide> entrySides);
 
-    public abstract CreatureType doPickLord(List<CreatureType> lords);
+    public abstract @RUntainted CreatureType doPickLord(List<@RUntainted CreatureType> lords);
 
     public abstract void doPickStrikePenalty(Client client,
-        List<String> choices);
+        @RUntainted List<@RUntainted String> choices);
 
     /** Inform this player about the other player's proposal. */
-    public abstract void tellProposal(String proposalString);
+    public abstract void tellProposal(@RUntainted String proposalString);
 
     public abstract void cleanupNegotiationDialogs();
 
-    public abstract void actOnTurnOrPlayerChange(Client c, int turnNr, Player p);
+    public abstract void actOnTurnOrPlayerChange(Client c, @RUntainted int turnNr, Player p);
 
     public abstract void actOnGameStarting();
 
@@ -271,13 +272,13 @@ public interface IClientGUI
 
     public abstract void actOnSetupBattleSummon();
 
-    public abstract void actOnPlaceNewChit(String imageName,
-        BattleUnit battleUnit, BattleHex hex);
+    public abstract void actOnPlaceNewChit(@RUntainted String imageName,
+        @RUntainted BattleUnit battleUnit, BattleHex hex);
 
     public abstract void resetStrikeNumbers();
 
     public abstract void actOnTellStrikeResults(boolean wasCarry,
-        int strikeNumber, List<String> rolls, BattleCritter striker,
+        int strikeNumber, @RUntainted List<@RUntainted String> rolls, BattleCritter striker,
         BattleCritter target);
 
     public abstract void highlightCrittersWithTargets();
@@ -308,12 +309,12 @@ public interface IClientGUI
 
     public abstract void doCleanupGUI();
 
-    public abstract void actOnTellGameOver(String message,
-        boolean disposeFollows, boolean suspended);
+    public abstract void actOnTellGameOver(@RUntainted String message,
+        @RUntainted boolean disposeFollows, @RUntainted boolean suspended);
 
     public abstract void actOnGameStartingFailed();
 
-    public abstract void showMessageDialogAndWait(String message);
+    public abstract void showMessageDialogAndWait(@RUntainted String message);
 
     // called by WebClient
     public abstract void doConfirmAndQuit();
@@ -331,7 +332,7 @@ public interface IClientGUI
     public abstract void setChosenDevice(GraphicsDevice chosen);
 
     // for PreferencesWindow
-    public abstract void setLookAndFeel(String text);
+    public abstract void setLookAndFeel(@RUntainted String text);
 
     public abstract void removeBattleChit(BattleUnit battleUnit);
 
@@ -341,10 +342,10 @@ public interface IClientGUI
 
     // GUI keeps track for which doMove()'s server has not ackknowledged yet
     public void setMovePending(Legion mover, MasterHex currentHex,
-        MasterHex targetHex);
+        @RUntainted MasterHex targetHex);
 
-    public void setMoveCompleted(Legion mover, MasterHex current,
-        MasterHex target);
+    public void setMoveCompleted(@RUntainted Legion mover, @RUntainted MasterHex current,
+        @RUntainted MasterHex target);
 
     public abstract void actOnHitsSet(BattleUnit targetUnit);
 
@@ -355,9 +356,9 @@ public interface IClientGUI
     public abstract void displayInactivityDialogEnsureEDT(final String title,
         final String text, final Color color);
 
-    public abstract void inactivityAutoFleeOrConcede(boolean reply);
+    public abstract void inactivityAutoFleeOrConcede(@RUntainted boolean reply);
 
-    public void askExtraRollApproval(String requestorName, boolean ourself, int requestId);
+    public void askExtraRollApproval(String requestorName, boolean ourself, @RUntainted int requestId);
 
     public void askSuspendConfirmation(String requestorName, int timeout);
 

@@ -7,6 +7,7 @@ import java.awt.Window;
 
 import net.sf.colossus.common.IOptions;
 import net.sf.colossus.common.Options;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -17,9 +18,9 @@ import net.sf.colossus.common.Options;
 public final class SaveWindow
 {
     private final IOptions options;
-    private final String name;
+    private final @RUntainted String name;
 
-    public SaveWindow(IOptions options, String name)
+    public SaveWindow(IOptions options, @RUntainted String name)
     {
         this.options = options;
         this.name = name;

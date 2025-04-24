@@ -19,6 +19,7 @@ import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
 import net.sf.colossus.xmlparser.TerrainRecruitLoader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -40,7 +41,7 @@ public class RecruitGraph
     private final IVariantKnower variantKnower;
     private final List<RecruitVertex> allVertex = new ArrayList<RecruitVertex>();
     private final List<RecruitEdge> allEdge = new ArrayList<RecruitEdge>();
-    private final Map<String, RecruitVertex> creatureToVertex = new HashMap<String, RecruitVertex>();
+    private final Map<String, @RUntainted RecruitVertex> creatureToVertex = new HashMap<String, @RUntainted RecruitVertex>();
 
     /** 99 creatures can muster one means: can not muster at all */
     public static final int BIGNUM = 99;
@@ -52,20 +53,20 @@ public class RecruitGraph
      */
     private static class RecruitVertex
     {
-        private final String cre;
+        private final @RUntainted String cre;
         private final RecruitGraph graph;
-        private final List<RecruitEdge> outgoingEdges = new ArrayList<RecruitEdge>();
+        private final List<@RUntainted RecruitEdge> outgoingEdges = new ArrayList<@RUntainted RecruitEdge>();
         private final List<RecruitEdge> incomingEdges = new ArrayList<RecruitEdge>();
 
-        RecruitVertex(String name, RecruitGraph graph)
+        RecruitVertex(@RUntainted String name, RecruitGraph graph)
         {
             this.cre = name;
             this.graph = graph;
         }
 
-        List<RecruitEdge> getOutgoingEdges()
+        List<@RUntainted RecruitEdge> getOutgoingEdges()
         {
-            List<RecruitEdge> oe = new ArrayList<RecruitEdge>();
+            List<@RUntainted RecruitEdge> oe = new ArrayList<@RUntainted RecruitEdge>();
             oe.addAll(outgoingEdges);
             return oe;
         }
@@ -77,7 +78,7 @@ public class RecruitGraph
             return ie;
         }
 
-        void addOutgoingEdge(RecruitEdge e)
+        void addOutgoingEdge(@RUntainted RecruitEdge e)
         {
             if (!(outgoingEdges.contains(e)))
             {
@@ -93,12 +94,12 @@ public class RecruitGraph
             }
         }
 
-        String getCreatureName()
+        @RUntainted String getCreatureName()
         {
             return cre;
         }
 
-        int getRemaining()
+        @RUntainted int getRemaining()
         {
             if (graph.getCaretaker() != null)
             {
@@ -144,10 +145,10 @@ public class RecruitGraph
     {
         private final RecruitVertex src;
         private final RecruitVertex dst;
-        private final int number;
+        private final @RUntainted int number;
         private final MasterBoardTerrain terrain;
 
-        RecruitEdge(RecruitVertex src, RecruitVertex dst, int number,
+        RecruitEdge(RecruitVertex src, RecruitVertex dst, @RUntainted int number,
             MasterBoardTerrain terrain)
         {
             this.src = src;
@@ -166,7 +167,7 @@ public class RecruitGraph
             return dst;
         }
 
-        int getNumber()
+        @RUntainted int getNumber()
         {
             return number;
         }
@@ -252,7 +253,7 @@ public class RecruitGraph
         this.caretaker = null;
     }
 
-    private RecruitVertex addVertex(String cre)
+    private @RUntainted RecruitVertex addVertex(@RUntainted String cre)
     {
         RecruitVertex temp = creatureToVertex.get(cre);
         if (temp == null)
@@ -264,7 +265,7 @@ public class RecruitGraph
         return temp;
     }
 
-    private RecruitVertex getVertex(String cre)
+    private RecruitVertex getVertex(@RUntainted String cre)
     {
         RecruitVertex temp = creatureToVertex.get(cre);
 
@@ -278,8 +279,8 @@ public class RecruitGraph
         return temp;
     }
 
-    private RecruitEdge addEdge(RecruitVertex src, RecruitVertex dst,
-        int number, MasterBoardTerrain terrain)
+    private RecruitEdge addEdge(@RUntainted RecruitVertex src, @RUntainted RecruitVertex dst,
+        @RUntainted int number, @RUntainted MasterBoardTerrain terrain)
     {
         RecruitEdge e = new RecruitEdge(src, dst, number, terrain);
         allEdge.add(e);
@@ -309,8 +310,8 @@ public class RecruitGraph
             all.add(s);
             visited.add(s);
 
-            List<RecruitEdge> oe = s.getOutgoingEdges();
-            Iterator<RecruitEdge> it = oe.iterator();
+            List<@RUntainted RecruitEdge> oe = s.getOutgoingEdges();
+            Iterator<@RUntainted RecruitEdge> it = oe.iterator();
 
             while (it.hasNext())
             {
@@ -362,7 +363,7 @@ public class RecruitGraph
      * @param  cre Name of the recruiting creature
      * @return A List of all the outgoing RecruitEdge.
      */
-    private List<RecruitEdge> getOutgoingEdges(String cre)
+    private List<@RUntainted RecruitEdge> getOutgoingEdges(@RUntainted String cre)
     {
         RecruitVertex temp = getVertex(cre);
         return temp.getOutgoingEdges();
@@ -373,7 +374,7 @@ public class RecruitGraph
      * @param  cre Name of the recruited creature
      * @return A List of all the incoming RecruitEdge.
      */
-    private List<RecruitEdge> getIncomingEdges(String cre)
+    private List<RecruitEdge> getIncomingEdges(@RUntainted String cre)
     {
         RecruitVertex temp = getVertex(cre);
         return temp.getIncomingEdges();
@@ -385,7 +386,7 @@ public class RecruitGraph
      * @param cre Name of the base creature
      * @return A List of all the reachable RecruitVertex.
      */
-    private List<RecruitVertex> traverse(String cre, Legion legion)
+    private List<RecruitVertex> traverse(@RUntainted String cre, Legion legion)
     {
         return traverse(getVertex(cre), new HashSet<RecruitVertex>(), legion);
     }
@@ -400,13 +401,13 @@ public class RecruitGraph
      * @param number Number of recruiters
      * @param terrain Terrain where the recruiting occurs
      */
-    public void addEdge(String src, String dst, int number,
-        MasterBoardTerrain terrain)
+    public void addEdge(@RUntainted String src, @RUntainted String dst, @RUntainted int number,
+        @RUntainted MasterBoardTerrain terrain)
     {
         addEdge(addVertex(src), addVertex(dst), number, terrain);
     }
 
-    public int numberOfRecruiterNeeded(String recruiter, String recruit,
+    public @RUntainted int numberOfRecruiterNeeded(@RUntainted String recruiter, @RUntainted String recruit,
         MasterBoardTerrain terrain, MasterHex hex)
     {
         List<RecruitEdge> allEdge = getIncomingEdges(recruit);
@@ -487,11 +488,11 @@ public class RecruitGraph
      * @param cre Name of the creature considered.
      * @return The higher number of creatures needed to recruit something.
      */
-    public int getMaximumUsefulNumber(String cre)
+    public int getMaximumUsefulNumber(@RUntainted String cre)
     {
         int mun = -1;
 
-        List<RecruitEdge> outgoing = getOutgoingEdges(cre);
+        List<@RUntainted RecruitEdge> outgoing = getOutgoingEdges(cre);
         Iterator<RecruitEdge> it = outgoing.iterator();
         while (it.hasNext())
         {
@@ -515,11 +516,11 @@ public class RecruitGraph
      *     is possible.
      */
     public List<MasterBoardTerrain> getAllTerrainsWhereThisNumberOfCreatureRecruit(
-        String cre, int number)
+        @RUntainted String cre, int number)
     {
         List<MasterBoardTerrain> at = new ArrayList<MasterBoardTerrain>();
 
-        List<RecruitEdge> outgoing = getOutgoingEdges(cre);
+        List<@RUntainted RecruitEdge> outgoing = getOutgoingEdges(cre);
         Iterator<RecruitEdge> it = outgoing.iterator();
         while (it.hasNext())
         {
@@ -536,11 +537,11 @@ public class RecruitGraph
     /**
      * A list of what a creature can recruit.
      */
-    public List<RecruitOption> getAllThatThisCreatureCanRecruit(String cre)
+    public List<RecruitOption> getAllThatThisCreatureCanRecruit(@RUntainted String cre)
     {
         List<RecruitOption> result = new ArrayList<RecruitOption>();
 
-        List<RecruitEdge> outgoing = getOutgoingEdges(cre);
+        List<@RUntainted RecruitEdge> outgoing = getOutgoingEdges(cre);
         Iterator<RecruitEdge> it = outgoing.iterator();
         while (it.hasNext())
         {
@@ -554,7 +555,7 @@ public class RecruitGraph
     /**
      * A list of what can recruit a creature.
      */
-    public List<RecruitOption> getAllThatCanRecruitThisCreature(String cre)
+    public List<RecruitOption> getAllThatCanRecruitThisCreature(@RUntainted String cre)
     {
         List<RecruitOption> result = new ArrayList<RecruitOption>();
 
@@ -580,7 +581,7 @@ public class RecruitGraph
     public CreatureType getRecruitFromRecruiterTerrainNumber(CreatureType cre,
         MasterBoardTerrain t, int number)
     {
-        List<RecruitEdge> outgoing = getOutgoingEdges(cre.getName());
+        List<@RUntainted RecruitEdge> outgoing = getOutgoingEdges(cre.getName());
         CreatureType v2 = null;
 
         Iterator<RecruitEdge> it = outgoing.iterator();
@@ -605,7 +606,7 @@ public class RecruitGraph
      * @param legion The recruiting legion or null.
      * @return The best possible recruit.
      */
-    public CreatureType getBestPossibleRecruitEver(String cre, Legion legion)
+    public CreatureType getBestPossibleRecruitEver(@RUntainted String cre, Legion legion)
     {
         CreatureType best = getVariant().getCreatureByName(cre);
         int maxVP = -1;
@@ -639,7 +640,7 @@ public class RecruitGraph
      * @param greater Name of the recruit we are trying to get to
      * @param distance number of steps to consider
      */
-    public boolean isRecruitDistanceLessThan(String lesser, String greater,
+    public boolean isRecruitDistanceLessThan(@RUntainted String lesser, String greater,
         int distance)
     {
         List<RecruitVertex> all = traverse(lesser, null);

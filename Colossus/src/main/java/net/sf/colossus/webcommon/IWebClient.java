@@ -1,4 +1,5 @@
 package net.sf.colossus.webcommon;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -31,39 +32,39 @@ public interface IWebClient
 
     public void grantAdminStatus();
 
-    public void didEnroll(String gameId, String username);
+    public void didEnroll(@RUntainted String gameId, @RUntainted String username);
 
-    public void didUnenroll(String gameId, String username);
+    public void didUnenroll(@RUntainted String gameId, @RUntainted String username);
 
-    public void userInfo(int loggedin, int enrolled, int playing, int dead,
-        long ago, String text);
+    public void userInfo(@RUntainted int loggedin, @RUntainted int enrolled, @RUntainted int playing, @RUntainted int dead,
+        @RUntainted long ago, @RUntainted String text);
 
-    public void gameInfo(GameInfo gi);
+    public void gameInfo(@RUntainted GameInfo gi);
 
-    public void gameStartsNow(String gameId, int port, String hostingHost,
-        int inactivityCheckInterval, int inactivityWarningInterval,
-        int inactivityTimeout);
+    public void gameStartsNow(@RUntainted String gameId, @RUntainted int port, @RUntainted String hostingHost,
+        @RUntainted int inactivityCheckInterval, @RUntainted int inactivityWarningInterval,
+        @RUntainted int inactivityTimeout);
 
-    public void gameStartsSoon(String gameId, String startUser);
+    public void gameStartsSoon(@RUntainted String gameId, @RUntainted String startUser);
 
-    public void gameCancelled(String gameId, String byUser);
+    public void gameCancelled(@RUntainted String gameId, @RUntainted String byUser);
 
-    public void chatDeliver(String chatId, long when, String sender,
-        String message, boolean resent);
+    public void chatDeliver(@RUntainted String chatId, @RUntainted long when, @RUntainted String sender,
+        @RUntainted String message, @RUntainted boolean resent);
 
     public void connectionReset(boolean forcedLogout);
 
-    public int getClientVersion();
+    public @RUntainted int getClientVersion();
 
-    public void deliverGeneralMessage(long when, boolean error, String title,
-        String message);
+    public void deliverGeneralMessage(@RUntainted long when, @RUntainted boolean error, @RUntainted String title,
+        @RUntainted String message);
 
-    public void systemMessage(long when, String message);
+    public void systemMessage(@RUntainted long when, @RUntainted String message);
 
-    public void requestAttention(long when, String byUser, boolean byAdmin,
-        String message, int beepCount, long beepInterval, boolean windows);
+    public void requestAttention(@RUntainted long when, @RUntainted String byUser, @RUntainted boolean byAdmin,
+        @RUntainted String message, @RUntainted int beepCount, @RUntainted long beepInterval, @RUntainted boolean windows);
 
-    public void watchGameInfo(String gameId, String host, int port);
+    public void watchGameInfo(@RUntainted String gameId, @RUntainted String host, @RUntainted int port);
 
-    public void tellOwnInfo(String email);
+    public void tellOwnInfo(@RUntainted String email);
 }

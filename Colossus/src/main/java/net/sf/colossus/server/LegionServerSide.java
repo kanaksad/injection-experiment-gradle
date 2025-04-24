@@ -17,6 +17,8 @@ import net.sf.colossus.game.Player;
 import net.sf.colossus.game.actions.Acquisition;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
 
 
 /**
@@ -33,18 +35,18 @@ public final class LegionServerSide extends Legion implements
     private static final Logger LOGGER = Logger
         .getLogger(LegionServerSide.class.getName());
 
-    private final Legion parent;
+    private final @RUntainted Legion parent;
 
     /**
      * The label of the starting hex of the last move.
      */
-    private MasterHex startingHex;
+    private @RUntainted MasterHex startingHex;
 
     /**
      * TODO this should be a {@link Creature} or {@link CreatureType}
      */
-    private int battleTally;
-    private final GameServerSide game;
+    private @RUntainted int battleTally;
+    private final @RUntainted GameServerSide game;
 
     /**
      * Creates a new Legion instance.
@@ -56,9 +58,9 @@ public final class LegionServerSide extends Legion implements
      * TODO the game parameter should be redundant since it should be the same
      *      as player.getGame()
      */
-    public LegionServerSide(String markerId, Legion parent,
-        MasterHex currentHex, MasterHex startingHex, Player player,
-        GameServerSide game, CreatureType... creatureTypes)
+    public LegionServerSide(@RUntainted String markerId, @RUntainted Legion parent,
+        @RUntainted MasterHex currentHex, @RUntainted MasterHex startingHex, @RUntainted Player player,
+        @RUntainted GameServerSide game, @RUntainted CreatureType... creatureTypes)
     {
         super(player, markerId, currentHex);
         assert markerId != null : "MarkerId must not be null";
@@ -79,7 +81,7 @@ public final class LegionServerSide extends Legion implements
     }
 
     @Override
-    public int getPointValue()
+    public @RUntainted int getPointValue()
     {
         int pointValue = 0;
         for (Creature critter : getCreatures())
@@ -102,7 +104,7 @@ public final class LegionServerSide extends Legion implements
         }
     }
 
-    void addAngel(CreatureType angelType)
+    void addAngel(@RUntainted CreatureType angelType)
     {
         if (angelsToAcquire <= 0)
         {
@@ -170,7 +172,7 @@ public final class LegionServerSide extends Legion implements
         }
     }
 
-    void addToBattleTally(int points)
+    void addToBattleTally(@RUntainted int points)
     {
         battleTally += points;
     }
@@ -182,17 +184,17 @@ public final class LegionServerSide extends Legion implements
         clearBattleTally();
     }
 
-    public String getMarkerName()
+    public @RUntainted String getMarkerName()
     {
         return getMarkerName(getMarkerId());
     }
 
-    public static String getMarkerName(String markerId)
+    public static @RPolyTainted String getMarkerName(@RPolyTainted String markerId)
     {
         return VariantSupport.getMarkerNamesProperties().getProperty(markerId);
     }
 
-    public static String getLongMarkerName(String markerId)
+    public static @RPolyTainted String getLongMarkerName(@RPolyTainted String markerId)
     {
         StringBuilder sb = new StringBuilder(markerId);
         sb.append(" (");
@@ -201,18 +203,18 @@ public final class LegionServerSide extends Legion implements
         return sb.toString();
     }
 
-    public String getLongMarkerName()
+    public @RUntainted String getLongMarkerName()
     {
         return getLongMarkerName(getMarkerId());
     }
 
-    public Legion getParent()
+    public @RUntainted Legion getParent()
     {
         return parent;
     }
 
     @Override
-    public PlayerServerSide getPlayer()
+    public @RUntainted PlayerServerSide getPlayer()
     {
         return (PlayerServerSide)super.getPlayer();
     }
@@ -277,8 +279,8 @@ public final class LegionServerSide extends Legion implements
         }
     }
 
-    void moveToHex(MasterHex hex, EntrySide entrySide, boolean teleported,
-        CreatureType teleportingLord)
+    void moveToHex(@RUntainted MasterHex hex, @RUntainted EntrySide entrySide, boolean teleported,
+        @RUntainted CreatureType teleportingLord)
     {
         PlayerServerSide player = getPlayer();
 
@@ -351,7 +353,7 @@ public final class LegionServerSide extends Legion implements
             getCurrentHex()).isEmpty()));
     }
 
-    String cantRecruitBecause()
+    @RUntainted String cantRecruitBecause()
     {
         CreatureType recruit = getRecruit();
         if (recruit != null)
@@ -429,7 +431,7 @@ public final class LegionServerSide extends Legion implements
         return !game.findLegionsWithSummonables(this).isEmpty();
     }
 
-    MasterHex getStartingHex()
+    @RUntainted MasterHex getStartingHex()
     {
         return startingHex;
     }
@@ -438,7 +440,7 @@ public final class LegionServerSide extends Legion implements
       * then do this only if such a creature remains in the stacks,
       * and decrement the number of this creature type remaining.
       */
-    boolean addCreature(CreatureType creature, boolean takeFromStack)
+    boolean addCreature(@RUntainted CreatureType creature, boolean takeFromStack)
     {
         assert getHeight() < 7
             || (getHeight() == 7 && game.getTurnNumber() == 1) : "Tried "
@@ -470,7 +472,7 @@ public final class LegionServerSide extends Legion implements
     /** Remove the creature in position i in the legion.  Return the
      removed creature. Put immortal creatures back on the stack
      and others to the Graveyard if returnImmortalToStack is true. */
-    CreatureType removeCreature(int i, boolean returnToStack,
+    @RUntainted CreatureType removeCreature(int i, boolean returnToStack,
         boolean disbandIfEmpty)
     {
         Creature critter = getCreatures().remove(i);
@@ -499,7 +501,7 @@ public final class LegionServerSide extends Legion implements
 
     /** Remove the first creature matching the passed creature's type
      from the legion.  Return the removed creature. */
-    CreatureType removeCreature(CreatureType creature,
+    @RUntainted CreatureType removeCreature(CreatureType creature,
         boolean returnImmortalToStack, boolean disbandIfEmpty)
     {
         // indexOf wants the same object, not just the same type.
@@ -547,7 +549,7 @@ public final class LegionServerSide extends Legion implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<CreatureServerSide> getCreatures()
+    public @RUntainted List<@RUntainted CreatureServerSide> getCreatures()
     {
         return (List<CreatureServerSide>)super.getCreatures();
     }
@@ -560,7 +562,7 @@ public final class LegionServerSide extends Legion implements
         return getCreatures().get(i);
     }
 
-    void addCritter(CreatureServerSide critter)
+    void addCritter(@RUntainted CreatureServerSide critter)
     {
         getCreatures().add(critter);
         critter.setLegion(this);
@@ -581,7 +583,7 @@ public final class LegionServerSide extends Legion implements
 
     /** Move critter to the first position in the critters list.
      *  Return true if it was moved. */
-    boolean moveToTop(CreatureServerSide critter)
+    boolean moveToTop(@RUntainted CreatureServerSide critter)
     {
         int i = getCreatures().indexOf(critter);
         if (i <= 0)
@@ -627,7 +629,7 @@ public final class LegionServerSide extends Legion implements
      concurrent access problems. Someone needs to call
      MasterBoard.alignLegions() on the remaining legion's hexLabel
      after the recombined legion is actually removed. */
-    void recombine(Legion legion, boolean remove)
+    void recombine(@RUntainted Legion legion, boolean remove)
     {
         // Sanity check
         if (legion == this)
@@ -664,7 +666,7 @@ public final class LegionServerSide extends Legion implements
      * (Or the first available marker, if markerId is null.)
      * Return the new legion, or null if there's an error.
      */
-    LegionServerSide split(List<CreatureType> creatures, String newMarkerId)
+    @RUntainted LegionServerSide split(List<@RUntainted CreatureType> creatures, @RUntainted String newMarkerId)
     {
         assert newMarkerId != null : "We need a marker to split";
         PlayerServerSide player = getPlayer();
@@ -673,7 +675,7 @@ public final class LegionServerSide extends Legion implements
         LegionServerSide newLegion = new LegionServerSide(newMarkerId, this,
             getCurrentHex(), getCurrentHex(), getPlayer(), game);
 
-        Iterator<CreatureType> it = creatures.iterator();
+        Iterator<@RUntainted CreatureType> it = creatures.iterator();
         while (it.hasNext())
         {
             CreatureType creature = it.next();
@@ -707,7 +709,7 @@ public final class LegionServerSide extends Legion implements
     /**
      * List the lords eligible to teleport this legion to hexLabel.
      */
-    List<CreatureType> listTeleportingLords(MasterHex hex)
+    @RUntainted List<CreatureType> listTeleportingLords(MasterHex hex)
     {
         // Needs to be a List not a Set so that it can be passed as
         // an imageList.
@@ -768,7 +770,7 @@ public final class LegionServerSide extends Legion implements
     }
 
     @Override
-    public void addCreature(CreatureType type)
+    public void addCreature(@RUntainted CreatureType type)
     {
         addCreature(type, true);
     }

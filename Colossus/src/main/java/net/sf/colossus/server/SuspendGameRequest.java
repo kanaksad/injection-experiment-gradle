@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import net.sf.colossus.common.Constants;
 import net.sf.colossus.util.Glob;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class SuspendGameRequest
@@ -19,9 +20,9 @@ public class SuspendGameRequest
 
     private final Server server;
 
-    private final HashSet<ClientHandler> suspendRequestApprovers = new HashSet<ClientHandler>();
+    private final @RUntainted HashSet<ClientHandler> suspendRequestApprovers = new HashSet<ClientHandler>();
 
-    private final List<String> denyingClients = new LinkedList<String>();
+    private final @RUntainted List<String> denyingClients = new LinkedList<String>();
 
     private ClientHandler currentRequestor;
 
@@ -110,7 +111,7 @@ public class SuspendGameRequest
         }
     }
 
-    public void handleOneResponse(boolean approved)
+    public void handleOneResponse(@RUntainted boolean approved)
     {
         if (suspendRequestApprovers.isEmpty())
         {

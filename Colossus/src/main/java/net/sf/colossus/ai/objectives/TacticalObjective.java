@@ -2,6 +2,7 @@ package net.sf.colossus.ai.objectives;
 
 
 import net.sf.colossus.util.ValueRecorder;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -16,7 +17,7 @@ public interface TacticalObjective
      *
      * @return Whether the objective is already achieved
      */
-    boolean objectiveAttained();
+    @RUntainted boolean objectiveAttained();
 
     /** How much does the 'current situation' contributes to the objective.
      * The actual value is currently added to the overall evaluation
@@ -29,18 +30,18 @@ public interface TacticalObjective
      *
      * @return The current priority of this objective.
      */
-    float getPriority();
+    @RUntainted float getPriority();
 
     /** Get the description of this objective.
      *
      * @return The description of this objective.
      */
-    String getDescription();
+    @RUntainted String getDescription();
 
     /** Change the priority of this objective.
      *
      * @param newPriority The new priority.
      * @return The old priority.
      */
-    float changePriority(float newPriority);
+    float changePriority(@RUntainted float newPriority);
 }

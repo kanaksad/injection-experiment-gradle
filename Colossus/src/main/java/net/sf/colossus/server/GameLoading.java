@@ -15,6 +15,7 @@ import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class GameLoading
@@ -22,8 +23,8 @@ public class GameLoading
     private static final Logger LOGGER = Logger.getLogger(GameLoading.class
         .getName());
 
-    private Variant variant;
-    private Element root;
+    private @RUntainted Variant variant;
+    private @RUntainted Element root;
 
     public GameLoading()
     {
@@ -31,12 +32,12 @@ public class GameLoading
         LOGGER.info("Instantiated GameLoading");
     }
 
-    public Variant getVariant()
+    public @RUntainted Variant getVariant()
     {
         return variant;
     }
 
-    public Element getRoot()
+    public @RUntainted Element getRoot()
     {
         return root;
     }
@@ -49,7 +50,7 @@ public class GameLoading
      *
      * @return String telling reason for failure, or null if all ok
      */
-    public String loadGame(String filename)
+    public @RUntainted String loadGame(@RUntainted String filename)
     {
         File file = resolveFileNameToFile(filename);
         if (file == null)
@@ -74,7 +75,7 @@ public class GameLoading
      * @return The File object for that filename, or null if no such file
      *         can't be found
      */
-    private File resolveFileNameToFile(String filename)
+    private @RUntainted File resolveFileNameToFile(@RUntainted String filename)
     {
         File file = null;
 
@@ -138,7 +139,7 @@ public class GameLoading
      * @param file The file from which to load the game
      * @return True if load was successful, otherwise false
      */
-    public String loadGameFromFile(File file)
+    public @RUntainted String loadGameFromFile(@RUntainted File file)
     {
         try
         {
@@ -188,12 +189,12 @@ public class GameLoading
      * @param filenames An array of strings which represent filenames
      * @return Latest savegame from the list
      */
-    private String latestSaveFilename(String[] filenames)
+    private @RUntainted String latestSaveFilename(String[] filenames)
     {
         return Collections.max(Arrays.asList(filenames),
             new Comparator<String>()
             {
-                public int compare(String s1, String s2)
+                public int compare(@RUntainted String s1, @RUntainted String s2)
                 {
                     long diff = (numberValue(s1) - numberValue(s2));
 
@@ -211,7 +212,7 @@ public class GameLoading
     }
 
     /** Extract and return the numeric part of a filename. */
-    private long numberValue(String filename)
+    private long numberValue(@RUntainted String filename)
     {
         StringBuilder numberPart = new StringBuilder();
         boolean foundFirstDigit = false;

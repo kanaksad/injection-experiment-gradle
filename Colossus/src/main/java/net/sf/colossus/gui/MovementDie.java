@@ -1,4 +1,5 @@
 package net.sf.colossus.gui;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -10,13 +11,13 @@ final class MovementDie extends Chit
 {
     private final int lastRoll = 0;
 
-    MovementDie(int scale, String id)
+    MovementDie(@RUntainted int scale, @RUntainted String id)
     {
         // null: no overlays
         super(scale, id, null);
     }
 
-    static String getDieImageName(int roll)
+    static @RUntainted String getDieImageName(int roll)
     {
         StringBuilder basename = new StringBuilder("Hit");
         basename.append(roll);

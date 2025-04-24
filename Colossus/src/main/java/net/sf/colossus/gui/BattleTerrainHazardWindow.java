@@ -26,6 +26,7 @@ import net.sf.colossus.variant.HazardTerrain;
 import net.sf.colossus.variant.Hazards;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -64,7 +65,7 @@ public class BattleTerrainHazardWindow extends KDialog
 
     private final MasterHex hex;
     private final Variant variant;
-    private final SortedSet<CreatureType> creatures;
+    private final SortedSet<@RUntainted CreatureType> creatures;
     private Map<String, HazardTerrain> hazardsDisplayed;
     private Map<String, HazardHexside> hexsidesDisplayed;
 
@@ -178,7 +179,7 @@ public class BattleTerrainHazardWindow extends KDialog
         container.add(textPanel, vFillConstraints);
     }
 
-    private void addHazard(Container container, Hazards hazard)
+    private void addHazard(Container container, @RUntainted Hazards hazard)
     {
         // hex label is always first in row, aligned vCenter but left
         GridBagConstraints hexLabelConstraints = (GridBagConstraints)GBC_DEFAULT
@@ -203,7 +204,7 @@ public class BattleTerrainHazardWindow extends KDialog
     }
 
     // Create GUI representation of Terrain
-    private void addHexImage(Container container, Hazards hazard)
+    private void addHexImage(Container container, @RUntainted Hazards hazard)
     {
         GUIBattleHex hex = new GUIBattleHex(HEX_SIZE, 0, HEX_SIZE, container,
             0, 0);
@@ -244,7 +245,7 @@ public class BattleTerrainHazardWindow extends KDialog
         container.add(hex, constraints);
     }
 
-    private void configureHexModel(HazardHexside hazard, BattleHex model)
+    private void configureHexModel(@RUntainted HazardHexside hazard, BattleHex model)
     {
         model.setTerrain(HazardTerrain.getDefaultTerrain());
         for (int i = 0; i <= 5; i++)
@@ -443,7 +444,7 @@ public class BattleTerrainHazardWindow extends KDialog
 
     private Chit makeStrikeEffect(String strike, Hazards.CombatEffect e)
     {
-        String[] overlay;
+        @RUntainted String[] overlay;
         if ("Being Rangestruck".equals(strike)
             || "Rangestriking".equals(strike))
         {

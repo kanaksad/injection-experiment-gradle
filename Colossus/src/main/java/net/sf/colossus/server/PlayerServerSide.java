@@ -17,6 +17,7 @@ import net.sf.colossus.game.Player;
 import net.sf.colossus.util.Glob;
 import net.sf.colossus.util.InstanceTracker;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -36,7 +37,7 @@ public final class PlayerServerSide extends Player implements
     // they could be summed up there and then added all in one go. That
     // would save us from storing a double and truncating things later
     // and the getScore/setScore overrides could go.
-    private double score; // track half-points, then round
+    private @RUntainted double score; // track half-points, then round
     private boolean summoned;
 
     /**
@@ -53,7 +54,7 @@ public final class PlayerServerSide extends Player implements
      *      specific, so that we can easier do "special stuff" that
      *      involves comparing a roll to the previous one of same player.
      */
-    private int movementRoll; // 0 if movement has not been rolled.
+    private @RUntainted int movementRoll; // 0 if movement has not been rolled.
     private int preExtraRollRequestMovementRoll; // set ONLY for requestExtraRoll use
     private int previousTurnMovementRoll = 0;
 
@@ -64,14 +65,14 @@ public final class PlayerServerSide extends Player implements
     /**
      * The legion which gave a summonable creature.
      */
-    private LegionServerSide donor;
-    private String firstMarker;
+    private @RUntainted LegionServerSide donor;
+    private @RUntainted String firstMarker;
 
     /* Needed during loading a game: */
-    private String playersEliminatedBackup = "";
-    private final List<Legion> legionsBackup = new ArrayList<Legion>();
+    private @RUntainted String playersEliminatedBackup = "";
+    private final @RUntainted List<@RUntainted Legion> legionsBackup = new ArrayList<@RUntainted Legion>();
 
-    PlayerServerSide(String name, GameServerSide game, String shortTypeName)
+    PlayerServerSide(@RUntainted String name, GameServerSide game, @RUntainted String shortTypeName)
     {
         // TODO why are the players on the client side numbered but not here?
         super(game, name, 0);
@@ -94,7 +95,7 @@ public final class PlayerServerSide extends Player implements
 
     // TODO strong redundancy with Client.setType(String)
     @Override
-    public void setType(final String shortTypeName)
+    public void setType(final @RUntainted String shortTypeName)
     {
         String type = shortTypeName;
         LOGGER.log(Level.FINEST, "Called Player.setType() for " + getName()
@@ -125,7 +126,7 @@ public final class PlayerServerSide extends Player implements
         initMarkersAvailable(getShortColor());
     }
 
-    void initMarkersAvailable(String shortColor)
+    void initMarkersAvailable(@RUntainted String shortColor)
     {
         for (int i = 1; i <= 9; i++)
         {
@@ -164,12 +165,12 @@ public final class PlayerServerSide extends Player implements
         }
     }
 
-    void setFirstMarker(String firstMarker)
+    void setFirstMarker(@RUntainted String firstMarker)
     {
         this.firstMarker = firstMarker;
     }
 
-    String getFirstMarker()
+    @RUntainted String getFirstMarker()
     {
         return firstMarker;
     }
@@ -203,12 +204,12 @@ public final class PlayerServerSide extends Player implements
         this.summoned = summoned;
     }
 
-    LegionServerSide getDonor()
+    @RUntainted LegionServerSide getDonor()
     {
         return donor;
     }
 
-    void setDonor(LegionServerSide donor)
+    void setDonor(@RUntainted LegionServerSide donor)
     {
         this.donor = donor;
     }
@@ -237,7 +238,7 @@ public final class PlayerServerSide extends Player implements
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<LegionServerSide> getLegions()
+    public @RUntainted List<@RUntainted LegionServerSide> getLegions()
     {
         return (List<LegionServerSide>)super.getLegions();
     }
@@ -286,12 +287,12 @@ public final class PlayerServerSide extends Player implements
         return getMovementRoll();
     }
 
-    int getMovementRoll()
+    @RUntainted int getMovementRoll()
     {
         return movementRoll;
     }
 
-    void setMovementRoll(int movementRoll)
+    void setMovementRoll(@RUntainted int movementRoll)
     {
         this.movementRoll = movementRoll;
     }
@@ -309,7 +310,7 @@ public final class PlayerServerSide extends Player implements
         commitMoves();
     }
 
-    int rollMovement(String reason)
+    @RUntainted int rollMovement(@RUntainted String reason)
     {
         boolean forExtraRequest = reason.equals(Constants.reasonExtraRoll);
 
@@ -479,7 +480,7 @@ public final class PlayerServerSide extends Player implements
      * (quite similar to undorecuit, but not exactly the same)
      * @param legion The legion which cancels the reinforcement
      */
-    void undoReinforcement(Legion legion)
+    void undoReinforcement(@RUntainted Legion legion)
     {
         // This is now permanently fixed in Player.java, so this should
         // never happen again. Still, leaving this in place, just to be sure...
@@ -525,20 +526,20 @@ public final class PlayerServerSide extends Player implements
     }
 
     @Override
-    public void setScore(int score)
+    public void setScore(@RUntainted int score)
     {
         this.score = score;
     }
 
     @Override
-    public int getScore()
+    public @RUntainted int getScore()
     {
         return (int)score;
     }
 
     /** Add points to this player's score.  Update the status window
      *  to reflect the addition. */
-    void addPoints(double points, boolean halfPoints)
+    void addPoints(@RUntainted double points, boolean halfPoints)
     {
         if (points > 0)
         {
@@ -570,7 +571,7 @@ public final class PlayerServerSide extends Player implements
      * @param legion the legion which is entitled to acquire due to that
      * @param halfPoints this are already halfPoints (from fleeing)
      */
-    void awardPoints(int points, LegionServerSide legion, boolean halfPoints)
+    void awardPoints(@RUntainted int points, LegionServerSide legion, boolean halfPoints)
     {
         int scoreBeforeAdd = getScore(); // 375
         addPoints(points, halfPoints); // 375 + 150 = 525
@@ -593,7 +594,7 @@ public final class PlayerServerSide extends Player implements
      *
      * @param slayer The player who killed us. May be null if we just gave up or it is a draw.
      */
-    void die(Player slayer)
+    void die(@RUntainted Player slayer)
     {
         LOGGER.info("Player '" + getName() + "' is dying, killed by "
             + (slayer == null ? "nobody" : slayer.getName()));
@@ -676,7 +677,7 @@ public final class PlayerServerSide extends Player implements
     /** Return a colon-separated string with a bunch of info for
      *  the status screen.
      */
-    String getStatusInfo(boolean treatDeadAsAlive)
+    @RUntainted String getStatusInfo(boolean treatDeadAsAlive)
     {
         List<String> li = new ArrayList<String>();
         li.add(Boolean.toString(!treatDeadAsAlive && isDead()));
@@ -707,7 +708,7 @@ public final class PlayerServerSide extends Player implements
      *
      * @return New info or "" if all is same as last time
      */
-    String getValuesIfChanged()
+    @RUntainted String getValuesIfChanged()
     {
         List<String> li = new ArrayList<String>();
         li.add(getName());
@@ -750,7 +751,7 @@ public final class PlayerServerSide extends Player implements
         removeAllLegions();
     }
 
-    public boolean resyncBackupData()
+    public @RUntainted boolean resyncBackupData()
     {
         if (!(playersEliminatedBackup != null && getPlayersElim() != null && getPlayersElim()
             .equals(playersEliminatedBackup)))
@@ -774,7 +775,7 @@ public final class PlayerServerSide extends Player implements
         {
             Legion l = getLegionByMarkerId(bl.getMarkerId());
 
-            List<CreatureType> ourCreatures = new ArrayList<CreatureType>(
+            List<@RUntainted CreatureType> ourCreatures = new ArrayList<@RUntainted CreatureType>(
                 l.getCreatureTypes());
             ourCreatures.removeAll(bl.getCreatureTypes());
 
@@ -804,13 +805,13 @@ public final class PlayerServerSide extends Player implements
     }
 
     @Override
-    public int makeBattleRoll()
+    public @RUntainted int makeBattleRoll()
     {
         return myDice.rollBattleDie();
     }
 
     @Override
-    public int makeMovementRoll()
+    public @RUntainted int makeMovementRoll()
     {
         return myDice.rollMovementDie();
     }

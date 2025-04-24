@@ -39,6 +39,7 @@ import net.sf.colossus.variant.IVariantHint;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -67,7 +68,7 @@ public abstract class AbstractAI implements AI
     protected Variant variant;
 
     /** Our random source. */
-    final protected Random random = new DevRandom();
+    final protected @RUntainted Random random = new DevRandom();
     /**
      * For the Oracle Hint stuff, the play style we use.
      *
@@ -86,8 +87,8 @@ public abstract class AbstractAI implements AI
         this.variant = v;
     }
 
-    final public CreatureType getVariantRecruitHint(LegionClientSide legion,
-        MasterHex hex, List<CreatureType> recruits)
+    final public @RUntainted CreatureType getVariantRecruitHint(LegionClientSide legion,
+        MasterHex hex, List<@RUntainted CreatureType> recruits)
     {
         return VariantSupport.getRecruitHint(hex.getTerrain(), legion,
             recruits, new AbstractAIOracle(legion, hex, recruits),
@@ -121,7 +122,7 @@ public abstract class AbstractAI implements AI
                 for (int roll = 1; roll <= 6; roll++)
                 {
                     // count the moves he can get to
-                    Set<MasterHex> set;
+                    Set<@RUntainted MasterHex> set;
                     // Only allow Titan teleport
                     // Remember, tower teleports cannot attack
                     if (legion.hasTitan()
@@ -167,7 +168,7 @@ public abstract class AbstractAI implements AI
         int total = 0;
         for (int roll = 1; roll <= 6; roll++)
         {
-            Set<MasterHex> tempset = client.getMovement().listAllMoves(legion,
+            Set<@RUntainted MasterHex> tempset = client.getMovement().listAllMoves(legion,
                 hex, roll, true);
             if (doesSetContainHexWithTerrain(tempset, terrainTypeName))
             {
@@ -177,7 +178,7 @@ public abstract class AbstractAI implements AI
         return total;
     }
 
-    final private boolean doesSetContainHexWithTerrain(Set<MasterHex> set,
+    final private boolean doesSetContainHexWithTerrain(Set<@RUntainted MasterHex> set,
         String terrainTypeName)
     {
         for (MasterHex hex : set)
@@ -199,7 +200,7 @@ public abstract class AbstractAI implements AI
         Map<BattleHex, Integer> map = new HashMap<BattleHex, Integer>();
         for (BattleCritter critter : client.getActiveBattleUnits())
         {
-            Set<BattleHex> targets = client.findStrikes(critter.getTag());
+            Set<@RUntainted BattleHex> targets = client.findStrikes(critter.getTag());
             for (BattleHex targetHex : targets)
             {
                 Integer old = map.get(targetHex);
@@ -230,7 +231,7 @@ public abstract class AbstractAI implements AI
             {
                 continue;
             }
-            Set<BattleHex> set = client.findStrikes(critter.getTag());
+            Set<@RUntainted BattleHex> set = client.findStrikes(critter.getTag());
             for (BattleHex targetHex : set)
             {
                 BattleCritter target = getBattleUnit(targetHex);
@@ -264,7 +265,7 @@ public abstract class AbstractAI implements AI
      * @param terrain The terrain on which the value is requested, or null.
      * @return The 'kill value' value of the critter, on terrain if non-null
      */
-    public int getKillValue(final BattleCritter battleCritter,
+    public @RUntainted int getKillValue(final BattleCritter battleCritter,
         final MasterBoardTerrain terrain)
     {
         return getKillValue(battleCritter.getType(), terrain);
@@ -284,7 +285,7 @@ public abstract class AbstractAI implements AI
      * @param terrain The terrain on which the value is requested, or null
      * @return The 'kill value' value of chit, on terrain if non-null
      */
-    private int getKillValue(final CreatureType creature,
+    private @RUntainted int getKillValue(final CreatureType creature,
         MasterBoardTerrain terrain)
     {
         int val;
@@ -309,7 +310,7 @@ public abstract class AbstractAI implements AI
      *
      * @return The acquirableRecruitmentsValue
      */
-    protected int getAcqStepValue()
+    protected @RUntainted int getAcqStepValue()
     {
         return variant.getAcquirableRecruitmentsValue();
     }
@@ -318,13 +319,13 @@ public abstract class AbstractAI implements AI
      * Return true if the legion could recruit or acquire something
      * better than its worst creature in hexLabel.
      */
-    final protected boolean couldRecruitUp(Legion legion, MasterHex hex,
-        Legion enemy)
+    final protected boolean couldRecruitUp(@RUntainted Legion legion, MasterHex hex,
+        @RUntainted Legion enemy)
     {
         CreatureType weakest = legion.getCreatureTypes().get(
             legion.getHeight() - 1);
         // Consider recruiting.
-        List<CreatureType> recruits = client.findEligibleRecruits(legion, hex);
+        List<@RUntainted CreatureType> recruits = client.findEligibleRecruits(legion, hex);
         if (!recruits.isEmpty())
         {
             CreatureType bestRecruit = recruits.get(recruits.size() - 1);
@@ -352,7 +353,7 @@ public abstract class AbstractAI implements AI
             CreatureType bestRecruit = null;
             while ((currentScore + pointValue) >= nextScore)
             {
-                List<String> ral = variant.getRecruitableAcquirableList(
+                List<@RUntainted String> ral = variant.getRecruitableAcquirableList(
                     hex.getTerrain(), nextScore);
                 for (String creatureName : ral)
                 {
@@ -389,14 +390,14 @@ public abstract class AbstractAI implements AI
             + VariantSupport.getHintedRecruitmentValueOffset(creature);
     }
 
-    public int getHintedRecruitmentValueNonTitan(CreatureType creature,
+    public @RUntainted int getHintedRecruitmentValueNonTitan(CreatureType creature,
         List<IVariantHint.AIStyle> styles)
     {
         return creature.getPointValue()
             + VariantSupport.getHintedRecruitmentValueOffset(creature, styles);
     }
 
-    protected final int getHintedRecruitmentValue(CreatureType creature,
+    protected final @RUntainted int getHintedRecruitmentValue(CreatureType creature,
         Legion legion, List<IVariantHint.AIStyle> styles)
     {
         if (!creature.isTitan())
@@ -423,7 +424,7 @@ public abstract class AbstractAI implements AI
          * returned by the creature type.
          * SimpleAI (and all its subclasses) override this to 3.
          */
-        int HAS_NATIVE_COMBAT_BONUS = 0;
+        @RUntainted int HAS_NATIVE_COMBAT_BONUS = 0;
     }
 
     /** Test whether a Legion belongs to a Human player */
@@ -448,7 +449,7 @@ public abstract class AbstractAI implements AI
         return honc;
     }
 
-    final protected int rangeToClosestOpponent(final BattleHex hex)
+    final protected @RUntainted int rangeToClosestOpponent(final BattleHex hex)
     {
         int range = Constants.BIGNUM;
         for (BattleCritter critter : client.getInactiveBattleUnits())
@@ -472,9 +473,9 @@ public abstract class AbstractAI implements AI
      *  algorithm is in nestForLoop)
      */
     final protected Collection<LegionMove> generateLegionMoves(
-        final List<List<CritterMove>> allCritterMoves, boolean forceAll)
+        final List<@RUntainted List<CritterMove>> allCritterMoves, boolean forceAll)
     {
-        List<List<CritterMove>> critterMoves = new ArrayList<List<CritterMove>>(
+        List<@RUntainted List<CritterMove>> critterMoves = new ArrayList<@RUntainted List<CritterMove>>(
             allCritterMoves);
         while (trimCritterMoves(critterMoves))
         {// Just trimming
@@ -509,7 +510,7 @@ public abstract class AbstractAI implements AI
      *  on a not-so-good choice).
      */
     final private void nestForLoop(int[] indexes, final int level,
-        final List<List<CritterMove>> critterMoves,
+        final List<@RUntainted List<CritterMove>> critterMoves,
         List<LegionMove> legionMoves, boolean forceAll)
     {
         // TODO See if doing the set test at every level is faster than
@@ -596,7 +597,7 @@ public abstract class AbstractAI implements AI
      *  MoveList. The CritterMove is selected by the index.
      */
     final public static LegionMove makeLegionMove(int[] indexes,
-        List<List<CritterMove>> critterMoves)
+        List<@RUntainted List<CritterMove>> critterMoves)
     {
         LegionMove lm = new LegionMove();
         for (int i = 0; i < indexes.length; i++)
@@ -610,7 +611,7 @@ public abstract class AbstractAI implements AI
 
     /** Modify allCritterMoves in place, and return true if it changed. */
     final private boolean trimCritterMoves(
-        List<List<CritterMove>> allCritterMoves)
+        List<@RUntainted List<CritterMove>> allCritterMoves)
     {
         Set<BattleHex> takenHexes = new HashSet<BattleHex>(); // XXX reuse?
         boolean changed = false;
@@ -654,11 +655,11 @@ public abstract class AbstractAI implements AI
 
         private final LegionClientSide legion;
         private final MasterHex hex;
-        private final List<CreatureType> recruits;
+        private final List<@RUntainted CreatureType> recruits;
         private Map<MasterHex, List<Legion>>[] enemyAttackMap = null;
 
         AbstractAIOracle(LegionClientSide legion, MasterHex hex,
-            List<CreatureType> recruits)
+            List<@RUntainted CreatureType> recruits)
         {
             this.legion = legion;
             this.hex = hex;
@@ -672,7 +673,7 @@ public abstract class AbstractAI implements AI
             return (now > 0);
         }
 
-        public int creatureAvailable(String name)
+        public int creatureAvailable(@RUntainted String name)
         {
             return creatureAvailable(variant.getCreatureByName(name));
         }
@@ -682,7 +683,7 @@ public abstract class AbstractAI implements AI
             return client.getReservedRemain(creatureType);
         }
 
-        public boolean canRecruit(String name)
+        public boolean canRecruit(@RUntainted String name)
         {
             return recruits.contains(variant.getCreatureByName(name));
         }
@@ -722,14 +723,14 @@ public abstract class AbstractAI implements AI
     protected class MoveInfo
     {
 
-        final Legion legion;
+        final @RUntainted Legion legion;
         /** hex to move to.  if hex == null, then this means sit still. */
-        final MasterHex hex;
-        final int value;
-        final int difference; // difference from sitting still
+        final @RUntainted MasterHex hex;
+        final @RUntainted int value;
+        final @RUntainted int difference; // difference from sitting still
         final ValueRecorder why; // explain value
 
-        MoveInfo(Legion legion, MasterHex hex, int value, int difference,
+        MoveInfo(@RUntainted Legion legion, @RUntainted MasterHex hex, @RUntainted int value, @RUntainted int difference,
             ValueRecorder why)
         {
             this.legion = legion;
@@ -761,7 +762,7 @@ public abstract class AbstractAI implements AI
         return client.getGame().getBattleStrike();
     }
 
-    final public int countCreatureAccrossAllLegionFromPlayer(Creature creature)
+    final public @RUntainted int countCreatureAccrossAllLegionFromPlayer(Creature creature)
     {
         Player player = creature.getPlayer();
         int count = 0;

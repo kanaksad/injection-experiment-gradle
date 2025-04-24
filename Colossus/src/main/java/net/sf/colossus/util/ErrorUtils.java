@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import net.sf.colossus.common.Options;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -40,7 +41,7 @@ public class ErrorUtils
      * @param e An exception that was caught somewhere
      * @return A string object containing all the stack trace lines.
      */
-    public static String makeStackTraceString(Throwable e)
+    public static @RUntainted String makeStackTraceString(Throwable e)
     {
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw, true));

@@ -8,6 +8,7 @@ import java.util.List;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public abstract class Legion
@@ -53,7 +54,7 @@ public abstract class Legion
      * This only works properly if all legions are owned by the same player.
      * The case of two legions with titans is not handled.
      */
-    public static final Comparator<Legion> ORDER_TITAN_THEN_POINTS_THEN_MARKER = new Comparator<Legion>()
+    public static final Comparator<@RUntainted Legion> ORDER_TITAN_THEN_POINTS_THEN_MARKER = new Comparator<@RUntainted Legion>()
     {
         /**
          * Legions are sorted in descending order of known total point value,
@@ -82,26 +83,26 @@ public abstract class Legion
      *
      * Never null.
      */
-    private final Player player;
+    private final @RUntainted Player player;
 
     /**
      * The current position of the legion on the masterboard.
      *
      * Never null.
      */
-    private MasterHex currentHex;
+    private @RUntainted MasterHex currentHex;
 
     /**
      * The creatures in this legion.
      */
-    private final List<Creature> creatures = new ArrayList<Creature>();
+    private final @RUntainted List<@RUntainted Creature> creatures = new ArrayList<@RUntainted Creature>();
 
     /**
      * The ID of the marker of this legion.
      *
      * Used as identifier for serialization purposes. Never null.
      */
-    private final String markerId;
+    private final @RUntainted String markerId;
 
     /**
      * Flag if the legion has moved in the current masterboard round.
@@ -116,7 +117,7 @@ public abstract class Legion
     /**
      * The side this legion entered a battle in.
      */
-    private EntrySide entrySide = EntrySide.NOT_SET;
+    private @RUntainted EntrySide entrySide = EntrySide.NOT_SET;
 
     protected List<AcquirableDecision> decisions = null;
     protected int angelsToAcquire;
@@ -150,7 +151,7 @@ public abstract class Legion
     private boolean visitedThisPhase = false;
 
     // TODO legions should be created through factory from the player instances
-    public Legion(final Player player, String markerId, MasterHex hex)
+    public Legion(final @RUntainted Player player, @RUntainted String markerId, @RUntainted MasterHex hex)
     {
         assert player != null : "Legion has to have a player";
         assert markerId != null : "Legion has to have a markerId";
@@ -165,7 +166,7 @@ public abstract class Legion
      *
      * @return The matching player. Never null.
      */
-    public Player getPlayer()
+    public @RUntainted Player getPlayer()
     {
         return player;
     }
@@ -176,7 +177,7 @@ public abstract class Legion
      * @param newPosition the hex that will be the new position. Not null.
      * @see #getCurrentHex()
      */
-    public void setCurrentHex(MasterHex newPosition)
+    public void setCurrentHex(@RUntainted MasterHex newPosition)
     {
         assert newPosition != null : "Need position to move legion to";
         this.currentHex = newPosition;
@@ -189,7 +190,7 @@ public abstract class Legion
      *
      * @see #setCurrentHex(MasterHex)
      */
-    public MasterHex getCurrentHex()
+    public @RUntainted MasterHex getCurrentHex()
     {
         assert currentHex != null : "getCurrentHex() called on Legion before position was set";
         return currentHex;
@@ -200,22 +201,22 @@ public abstract class Legion
      * derived classes and users might still expect to change it
      * TODO should be List<Creature>, but subtypes are still covariant
      */
-    public List<? extends Creature> getCreatures()
+    public @RUntainted List<? extends @RUntainted Creature> getCreatures()
     {
         return creatures;
     }
 
-    public String getMarkerId()
+    public @RUntainted String getMarkerId()
     {
         return markerId;
     }
 
-    public String getLongMarkerId()
+    public @RUntainted String getLongMarkerId()
     {
         return markerId + "-" + getPlayer().getColor().getName();
     }
 
-    public boolean hasTitan()
+    public @RUntainted boolean hasTitan()
     {
         for (Creature critter : getCreatures())
         {
@@ -248,7 +249,7 @@ public abstract class Legion
      *
      * @return the number of creatures in the legion
      */
-    public int getHeight()
+    public @RUntainted int getHeight()
     {
         return getCreatures().size();
     }
@@ -319,7 +320,7 @@ public abstract class Legion
         return getCreatureTypes().contains(type);
     }
 
-    public abstract void addCreature(CreatureType type);
+    public abstract void addCreature(@RUntainted CreatureType type);
 
     public abstract void removeCreature(CreatureType type);
 
@@ -328,7 +329,7 @@ public abstract class Legion
         this.entrySide = entrySide;
     }
 
-    public EntrySide getEntrySide()
+    public @RUntainted EntrySide getEntrySide()
     {
         return entrySide;
     }
@@ -337,7 +338,7 @@ public abstract class Legion
      * TODO unify between the two derived classes if possible -- the handling of Titans
      *      is quite different, although it should have the same result
      */
-    public abstract int getPointValue();
+    public abstract @RUntainted int getPointValue();
 
     public CreatureType getRecruit()
     {
@@ -378,7 +379,7 @@ public abstract class Legion
         return true;
     }
 
-    public int numCreature(CreatureType creatureType)
+    public @RUntainted int numCreature(CreatureType creatureType)
     {
         int count = 0;
         for (Creature critter : getCreatures())
@@ -500,9 +501,9 @@ public abstract class Legion
      *
      * @return A list of all creature types in this legion.
      */
-    public List<CreatureType> getCreatureTypes()
+    public @RUntainted List<@RUntainted CreatureType> getCreatureTypes()
     {
-        List<CreatureType> result = new ArrayList<CreatureType>();
+        List<@RUntainted CreatureType> result = new ArrayList<@RUntainted CreatureType>();
         for (Creature creature : getCreatures())
         {
             result.add(creature.getType());
@@ -554,7 +555,7 @@ public abstract class Legion
      * {{@link #equals(Object)} and {@link #hashCode()} declared final.
      */
     @Override
-    public final boolean equals(Object obj)
+    public final @RUntainted boolean equals(Object obj)
     {
         if (this == obj)
             return true;

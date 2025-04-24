@@ -1,4 +1,5 @@
 package net.sf.colossus.util;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -17,5 +18,5 @@ public interface Predicate<T>
      * @param object The object to test. May be null.
      * @return true iff the object matches.
      */
-    boolean matches(T object);
+    boolean matches(@RUntainted T object);
 }

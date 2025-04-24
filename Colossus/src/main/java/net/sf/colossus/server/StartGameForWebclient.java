@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import net.sf.colossus.common.IStartHandler;
 import net.sf.colossus.common.Options;
 import net.sf.colossus.common.WhatNextManager;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class StartGameForWebclient implements IStartHandler
@@ -13,11 +14,11 @@ public class StartGameForWebclient implements IStartHandler
     private static final Logger LOGGER = Logger
         .getLogger(StartGameForWebclient.class.getName());
 
-    private final WhatNextManager whatNextManager;
+    private final @RUntainted WhatNextManager whatNextManager;
     private GameServerSide game;
     private String username;
 
-    public StartGameForWebclient(WhatNextManager whatNextMgr)
+    public StartGameForWebclient(@RUntainted WhatNextManager whatNextMgr)
     {
         LOGGER.info("Instance created");
         this.whatNextManager = whatNextMgr;

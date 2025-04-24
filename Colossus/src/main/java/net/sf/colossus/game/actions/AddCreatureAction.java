@@ -3,6 +3,7 @@ package net.sf.colossus.game.actions;
 
 import net.sf.colossus.game.Legion;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -14,9 +15,9 @@ import net.sf.colossus.variant.CreatureType;
  */
 public class AddCreatureAction extends LegionAction implements RevealingAction
 {
-    private final CreatureType creatureType;
+    private final @RUntainted CreatureType creatureType;
 
-    public AddCreatureAction(Legion legion, CreatureType creatureType)
+    public AddCreatureAction(@RUntainted Legion legion, @RUntainted CreatureType creatureType)
     {
         super(legion);
         this.creatureType = creatureType;
@@ -25,7 +26,7 @@ public class AddCreatureAction extends LegionAction implements RevealingAction
     /**
      * The type of creature that was added.
      */
-    public CreatureType getAddedCreatureType()
+    public @RUntainted CreatureType getAddedCreatureType()
     {
         return creatureType;
     }
@@ -41,7 +42,7 @@ public class AddCreatureAction extends LegionAction implements RevealingAction
      * TODO remove in favour of using the event hierarchy
      * TODO should be abstract here, but History still creates instances of this class
      */
-    public String getReason()
+    public @RUntainted String getReason()
     {
         return "unknown";
     }

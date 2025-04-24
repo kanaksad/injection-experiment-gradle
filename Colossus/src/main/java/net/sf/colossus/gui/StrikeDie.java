@@ -1,4 +1,6 @@
 package net.sf.colossus.gui;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
 
 
 /**
@@ -13,19 +15,19 @@ final class StrikeDie extends Chit
 {
     private int lastRoll = 0;
 
-    StrikeDie(int scale, int roll, String type)
+    StrikeDie(@RUntainted int scale, int roll, @RUntainted String type)
     {
         this(scale, roll, type, null);
     }
 
-    StrikeDie(int scale, int roll, String type, String[] overlays)
+    StrikeDie(@RUntainted int scale, int roll, @RUntainted String type, @RUntainted String[] overlays)
     {
         super(scale, getDieImageName(type, roll), overlays);
         lastRoll = roll;
         setOpaque(false);
     }
 
-    static String getDieImageName(String type, int roll)
+    static @RPolyTainted String getDieImageName(@RPolyTainted String type, int roll)
     {
         StringBuilder basename = new StringBuilder(type);
         basename.append(roll);

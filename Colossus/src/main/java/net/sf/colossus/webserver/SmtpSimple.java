@@ -6,6 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -53,7 +54,7 @@ public class SmtpSimple
         }
     }
 
-    public synchronized final String sendEmail(String sSmtpServer,
+    public synchronized final String sendEmail(@RUntainted String sSmtpServer,
         String sFromAdr, String sFromRealName, String sToAdr,
         String sToRealName, String sSubject, String sText) throws IOException,
         Exception

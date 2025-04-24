@@ -17,6 +17,7 @@ import net.sf.colossus.common.Constants;
 import net.sf.colossus.game.BattleUnit;
 import net.sf.colossus.game.PlayerColor;
 import net.sf.colossus.util.HTMLColor;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class GUIBattleChit extends Chit
@@ -32,7 +33,7 @@ public class GUIBattleChit extends Chit
     private final Color color;
     private static BasicStroke borderStroke;
     private Rectangle midRect;
-    private Rectangle outerRect;
+    private @RUntainted Rectangle outerRect;
     private int strikeNumber; // Number required for successful strike.
     private int numDice; // modifier for number of Dice rolled.
     private StrikeDie strikeDie; // Graphical representation of strikeNumber.
@@ -43,7 +44,7 @@ public class GUIBattleChit extends Chit
     private static final int borderRatio = 20;
     private static boolean useColoredBorders = false;
 
-    public GUIBattleChit(int scale, String id, boolean inverted,
+    public GUIBattleChit(@RUntainted int scale, @RUntainted String id, boolean inverted,
         PlayerColor playerColor, Client client, BattleUnit battleUnit)
     {
         super(scale, id, inverted, client);
@@ -102,7 +103,7 @@ public class GUIBattleChit extends Chit
         return getDescription();
     }
 
-    public int getTag()
+    public @RUntainted int getTag()
     {
         return battleUnit.getTag();
     }
@@ -134,7 +135,7 @@ public class GUIBattleChit extends Chit
     }
 
     @Override
-    public void paintComponent(Graphics g)
+    public void paintComponent(@RUntainted Graphics g)
     {
         super.paintComponent(g);
 
@@ -233,7 +234,7 @@ public class GUIBattleChit extends Chit
     }
 
     @Override
-    public void setBounds(Rectangle outerRect)
+    public void setBounds(@RUntainted Rectangle outerRect)
     {
         this.outerRect = outerRect;
         int innerScale = (int)(outerRect.width / (1.0 + 2.0 / borderRatio));

@@ -54,6 +54,7 @@ import net.sf.colossus.guiutil.SaveWindow;
 import net.sf.colossus.server.LegionServerSide;
 import net.sf.colossus.util.StaticResourceLoader;
 import net.sf.colossus.variant.BattleHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -69,7 +70,7 @@ public final class BattleBoard extends KFrame
     private static final Logger LOGGER = Logger.getLogger(BattleMap.class
         .getName());
 
-    private static int count = 1;
+    private static @RUntainted int count = 1;
 
     private JMenuBar menuBar;
     private JMenu phaseMenu;
@@ -80,7 +81,7 @@ public final class BattleBoard extends KFrame
     private final String infoText;
 
     /** tag of the selected critter, or -1 if no critter is selected. */
-    private int selectedCritterTag = -1;
+    private @RUntainted int selectedCritterTag = -1;
 
     private static final String undoLast = "Undo Last";
     private static final String undoAll = "Undo All";
@@ -381,7 +382,7 @@ public final class BattleBoard extends KFrame
         gui.getClient().concede();
     }
 
-    private void setBattleMarkerLocation(boolean isDefender, String hexLabel)
+    private void setBattleMarkerLocation(boolean isDefender, @RUntainted String hexLabel)
     {
         BattleHex hex = battleMap.getHexByLabel(hexLabel);
         battleMap.setBattleMarkerLocation(isDefender, hex);
@@ -667,12 +668,12 @@ public final class BattleBoard extends KFrame
 
     private void setupIcon()
     {
-        List<String> directories = new ArrayList<String>();
+        List<@RUntainted String> directories = new ArrayList<@RUntainted String>();
         directories.add(Constants.defaultDirName
             + StaticResourceLoader.getPathSeparator()
             + Constants.imagesDirName);
 
-        String[] iconNames = {
+        @RUntainted String[] iconNames = {
             Constants.battlemapIconImage,
             Constants.battlemapIconText + "-Name-"
                 + Constants.battlemapIconTextColor,
@@ -758,7 +759,7 @@ public final class BattleBoard extends KFrame
     /** Select all hexes containing critters eligible to move. */
     public void highlightMobileCritters()
     {
-        Set<BattleHex> set = getClient().findMobileCritterHexes();
+        Set<@RUntainted BattleHex> set = getClient().findMobileCritterHexes();
         unselectAllHexes();
         battleMap.unselectEntranceHexes();
         battleMap.selectHexes(set);
@@ -767,7 +768,7 @@ public final class BattleBoard extends KFrame
 
     private void highlightMoves(BattleCritter critter)
     {
-        Set<BattleHex> set = getClient().showBattleMoves(critter);
+        Set<@RUntainted BattleHex> set = getClient().showBattleMoves(critter);
         battleMap.unselectAllHexes();
         battleMap.unselectEntranceHexes();
         battleMap.selectHexes(set);
@@ -776,7 +777,7 @@ public final class BattleBoard extends KFrame
     /** Select hexes containing critters that have valid strike targets. */
     public void highlightCrittersWithTargets()
     {
-        Set<BattleHex> set = getClient().findCrittersWithTargets();
+        Set<@RUntainted BattleHex> set = getClient().findCrittersWithTargets();
         unselectAllHexes();
         battleMap.selectHexes(set);
         // XXX Needed?
@@ -786,7 +787,7 @@ public final class BattleBoard extends KFrame
     /** Highlight all hexes with targets that the critter can strike. */
     private void highlightStrikes(BattleUnit battleUnit)
     {
-        Set<BattleHex> set = getClient().findStrikes(battleUnit.getTag());
+        Set<@RUntainted BattleHex> set = getClient().findStrikes(battleUnit.getTag());
         unselectAllHexes();
         gui.resetStrikeNumbers();
         battleMap.selectHexes(set);
@@ -796,7 +797,7 @@ public final class BattleBoard extends KFrame
     }
 
     /** Highlight all hexes to which carries could be applied */
-    public void highlightPossibleCarries(Set<BattleHex> set)
+    public void highlightPossibleCarries(Set<@RUntainted BattleHex> set)
     {
         unselectAllHexes();
         gui.resetStrikeNumbers();
@@ -882,7 +883,7 @@ public final class BattleBoard extends KFrame
         }
     }
 
-    private void actOnHex(BattleHex hex)
+    private void actOnHex(@RUntainted BattleHex hex)
     {
         if (isMovePhase())
         {
@@ -1157,7 +1158,7 @@ public final class BattleBoard extends KFrame
     }
 
     // TODO get rid of this, is is only introduced for refactoring purposes
-    public BattleHex getBattleHexByLabel(String hexLabel)
+    public @RUntainted BattleHex getBattleHexByLabel(@RUntainted String hexLabel)
     {
         return battleMap.getHexByLabel(hexLabel);
     }

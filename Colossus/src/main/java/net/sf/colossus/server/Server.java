@@ -48,6 +48,7 @@ import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.xmlparser.TerrainRecruitLoader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -63,7 +64,7 @@ public final class Server extends Thread implements IServer
         .getName());
     private static StartupProgress startLog;
 
-    private GameServerSide game;
+    private @RUntainted GameServerSide game;
 
     private final WhatNextManager whatNextManager;
 
@@ -82,32 +83,32 @@ public final class Server extends Thread implements IServer
      *  Do not share these references. */
 
     /** Recipients for everything send to "each client" - including the stub */
-    private final List<IClient> iClients = new ArrayList<IClient>();
+    private final @RUntainted List<IClient> iClients = new ArrayList<IClient>();
 
     /** Only real ClientHandlers (excluding the stub/internal spectator) */
-    private final List<ClientHandler> realClients = new ArrayList<ClientHandler>();
+    private final @RUntainted List<ClientHandler> realClients = new ArrayList<ClientHandler>();
 
     private final List<IClient> remoteClients = new ArrayList<IClient>();
     private final List<RemoteLogHandler> remoteLogHandlers = new ArrayList<RemoteLogHandler>();
 
     /** Map of players to their clients. */
-    private final Map<Player, IClient> playerToClientMap = new HashMap<Player, IClient>();
+    private final Map<Player, @RUntainted IClient> playerToClientMap = new HashMap<Player, @RUntainted IClient>();
 
     /** List of SocketChannels that are currently active */
-    private final List<SocketChannel> activeSocketChannelList = new ArrayList<SocketChannel>();
+    private final @RUntainted List<SocketChannel> activeSocketChannelList = new ArrayList<SocketChannel>();
 
     /** ClientHandlers to be withdrawn, together with some related (timing)
      *  data; selector thread will do it then when it's the right time for it
      */
-    private final Map<String, WithdrawInfo> forcedWithdraws = new HashMap<String, WithdrawInfo>();
+    private final @RUntainted Map<@RUntainted String, WithdrawInfo> forcedWithdraws = new HashMap<@RUntainted String, WithdrawInfo>();
 
     /** Number of player clients we're waiting for to *connect* */
-    private int waitingForClients;
+    private @RUntainted int waitingForClients;
 
     /** Number of player clients we're waiting for to *join*
      *  - when last one has joined, then kick of newGame2() or loadGame2()
      */
-    private int waitingForPlayersToJoin = 0;
+    private @RUntainted int waitingForPlayersToJoin = 0;
 
     /** Semaphor for synchronized access to waitingForPlayersToJoin */
     private final Object wfptjSemaphor = new Object();
@@ -115,29 +116,29 @@ public final class Server extends Thread implements IServer
     /** Will be set to true after all clients are properly connected */
     private boolean sendPingRequests = false;
 
-    private int spectators = 0;
+    private @RUntainted int spectators = 0;
 
-    private int connectionIdCounter = 1;
+    private @RUntainted int connectionIdCounter = 1;
 
     /** Server socket port. */
-    private final int port;
+    private final @RUntainted int port;
 
     // Cached strike information.
     private CreatureServerSide striker;
     private CreatureServerSide target;
     private int strikeNumber;
-    private List<String> rolls;
+    private @RUntainted List<@RUntainted String> rolls;
 
     // Network stuff
     private ServerSocket serverSocket;
-    private Selector selector = null;
+    private @RUntainted Selector selector = null;
     private SelectionKey acceptKey = null;
     private boolean stopAcceptingFlag = false;
 
     private final Object guiRequestMutex = new Object();
     private boolean guiRequestQuitFlag = false;
     private boolean guiRequestSaveFlag = false;
-    private String guiRequestSaveFilename = null;
+    private @RUntainted String guiRequestSaveFilename = null;
     private boolean inPauseState = false;
     private boolean suspendFlag = false;
     private boolean saveBeforeSuspend = true;
@@ -146,7 +147,7 @@ public final class Server extends Thread implements IServer
      * previously allocated FileServerThread */
     private static Thread fileServerThread = null;
 
-    private boolean serverRunning = false;
+    private @RUntainted boolean serverRunning = false;
     private boolean obsolete = false;
     private boolean shuttingDown = false;
     private boolean forceShutDown = false;
@@ -166,7 +167,7 @@ public final class Server extends Thread implements IServer
     /**
      * How many ms ago last ping round was done.
      */
-    private long lastPingRound = 0;
+    private @RUntainted long lastPingRound = 0;
 
     /**
      * When server started to listed for clients
@@ -195,23 +196,23 @@ public final class Server extends Thread implements IServer
     private final Object disposeAllClientsDoneMutex = new Object();
     private boolean disposeAllClientsDone = false;
 
-    private final ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+    private final @RUntainted ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
 
     // The ClientHandler of which the input is currently processed
-    ClientHandler processingCH = null;
+    @RUntainted ClientHandler processingCH = null;
 
     // During processing of redoLog, need to override the processing player
     // with the one who did that event originally
     // (because right now, all redo is processed while processingCH is the
     // one of the last player that joined and triggered the loadGame2() etc.)
-    ClientHandler overriddenCH = null;
+    @RUntainted ClientHandler overriddenCH = null;
 
     // Channels are queued into here, to be removed from selector on
     // next possible opportunity ( = when all waiting-to-be-processed keys
     // have been processed).
-    private final List<ClientHandlerStub> channelChanges = new ArrayList<ClientHandlerStub>();
+    private final @RUntainted List<ClientHandlerStub> channelChanges = new ArrayList<ClientHandlerStub>();
 
-    Server(GameServerSide game, WhatNextManager whatNextMgr, int port)
+    Server(@RUntainted GameServerSide game, WhatNextManager whatNextMgr, @RUntainted int port)
     {
         this.game = game;
         this.port = port;
@@ -518,7 +519,7 @@ public final class Server extends Thread implements IServer
         return realClients;
     }
 
-    public void waitOnSelector(int timeout, boolean stillWaitingForClients)
+    public void waitOnSelector(@RUntainted int timeout, boolean stillWaitingForClients)
     {
         try
         {
@@ -572,7 +573,7 @@ public final class Server extends Thread implements IServer
     {
         if (!forcedWithdraws.isEmpty())
         {
-            Set<String> keys = forcedWithdraws.keySet();
+            Set<@RUntainted String> keys = forcedWithdraws.keySet();
             for (String name : keys)
             {
                 WithdrawInfo info = forcedWithdraws.get(name);
@@ -631,8 +632,8 @@ public final class Server extends Thread implements IServer
     private void handleSelectedKeys() throws IOException,
         ClosedChannelException
     {
-        Set<SelectionKey> selectedKeys = selector.selectedKeys();
-        Iterator<SelectionKey> readyKeys = selectedKeys.iterator();
+        Set<@RUntainted SelectionKey> selectedKeys = selector.selectedKeys();
+        Iterator<@RUntainted SelectionKey> readyKeys = selectedKeys.iterator();
         while (readyKeys.hasNext() && !shuttingDown)
         {
             SelectionKey key = readyKeys.next();
@@ -855,7 +856,7 @@ public final class Server extends Thread implements IServer
     //   http://www.javafaq.nu/java-article1102.html
     // Throws IOException when closing the channel fails.
 
-    private int handleReadFromChannel(SelectionKey key, SocketChannel sc)
+    private int handleReadFromChannel(SelectionKey key, @RUntainted SocketChannel sc)
         throws IOException
     {
         byteBuffer.clear();
@@ -964,7 +965,7 @@ public final class Server extends Thread implements IServer
      * @param didDisconnect whether an explicit dicsonnect request message had been
      * received already from that client ( = no point to wait for reconnect attempt).
      */
-    private void withdrawFromGameIfRelevant(Exception gotException,
+    private void withdrawFromGameIfRelevant(@RUntainted Exception gotException,
         boolean didDisconnect)
     {
         if (isWithdrawalIrrelevant())
@@ -1038,8 +1039,8 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    private void triggerWithdrawIfDoesNotReconnect(final long intervalLen,
-        final int intervals)
+    private void triggerWithdrawIfDoesNotReconnect(final @RUntainted long intervalLen,
+        final @RUntainted int intervals)
     {
         String withdrawName = processingCH.getPlayerName();
 
@@ -1220,7 +1221,7 @@ public final class Server extends Thread implements IServer
      * @param key Key for that SocketChannel
      * @throws IOException
      */
-    private void disconnectChannel(SocketChannel sc, SelectionKey key)
+    private void disconnectChannel(@RUntainted SocketChannel sc, SelectionKey key)
         throws IOException
     {
         sc.close();
@@ -1228,7 +1229,7 @@ public final class Server extends Thread implements IServer
         unregisterSocketChannel(sc);
     }
 
-    public void unregisterSocketChannel(SocketChannel socketChannel)
+    public void unregisterSocketChannel(@RUntainted SocketChannel socketChannel)
     {
         if (activeSocketChannelList == null)
         {
@@ -1323,7 +1324,7 @@ public final class Server extends Thread implements IServer
         return false;
     }
 
-    public int getNextConnectionId()
+    public @RUntainted int getNextConnectionId()
     {
         return connectionIdCounter++;
     }
@@ -1346,7 +1347,7 @@ public final class Server extends Thread implements IServer
     /**
      * Name of the player, for which data from socket is currently processed.
      */
-    String getPlayerName()
+    @RUntainted String getPlayerName()
     {
         // Return the playerName for the processingCH.
         // processingCH holds the ClientHandler of the client/player for
@@ -1361,7 +1362,7 @@ public final class Server extends Thread implements IServer
     /**
      * The player, for which data from socket is currently processed.
      */
-    private Player getPlayer()
+    private @RUntainted Player getPlayer()
     {
         Player p = game.getPlayerByName(getPlayerName());
         assert p != null : "game.getPlayer returned null player for name "
@@ -1421,8 +1422,8 @@ public final class Server extends Thread implements IServer
      * @param spectator
      * @return  Reason why failed, or null if successful
      */
-    String handleScratchReconnect(ClientHandler client, String clientName,
-        boolean remote, int clientVersion, String buildInfo, boolean spectator)
+    String handleScratchReconnect(@RUntainted ClientHandler client, @RUntainted String clientName,
+        @RUntainted boolean remote, @RUntainted int clientVersion, @RUntainted String buildInfo, @RUntainted boolean spectator)
     {
         boolean isReconnect = false;
 
@@ -1476,9 +1477,9 @@ public final class Server extends Thread implements IServer
      * @param isReconnect TODO
      * @return Reason why adding Client was refused, null if all is fine.
      */
-    String handleNewConnection(ClientHandler client, String clientName,
-        boolean remote, int clientVersion, String buildInfo,
-        boolean spectator, int connectionId)
+    String handleNewConnection(@RUntainted ClientHandler client, @RUntainted String clientName,
+        @RUntainted boolean remote, @RUntainted int clientVersion, @RUntainted String buildInfo,
+        @RUntainted boolean spectator, @RUntainted int connectionId)
     {
         // System.out.println("handleNewConn, called with connId " + connectionId);
         boolean isReconnect;
@@ -1654,7 +1655,7 @@ public final class Server extends Thread implements IServer
         existingCH.declareObsolete();
     }
 
-    private void removeFromForcedWithdrawsList(String name)
+    private void removeFromForcedWithdrawsList(@RUntainted String name)
     {
         LOGGER.info("Removing player with name " + name
             + " from forcedWithDrawlist. Size was " + forcedWithdraws.size());
@@ -1672,7 +1673,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    private Player findPlayerForNewConnection(final String playerName,
+    private Player findPlayerForNewConnection(final @RUntainted String playerName,
         final boolean remote, boolean spectator)
     {
         Player player = null;
@@ -1700,8 +1701,8 @@ public final class Server extends Thread implements IServer
         return player;
     }
 
-    private String checkClientVersion(final String playerName,
-        final int clientVersion, String buildInfo)
+    private String checkClientVersion(final @RUntainted String playerName,
+        final @RUntainted int clientVersion, String buildInfo)
     {
         String reasonRejected = null;
 
@@ -1797,7 +1798,7 @@ public final class Server extends Thread implements IServer
      *
      *  @param count the number of players that are expected to join
      */
-    private void initWaitingForPlayersToJoin(int count)
+    private void initWaitingForPlayersToJoin(@RUntainted int count)
     {
         synchronized (wfptjSemaphor)
         {
@@ -1891,7 +1892,7 @@ public final class Server extends Thread implements IServer
         game = null;
     }
 
-    void allUpdatePlayerInfo(boolean treatDeadAsAlive, String reason)
+    void allUpdatePlayerInfo(boolean treatDeadAsAlive, @RUntainted String reason)
     {
         LOGGER.finest("AllUpdatePlayerInfo, reason " + reason);
         for (IClient client : iClients)
@@ -1913,11 +1914,11 @@ public final class Server extends Thread implements IServer
      *
      * @param reason  Reason what triggered this sending
      */
-    void allUpdateChangedPlayerValues(String reason)
+    void allUpdateChangedPlayerValues(@RUntainted String reason)
     {
         LOGGER.finest("AllUpdateChangedPlayerValues, reason " + reason);
-        List<String> changedValuesStrings = getChangedPlayerValues();
-        List<String> fullInfo = getPlayerInfo(false);
+        List<@RUntainted String> changedValuesStrings = getChangedPlayerValues();
+        List<@RUntainted String> fullInfo = getPlayerInfo(false);
         for (IClient client : iClients)
         {
             if (client.canHandleChangedValuesOnlyStyle())
@@ -1934,13 +1935,13 @@ public final class Server extends Thread implements IServer
          }
      }
 
-    void allUpdatePlayerInfo(String reason)
+    void allUpdatePlayerInfo(@RUntainted String reason)
     {
         allUpdateChangedPlayerValues(reason);
         //allUpdatePlayerInfo(false, reason);
     }
 
-    void allUpdateCreatureCount(CreatureType type, int count, int deadCount)
+    void allUpdateCreatureCount(CreatureType type, @RUntainted int count, @RUntainted int deadCount)
     {
         for (IClient client : iClients)
         {
@@ -1948,7 +1949,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allTellMovementRoll(int roll, String reason)
+    void allTellMovementRoll(@RUntainted int roll, @RUntainted String reason)
     {
         for (IClient client : iClients)
         {
@@ -2021,7 +2022,7 @@ public final class Server extends Thread implements IServer
      * Validates that it it OK to be "done with strikes" now for executing player
      * @return reason why it's not OK; null if all is ok
      */
-    private String isDoneWithStrikesOk()
+    private @RUntainted String isDoneWithStrikesOk()
     {
         BattleServerSide battle = game.getBattleSS();
         if (!isBattleActivePlayer())
@@ -2040,7 +2041,7 @@ public final class Server extends Thread implements IServer
         return null;
     }
 
-    private IClient getClient(Player player)
+    private @RUntainted IClient getClient(Player player)
     {
         if (playerToClientMap.containsKey(player))
         {
@@ -2068,7 +2069,7 @@ public final class Server extends Thread implements IServer
         clientStub.initBoard();
     }
 
-    void allTellReplay(boolean val, int maxTurn)
+    void allTellReplay(@RUntainted boolean val, int maxTurn)
     {
         for (IClient client : iClients)
         {
@@ -2076,7 +2077,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allTellRedo(boolean val)
+    void allTellRedo(@RUntainted boolean val)
     {
         for (IClient client : iClients)
         {
@@ -2136,7 +2137,7 @@ public final class Server extends Thread implements IServer
 
     void oneTellAllLegionLocations(ClientHandler client)
     {
-        List<Legion> legions = game.getAllLegions();
+        List<@RUntainted Legion> legions = game.getAllLegions();
         for (Legion legion : legions)
         {
             client.tellLegionLocation(legion, legion.getCurrentHex());
@@ -2145,7 +2146,7 @@ public final class Server extends Thread implements IServer
 
     void allTellAllLegionLocations()
     {
-        List<Legion> legions = game.getAllLegions();
+        List<@RUntainted Legion> legions = game.getAllLegions();
         for (Legion legion : legions)
         {
             allTellLegionLocation(legion);
@@ -2168,7 +2169,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allTellPlayerElim(Player eliminatedPlayer, Player slayer,
+    void allTellPlayerElim(@RUntainted Player eliminatedPlayer, @RUntainted Player slayer,
         boolean updateHistory)
     {
         for (IClient client : iClients)
@@ -2315,8 +2316,8 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allTellGameOver(String message, boolean disposeFollows,
-        boolean suspended)
+    void allTellGameOver(@RUntainted String message, @RUntainted boolean disposeFollows,
+        @RUntainted boolean suspended)
     {
         for (IClient client : iClients)
         {
@@ -2438,7 +2439,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allTellEngagementResults(Legion winner, String method, int points,
+    void allTellEngagementResults(@RUntainted Legion winner, String method, int points,
         int turns)
     {
         for (IClient client : iClients)
@@ -2467,7 +2468,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    public void acquireAngel(Legion legion, CreatureType angelType)
+    public void acquireAngel(Legion legion, @RUntainted CreatureType angelType)
     {
         if (legion != null)
         {
@@ -2483,13 +2484,13 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void createSummonAngel(Legion legion)
+    void createSummonAngel(@RUntainted Legion legion)
     {
         IClient client = getClient(legion.getPlayer());
         client.createSummonAngel(legion);
     }
 
-    void reinforce(Legion legion)
+    void reinforce(@RUntainted Legion legion)
     {
         IClient client = getClient(legion.getPlayer());
         client.doReinforce(legion);
@@ -2599,7 +2600,7 @@ public final class Server extends Thread implements IServer
     }
 
     // TODO should use RecruitEvent
-    void didRecruit(AddCreatureAction event, CreatureType recruiter)
+    void didRecruit(AddCreatureAction event, @RUntainted CreatureType recruiter)
     {
         allUpdatePlayerInfo("DidRecruit");
 
@@ -2619,7 +2620,7 @@ public final class Server extends Thread implements IServer
         // reveal only if there is something to tell
         if (recruiter != null)
         {
-            List<CreatureType> recruiters = new ArrayList<CreatureType>();
+            List<@RUntainted CreatureType> recruiters = new ArrayList<@RUntainted CreatureType>();
             for (int i = 0; i < numRecruiters; i++)
             {
                 recruiters.add(recruiter);
@@ -2645,7 +2646,7 @@ public final class Server extends Thread implements IServer
         game.removeCreatureEvent(legion, recruit, reason);
     }
 
-    public void engage(MasterHex hex)
+    public void engage(@RUntainted MasterHex hex)
     {
         if (!isActivePlayer())
         {
@@ -2656,7 +2657,7 @@ public final class Server extends Thread implements IServer
         game.engage(hex);
     }
 
-    void allTellEngagement(MasterHex hex, Legion attacker, Legion defender)
+    void allTellEngagement(@RUntainted MasterHex hex, @RUntainted Legion attacker, @RUntainted Legion defender)
     {
         LOGGER.finest("allTellEngagement() " + hex);
         Iterator<IClient> it = iClients.iterator();
@@ -2668,13 +2669,13 @@ public final class Server extends Thread implements IServer
     }
 
     /** Ask ally's player whether he wants to concede with ally. */
-    void askConcede(Legion ally, Legion enemy)
+    void askConcede(@RUntainted Legion ally, @RUntainted Legion enemy)
     {
         IClient client = getClient(ally.getPlayer());
         client.askConcede(ally, enemy);
     }
 
-    public void concede(Legion legion)
+    public void concede(@RUntainted Legion legion)
     {
         // Should not happen but at least once did - legion was just
         // eliminated and player still conceded?
@@ -2719,13 +2720,13 @@ public final class Server extends Thread implements IServer
     }
 
     /** Ask ally's player whether he wants to flee with ally. */
-    void askFlee(Legion ally, Legion enemy)
+    void askFlee(@RUntainted Legion ally, @RUntainted Legion enemy)
     {
         IClient client = getClient(ally.getPlayer());
         client.askFlee(ally, enemy);
     }
 
-    public void flee(Legion legion)
+    public void flee(@RUntainted Legion legion)
     {
         if (!getPlayer().equals(legion.getPlayer()))
         {
@@ -2757,7 +2758,7 @@ public final class Server extends Thread implements IServer
     }
 
     /** playerName makes a proposal. */
-    public void makeProposal(String proposalString)
+    public void makeProposal(@RUntainted String proposalString)
     {
         // TODO Validate calling player
         game.makeProposal(getPlayerName(), proposalString);
@@ -2770,13 +2771,13 @@ public final class Server extends Thread implements IServer
         client.tellProposal(proposal.toString());
     }
 
-    public void fight(MasterHex hex)
+    public void fight(@RUntainted MasterHex hex)
     {
         // TODO Validate calling player
         game.fight(hex);
     }
 
-    public void doBattleMove(int tag, BattleHex hex)
+    public void doBattleMove(@RUntainted int tag, @RUntainted BattleHex hex)
     {
         if (hex == null)
         {
@@ -2813,7 +2814,7 @@ public final class Server extends Thread implements IServer
     }
 
     void allTellBattleMove(int tag, BattleHex startingHex,
-        BattleHex endingHex, boolean undo)
+        @RUntainted BattleHex endingHex, boolean undo)
     {
         Iterator<IClient> it = iClients.iterator();
         while (it.hasNext())
@@ -2823,7 +2824,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    public void strike(int tag, BattleHex hex)
+    public void strike(@RUntainted int tag, BattleHex hex)
     {
         IClient client = getClient(getPlayer());
         if (!isBattleActivePlayer())
@@ -2906,8 +2907,8 @@ public final class Server extends Thread implements IServer
     }
 
     void allTellStrikeResults(CreatureServerSide striker,
-        CreatureServerSide target, int strikeNumber, List<String> rolls,
-        int damage, int carryDamageLeft, Set<String> carryTargetDescriptions)
+        CreatureServerSide target, int strikeNumber, @RUntainted List<@RUntainted String> rolls,
+        @RUntainted int damage, @RUntainted int carryDamageLeft, Set<@RUntainted String> carryTargetDescriptions)
     {
         // Save strike info so that it can be reused for carries.
         this.striker = striker;
@@ -2936,8 +2937,8 @@ public final class Server extends Thread implements IServer
     }
 
     void allTellCarryResults(CreatureServerSide carryTarget,
-        int carryDamageDone, int carryDamageLeft,
-        Set<String> carryTargetDescriptions)
+        @RUntainted int carryDamageDone, @RUntainted int carryDamageLeft,
+        Set<@RUntainted String> carryTargetDescriptions)
     {
         if (striker == null || target == null || rolls == null)
         {
@@ -2977,7 +2978,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allTellHexDamageResults(CreatureServerSide target, int damage)
+    void allTellHexDamageResults(CreatureServerSide target, @RUntainted int damage)
     {
         this.target = target;
 
@@ -2995,7 +2996,7 @@ public final class Server extends Thread implements IServer
     {
         Player player = game.getBattleSS().getBattleActivePlayer();
         IClient client = getClient(player);
-        List<String> choices = new ArrayList<String>();
+        List<@RUntainted String> choices = new ArrayList<@RUntainted String>();
         Iterator<PenaltyOption> it = penaltyOptions.iterator();
         while (it.hasNext())
         {
@@ -3006,7 +3007,7 @@ public final class Server extends Thread implements IServer
         client.askChooseStrikePenalty(choices);
     }
 
-    public void assignStrikePenalty(String prompt)
+    public void assignStrikePenalty(@RUntainted String prompt)
     {
         if (!isBattleActivePlayer())
         {
@@ -3083,7 +3084,7 @@ public final class Server extends Thread implements IServer
         extraRollRequest.handleExtraRollRequest(processingCH);
     }
 
-    public void extraRollResponse(boolean approved, int requestId)
+    public void extraRollResponse(boolean approved, @RUntainted int requestId)
     {
         extraRollRequest.handleExtraRollResponse(requestId, processingCH,
             approved);
@@ -3095,7 +3096,7 @@ public final class Server extends Thread implements IServer
         suspendGameRequest.requestToSuspendGame();
     }
 
-    public void suspendResponse(boolean approved)
+    public void suspendResponse(@RUntainted boolean approved)
     {
         suspendGameRequest.handleOneResponse(approved);
     }
@@ -3117,8 +3118,8 @@ public final class Server extends Thread implements IServer
         getActivePlayerSS().undoSplit(splitoff);
     }
 
-    void undidSplit(Legion splitoff, Legion survivor, boolean updateHistory,
-        int turn)
+    void undidSplit(@RUntainted Legion splitoff, Legion survivor, boolean updateHistory,
+        @RUntainted int turn)
     {
         Iterator<IClient> it = iClients.iterator();
         while (it.hasNext())
@@ -3142,7 +3143,7 @@ public final class Server extends Thread implements IServer
     }
 
     public void allTellUndidMove(Legion legion, MasterHex formerHex,
-        MasterHex currentHex, boolean splitLegionHasForcedMove)
+        @RUntainted MasterHex currentHex, boolean splitLegionHasForcedMove)
     {
         Iterator<IClient> it = iClients.iterator();
         while (it.hasNext())
@@ -3309,7 +3310,7 @@ public final class Server extends Thread implements IServer
      *  encountered closed socket.
      *  @param playerName Name of the player to withdraw
      */
-    public void withdrawFromGame(String playerName)
+    public void withdrawFromGame(@RUntainted String playerName)
     {
         LOGGER.info("Withdrawal for specific player " + playerName
             + " requested.");
@@ -3363,9 +3364,9 @@ public final class Server extends Thread implements IServer
         initiateDisposal = true;
     }
 
-    private List<String> getPlayerInfo(boolean treatDeadAsAlive)
+    private List<@RUntainted String> getPlayerInfo(boolean treatDeadAsAlive)
     {
-        List<String> info = new ArrayList<String>(game.getNumPlayers());
+        List<@RUntainted String> info = new ArrayList<@RUntainted String>(game.getNumPlayers());
         for (Player player : game.getPlayers())
         {
             String longString = ((PlayerServerSide)player)
@@ -3384,9 +3385,9 @@ public final class Server extends Thread implements IServer
      *
      * @return List of strings, one for each player with changes
      */
-    private List<String> getChangedPlayerValues()
+    private List<@RUntainted String> getChangedPlayerValues()
     {
-        List<String> changes = new ArrayList<String>(game.getNumPlayers());
+        List<@RUntainted String> changes = new ArrayList<@RUntainted String>(game.getNumPlayers());
         for (Player player : game.getPlayers())
         {
             PlayerServerSide p = (PlayerServerSide)player;
@@ -3399,7 +3400,7 @@ public final class Server extends Thread implements IServer
         return changes;
     }
 
-    public void doSplit(Legion parent, String childId,
+    public void doSplit(@RUntainted Legion parent, @RUntainted String childId,
         List<CreatureType> creaturesToSplit)
     {
         LOGGER.log(Level.FINER, "Server.doSplit " + parent + " " + childId
@@ -3422,7 +3423,7 @@ public final class Server extends Thread implements IServer
     }
 
     /** Called from game after this legion was split off, or by history */
-    void allTellDidSplit(Legion parent, Legion child, int turn, boolean history)
+    void allTellDidSplit(@RUntainted Legion parent, @RUntainted Legion child, @RUntainted int turn, boolean history)
     {
         MasterHex hex = parent.getCurrentHex();
         int childSize = child.getHeight();
@@ -3458,8 +3459,8 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    public void doMove(Legion legion, MasterHex hex, EntrySide entrySide,
-        boolean teleport, CreatureType teleportingLord)
+    public void doMove(@RUntainted Legion legion, @RUntainted MasterHex hex, @RUntainted EntrySide entrySide,
+        @RUntainted boolean teleport, @RUntainted CreatureType teleportingLord)
     {
         IClient client = getClient(getPlayer());
         // Check for "is it the right player", but not during replay / redo
@@ -3492,8 +3493,8 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allTellDidMove(Legion legion, MasterHex startingHex, MasterHex hex,
-        EntrySide entrySide, boolean teleport, CreatureType teleportingLord)
+    void allTellDidMove(@RUntainted Legion legion, @RUntainted MasterHex startingHex, @RUntainted MasterHex hex,
+        EntrySide entrySide, boolean teleport, @RUntainted CreatureType teleportingLord)
     {
         PlayerServerSide player = getActivePlayerSS();
         // needed in didMove to decide whether to dis/enable button
@@ -3509,7 +3510,7 @@ public final class Server extends Thread implements IServer
     }
 
     void allTellDidSummon(Legion receivingLegion, Legion donorLegion,
-        CreatureType summon)
+        @RUntainted CreatureType summon)
     {
         Iterator<IClient> it = iClients.iterator();
         while (it.hasNext())
@@ -3536,7 +3537,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allTellRemoveCreature(Legion legion, CreatureType creature,
+    void allTellRemoveCreature(@RUntainted Legion legion, @RUntainted CreatureType creature,
         boolean updateHistory, String reason)
     {
         Iterator<IClient> it = iClients.iterator();
@@ -3551,7 +3552,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allRevealLegion(Legion legion, String reason)
+    void allRevealLegion(@RUntainted Legion legion, String reason)
     {
         Iterator<IClient> it = iClients.iterator();
         while (it.hasNext())
@@ -3569,8 +3570,8 @@ public final class Server extends Thread implements IServer
      * @param isAttacker true if the 'legion' is the atackker in the
      *   battle, false for the defender.
      */
-    void allRevealEngagedLegion(final Legion legion, final boolean isAttacker,
-        String reason)
+    void allRevealEngagedLegion(final @RUntainted Legion legion, final boolean isAttacker,
+        @RUntainted String reason)
     {
         Iterator<IClient> it = iClients.iterator();
         while (it.hasNext())
@@ -3583,7 +3584,7 @@ public final class Server extends Thread implements IServer
     }
 
     /** Call from History during load game only */
-    void allRevealLegion(Legion legion, List<CreatureType> creatures,
+    void allRevealLegion(Legion legion, @RUntainted List<@RUntainted CreatureType> creatures,
         String reason)
     {
         Iterator<IClient> it = iClients.iterator();
@@ -3594,7 +3595,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void oneRevealLegion(Legion legion, Player player, String reason)
+    void oneRevealLegion(@RUntainted Legion legion, Player player, String reason)
     {
         IClient client = getClient(player);
         if (client != null)
@@ -3608,7 +3609,7 @@ public final class Server extends Thread implements IServer
 
     /** Call from History during load game only */
     void oneRevealLegion(Player player, Legion legion,
-        List<CreatureType> creatureNames, String reason)
+        @RUntainted List<@RUntainted CreatureType> creatureNames, String reason)
     {
         IClient client = getClient(player);
         if (client != null)
@@ -3648,7 +3649,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allRevealCreatures(Legion legion, List<CreatureType> creatureNames,
+    void allRevealCreatures(@RUntainted Legion legion, @RUntainted List<@RUntainted CreatureType> creatureNames,
         String reason)
     {
         Iterator<IClient> it = iClients.iterator();
@@ -3676,12 +3677,12 @@ public final class Server extends Thread implements IServer
 
     // This was earlier called from Client via network message
     // TODO: to be perhaps removed soon? See also SocketClientThread
-    public void saveGame(String filename)
+    public void saveGame(@RUntainted String filename)
     {
         saveGame(filename, false);
     }
 
-    public void saveGame(String filename, boolean autoSave)
+    public void saveGame(@RUntainted String filename, boolean autoSave)
     {
         game.saveGameWithErrorHandling(filename, autoSave);
     }
@@ -3691,7 +3692,7 @@ public final class Server extends Thread implements IServer
     // loop, to be sure it does not run concurrently while some message
     // from client is currently processed and would change the state of the
     // game while the save is ongoing.
-    public void initiateSaveGame(String filename)
+    public void initiateSaveGame(@RUntainted String filename)
     {
         synchronized (guiRequestMutex)
         {
@@ -3829,7 +3830,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    public void checkAllConnections(String requestingClientName)
+    public void checkAllConnections(@RUntainted String requestingClientName)
     {
         LOGGER.info("Server received checkAllConnections request from "
             + "client " + getPlayerName() + " - ....");
@@ -3879,7 +3880,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    private final HashSet<IClient> waitingToCatchup = new HashSet<IClient>();
+    private final @RUntainted HashSet<IClient> waitingToCatchup = new HashSet<IClient>();
 
     /**
      * Check whether client is currently expected to send a caught-Up
@@ -3889,7 +3890,7 @@ public final class Server extends Thread implements IServer
      * @param reason Reason why client won't send the confirmation
      *        (typically disconnected or something).
      */
-    public void clientWontConfirmCatchup(ClientHandler ch, String reason)
+    public void clientWontConfirmCatchup(ClientHandler ch, @RUntainted String reason)
     {
         String clientName = ch.getClientName();
 
@@ -3955,7 +3956,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    private String prettyTime(long when)
+    private @RUntainted String prettyTime(@RUntainted long when)
     {
         if (when == 0L)
         {
@@ -3964,8 +3965,8 @@ public final class Server extends Thread implements IServer
         return new SimpleDateFormat("HH:mm:ss.SSS").format(new Date(when));
     }
 
-    void replyToPing(String playerName, int requestNr, long requestSent,
-        long replySent, long replyReceived)
+    void replyToPing(@RUntainted String playerName, @RUntainted int requestNr, @RUntainted long requestSent,
+        @RUntainted long replySent, @RUntainted long replyReceived)
     {
         LOGGER.fine("Ping Reply #" + requestNr + " from " + playerName + ": "
             + prettyTime(requestSent) + "/" + prettyTime(replySent) + "/"
@@ -3973,7 +3974,7 @@ public final class Server extends Thread implements IServer
     }
 
     /** Used to change a player name after color is assigned. */
-    void setPlayerName(Player player, String newName)
+    void setPlayerName(Player player, @RUntainted String newName)
     {
         LOGGER.finest("Server.setPlayerName() from " + player.getName()
             + " to " + newName);
@@ -4000,7 +4001,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    public void assignColor(PlayerColor color)
+    public void assignColor(@RUntainted PlayerColor color)
     {
         Player p = getPlayer();
         assert p != null : "getPlayer returned null player (in thread "
@@ -4037,7 +4038,7 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    public void assignFirstMarker(String markerId)
+    public void assignFirstMarker(@RUntainted String markerId)
     {
         Player player = game.getPlayerByName(getPlayerName());
         assert player.getMarkersAvailable().contains(markerId) : getPlayerName()
@@ -4062,12 +4063,12 @@ public final class Server extends Thread implements IServer
 
     // XXX We use Server as a hook for PhaseAdvancer to get to options,
     // but this is ugly.
-    int getIntOption(String optname)
+    int getIntOption(@RUntainted String optname)
     {
         return game.getIntOption(optname);
     }
 
-    void oneSetOption(Player player, String optname, String value)
+    void oneSetOption(Player player, @RUntainted String optname, String value)
     {
         IClient client = getClient(player);
         if (client != null)
@@ -4076,12 +4077,12 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void oneSetOption(Player player, String optname, boolean value)
+    void oneSetOption(Player player, @RUntainted String optname, boolean value)
     {
         oneSetOption(player, optname, String.valueOf(value));
     }
 
-    void allSyncOption(String optname, String value)
+    void allSyncOption(@RUntainted String optname, String value)
     {
         Iterator<IClient> it = iClients.iterator();
         while (it.hasNext())
@@ -4091,12 +4092,12 @@ public final class Server extends Thread implements IServer
         }
     }
 
-    void allSyncOption(String optname, boolean value)
+    void allSyncOption(@RUntainted String optname, boolean value)
     {
         allSyncOption(optname, String.valueOf(value));
     }
 
-    void allSyncOption(String optname, int value)
+    void allSyncOption(@RUntainted String optname, int value)
     {
         allSyncOption(optname, String.valueOf(value));
     }
@@ -4105,7 +4106,7 @@ public final class Server extends Thread implements IServer
      * package so that it can be called from Log4J Appender.
      *
      */
-    void allLog(String message)
+    void allLog(@RUntainted String message)
     {
         Iterator<IClient> it = remoteClients.iterator();
         while (it.hasNext())
@@ -4135,7 +4136,7 @@ public final class Server extends Thread implements IServer
     /*
      * Called by GameServerSide, to initiate the "Quit All"
      */
-    public void doSetWhatToDoNext(WhatToDoNext whatToDoNext,
+    public void doSetWhatToDoNext(@RUntainted WhatToDoNext whatToDoNext,
         boolean triggerQuitTimer)
     {
         whatNextManager.setWhatToDoNext(whatToDoNext, triggerQuitTimer);
@@ -4168,7 +4169,7 @@ public final class Server extends Thread implements IServer
         System.exit(1);
     }
 
-    public GameServerSide getGame()
+    public @RUntainted GameServerSide getGame()
     {
         return game;
     }
@@ -4184,8 +4185,8 @@ public final class Server extends Thread implements IServer
             getGame().getPreliminaryPlayerNames());
     }
 
-    public void requestSyncDelta(int lastReceivedMessageNr,
-        int syncRequestNumber)
+    public void requestSyncDelta(@RUntainted int lastReceivedMessageNr,
+        @RUntainted int syncRequestNumber)
     {
         LOGGER.info("Client requests sync #" + syncRequestNumber
             + " after reconnect, last msg nr was " + lastReceivedMessageNr);
@@ -4302,7 +4303,7 @@ public final class Server extends Thread implements IServer
         game.updateCaretakerDisplays();
     }
 
-    public void logMsgToServer(String severity, String message)
+    public void logMsgToServer(@RUntainted String severity, @RUntainted String message)
     {
         LOGGER.info("CLIENTLOG: " + severity + ": " + message);
     }
@@ -4331,13 +4332,13 @@ public final class Server extends Thread implements IServer
 
     public class WithdrawInfo
     {
-        public long deadline;
+        public @RUntainted long deadline;
         public long intervalLen;
         public long intervals;
         public long lastNotification;
         public ClientHandler ch;
 
-        public WithdrawInfo(ClientHandler ch, int intervals, long intervalLen)
+        public WithdrawInfo(ClientHandler ch, @RUntainted int intervals, @RUntainted long intervalLen)
         {
             long now = new Date().getTime();
             this.deadline = now + (intervals * intervalLen);

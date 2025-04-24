@@ -33,6 +33,7 @@ import net.sf.colossus.game.SummonInfo;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -53,11 +54,11 @@ final public class SummonAngel
         .getName());
 
     private final ClientGUI gui;
-    private final Legion legion;
-    private final List<Legion> possibleDonors;
+    private final @RUntainted Legion legion;
+    private final List<@RUntainted Legion> possibleDonors;
 
-    public SummonAngel(ClientGUI gui, Legion legion,
-        List<Legion> possibleDonors)
+    public SummonAngel(ClientGUI gui, @RUntainted Legion legion,
+        List<@RUntainted Legion> possibleDonors)
     {
         this.gui = gui;
         this.legion = legion;
@@ -103,14 +104,14 @@ final public class SummonAngel
 
         private final SummonAngel saInstance;
 
-        private final Legion target;
+        private final @RUntainted Legion target;
         private final List<Chit> sumChitList = new ArrayList<Chit>();
         private final JButton cancelButton;
         private final SaveWindow saveWindow;
-        private final Map<Chit, Legion> chitToDonor = new HashMap<Chit, Legion>();
+        private final Map<Chit, @RUntainted Legion> chitToDonor = new HashMap<Chit, @RUntainted Legion>();
 
         public SummonAngelDialog(SummonAngel saInst, ClientGUI gui,
-            Legion legion, List<Legion> possibleDonors)
+            @RUntainted Legion legion, List<@RUntainted Legion> possibleDonors)
         {
             super(gui.getBoard().getFrame(), gui.getOwningPlayer().getName()
                 + BASE_SUMMON_STRING + legion, false);
@@ -148,7 +149,7 @@ final public class SummonAngel
 
             sumChitList.clear();
 
-            SortedSet<Legion> sortedDonors = new TreeSet<Legion>(
+            SortedSet<@RUntainted Legion> sortedDonors = new TreeSet<@RUntainted Legion>(
                 Legion.ORDER_TITAN_THEN_POINTS_THEN_MARKER);
             sortedDonors.addAll(possibleDonors);
 
@@ -248,7 +249,7 @@ final public class SummonAngel
         // a summoning, and then this could be part of the move phase,
         // instead of the "do it now or never" style as it is now.
 
-        private void cleanup(Legion donor, CreatureType angel)
+        private void cleanup(@RUntainted Legion donor, @RUntainted CreatureType angel)
         {
             LOGGER.log(Level.FINEST, "SummonAngel.cleanup " + donor + " "
                 + angel);

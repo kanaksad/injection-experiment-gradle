@@ -15,6 +15,7 @@ import net.sf.colossus.game.Player;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.IOracleLegion;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -29,7 +30,7 @@ public final class LegionClientSide extends Legion implements IOracleLegion
 
     private PredictSplitNode myNode;
 
-    public LegionClientSide(Player player, String markerId, MasterHex hex)
+    public LegionClientSide(@RUntainted Player player, @RUntainted String markerId, @RUntainted MasterHex hex)
     {
         super(player, markerId, hex);
         myNode = null;
@@ -52,7 +53,7 @@ public final class LegionClientSide extends Legion implements IOracleLegion
     }
 
     @Override
-    public int getHeight()
+    public @RUntainted int getHeight()
     {
         PredictSplitNode node = getNode();
         if (node == null)
@@ -72,9 +73,9 @@ public final class LegionClientSide extends Legion implements IOracleLegion
      *      identity checks.
      */
     @Override
-    public List<? extends Creature> getCreatures()
+    public @RUntainted List<? extends @RUntainted Creature> getCreatures()
     {
-        List<Creature> result = new ArrayList<Creature>();
+        List<@RUntainted Creature> result = new ArrayList<@RUntainted Creature>();
         for (String name : getContents())
         {
             result.add(new Creature(getPlayer().getGame().getVariant()
@@ -88,7 +89,7 @@ public final class LegionClientSide extends Legion implements IOracleLegion
      *
      * TODO get rid of this string-based version in favor of the typesafe ones
      */
-    private List<String> getContents()
+    private List<@RUntainted String> getContents()
     {
         try
         {
@@ -114,7 +115,7 @@ public final class LegionClientSide extends Legion implements IOracleLegion
     /**
      * TODO get rid of string-based version
      */
-    public int numCreature(String creatureName)
+    public @RUntainted int numCreature(String creatureName)
     {
         int count = 0;
         for (CreatureType type : getCreatureTypes())
@@ -129,9 +130,9 @@ public final class LegionClientSide extends Legion implements IOracleLegion
 
     /** Return a list of Strings.  Use the proper string for titans and
      *  unknown creatures. */
-    public List<String> getImageNames()
+    public List<@RUntainted String> getImageNames()
     {
-        List<String> names = new ArrayList<String>();
+        List<@RUntainted String> names = new ArrayList<@RUntainted String>();
         names.addAll(getContents());
         int j = names.indexOf(Constants.titan);
         if (j != -1)
@@ -160,7 +161,7 @@ public final class LegionClientSide extends Legion implements IOracleLegion
     }
 
     @Override
-    public PlayerClientSide getPlayer()
+    public @RUntainted PlayerClientSide getPlayer()
     {
         return (PlayerClientSide)super.getPlayer();
     }
@@ -193,13 +194,13 @@ public final class LegionClientSide extends Legion implements IOracleLegion
         getNode().revealCreatures(creatures);
     }
 
-    void split(int childHeight, Legion child, int turn)
+    void split(int childHeight, Legion child, @RUntainted int turn)
     {
         getNode().split(childHeight, child, turn);
         myNode = myNode.getChild1();
     }
 
-    void merge(Legion splitoff)
+    void merge(@RUntainted Legion splitoff)
     {
         LOGGER.log(Level.FINER, "LegionInfo.merge() for " + splitoff + " "
             + splitoff);
@@ -211,7 +212,7 @@ public final class LegionClientSide extends Legion implements IOracleLegion
 
     /** Return the point value of suspected contents of this legion. */
     @Override
-    public int getPointValue()
+    public @RUntainted int getPointValue()
     {
         int sum = 0;
         for (CreatureType type : getCreatureTypes())

@@ -20,6 +20,7 @@ import net.sf.colossus.util.Combos;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.xmlparser.TerrainRecruitLoader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -118,7 +119,7 @@ public class MilvangAI extends RationalAI // NO_UCD
 
         Combos<CreatureType> combos = new Combos<CreatureType>(critters,
             critters.size() - 2);
-        for (Iterator<List<CreatureType>> it = combos.iterator(); it.hasNext();)
+        for (Iterator<@RUntainted List<CreatureType>> it = combos.iterator(); it.hasNext();)
         {
             List<CreatureType> keepers = it.next();
             double critterValue = 0;

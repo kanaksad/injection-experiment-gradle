@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -38,13 +39,13 @@ public class CreatureType implements Comparable<CreatureType>
         noBaseColor = b;
     }
 
-    private final String name;
+    private final @RUntainted String name;
 
-    private final String pluralName;
+    private final @RUntainted String pluralName;
 
-    private final int power;
+    private final @RUntainted int power;
 
-    private final int skill;
+    private final @RUntainted int skill;
 
     private final boolean rangestrikes;
 
@@ -64,13 +65,13 @@ public class CreatureType implements Comparable<CreatureType>
 
     private final boolean demilord;
 
-    private int maxCount;
+    private @RUntainted int maxCount;
 
-    private final int poison;
+    private final @RUntainted int poison;
 
     private final int slows;
 
-    private final String baseColor;
+    private final @RUntainted String baseColor;
 
     private final Set<HazardTerrain> nativeTerrains = new HashSet<HazardTerrain>();
 
@@ -91,13 +92,13 @@ public class CreatureType implements Comparable<CreatureType>
      * really HashSet, not just Set.
      */
 
-    public CreatureType(String name, int power, int skill,
+    public CreatureType(@RUntainted String name, @RUntainted int power, @RUntainted int skill,
         boolean rangestrikes, boolean flies,
         Set<HazardTerrain> nativeTerrains, boolean nativeSlope,
         boolean nativeRiver, boolean nativeDune, boolean waterDwelling,
         boolean magicMissile, boolean summonable, boolean lord,
-        boolean demilord, int maxCount, String pluralName, String baseColor,
-        int poison, int slows)
+        boolean demilord, @RUntainted int maxCount, @RUntainted String pluralName, @RUntainted String baseColor,
+        @RUntainted int poison, int slows)
     {
         this.name = name;
         this.pluralName = pluralName;
@@ -133,7 +134,7 @@ public class CreatureType implements Comparable<CreatureType>
     /**
      * The name used for creatures of this type.
      */
-    public String getName()
+    public @RUntainted String getName()
     {
         return name;
     }
@@ -141,7 +142,7 @@ public class CreatureType implements Comparable<CreatureType>
     /**
      * The name used for multiple creatures of this type.
      */
-    public String getPluralName()
+    public @RUntainted String getPluralName()
     {
         return pluralName;
     }
@@ -177,7 +178,7 @@ public class CreatureType implements Comparable<CreatureType>
     }
 
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         return getName();
     }
@@ -198,7 +199,7 @@ public class CreatureType implements Comparable<CreatureType>
         return getName().equals(other.getName());
     }
 
-    public int getMaxCount()
+    public @RUntainted int getMaxCount()
     {
         return maxCount;
     }
@@ -206,7 +207,7 @@ public class CreatureType implements Comparable<CreatureType>
     /** Only called on Titans after numPlayers is known.
      *  08/2009 Clemens: And on Balrogs when players scores raise.
      */
-    public void setMaxCount(int maxCount)
+    public void setMaxCount(@RUntainted int maxCount)
     {
         this.maxCount = maxCount;
     }
@@ -243,14 +244,14 @@ public class CreatureType implements Comparable<CreatureType>
         return isTitan();
     }
 
-    protected String getImageName()
+    protected @RUntainted String getImageName()
     {
         return getName();
     }
 
-    public String[] getImageNames()
+    public @RUntainted String[] getImageNames()
     {
-        String[] tempNames;
+        @RUntainted String[] tempNames;
         if (baseColor != null)
         {
             int specialIncrement = ((isFlier() || isRangestriker()) ? 1 : 0);
@@ -275,17 +276,17 @@ public class CreatureType implements Comparable<CreatureType>
         return tempNames;
     }
 
-    public int getPower()
+    public @RUntainted int getPower()
     {
         return power;
     }
 
-    public int getSkill()
+    public @RUntainted int getSkill()
     {
         return skill;
     }
 
-    public int getPointValue()
+    public @RUntainted int getPointValue()
     { // this function is replicated in Critter
         return getPower() * getSkill();
     }
@@ -387,7 +388,7 @@ public class CreatureType implements Comparable<CreatureType>
         }
     }
 
-    public int getPoison()
+    public @RUntainted int getPoison()
     {
         return poison;
     }
@@ -403,7 +404,7 @@ public class CreatureType implements Comparable<CreatureType>
      * TODO this is not model, but AI related (but also used in client for
      * sorting creatures -- the client uses the AI for recruit hints, too)
      */
-    public int getKillValue()
+    public @RUntainted int getKillValue()
     {
         int val = 10 * getPointValue();
         final int lskill = getSkill();

@@ -3,6 +3,7 @@ package net.sf.colossus.variant;
 
 import java.util.List;
 import java.util.SortedSet;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -22,7 +23,7 @@ public interface AllCreatureType
      * natural order of CreatureType
      * @return The immutable SortedSet of all CreatureType in the Variant.
      */
-    public SortedSet<CreatureType> getCreatureTypes();
+    public SortedSet<@RUntainted CreatureType> getCreatureTypes();
 
     /**
      * Convert a name into the actual CreatureType

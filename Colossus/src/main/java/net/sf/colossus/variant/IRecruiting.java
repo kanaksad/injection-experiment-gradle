@@ -2,6 +2,7 @@ package net.sf.colossus.variant;
 
 
 import java.util.Set;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -17,7 +18,7 @@ public interface IRecruiting
      * @param hex The hexagon in which the recruiting occurs
      * @return The number of recruiter needed to obtain a recruit in hex
      */
-    public int numberOfRecruiterNeeded(CreatureType recruiter,
+    public @RUntainted int numberOfRecruiterNeeded(CreatureType recruiter,
         CreatureType recruit, MasterHex hex);
 
     /** Return all the CreatureType that can be (somehow) recruited in the hex.
@@ -30,7 +31,7 @@ public interface IRecruiting
      * @param hex The hexagon to consider
      * @return All CreatureType that can recruit in hex
      */
-    public Set<CreatureType> getPossibleRecruiters(MasterHex hex);
+    public Set<@RUntainted CreatureType> getPossibleRecruiters(MasterHex hex);
 
-    public int maximumNumberNeededOf(CreatureType ct, MasterHex hex);
+    public @RUntainted int maximumNumberNeededOf(CreatureType ct, MasterHex hex);
 }

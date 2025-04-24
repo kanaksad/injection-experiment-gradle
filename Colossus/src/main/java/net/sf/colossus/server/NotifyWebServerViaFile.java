@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -26,14 +27,14 @@ public class NotifyWebServerViaFile implements INotifyWebServer
     private static final Logger LOGGER = Logger
         .getLogger(NotifyWebServerViaFile.class.getName());
 
-    private final String flagFilename;
+    private final @RUntainted String flagFilename;
     private PrintWriter out;
     private File flagFile = null;
     // Do we even have a web server to notify at all?
     private final boolean active;
     private boolean suspended = false;
 
-    public NotifyWebServerViaFile(String name)
+    public NotifyWebServerViaFile(@RUntainted String name)
     {
         if (name != null && !name.equals(""))
         {
@@ -60,7 +61,7 @@ public class NotifyWebServerViaFile implements INotifyWebServer
         }
     }
 
-    public void gotClient(String playerName, boolean remote)
+    public void gotClient(@RUntainted String playerName, boolean remote)
     {
         if (active)
         {
@@ -85,7 +86,7 @@ public class NotifyWebServerViaFile implements INotifyWebServer
         }
     }
 
-    public void gameStartupFailed(String reason)
+    public void gameStartupFailed(@RUntainted String reason)
     {
         if (active)
         {
@@ -156,7 +157,7 @@ public class NotifyWebServerViaFile implements INotifyWebServer
         }
     }
 
-    private void renameFlagfile(String suspendedFilename)
+    private void renameFlagfile(@RUntainted String suspendedFilename)
     {
         try
         {

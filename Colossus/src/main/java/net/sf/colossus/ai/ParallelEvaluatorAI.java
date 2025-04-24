@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import net.sf.colossus.ai.helper.LegionMove;
 import net.sf.colossus.client.Client;
 import net.sf.colossus.common.Constants;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -46,7 +47,7 @@ public class ParallelEvaluatorAI extends ExperimentalAI // NO_UCD
     }
 
     @Override
-    protected int evaluateLegionBattleMove(LegionMove lm)
+    protected @RUntainted int evaluateLegionBattleMove(LegionMove lm)
     {
         return random.nextInt(1000);
     }

@@ -28,6 +28,7 @@ import net.sf.colossus.util.BuildInfo;
 import net.sf.colossus.util.ViableEntityManager;
 import net.sf.colossus.variant.Variant;
 import net.sf.colossus.webclient.WebClient;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -43,7 +44,7 @@ public final class Start
 
     private CmdLine cmdLine;
 
-    private final WhatNextManager whatNextManager;
+    private final @RUntainted WhatNextManager whatNextManager;
 
     // Options remembered only inside this running application,
     // related to server/port/name startup settings; initialized
@@ -60,7 +61,7 @@ public final class Start
      * Brings up one of the dialogs, or starts a Game, a Network client
      * or a Web Client.
      */
-    public Start(String[] args)
+    public Start(@RUntainted String[] args)
     {
         this.startOptions = new Options(Constants.OPTIONS_START);
         // initialize it from the -D..forceViewBoard  cmdline settings,
@@ -76,12 +77,12 @@ public final class Start
         return startOptions;
     }
 
-    public WhatNextManager getWhatNextManager()
+    public @RUntainted WhatNextManager getWhatNextManager()
     {
         return whatNextManager;
     }
 
-    public WhatToDoNext getWhatToDoNext()
+    public @RUntainted WhatToDoNext getWhatToDoNext()
     {
         return whatNextManager.getWhatToDoNext();
     }
@@ -111,7 +112,7 @@ public final class Start
      * @param args The String-Array given to main()
      * @return
      */
-    private void commandLineProcessing(String[] args)
+    private void commandLineProcessing(@RUntainted String[] args)
     {
         Opts opts = new Opts();
 

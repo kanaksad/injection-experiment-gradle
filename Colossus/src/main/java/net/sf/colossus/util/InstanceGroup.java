@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.WeakHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -22,13 +23,13 @@ public class InstanceGroup
     private final WeakHashMap<Object, TypeInstance> instances;
     private final String shortType;
 
-    public InstanceGroup(String type)
+    public InstanceGroup(@RUntainted String type)
     {
         instances = new WeakHashMap<Object, TypeInstance>();
         this.shortType = shortType(type);
     }
 
-    public static String shortType(String type)
+    public static @RUntainted String shortType(@RUntainted String type)
     {
         int index = type.lastIndexOf(".");
         if (index == -1)

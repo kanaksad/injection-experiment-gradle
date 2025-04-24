@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.Date;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 class QueuedSocketWriter extends Thread
@@ -23,7 +24,7 @@ class QueuedSocketWriter extends Thread
      * The actual queue holding all messages that need to be sent.
      * This is a concurrent-safe queue.
      */
-    private final LinkedBlockingQueue<String> queue;
+    private final LinkedBlockingQueue<@RUntainted String> queue;
 
     /**
      * The actual writer object which will send printed data over the socket.
@@ -43,9 +44,9 @@ class QueuedSocketWriter extends Thread
 
     private boolean done = false;
 
-    private static int instanceIdCounter = 0;
+    private static @RUntainted int instanceIdCounter = 0;
 
-    private final int instanceId;
+    private final @RUntainted int instanceId;
 
     public QueuedSocketWriter(Socket socket) throws IOException
     {
@@ -138,7 +139,7 @@ class QueuedSocketWriter extends Thread
         sendMessage(MSG_EXIT_LOOP);
     }
 
-    public void sendMessage(String message)
+    public void sendMessage(@RUntainted String message)
     {
         queue.add(message);
     }
@@ -148,7 +149,7 @@ class QueuedSocketWriter extends Thread
      * To get it out of the loop, we enqueue a special marker (MSG_EXIT_LOOP).
      * @return String containing the next message to write.
      */
-    private String readNextFromQueue()
+    private @RUntainted String readNextFromQueue()
     {
         try
         {

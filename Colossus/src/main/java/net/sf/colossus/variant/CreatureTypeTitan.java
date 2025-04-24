@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.colossus.common.Constants;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -29,13 +30,13 @@ public class CreatureTypeTitan extends CreatureType
     private static final Logger LOGGER = Logger
         .getLogger(CreatureTypeTitan.class.getName());
 
-    public CreatureTypeTitan(String name, int power, int skill,
+    public CreatureTypeTitan(@RUntainted String name, @RUntainted int power, @RUntainted int skill,
         boolean rangestrikes, boolean flies,
         Set<HazardTerrain> nativeTerrrains, boolean nativeSlope,
         boolean nativeRiver, boolean nativeDune, boolean waterDwelling,
         boolean magicMissile, boolean summonable, boolean lord,
-        boolean demilord, int maxCount, String pluralName, String baseColor,
-        int poison, int slows)
+        boolean demilord, @RUntainted int maxCount, @RUntainted String pluralName, @RUntainted String baseColor,
+        @RUntainted int poison, int slows)
     {
         super(name, power, skill, rangestrikes, flies, nativeTerrrains,
             nativeSlope, nativeRiver, nativeDune, waterDwelling, magicMissile,
@@ -62,7 +63,7 @@ public class CreatureTypeTitan extends CreatureType
     }
 
     @Override
-    public int getPointValue()
+    public @RUntainted int getPointValue()
     {
         // Log.warn("Calling getPointValue() on Titan Creature");
         // XXX This is wrong, but 24 is better than -4.

@@ -18,6 +18,7 @@ import net.sf.colossus.game.EntrySide;
 import net.sf.colossus.server.VariantSupport;
 import net.sf.colossus.util.StaticResourceLoader;
 import net.sf.colossus.xmlparser.BattlelandLoader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -38,7 +39,7 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
     /** The (unique) identifier of this terrain.
      * Should also be used for all Battlelands purpose.
      */
-    private final String id;
+    private final @RUntainted String id;
 
     /** The name displayed on the Masterboard.
      * Should also be used for all recruiting purpose.
@@ -50,7 +51,7 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
      * ADDITIONAL WARNING: What about variant such as Balrog? The recruitment
      * is Hex-specific, not Terrain-specific...
      */
-    private final String displayName;
+    private final @RUntainted String displayName;
     /** Subtitle, for the Battlelands. Cosmetic only, but nice */
     private String subtitle;
     private final Color color;
@@ -58,7 +59,7 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
      * If non-null, this is the list of hexes a defending legion will start
      * in, in a similar way to the Tower in the Default variant.
      */
-    private List<String> startList;
+    private List<@RUntainted String> startList;
     /** Whether this is a Tower-like building, with regards to starting the
      * game, not recruiting or defender entering in a non-default location on
      * the Battlemap.
@@ -77,13 +78,13 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
     private final boolean isAlias;
 
     // TODO it might be worthwhile moving the battle land into a separate class
-    private final BattleHex[][] battleHexes = new BattleHex[6][6];
-    private final BattleHex[] entrances = new BattleHex[6];
+    private final @RUntainted BattleHex[][] battleHexes = new BattleHex[6][6];
+    private final @RUntainted BattleHex[] entrances = new BattleHex[6];
 
     /** The recruiting tree of this terrain */
-    IRecruiting recruitingSubTree;
+    @RUntainted IRecruiting recruitingSubTree;
 
-    public MasterBoardTerrain(String id, String displayName, Color color,
+    public MasterBoardTerrain(@RUntainted String id, @RUntainted String displayName, Color color,
         boolean isAlias)
     {
         this.id = id;
@@ -201,7 +202,7 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
         }
     }
 
-    public BattleHex getEntrance(EntrySide entrySide)
+    public @RUntainted BattleHex getEntrance(@RUntainted EntrySide entrySide)
     {
         return getHexByLabel("X" + entrySide.ordinal());
     }
@@ -212,9 +213,9 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
      *  uphill movement. */
     private void setupHexesGameState()
     {
-        List<String> directories = VariantSupport
+        List<@RUntainted String> directories = VariantSupport
             .getBattlelandsDirectoriesList();
-        BattleHex[][] hexModel = new BattleHex[battleHexes.length][battleHexes[0].length];
+        @RUntainted BattleHex[][] hexModel = new BattleHex[battleHexes.length][battleHexes[0].length];
         for (int i = 0; i < battleHexes.length; i++)
         {
             for (int j = 0; j < battleHexes[0].length; j++)
@@ -260,7 +261,7 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
                 t2n.put(hTerrain, Integer.valueOf(count));
             }
             setHazardNumberMap(t2n);
-            Collection<HazardHexside> hazardTypes = HazardHexside
+            Collection<@RUntainted HazardHexside> hazardTypes = HazardHexside
                 .getAllHazardHexsides();
 
             // old way
@@ -298,7 +299,7 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
             // map model into GUI
             for (int i = 0; i < hexModel.length; i++)
             {
-                BattleHex[] row = hexModel[i];
+                @RUntainted BattleHex[] row = hexModel[i];
                 for (int j = 0; j < row.length; j++)
                 {
                     BattleHex hex = row[j];
@@ -320,7 +321,7 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
     /**
      * Look for the Hex matching the Label in this terrain.
      */
-    public BattleHex getHexByLabel(String label)
+    public @RUntainted BattleHex getHexByLabel(@RUntainted String label)
     {
         assert label != null : "We must have a label";
         int x = 0;
@@ -372,17 +373,17 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
         return battleHexes[x][y];
     }
 
-    public void setRecruitingSubTree(IRecruiting rst)
+    public void setRecruitingSubTree(@RUntainted IRecruiting rst)
     {
         this.recruitingSubTree = rst;
     }
 
-    public IRecruiting getRecruitingSubTree()
+    public @RUntainted IRecruiting getRecruitingSubTree()
     {
         return recruitingSubTree;
     }
 
-    public MasterBoardTerrain(String id, String displayName, Color color)
+    public MasterBoardTerrain(@RUntainted String id, @RUntainted String displayName, Color color)
     {
         this(id, displayName, color, false);
     }
@@ -407,12 +408,12 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
         return Collections.unmodifiableSet(aliases);
     }
 
-    public String getId()
+    public @RUntainted String getId()
     {
         return id;
     }
 
-    public String getDisplayName()
+    public @RUntainted String getDisplayName()
     {
         return displayName;
     }
@@ -456,7 +457,7 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
             }
         }
 
-        final Collection<HazardHexside> hazardTypes = HazardHexside
+        final Collection<@RUntainted HazardHexside> hazardTypes = HazardHexside
             .getAllHazardHexsides();
 
         for (HazardHexside hazard : hazardTypes)
@@ -484,12 +485,12 @@ public class MasterBoardTerrain implements Comparable<MasterBoardTerrain>
         return false;
     }
 
-    public void setStartList(List<String> startList)
+    public void setStartList(List<@RUntainted String> startList)
     {
         this.startList = startList;
     }
 
-    public List<String> getStartList()
+    public List<@RUntainted String> getStartList()
     {
         if (startList == null)
         {

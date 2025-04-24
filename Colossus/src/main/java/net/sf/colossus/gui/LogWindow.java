@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import net.sf.colossus.common.Options;
 import net.sf.colossus.guiutil.SaveWindow;
 import net.sf.colossus.util.SwingDocumentLogHandler;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**

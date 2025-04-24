@@ -27,6 +27,7 @@ import net.sf.colossus.game.PlayerColor;
 import net.sf.colossus.server.VariantSupport;
 import net.sf.colossus.util.StaticResourceLoader;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -51,7 +52,7 @@ class Chit extends JPanel
 
     private final Image bufferedImage;
     private Image bufferedInvertedImage;
-    Rectangle rect;
+    @RUntainted Rectangle rect;
     final Client client; // may be null; set for some subclasses
     final IOptions options;
 
@@ -68,7 +69,7 @@ class Chit extends JPanel
     protected final boolean inverted;
 
     // Initialize early to avoid NullPointerException with GTK L&F
-    private final String id;
+    private final @RUntainted String id;
 
     final static BasicStroke oneWide = new BasicStroke(1);
     private final static BasicStroke threeWide = new BasicStroke(3);
@@ -80,7 +81,7 @@ class Chit extends JPanel
      * @param id
      * @return The newly created CreatureChit
      */
-    public static Chit newCreatureChit(int scale, String id)
+    public static Chit newCreatureChit(@RUntainted int scale, @RUntainted String id)
     {
         return new Chit(scale, id);
     }
@@ -91,7 +92,7 @@ class Chit extends JPanel
      * @param type
      * @return The newly created CreatureChit
      */
-    public static Chit newCreatureChit(int scale, CreatureType type)
+    public static Chit newCreatureChit(@RUntainted int scale, CreatureType type)
     {
         return new Chit(scale, type);
     }
@@ -102,7 +103,7 @@ class Chit extends JPanel
      * @param markerId
      * @return The newly created MarkerChit
      */
-    public static Chit newDiceChit(int scale, String markerId)
+    public static Chit newDiceChit(@RUntainted int scale, @RUntainted String markerId)
     {
         return new Chit(scale, markerId);
     }
@@ -113,7 +114,7 @@ class Chit extends JPanel
      * @param id
      * @return the created Chit
      */
-    public static Chit newSymbolChit(int scale, String id)
+    public static Chit newSymbolChit(@RUntainted int scale, @RUntainted String id)
     {
         return new Chit(scale, id);
     }
@@ -123,33 +124,33 @@ class Chit extends JPanel
      *
      **/
     // to be used mostly by the factory methods
-    Chit(int scale, String id)
+    Chit(@RUntainted int scale, @RUntainted String id)
     {
         this(scale, id, false, false);
     }
 
-    Chit(int scale, CreatureType creatureType)
+    Chit(@RUntainted int scale, CreatureType creatureType)
     {
         this(scale, creatureType.getName());
     }
 
     // No client, no options: use only for TerrainEffect symbol or dice!
-    Chit(int scale, String id, String[] overlays)
+    Chit(@RUntainted int scale, @RUntainted String id, @RUntainted String[] overlays)
     {
         this(scale, id, false, false, false, overlays, null, null);
     }
 
-    Chit(int scale, String id, boolean inverted, Client client)
+    Chit(@RUntainted int scale, @RUntainted String id, boolean inverted, Client client)
     {
         this(scale, id, inverted, false, false, client);
     }
 
-    Chit(int scale, String id, boolean inverted, boolean dubious)
+    Chit(@RUntainted int scale, @RUntainted String id, boolean inverted, boolean dubious)
     {
         this(scale, id, inverted, dubious, false, null);
     }
 
-    Chit(int scale, String id, boolean inverted, boolean dubious,
+    Chit(@RUntainted int scale, @RUntainted String id, boolean inverted, boolean dubious,
         boolean dubiousAsBlank, Client client)
     {
         this(scale, id, inverted, dubious, dubiousAsBlank, null, client,
@@ -168,8 +169,8 @@ class Chit extends JPanel
      * they will be painted in that color (e.g. captured markers)
      * @param options TODO
      */
-    private Chit(int scale, String idPerhapsWithColor, boolean inverted,
-        boolean dubious, boolean dubiousAsBlank, String[] overlays,
+    private Chit(@RUntainted int scale, @RUntainted String idPerhapsWithColor, boolean inverted,
+        boolean dubious, boolean dubiousAsBlank, @RUntainted String[] overlays,
         Client client, IOptions options)
     {
         // LayoutManager null - we want to place things ourselves
@@ -209,7 +210,7 @@ class Chit extends JPanel
 
         if (dubious && dubiousAsBlank)
         {
-            String[] names = new String[1];
+            @RUntainted String[] names = new String[1];
             names[0] = "QuestionMarkMask";
             bufferedImage = getImage(names, scale);
         }
@@ -221,7 +222,7 @@ class Chit extends JPanel
             String[] names = cre.getImageNames();
             if (dubious)
             {
-                String[] names2 = new String[names.length + 1];
+                @RUntainted String[] names2 = new String[names.length + 1];
                 for (int i = 0; i < names.length; i++)
                 {
                     names2[i] = names[i];
@@ -236,7 +237,7 @@ class Chit extends JPanel
         {
             if (idPerhapsWithColor.startsWith("Titan-"))
             {
-                String[] filenames = new String[4 + (dubious ? 1 : 0)];
+                @RUntainted String[] filenames = new String[4 + (dubious ? 1 : 0)];
                 int power = getTitanPower();
                 String color = idPerhapsWithColor.split("-")[2] + "Colossus";
                 filenames[0] = "Plain" + "-" + color;
@@ -327,21 +328,21 @@ class Chit extends JPanel
             && id.charAt(3) >= '0' && id.charAt(3) <= '9');
     }
 
-    public int getTitanPower()
+    public @RUntainted int getTitanPower()
     {
         if (!id.startsWith("Titan-"))
         {
             return -1;
         }
-        String[] parts = id.split("-");
+        @RUntainted String[] parts = id.split("-");
         int power = Integer.parseInt(parts[1]);
         return power;
     }
 
-    private static Image getImage(String imageFilename, int scale)
+    private static Image getImage(@RUntainted String imageFilename, @RUntainted int scale)
     {
         ImageIcon tempIcon = null;
-        List<String> directories = VariantSupport.getImagesDirectoriesList();
+        List<@RUntainted String> directories = VariantSupport.getImagesDirectoriesList();
         tempIcon = StaticResourceLoader.getImageIcon(imageFilename,
             directories, scale, scale);
         if (tempIcon == null)
@@ -355,9 +356,9 @@ class Chit extends JPanel
         return tempIcon.getImage();
     }
 
-    private static Image getImage(String[] imageFilenames, int scale)
+    private static Image getImage(@RUntainted String[] imageFilenames, @RUntainted int scale)
     {
-        List<String> directories = VariantSupport.getImagesDirectoriesList();
+        List<@RUntainted String> directories = VariantSupport.getImagesDirectoriesList();
         Image composite = StaticResourceLoader.getCompositeImage(
             imageFilenames, directories, scale, scale);
         return composite;
@@ -365,7 +366,7 @@ class Chit extends JPanel
 
     // TODO should become package private again one day.
     // see isDead()
-    public String getId()
+    public @RUntainted String getId()
     {
         if (id == null)
         {
@@ -384,7 +385,7 @@ class Chit extends JPanel
         return getId();
     }
 
-    void rescale(int scale)
+    void rescale(@RUntainted int scale)
     {
         rect.width = scale;
         rect.height = scale;
@@ -392,7 +393,7 @@ class Chit extends JPanel
     }
 
     @Override
-    public void paintComponent(Graphics g)
+    public void paintComponent(@RUntainted Graphics g)
     {
         Graphics2D g2 = (Graphics2D)g;
         super.paintComponent(g2);

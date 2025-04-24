@@ -6,6 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.colossus.util.HTMLColor;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
 
 
 /**
@@ -20,7 +22,7 @@ public class BattleHex extends Hex
         .getName());
 
     /** Valid elevations are 0, 1, and 2.  Also 3 for JDG Badlands. */
-    private int elevation;
+    private @RUntainted int elevation;
 
     // TODO the hexsides could/should be an enum
     // Hexside terrain types are:
@@ -40,14 +42,14 @@ public class BattleHex extends Hex
      * (e.g. Slope, Dune, River...).
      * The hexside is marked only in the higher hex.
      */
-    private final HazardHexside[] hexsideHazards = new HazardHexside[6];
+    private final @RUntainted HazardHexside[] hexsideHazards = new HazardHexside[6];
 
     /**
      * Links to the neighbors of the BattleHex.
      * Neighbors have one hex side in common.
      * Non-existent neighbor are marked with <b>null</b>.
      */
-    private final BattleHex[] neighbors = new BattleHex[6];
+    private final @RUntainted BattleHex[] neighbors = new BattleHex[6];
 
     // Hex labels are:
     // A1-A3, B1-B4, C1-C5, D1-D6, E1-E5, F1-F4.
@@ -56,7 +58,7 @@ public class BattleHex extends Hex
     /*
      * TODO this should be final, but can't be at the moment
      */
-    private HazardTerrain terrain;
+    private @RUntainted HazardTerrain terrain;
 
     /** Movement costs */
     public static final int IMPASSIBLE_COST = 99;
@@ -64,7 +66,7 @@ public class BattleHex extends Hex
     private static final int NORMAL_COST = 1;
     private static final int SLOW_INCREMENT_COST = SLOW_COST - NORMAL_COST;
 
-    public BattleHex(int xCoord, int yCoord)
+    public BattleHex(@RUntainted int xCoord, @RUntainted int yCoord)
     {
         super(createLabel(xCoord, yCoord), xCoord, yCoord);
 
@@ -76,7 +78,7 @@ public class BattleHex extends Hex
         terrain = HazardTerrain.PLAINS;
     }
 
-    private static String createLabel(int xCoord, int yCoord)
+    private static @RPolyTainted String createLabel(@RPolyTainted int xCoord, @RPolyTainted int yCoord)
     {
         String label;
         if (xCoord < 0)
@@ -93,25 +95,25 @@ public class BattleHex extends Hex
 
     /** a char for an int: 0:'A'=0, 1:'B', ... int(w):'W', else:'?', <0:undef.
      * */
-    private final static char _intXCoordToXLabel(final int x)
+    private final static @RPolyTainted char _intXCoordToXLabel(final @RPolyTainted int x)
     {
         return (x < 'X') // 'X' is used for -1
         ? (char)('A' + x)
             : '?';
     }
 
-    public HazardTerrain getTerrain()
+    public @RUntainted HazardTerrain getTerrain()
     {
         return this.terrain;
     }
 
-    public void setTerrain(HazardTerrain terrain)
+    public void setTerrain(@RUntainted HazardTerrain terrain)
     {
         this.terrain = terrain;
     }
 
     @Override
-    public String getTerrainName()
+    public @RUntainted String getTerrainName()
     {
         String terrainName = terrain.getName();
         if (elevation == 0)
@@ -256,7 +258,7 @@ public class BattleHex extends Hex
         return result;
     }
 
-    public void setHexsideHazard(int i, HazardHexside hazard)
+    public void setHexsideHazard(int i, @RUntainted HazardHexside hazard)
     {
         this.hexsideHazards[i] = hazard;
     }
@@ -267,7 +269,7 @@ public class BattleHex extends Hex
      * @param i The side number, from 0 to 5
      * @return The HazardHexside type at that side
      */
-    public HazardHexside getHexsideHazard(int i)
+    public @RUntainted HazardHexside getHexsideHazard(@RUntainted int i)
     {
         if (i >= 0 && i <= 5)
         {
@@ -287,7 +289,7 @@ public class BattleHex extends Hex
     // derive the image name.
     // TODO get rid of this, when HazardHexside uses correct text.
     //
-    public String getHexsideImageName(int i)
+    public @RUntainted String getHexsideImageName(int i)
     {
         HazardHexside hazard = hexsideHazards[i];
 
@@ -302,7 +304,7 @@ public class BattleHex extends Hex
     }
 
     /** Return the hazard type of opposite side of side i. */
-    public HazardHexside getOppositeHazard(int i)
+    public HazardHexside getOppositeHazard(@RUntainted int i)
     {
         HazardHexside hazard = HazardHexside.NOTHING;
 
@@ -319,28 +321,28 @@ public class BattleHex extends Hex
      *  Return the character code of the hazard type
      *  of opposite side of side i.
      */
-    public char getOppositeHexside(int i)
+    public char getOppositeHexside(@RUntainted int i)
     {
         return getOppositeHazard(i).getCode();
     }
 
-    public int getElevation()
+    public @RUntainted int getElevation()
     {
         return elevation;
     }
 
-    public void setElevation(int elevation)
+    public void setElevation(@RUntainted int elevation)
     {
         this.elevation = elevation;
     }
 
-    public BattleHex getNeighbor(int i)
+    public @RUntainted BattleHex getNeighbor(int i)
     {
         assert (i >= 0) && (i <= 5) : "Neighbor index out of range";
         return neighbors[i];
     }
 
-    public void setNeighbor(int i, BattleHex hex)
+    public void setNeighbor(int i, @RUntainted BattleHex hex)
     {
         assert (i >= 0) && (i <= 5) : "Neighbor index out of range";
         neighbors[i] = hex;
@@ -381,7 +383,7 @@ public class BattleHex extends Hex
      * @param cameFrom The HexSide through which the Creature try to enter.
      * @return Cost to enter the BattleHex.
      */
-    public int getEntryCost(CreatureType creature, int cameFrom, boolean cumul)
+    public int getEntryCost(CreatureType creature, @RUntainted int cameFrom, boolean cumul)
     {
         int cost = NORMAL_COST;
 
@@ -491,7 +493,7 @@ public class BattleHex extends Hex
      * @param creature The Creature that may suffer damage.
      * @return How much damage the Creature should take from being there.
      */
-    public int damageToCreature(CreatureType creature)
+    public @RUntainted int damageToCreature(CreatureType creature)
     {
         if (terrain.isDamagingToNonNative() && (!creature.isNativeIn(terrain)))
         { // Non-native take damage in Drift
@@ -509,7 +511,7 @@ public class BattleHex extends Hex
         return 0;
     }
 
-    public boolean isCliff(int hexside)
+    public boolean isCliff(@RUntainted int hexside)
     {
         return getHexsideHazard(hexside) == HazardHexside.CLIFF
             || getOppositeHazard(hexside) == HazardHexside.CLIFF;

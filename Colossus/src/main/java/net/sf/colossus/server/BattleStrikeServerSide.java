@@ -9,6 +9,7 @@ import net.sf.colossus.game.Game;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.HazardHexside;
 import net.sf.colossus.variant.HazardTerrain;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class BattleStrikeServerSide
@@ -31,7 +32,7 @@ public class BattleStrikeServerSide
      * @param striker TODO
      * @param target TODO
      */
-    protected int getDice(CreatureServerSide striker, Creature target)
+    protected @RUntainted int getDice(CreatureServerSide striker, Creature target)
     {
         assert getBattle() != null : "getDice called when there is no battle!";
         return getDice(striker, target, !getBattle()
@@ -40,7 +41,7 @@ public class BattleStrikeServerSide
 
     /** WARNING: this is currently still duplicated in game.BattleStrike
      */
-    public int getDice(Creature striker, Creature target, boolean rangestrike)
+    public @RUntainted int getDice(Creature striker, Creature target, boolean rangestrike)
     {
         BattleHex hex = striker.getCurrentHex();
         BattleHex targetHex = target.getCurrentHex();
@@ -122,7 +123,7 @@ public class BattleStrikeServerSide
      * @param target TODO
      * @param rangestrike TODO*/
     @SuppressWarnings("deprecation")
-    int getAttackerSkill(Creature striker, Creature target, boolean rangestrike)
+    @RUntainted int getAttackerSkill(@RUntainted Creature striker, @RUntainted Creature target, boolean rangestrike)
     {
         // rangestrike calc depends on countBrambleHexes which needs battle.
         // (it's called when there is no battle by ShowCreatureDetails)
@@ -276,13 +277,13 @@ public class BattleStrikeServerSide
     /** WARNING: this is duplicated in BattleClientSide
      * @param striker TODO
      * @param target TODO*/
-    public int getStrikeNumber(CreatureServerSide striker, Creature target)
+    public @RUntainted int getStrikeNumber(@RUntainted CreatureServerSide striker, @RUntainted Creature target)
     {
         return getStrikeNumber(striker, target,
             !getBattle().isInContact(striker, true));
     }
 
-    public int getStrikeNumber(Creature striker, Creature target,
+    public @RUntainted int getStrikeNumber(@RUntainted Creature striker, @RUntainted Creature target,
         boolean rangestrike)
     {
         int attackerSkill = getAttackerSkill(striker, target, rangestrike);

@@ -23,6 +23,7 @@ import net.sf.colossus.common.Options;
 import net.sf.colossus.server.LegionServerSide;
 import net.sf.colossus.util.Split;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 abstract public class Movement
@@ -76,12 +77,12 @@ abstract public class Movement
 
     /** Recursively find all unoccupied hexes within roll hexes, for
      *  tower teleport. */
-    protected Set<MasterHex> findNearbyUnoccupiedHexes(MasterHex hex,
+    protected Set<@RUntainted MasterHex> findNearbyUnoccupiedHexes(MasterHex hex,
         Legion legion, int roll, int cameFrom)
     {
         // This hex is the final destination.  Mark it as legal if
         // it is unoccupied.
-        Set<MasterHex> result = new HashSet<MasterHex>();
+        Set<@RUntainted MasterHex> result = new HashSet<@RUntainted MasterHex>();
 
         if (!game.isOccupied(hex))
         {
@@ -163,11 +164,11 @@ abstract public class Movement
     /** Return set of hexLabels describing where this legion can teleport.
      *  @return set of hexlabels
      */
-    protected Set<MasterHex> listTeleportMoves(Legion legion, MasterHex hex,
+    protected @RUntainted Set<@RUntainted MasterHex> listTeleportMoves(Legion legion, MasterHex hex,
         int movementRoll, boolean inAdvance)
     {
         Player player = legion.getPlayer();
-        Set<MasterHex> result = new HashSet<MasterHex>();
+        Set<@RUntainted MasterHex> result = new HashSet<@RUntainted MasterHex>();
 
         if (hex == null)
         {
@@ -231,7 +232,7 @@ abstract public class Movement
     }
 
     /** Return set of hexLabels describing where this legion can teleport. */
-    public Set<MasterHex> listTeleportMoves(Legion legion, MasterHex hex,
+    public Set<@RUntainted MasterHex> listTeleportMoves(Legion legion, MasterHex hex,
         int movementRoll)
     {
         // Call with inAdvance=false
@@ -241,8 +242,8 @@ abstract public class Movement
     /** Return a Set of Strings "Left" "Right" or "Bottom" describing
      *  possible entry sides.  If the hex is unoccupied, just return
      *  one entry side since it doesn't matter. */
-    public Set<EntrySide> listPossibleEntrySides(Legion legion,
-        MasterHex targetHex, boolean teleport)
+    public @RUntainted Set<EntrySide> listPossibleEntrySides(Legion legion,
+        @RUntainted MasterHex targetHex, boolean teleport)
     {
         Set<EntrySide> entrySides = new HashSet<EntrySide>();
         int movementRoll = game.getMovementRoll();
@@ -275,13 +276,13 @@ abstract public class Movement
         }
 
         // Normal moves.
-        Set<String> tuples = findNormalMoves(currentHex, legion, movementRoll,
+        Set<@RUntainted String> tuples = findNormalMoves(currentHex, legion, movementRoll,
             findBlock(currentHex), Constants.NOWHERE, null, false);
-        Iterator<String> it = tuples.iterator();
+        Iterator<@RUntainted String> it = tuples.iterator();
         while (it.hasNext())
         {
             String tuple = it.next();
-            List<String> parts = Split.split(':', tuple);
+            List<@RUntainted String> parts = Split.split(':', tuple);
             String hl = parts.get(0);
 
             if (hl.equals(targetHex.getLabel()))
@@ -294,24 +295,24 @@ abstract public class Movement
     }
 
     /** Return set of hexLabels describing where this legion can move. */
-    public Set<MasterHex> listAllMoves(Legion legion, MasterHex hex,
-        int movementRoll)
+    public Set<@RUntainted MasterHex> listAllMoves(Legion legion, MasterHex hex,
+        @RUntainted int movementRoll)
     {
         return listAllMoves(legion, hex, movementRoll, false);
     }
 
     /** Return set of hexLabels describing where this legion can move. */
-    public Set<MasterHex> listAllMoves(Legion legion, MasterHex hex,
-        int movementRoll, boolean inAdvance)
+    public Set<@RUntainted MasterHex> listAllMoves(Legion legion, MasterHex hex,
+        @RUntainted int movementRoll, boolean inAdvance)
     {
-        Set<MasterHex> set = listNormalMoves(legion, hex, movementRoll, false,
+        Set<@RUntainted MasterHex> set = listNormalMoves(legion, hex, movementRoll, false,
             null, inAdvance);
         set.addAll(listTeleportMoves(legion, hex, movementRoll, inAdvance));
         return set;
     }
 
-    public Set<MasterHex> listNormalMoves(Legion legion, MasterHex hex,
-        int movementRoll)
+    public Set<@RUntainted MasterHex> listNormalMoves(Legion legion, MasterHex hex,
+        @RUntainted int movementRoll)
     {
         return listNormalMoves(legion, hex, movementRoll, false, null, false);
     }
@@ -322,8 +323,8 @@ abstract public class Movement
      *  if ignoreFriends is true.
      *  @return set of hexlabels
      */
-    public Set<MasterHex> listNormalMoves(Legion legion, MasterHex hex,
-        int movementRoll, boolean ignoreFriends, MasterHex fromHex,
+    public @RUntainted Set<@RUntainted MasterHex> listNormalMoves(Legion legion, MasterHex hex,
+        @RUntainted int movementRoll, boolean ignoreFriends, MasterHex fromHex,
         boolean inAdvance)
     {
         if (hex == null || (legion.hasMoved() && !inAdvance))
@@ -331,16 +332,16 @@ abstract public class Movement
             return new HashSet<MasterHex>();
         }
 
-        Set<String> tuples = findNormalMoves(hex, legion, movementRoll,
+        Set<@RUntainted String> tuples = findNormalMoves(hex, legion, movementRoll,
             findBlock(hex), Constants.NOWHERE, fromHex, ignoreFriends);
 
         // Extract just the hexLabels from the hexLabel:entrySide tuples.
-        Set<MasterHex> result = new HashSet<MasterHex>();
-        Iterator<String> it = tuples.iterator();
+        Set<@RUntainted MasterHex> result = new HashSet<@RUntainted MasterHex>();
+        Iterator<@RUntainted String> it = tuples.iterator();
         while (it.hasNext())
         {
             String tuple = it.next();
-            List<String> parts = Split.split(':', tuple);
+            List<@RUntainted String> parts = Split.split(':', tuple);
             String hexLabel = parts.get(0);
             result.add(game.getVariant().getMasterBoard()
                 .getHexByLabel(hexLabel));
@@ -358,10 +359,10 @@ abstract public class Movement
      *
      *  @return a set of hexLabel:entrySide tuples.
      */
-    public Set<String> findNormalMoves(MasterHex hex, Legion legion, int roll,
+    public Set<@RUntainted String> findNormalMoves(MasterHex hex, Legion legion, @RUntainted int roll,
         int block, int cameFrom, MasterHex fromHex, boolean ignoreFriends)
     {
-        Set<String> result = new HashSet<String>();
+        Set<@RUntainted String> result = new HashSet<@RUntainted String>();
         Player player = legion.getPlayer();
 
         // TODO is fromHex actually useful?
@@ -485,9 +486,9 @@ abstract public class Movement
     * @param roll
     * @return Reason why it is not a valid teleport move, null if valid move
     */
-    public String isValidTeleportMove(Legion legion, MasterHex hex, int roll)
+    public @RUntainted String isValidTeleportMove(Legion legion, @RUntainted MasterHex hex, int roll)
     {
-        Set<MasterHex> set = listTeleportMoves(legion, legion.getCurrentHex(),
+        Set<@RUntainted MasterHex> set = listTeleportMoves(legion, legion.getCurrentHex(),
             roll, false);
 
         if (!set.contains(hex))
@@ -508,10 +509,10 @@ abstract public class Movement
     * @param player
     * @return Reason why it is not a normal move, null if valid move
     */
-    public String isValidNormalMove(Legion legion, MasterHex hex,
-        Player player, int roll)
+    public @RUntainted String isValidNormalMove(Legion legion, @RUntainted MasterHex hex,
+        Player player, @RUntainted int roll)
     {
-        Set<MasterHex> set = listNormalMoves(legion, legion.getCurrentHex(),
+        Set<@RUntainted MasterHex> set = listNormalMoves(legion, legion.getCurrentHex(),
             roll, false, null, false);
 
         if (!set.contains(hex))
@@ -532,8 +533,8 @@ abstract public class Movement
     *  @param teleport Whether this is a teleported move
     *  @return Reason why it is not a valid entry side, null if valid
     */
-    public String isValidEntrySide(Legion legion, MasterHex hex,
-        boolean teleport, EntrySide entrySide)
+    public @RUntainted String isValidEntrySide(Legion legion, @RUntainted MasterHex hex,
+        boolean teleport, @RUntainted EntrySide entrySide)
     {
         Set<EntrySide> legalSides = listPossibleEntrySides(legion, hex,
             teleport);

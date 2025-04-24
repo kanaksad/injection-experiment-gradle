@@ -6,6 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.colossus.util.DevRandom;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
 
 
 /**
@@ -23,11 +25,11 @@ public final class Dice
     private static final Logger LOGGER = Logger
         .getLogger(Dice.class.getName());
 
-    private static Random random = new DevRandom();
-    private static final int[] stats = new int[6];
-    private static int rcount = 0;
+    private static @RUntainted Random random = new DevRandom();
+    private static final @RUntainted int[] stats = new int[6];
+    private static @RUntainted int rcount = 0;
 
-    static void init(String source)
+    static void init(@RUntainted String source)
     {
         random = new DevRandom(source);
         for (int i = 0; i < 6; i++)
@@ -38,7 +40,7 @@ public final class Dice
 
     /** Put all die rolling in one place, in case we decide to change random
      *  number algorithms, use an external dice server, etc. */
-    public static int rollDie()
+    public static @RUntainted int rollDie()
     {
         int roll = rollDie(6);
         synchronized (stats)
@@ -58,17 +60,17 @@ public final class Dice
         return roll;
     }
 
-    public static int rollDie(int size)
+    public static @RPolyTainted int rollDie(@RPolyTainted int size)
     {
         return random.nextInt(size) + 1;
     }
 
-    private static int[] basicSequence = { 4, 3, 1, 6, 5, 2 };
+    private static @RUntainted int[] basicSequence = { 4, 3, 1, 6, 5, 2 };
     //private static int[] basicSequence = {1,2,3,4,5,6};
     private static int seqNum = -1;
 
     /* this one return from a fixed sequence, instead of a random value */
-    public static int rollDieNonRandom()
+    public static @RUntainted int rollDieNonRandom()
     {
         seqNum = (seqNum + 1) % basicSequence.length;
         return (basicSequence[seqNum]);

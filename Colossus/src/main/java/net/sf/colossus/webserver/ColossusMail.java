@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import net.sf.colossus.webcommon.FormatWhen;
 import net.sf.colossus.webcommon.IColossusMail;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 /**
  *  Encapsulates the way how the web server sends mail in some situations,
@@ -25,25 +26,25 @@ public class ColossusMail implements IColossusMail
     private final static FormatWhen whenFormatter = new FormatWhen();
 
     // For Message-To-Admin stuff:
-    private final String ContactAdminFromName;
-    private final String ContactAdminFromMail;
-    private final String ContactAdminToName;
-    private final String ContactAdminToMail;
+    private final @RUntainted String ContactAdminFromName;
+    private final @RUntainted String ContactAdminFromMail;
+    private final @RUntainted String ContactAdminToName;
+    private final @RUntainted String ContactAdminToMail;
 
     // For sending the registration mail:
-    private final String mailServer;
-    private final String fromAddress;
-    private final String fromName;
-    private final String thisServer;
-    private final String contactMail;
-    private final String contactWWW;
+    private final @RUntainted String mailServer;
+    private final @RUntainted String fromAddress;
+    private final @RUntainted String fromName;
+    private final @RUntainted String thisServer;
+    private final @RUntainted String contactMail;
+    private final @RUntainted String contactWWW;
     /**
      *  Whether or not to really send a mail. During development on PC I set
      *  this in the cf file to false, because I do not really have a mail
      *  server process running.
      */
     private final boolean reallyMail;
-    private final String mailToFileName;
+    private final @RUntainted String mailToFileName;
     private final File mailToFileFile;
     private final boolean mailToFileFlag;
 
@@ -106,13 +107,13 @@ public class ColossusMail implements IColossusMail
         mailToFileFile = testFile;
     }
 
-    private String getOption(String optName)
+    private @RUntainted String getOption(@RUntainted String optName)
     {
         return options.getStringOption(optName);
     }
 
-    public String sendConfirmationMail(String username, String email,
-        String confCode)
+    public @RUntainted String sendConfirmationMail(@RUntainted String username, @RUntainted String email,
+        @RUntainted String confCode)
     {
         try
         {
@@ -183,8 +184,8 @@ public class ColossusMail implements IColossusMail
     }
 
 
-    public String sendMessageToAdminMail(long when, String fromUser,
-        String hisMail, List<String> message)
+    public String sendMessageToAdminMail(@RUntainted long when, @RUntainted String fromUser,
+        @RUntainted String hisMail, List<String> message)
     {
         LOGGER.fine("ok, sending 'message-to-admin' mail to " + fromUser
             + " <" + hisMail + ">");

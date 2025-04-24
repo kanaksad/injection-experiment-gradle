@@ -27,6 +27,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -40,7 +41,7 @@ public class CreatureLoader implements AllCreatureType
     private static final Logger LOGGER = Logger.getLogger(CreatureLoader.class
         .getName());
     private static final String currentVersion = "2";
-    private final SortedSet<CreatureType> creatures;
+    private final SortedSet<@RUntainted CreatureType> creatures;
     private final Map<String, CreatureType> byName = new TreeMap<String, CreatureType>();
 
     public CreatureLoader()
@@ -51,7 +52,7 @@ public class CreatureLoader implements AllCreatureType
     // we need to cast since JDOM is not generified
     @SuppressWarnings("unchecked")
     public void fillCreatureLoader(InputStream creIS,
-        List<String> varDirectoriesList)
+        @RUntainted List<@RUntainted String> varDirectoriesList)
     {
         SAXBuilder builder = new SAXBuilder();
         try
@@ -64,7 +65,7 @@ public class CreatureLoader implements AllCreatureType
                 LOGGER.severe("Wrong / missing version in Creature file.");
             }
 
-            List<Element> lcreatures = root.getChildren("creature");
+            List<@RUntainted Element> lcreatures = root.getChildren("creature");
             for (Element el : lcreatures)
             {
                 handleCreature(el, varDirectoriesList);
@@ -90,7 +91,7 @@ public class CreatureLoader implements AllCreatureType
      * @param name The name of the attribute
      * @return The boolean value of the attribute, defaulting to false if absent
      */
-    private boolean getAttributeBoolean(Element el, String name)
+    private @RUntainted boolean getAttributeBoolean(@RUntainted Element el, @RUntainted String name)
         throws JDOMException
     {
         Attribute a = el.getAttribute(name);
@@ -100,7 +101,7 @@ public class CreatureLoader implements AllCreatureType
     }
 
     @SuppressWarnings("boxing")
-    private void handleCreature(Element el, List<String> varDirectoriesList)
+    private void handleCreature(@RUntainted Element el, @RUntainted List<@RUntainted String> varDirectoriesList)
         throws JDOMException, ObjectCreationException
     {
         String name = el.getAttributeValue("name");
@@ -210,7 +211,7 @@ public class CreatureLoader implements AllCreatureType
             this.creatures));
     }
 
-    public SortedSet<CreatureType> getCreatureTypes()
+    public SortedSet<@RUntainted CreatureType> getCreatureTypes()
     {
         return Collections.unmodifiableSortedSet(this.creatures);
     }

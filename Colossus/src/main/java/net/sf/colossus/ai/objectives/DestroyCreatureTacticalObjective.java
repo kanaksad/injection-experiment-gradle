@@ -9,6 +9,7 @@ import net.sf.colossus.game.BattleCritter;
 import net.sf.colossus.game.Creature;
 import net.sf.colossus.game.Legion;
 import net.sf.colossus.util.ValueRecorder;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /** The tactical objective of killing a certain number of a specific
@@ -31,11 +32,11 @@ class DestroyCreatureTacticalObjective extends AbstractTacticalObjective
     private final Creature critter;
     private final Legion killlegion;
     private final Client client;
-    private final int count;
-    private final int number;
+    private final @RUntainted int count;
+    private final @RUntainted int number;
 
-    DestroyCreatureTacticalObjective(float priority, Client client,
-        Legion killlegion, Creature critter, int number)
+    DestroyCreatureTacticalObjective(@RUntainted float priority, Client client,
+        Legion killlegion, Creature critter, @RUntainted int number)
     {
         super(priority);
         this.number = number;
@@ -51,7 +52,7 @@ class DestroyCreatureTacticalObjective extends AbstractTacticalObjective
         }
     }
 
-    public boolean objectiveAttained()
+    public @RUntainted boolean objectiveAttained()
     {
         if (killlegion.numCreature(critter.getType()) + number <= count)
         {
@@ -100,7 +101,7 @@ class DestroyCreatureTacticalObjective extends AbstractTacticalObjective
         return value;
     }
 
-    public String getDescription()
+    public @RUntainted String getDescription()
     {
         return "Destroying " + number + " " + critter.getName() + " ("
             + getPriority() + ")";

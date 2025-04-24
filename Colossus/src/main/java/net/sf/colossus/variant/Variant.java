@@ -15,6 +15,7 @@ import javax.swing.text.Document;
 import net.sf.colossus.game.Game;
 import net.sf.colossus.util.CollectionHelper;
 import net.sf.colossus.util.Predicate;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -37,12 +38,12 @@ public class Variant
 
     private final AllCreatureType creatureTypes;
     private final List<CreatureType> summonableCreatureTypes;
-    private final Collection<MasterBoardTerrain> terrains;
+    private final Collection<@RUntainted MasterBoardTerrain> terrains;
     private final List<AcquirableData> acquirableList;
     private final MasterBoard masterBoard;
     private final Document readme;
-    private final String variantName;
-    private final int titanImprove;
+    private final @RUntainted String variantName;
+    private final @RUntainted int titanImprove;
     private final int titanTeleport;
 
     /**
@@ -50,11 +51,11 @@ public class Variant
      *
      * This is a cache to find creatures by their case-insensitive name quickly.
      */
-    private final Map<String, CreatureType> creatureTypeByNameCache = new HashMap<String, CreatureType>();
+    private final Map<String, @RUntainted CreatureType> creatureTypeByNameCache = new HashMap<String, @RUntainted CreatureType>();
 
     public Variant(IVariantInitializer variantInitializer,
         AllCreatureType creatureTypes, MasterBoard masterBoard,
-        Document readme, String name)
+        Document readme, @RUntainted String name)
     {
         this.creatureTypes = creatureTypes;
         // defensive copies to ensure immutability
@@ -85,12 +86,12 @@ public class Variant
         return this.creatureTypes.getCreatureTypesAsList();
     }
 
-    public SortedSet<CreatureType> getCreatureTypes()
+    public SortedSet<@RUntainted CreatureType> getCreatureTypes()
     {
         return this.creatureTypes.getCreatureTypes();
     }
 
-    public Collection<MasterBoardTerrain> getTerrains()
+    public Collection<@RUntainted MasterBoardTerrain> getTerrains()
     {
         return this.terrains;
     }
@@ -126,7 +127,7 @@ public class Variant
         return readme;
     }
 
-    public String getName()
+    public @RUntainted String getName()
     {
         return variantName;
     }
@@ -144,7 +145,7 @@ public class Variant
      * @param name Name of a creature type. Not null.
      * @return CreatureType with the given name, null no such creature type.
      */
-    public CreatureType getCreatureByName(final String name)
+    public @RUntainted CreatureType getCreatureByName(final @RUntainted String name)
     {
         assert name != null;
         if (name.equals("null"))
@@ -233,11 +234,11 @@ public class Variant
     public static class AcquirableData
     {
         // TODO should be CreatureType
-        private final String name;
-        private final int value;
+        private final @RUntainted String name;
+        private final @RUntainted int value;
         private final List<MasterBoardTerrain> where;
 
-        public AcquirableData(String n, int v,
+        public AcquirableData(@RUntainted String n, @RUntainted int v,
             List<MasterBoardTerrain> terrains)
         {
             name = n;
@@ -245,12 +246,12 @@ public class Variant
             where = terrains;
         }
 
-        String getName()
+        @RUntainted String getName()
         {
             return name;
         }
 
-        int getValue()
+        @RUntainted int getValue()
         {
             return value;
         }
@@ -302,7 +303,7 @@ public class Variant
      * All Acquirements must occur at integer multiple of this.
      * @return The base amount of points needed for Acquirement.
      */
-    public int getAcquirableRecruitmentsValue()
+    public @RUntainted int getAcquirableRecruitmentsValue()
     {
         AcquirableData ad = acquirableList.get(0);
         return ad.getValue();
@@ -313,7 +314,7 @@ public class Variant
      * This one is the starting Lord with the Titan.
      * @return The name of the primary Acquirable Creature.
      */
-    public String getPrimaryAcquirable()
+    public @RUntainted String getPrimaryAcquirable()
     {
         AcquirableData ad = acquirableList.get(0);
         return ad.getName();
@@ -332,10 +333,10 @@ public class Variant
      * terrain, for this amount of points.
      * @see #getAcquirableRecruitmentsValue()
      */
-    public List<String> getRecruitableAcquirableList(MasterBoardTerrain t,
+    public List<@RUntainted String> getRecruitableAcquirableList(MasterBoardTerrain t,
         int value)
     {
-        List<String> al = new ArrayList<String>();
+        List<@RUntainted String> al = new ArrayList<@RUntainted String>();
         if ((value % getAcquirableRecruitmentsValue()) != 0)
         {
             return al;
@@ -386,7 +387,7 @@ public class Variant
      * To obtain the base amount of points needed for Titan improvement.
      * @return The base amount of points needed for Titan improvement.
      */
-    public int getTitanImprovementValue()
+    public @RUntainted int getTitanImprovementValue()
     {
         return titanImprove;
     }

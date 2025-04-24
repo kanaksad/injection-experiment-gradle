@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import net.sf.colossus.client.HexMap;
 import net.sf.colossus.game.EntrySide;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -129,7 +130,7 @@ final class PickEntrySide extends HexMap
     }
 
     @Override
-    public void paintComponent(Graphics g)
+    public void paintComponent(@RUntainted Graphics g)
     {
         super.paintComponent(g);
 

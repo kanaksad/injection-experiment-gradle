@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import net.sf.colossus.webclient.WebClient;
 import net.sf.colossus.webcommon.IWebClient;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -40,25 +41,25 @@ public class WebServerClientSocketThread extends Thread
 
     private final RoundtripTimeBookkeeper rttBookKeeper;
 
-    private Socket socket;
+    private @RUntainted Socket socket;
     private QueuedSocketWriter writer;
 
-    private long lastPacketReceived = 0;
-    private int pingsTried = 0;
-    private int pingCounter = 0;
-    private int idleWarningsSent = 0;
+    private @RUntainted long lastPacketReceived = 0;
+    private @RUntainted int pingsTried = 0;
+    private @RUntainted int pingCounter = 0;
+    private @RUntainted int idleWarningsSent = 0;
     private boolean connLostWarningLogged = false;
 
     private Thread stopper = null;
 
     private boolean forcedLogout = false;
 
-    private boolean done = false;
+    private @RUntainted boolean done = false;
     private boolean toldToTerminate = false;
 
     private boolean lastWasLogin = false;
 
-    public WebServerClientSocketThread(WebServerClient theClient, Socket socket)
+    public WebServerClientSocketThread(WebServerClient theClient, @RUntainted Socket socket)
     {
         super("WebServerClientSocketThread");
         this.theClient = theClient;
@@ -66,7 +67,7 @@ public class WebServerClientSocketThread extends Thread
         this.rttBookKeeper = new RoundtripTimeBookkeeper(10);
     }
 
-    String getClientInfo()
+    @RUntainted String getClientInfo()
     {
         String ip = "<undef>";
         if (socket != null && socket.getInetAddress() != null)
@@ -314,7 +315,7 @@ public class WebServerClientSocketThread extends Thread
      * MAX_WRITE_BLOCKTIME_MS milliseconds.
      * @param s
      */
-    public void sendToClient(String s)
+    public void sendToClient(@RUntainted String s)
     {
         long writeStartedAt = new Date().getTime();
         writer.sendMessage(s);
@@ -484,7 +485,7 @@ public class WebServerClientSocketThread extends Thread
      * WebClient standing around idle for very long.
      * @param now
      */
-    public void checkMaxIdleTime(long now)
+    public void checkMaxIdleTime(@RUntainted long now)
     {
         if (done)
         {

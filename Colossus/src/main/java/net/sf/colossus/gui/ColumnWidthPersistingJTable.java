@@ -13,6 +13,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import net.sf.colossus.common.Options;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -38,7 +39,7 @@ import net.sf.colossus.common.Options;
  */
 public class ColumnWidthPersistingJTable extends JTable
 {
-    public ColumnWidthPersistingJTable(String optionName, Options options,
+    public ColumnWidthPersistingJTable(@RUntainted String optionName, Options options,
         TableModel tableModel)
     {
         super(tableModel, new ColumnWidthPersistingTableColumnModel(
@@ -56,10 +57,10 @@ public class ColumnWidthPersistingJTable extends JTable
         private static String COLUMN_SEPARATOR = ",";
         private static String FIELD_SEPARATOR = ":";
 
-        private final String optionName;
+        private final @RUntainted String optionName;
         private final Options options;
 
-        public ColumnWidthPersistingTableColumnModel(String optionName,
+        public ColumnWidthPersistingTableColumnModel(@RUntainted String optionName,
             Options options)
         {
             super();
@@ -125,7 +126,7 @@ public class ColumnWidthPersistingJTable extends JTable
             super.addColumn(aColumn);
         }
 
-        public String getOptionName()
+        public @RUntainted String getOptionName()
         {
             return optionName;
         }
@@ -135,7 +136,7 @@ public class ColumnWidthPersistingJTable extends JTable
             return options;
         }
 
-        public int getPreferredWidth(Options options, String optionName,
+        public int getPreferredWidth(Options options, @RUntainted String optionName,
             int dataModelColumnNumber)
         {
             int preferredWidth = -1;

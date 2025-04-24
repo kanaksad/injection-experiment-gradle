@@ -2,6 +2,7 @@ package net.sf.colossus.guiutil;
 
 
 import java.lang.reflect.Field;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -107,7 +108,7 @@ public class SwingReferenceCleanupHacks
     }
 
     private static void SafelySetReflectedFieldToNull(Class<?> aClass,
-        String aFieldName, Object anObject)
+        String aFieldName, @RUntainted Object anObject)
     {
         try
         {
@@ -122,8 +123,8 @@ public class SwingReferenceCleanupHacks
         }
     }
 
-    private static void SafelySetReflectedFieldToNull(String aClassName,
-        String aFieldName, Object anObject)
+    private static void SafelySetReflectedFieldToNull(@RUntainted String aClassName,
+        String aFieldName, @RUntainted Object anObject)
     {
         try
         {
@@ -136,8 +137,8 @@ public class SwingReferenceCleanupHacks
         }
     }
 
-    private static Object safelyGetReflectedField(String aClassName,
-        String aFieldName, Object anObject)
+    private static @RUntainted Object safelyGetReflectedField(@RUntainted String aClassName,
+        String aFieldName, @RUntainted Object anObject)
     {
         try
         {

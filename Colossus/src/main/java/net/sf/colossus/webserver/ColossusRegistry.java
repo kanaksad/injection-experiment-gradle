@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class ColossusRegistry
@@ -16,9 +17,9 @@ public class ColossusRegistry
 
     public final static int DEFAULT_PORT = 1099;
 
-    private final int port;
+    private final @RUntainted int port;
 
-    public ColossusRegistry(int port)
+    public ColossusRegistry(@RUntainted int port)
     {
         this.port = port;
         startRegistry();
@@ -36,7 +37,7 @@ public class ColossusRegistry
         }
     }
 
-    public int getPort()
+    public @RUntainted int getPort()
     {
         return this.port;
     }

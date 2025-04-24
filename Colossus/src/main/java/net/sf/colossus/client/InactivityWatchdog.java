@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.util.logging.Logger;
 
 import net.sf.colossus.util.HTMLColor;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -37,15 +38,15 @@ public class InactivityWatchdog extends Thread
 
     private final Autoplay autoplay;
 
-    private final int inactivityWarningInterval;
+    private final @RUntainted int inactivityWarningInterval;
 
     private static int INITIALLY_TOLERATED_INTERVALS = 3;
     private int currentlyStillToleratedIntervals;
-    private int currentInterval;
+    private @RUntainted int currentInterval;
 
-    private int inactiveSeconds = 0;
+    private @RUntainted int inactiveSeconds = 0;
 
-    private boolean clockIsTicking = false;
+    private @RUntainted boolean clockIsTicking = false;
 
     private boolean aiWasInControl = false;
 
@@ -57,9 +58,9 @@ public class InactivityWatchdog extends Thread
 
     private boolean somethingHappened = false;
 
-    private boolean done;
+    private @RUntainted boolean done;
 
-    public InactivityWatchdog(Client client, int inactivityWarningInterval)
+    public InactivityWatchdog(Client client, @RUntainted int inactivityWarningInterval)
     {
         this.client = client;
         this.autoplay = client.getAutoplay();
@@ -69,7 +70,7 @@ public class InactivityWatchdog extends Thread
         LOGGER.fine("\n\nInactivityWatchdog instantiated");
     }
 
-    public void setDone(boolean value)
+    public void setDone(@RUntainted boolean value)
     {
         done = value;
     }
@@ -300,7 +301,7 @@ public class InactivityWatchdog extends Thread
         }
     }
 
-    public boolean isClockTicking()
+    public @RUntainted boolean isClockTicking()
     {
         synchronized (this)
         {

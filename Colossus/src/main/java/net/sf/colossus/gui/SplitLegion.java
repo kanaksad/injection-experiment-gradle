@@ -25,6 +25,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -58,7 +59,7 @@ final class SplitLegion extends KDialog
 
     private final SaveWindow saveWindow;
 
-    private SplitLegion(ClientGUI gui, Legion parent, String selectedMarkerId)
+    private SplitLegion(ClientGUI gui, Legion parent, @RUntainted String selectedMarkerId)
     {
         super(gui.getBoard().getFrame(), gui.getOwningPlayer().getName()
             + ": Split Legion " + parent, true);
@@ -114,10 +115,10 @@ final class SplitLegion extends KDialog
         oldBox.add(Box.createRigidArea(new Dimension(scale / 4, 0)));
         oldBox.add(Box.createHorizontalGlue());
 
-        List<String> imageNames = gui.getClient().getLegionImageNames(parent);
+        List<@RUntainted String> imageNames = gui.getClient().getLegionImageNames(parent);
         totalChits = imageNames.size();
 
-        Iterator<String> it = imageNames.iterator();
+        Iterator<@RUntainted String> it = imageNames.iterator();
         while (it.hasNext())
         {
             String imageName = it.next();
@@ -221,7 +222,7 @@ final class SplitLegion extends KDialog
      * @return The list of creature types selected for the split or null if the split was cancelled.
      */
     static List<CreatureType> splitLegion(ClientGUI gui, Legion parent,
-        String selectedMarkerId)
+        @RUntainted String selectedMarkerId)
     {
         if (!active)
         {

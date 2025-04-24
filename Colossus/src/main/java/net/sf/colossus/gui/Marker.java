@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import net.sf.colossus.client.Client;
 import net.sf.colossus.game.Legion;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -32,9 +33,9 @@ public final class Marker extends Chit
 
     private final Legion legion;
     private final boolean showHeight;
-    private Font font;
-    private int fontHeight;
-    private int fontWidth;
+    private @RUntainted Font font;
+    private @RUntainted int fontHeight;
+    private @RUntainted int fontWidth;
     String hexLabel;
     private boolean highlight;
 
@@ -54,7 +55,7 @@ public final class Marker extends Chit
      * does not even exist (PickMarker, SplitLegion, in RevealEvent for the
      * destroyed legion)
      */
-    Marker(Legion legion, int scale, String id)
+    Marker(Legion legion, @RUntainted int scale, @RUntainted String id)
     {
         this(legion, scale, id, null, false, false);
     }
@@ -68,7 +69,7 @@ public final class Marker extends Chit
      *
      * @param client A client, only used to ask for options
      */
-    Marker(Legion legion, int scale, String id, boolean inverted, Client client)
+    Marker(Legion legion, @RUntainted int scale, @RUntainted String id, boolean inverted, Client client)
     {
         this(legion, scale, id, client, inverted, false);
     }
@@ -85,7 +86,7 @@ public final class Marker extends Chit
      *
      * @param client A client, only used to ask for options
      */
-    Marker(Legion legion, int scale, String id, Client client,
+    Marker(Legion legion, @RUntainted int scale, @RUntainted String id, Client client,
         boolean showHeight)
     {
         this(legion, scale, id, client, false, showHeight);
@@ -99,7 +100,7 @@ public final class Marker extends Chit
      * @param inverted set to true (defender legion) will normally invert
      * the marker but NOT if doNotInvertDefender option is true
      */
-    private Marker(Legion legion, int scale, String id, Client client,
+    private Marker(Legion legion, @RUntainted int scale, @RUntainted String id, Client client,
         boolean inverted, boolean showHeight)
     {
         super(scale, id, inverted, client);
@@ -137,7 +138,7 @@ public final class Marker extends Chit
     }
 
     @Override
-    public void paintComponent(Graphics g)
+    public void paintComponent(@RUntainted Graphics g)
     {
         LOGGER.log(Level.FINEST, "Painting marker");
         Graphics2D g2 = (Graphics2D)g;

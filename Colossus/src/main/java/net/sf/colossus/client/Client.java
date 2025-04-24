@@ -51,6 +51,7 @@ import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
 import net.sf.colossus.xmlparser.TerrainRecruitLoader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -134,14 +135,14 @@ public final class Client implements IClient, IOracle, IVariant,
      *  (not even redraw) on any of those messages, they are mostly sent to
      *  rebuild the predict split data.
      */
-    private boolean replayOngoing = false;
+    private @RUntainted boolean replayOngoing = false;
 
     /**
      * Redo of the events since last commit phase is ongoing.
      * Needed right now only for "if redo ends, set flag to prevent the
      * setupXxxxxPhase methods to clear the undo stack.
      */
-    private boolean redoOngoing = false;
+    private @RUntainted boolean redoOngoing = false;
 
     /** This can be an actual ClientGUI, or a NullClientGUI (which does simply
      *  nothing, so that we don't need to check for null everywhere).
@@ -163,8 +164,8 @@ public final class Client implements IClient, IOracle, IVariant,
      * TODO should be final but can't be until the constructor gets all the data
      * needed
      */
-    private PlayerClientSide owningPlayer;
-    private boolean playerAlive = true;
+    private @RUntainted PlayerClientSide owningPlayer;
+    private @RUntainted boolean playerAlive = true;
 
     private boolean clockIsTicking = false;
 
@@ -173,7 +174,7 @@ public final class Client implements IClient, IOracle, IVariant,
     /**
      * The game in progress.
      */
-    private final GameClientSide game;
+    private final @RUntainted GameClientSide game;
 
     /**
      * Starting marker color of player who owns this client.
@@ -184,7 +185,7 @@ public final class Client implements IClient, IOracle, IVariant,
 
     // This ai is either the actual ai player for an AI player, but is also
     // used by human clients for the autoXXX actions.
-    private final AI ai;
+    private final @RUntainted AI ai;
 
     // TODO: could go into owningPlayer, BUT tricky right now as long as
     // owningPlayer is created twice (once fake and later for real)...
@@ -195,7 +196,7 @@ public final class Client implements IClient, IOracle, IVariant,
     private final Server localServer;
 
     // This client is a spectator
-    private final boolean spectator;
+    private final @RUntainted boolean spectator;
 
     /**
      *  This client is the very special internal spectator with the name
@@ -251,7 +252,7 @@ public final class Client implements IClient, IOracle, IVariant,
      * we pass with a request counter, so that we can distinct the
      * syncCompleted responses.
      */
-    private int syncRequestCounter = 0;
+    private @RUntainted int syncRequestCounter = 0;
 
     /**
      * Create a Client object and other related objects
@@ -274,10 +275,10 @@ public final class Client implements IClient, IOracle, IVariant,
      *
      */
 
-    public static synchronized Client createClient(String host, int port,
-        String playerName, String playerType, WhatNextManager whatNextMgr,
-        Server theServer, boolean byWebClient, boolean noOptionsFile,
-        boolean createGUI, boolean spectator) throws ConnectionInitException
+    public static synchronized @RUntainted Client createClient(@RUntainted String host, @RUntainted int port,
+        @RUntainted String playerName, @RUntainted String playerType, @RUntainted WhatNextManager whatNextMgr,
+        @RUntainted Server theServer, @RUntainted boolean byWebClient, @RUntainted boolean noOptionsFile,
+        @RUntainted boolean createGUI, @RUntainted boolean spectator) throws ConnectionInitException
     {
         /* TODO Clients on same machine could share the instance
          * (proper synchronization needed, of course).
@@ -369,19 +370,19 @@ public final class Client implements IClient, IOracle, IVariant,
      *
      * TODO Make player type typesafe
      */
-    public Client(String playerName, String playerType,
-        WhatNextManager whatNextMgr, Server theServer, boolean byWebClient,
+    public Client(@RUntainted String playerName, @RUntainted String playerType,
+        @RUntainted WhatNextManager whatNextMgr, Server theServer, boolean byWebClient,
         boolean noOptionsFile, boolean createGUI, ResourceLoader resLoader,
-        IServerConnection conn, Variant variant, boolean spectator)
+        IServerConnection conn, @RUntainted Variant variant, @RUntainted boolean spectator)
     {
         assert playerName != null;
         this.spectator = spectator;
         this.internalSpectator = (playerName
             .equals(Constants.INTERNAL_DUMMY_CLIENT_NAME));
 
-        Collection<String> playerNamesList = conn.getPreliminaryPlayerNames();
+        Collection<@RUntainted String> playerNamesList = conn.getPreliminaryPlayerNames();
 
-        String[] playerNames = new String[playerNamesList.size()];
+        @RUntainted String[] playerNames = new String[playerNamesList.size()];
         int i = 0;
         for (String name : playerNamesList)
         {
@@ -474,7 +475,7 @@ public final class Client implements IClient, IOracle, IVariant,
      * @return Some AI object, according to the situation
      */
     // TODO move (partly) to AI package, e.g. as static method
-    private AI createAI(String playerType)
+    private @RUntainted AI createAI(@RUntainted String playerType)
     {
         LOGGER.log(Level.FINEST, "Creating the AI player type " + playerType);
 
@@ -624,7 +625,7 @@ public final class Client implements IClient, IOracle, IVariant,
     // TODO can this be replaced with "!owningPlayer.isDead()" ?
     // Only critical issue AFAIS is that owningPlayer is not properly
     // initialized right away from the start (re-assigned later).
-    public boolean isAlive()
+    public @RUntainted boolean isAlive()
     {
         assert owningPlayer != null : "owningPlayer is null, "
             + "can't ask whether alive or not!";
@@ -640,14 +641,14 @@ public final class Client implements IClient, IOracle, IVariant,
         return paused;
     }
 
-    private String currentLegionMarkerId = null;
+    private @RUntainted String currentLegionMarkerId = null;
 
-    public void setCurrentLegionMarkerId(String MarkerId)
+    public void setCurrentLegionMarkerId(@RUntainted String MarkerId)
     {
         currentLegionMarkerId = MarkerId;
     }
 
-    public String getCurrentLegionMarkerId()
+    public @RUntainted String getCurrentLegionMarkerId()
     {
         return currentLegionMarkerId;
     }
@@ -707,7 +708,7 @@ public final class Client implements IClient, IOracle, IVariant,
      * until sync is completed. When sync is completed, it's re-set back
      * to -1.
      */
-    private int lastMsgNr = -1;
+    private @RUntainted int lastMsgNr = -1;
     private IServerConnection previousConn;
 
     public boolean isConnected()
@@ -869,7 +870,7 @@ public final class Client implements IClient, IOracle, IVariant,
         new Thread(oneConnectAttemptsRound).start();
     }
 
-    public void tellSyncCompleted(int syncRequestNumber)
+    public void tellSyncCompleted(@RUntainted int syncRequestNumber)
     {
         LOGGER.info("Synchronization #" + syncRequestNumber + " completed!");
         lastMsgNr = -1;
@@ -911,7 +912,7 @@ public final class Client implements IClient, IOracle, IVariant,
         return tookMulligan;
     }
 
-    public void requestExtraRollApproval(String requestorName, int requestId)
+    public void requestExtraRollApproval(String requestorName, @RUntainted int requestId)
     {
         LOGGER.finest("Client " + getOwningPlayer().getName()
             + " is asked to approve extra roll request... - answering true");
@@ -946,12 +947,12 @@ public final class Client implements IClient, IOracle, IVariant,
      * @param approved
      * @param requestId
      */
-    public void sendExtraRollRequestResponse(boolean approved, int requestId)
+    public void sendExtraRollRequestResponse(@RUntainted boolean approved, @RUntainted int requestId)
     {
         server.extraRollResponse(approved, requestId);
     }
 
-    public void askSuspendConfirmation(String requestorName, int timeout)
+    public void askSuspendConfirmation(@RUntainted String requestorName, @RUntainted int timeout)
     {
         LOGGER.fine("User " + requestorName
             + " requests to suspend the game, timeout=" + timeout);
@@ -974,7 +975,7 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void suspendResponse(boolean approved)
+    public void suspendResponse(@RUntainted boolean approved)
     {
         if (game.isSuspended())
         {
@@ -999,12 +1000,12 @@ public final class Client implements IClient, IOracle, IVariant,
         server.checkServerConnection();
     }
 
-    public void doCheckAllConnections(String requestingClientName)
+    public void doCheckAllConnections(@RUntainted String requestingClientName)
     {
         server.checkAllConnections(requestingClientName);
     }
 
-    public void relayedPeerRequest(String requestingClientName)
+    public void relayedPeerRequest(@RUntainted String requestingClientName)
     {
         LOGGER.finest("In client " + this.owningPlayer.getName()
             + " we received, that peer " + requestingClientName
@@ -1020,18 +1021,18 @@ public final class Client implements IClient, IOracle, IVariant,
         gui.serverConfirmsConnection();
     }
 
-    public void peerRequestReceivedBy(String respondingPlayerName, int queueLen)
+    public void peerRequestReceivedBy(@RUntainted String respondingPlayerName, @RUntainted int queueLen)
     {
         LOGGER.info("Got RECEIVED  confirmation from " + respondingPlayerName
             + ", queueLen=" + queueLen);
     }
 
-    public void peerRequestProcessedBy(String respondingPlayerName)
+    public void peerRequestProcessedBy(@RUntainted String respondingPlayerName)
     {
         LOGGER.info("Got PROCESSED confirmation from " + respondingPlayerName);
     }
 
-    public void locallyInitiateSaveGame(String filename)
+    public void locallyInitiateSaveGame(@RUntainted String filename)
     {
         localServer.initiateSaveGame(filename);
     }
@@ -1047,12 +1048,12 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     /** Resolve engagement in land. */
-    public void engage(MasterHex hex)
+    public void engage(@RUntainted MasterHex hex)
     {
         server.engage(hex);
     }
 
-    public Legion getMyEngagedLegion()
+    public @RUntainted Legion getMyEngagedLegion()
     {
         if (isMyLegion(getAttacker()))
         {
@@ -1070,7 +1071,7 @@ public final class Client implements IClient, IOracle, IVariant,
         concede(getMyEngagedLegion());
     }
 
-    private void concede(Legion legion)
+    private void concede(@RUntainted Legion legion)
     {
         if (legion != null)
         {
@@ -1084,7 +1085,7 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     /** Cease negotiations and fight a battle in land. */
-    private void fight(MasterHex hex)
+    private void fight(@RUntainted MasterHex hex)
     {
         server.fight(hex);
     }
@@ -1096,7 +1097,7 @@ public final class Client implements IClient, IOracle, IVariant,
         engagementStartupOngoing = val;
     }
 
-    public void tellEngagement(MasterHex hex, Legion attacker, Legion defender)
+    public void tellEngagement(@RUntainted MasterHex hex, @RUntainted Legion attacker, @RUntainted Legion defender)
     {
         if (isMyLegion(attacker) || isMyLegion(defender))
         {
@@ -1106,7 +1107,7 @@ public final class Client implements IClient, IOracle, IVariant,
         gui.tellEngagement(attacker, defender, getTurnNumber());
     }
 
-    public void tellEngagementResults(Legion winner, String method,
+    public void tellEngagementResults(@RUntainted Legion winner, String method,
         int points, int turns)
     {
         setEngagementStartupOngoing(false);
@@ -1126,7 +1127,7 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void tellMovementRoll(int roll, String reason)
+    public void tellMovementRoll(@RUntainted int roll, @RUntainted String reason)
     {
         game.setMovementRoll(roll);
         gui.actOnTellMovementRoll(roll, reason);
@@ -1186,7 +1187,7 @@ public final class Client implements IClient, IOracle, IVariant,
     /** Server sends Client some option setting (e.g. AI type,
      *  autoPlay for stresstest (also AIs (????), ...)
      */
-    public void syncOption(String optname, String value)
+    public void syncOption(@RUntainted String optname, String value)
     {
         options.setOption(optname, value);
     }
@@ -1197,7 +1198,7 @@ public final class Client implements IClient, IOracle, IVariant,
         return game.getNumPlayers();
     }
 
-    public void updatePlayerInfo(List<String> infoStrings)
+    public void updatePlayerInfo(List<@RUntainted String> infoStrings)
     {
         if (playersNotInitialized)
         {
@@ -1222,7 +1223,7 @@ public final class Client implements IClient, IOracle, IVariant,
         return true;
     }
 
-    public void updateChangedPlayerValues(String valuesString, String reason)
+    public void updateChangedPlayerValues(@RUntainted String valuesString, @RUntainted String reason)
     {
         LOGGER.finest("Updating values: " + valuesString + "(reason: "
             + reason + ")");
@@ -1230,7 +1231,7 @@ public final class Client implements IClient, IOracle, IVariant,
         gui.updateStatusScreen();
     }
 
-    public PlayerClientSide getOwningPlayer()
+    public @RUntainted PlayerClientSide getOwningPlayer()
     {
         return owningPlayer;
     }
@@ -1241,7 +1242,7 @@ public final class Client implements IClient, IOracle, IVariant,
         // this.color = color;
     }
 
-    public void updateCreatureCount(CreatureType type, int count, int deadCount)
+    public void updateCreatureCount(CreatureType type, @RUntainted int count, @RUntainted int deadCount)
     {
         getGame().getCaretaker().setAvailableCount(type, count);
         getGame().getCaretaker().setDeadCount(type, deadCount);
@@ -1528,7 +1529,7 @@ public final class Client implements IClient, IOracle, IVariant,
         {
             if (!battleUnit.hasStruck())
             {
-                Set<BattleHex> set = getBattleCS().findTargets(battleUnit,
+                Set<@RUntainted BattleHex> set = getBattleCS().findTargets(battleUnit,
                     autoRangeSingle);
                 if (set.size() == 1)
                 {
@@ -1582,7 +1583,7 @@ public final class Client implements IClient, IOracle, IVariant,
      *
      * TODO move legion creation into a factory on {@link Player}
      */
-    public LegionClientSide getLegion(String markerId)
+    public @RUntainted LegionClientSide getLegion(@RUntainted String markerId)
     {
         PlayerClientSide player = (PlayerClientSide)game
             .getPlayerByMarkerId(markerId);
@@ -1619,7 +1620,7 @@ public final class Client implements IClient, IOracle, IVariant,
         gui.alignLegionsMaybe(legion);
     }
 
-    public int getLegionHeight(String markerId)
+    public int getLegionHeight(@RUntainted String markerId)
     {
         Legion legionInfo = getLegion(markerId);
         if (legionInfo == null)
@@ -1640,7 +1641,7 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     // TODO make all who use this use directly from game
-    public List<String> getLegionImageNames(Legion legion)
+    public List<@RUntainted String> getLegionImageNames(Legion legion)
     {
         return game.getLegionImageNames(legion);
     }
@@ -1654,7 +1655,7 @@ public final class Client implements IClient, IOracle, IVariant,
     /**
      * Add a new creature to this legion.
      */
-    public void addCreature(Legion legion, CreatureType creature, String reason)
+    public void addCreature(Legion legion, @RUntainted CreatureType creature, @RUntainted String reason)
     {
         legion.addCreature(creature);
 
@@ -1662,7 +1663,7 @@ public final class Client implements IClient, IOracle, IVariant,
 
     }
 
-    public void removeCreature(Legion legion, CreatureType creature,
+    public void removeCreature(@RUntainted Legion legion, @RUntainted CreatureType creature,
         String reason)
     {
         if (legion == null || creature == null)
@@ -1704,7 +1705,7 @@ public final class Client implements IClient, IOracle, IVariant,
     /* pass revealed info to SplitPrediction and the GUI
      */
     public void revealEngagedCreatures(Legion legion,
-        final List<CreatureType> names, boolean isAttacker, String reason)
+        final List<CreatureType> names, boolean isAttacker, @RUntainted String reason)
     {
         revealCreatures(legion, names, reason);
 
@@ -1745,8 +1746,8 @@ public final class Client implements IClient, IOracle, IVariant,
      *  and add them to the lists of BattleUnits (in Battle[ClientSide])
      *  and GUIBattleChits (in GUI)
      */
-    public void placeNewChit(String bareImageName, boolean inverted, int tag,
-        BattleHex hex)
+    public void placeNewChit(@RUntainted String bareImageName, @RUntainted boolean inverted, @RUntainted int tag,
+        @RUntainted BattleHex hex)
     {
         Legion legion = inverted ? getDefender() : getAttacker();
 
@@ -1769,8 +1770,8 @@ public final class Client implements IClient, IOracle, IVariant,
         gui.actOnPlaceNewChit(imageName, battleUnit, hex);
     }
 
-    public CreatureType chooseBestPotentialRecruit(LegionClientSide legion,
-        MasterHex hex, List<CreatureType> recruits)
+    public @RUntainted CreatureType chooseBestPotentialRecruit(LegionClientSide legion,
+        MasterHex hex, List<@RUntainted CreatureType> recruits)
     {
         CreatureType recruit = ai.getVariantRecruitHint(legion, hex, recruits);
         return recruit;
@@ -1781,24 +1782,24 @@ public final class Client implements IClient, IOracle, IVariant,
         return gui;
     }
 
-    public void tellReplay(boolean val, int maxTurn)
+    public void tellReplay(@RUntainted boolean val, int maxTurn)
     {
         replayOngoing = val;
         gui.actOnTellReplay(maxTurn);
     }
 
-    public boolean isReplayOngoing()
+    public @RUntainted boolean isReplayOngoing()
     {
         return replayOngoing;
     }
 
-    public void tellRedo(boolean val)
+    public void tellRedo(@RUntainted boolean val)
     {
         redoOngoing = val;
         gui.actOnTellRedoChange();
     }
 
-    public boolean isRedoOngoing()
+    public @RUntainted boolean isRedoOngoing()
     {
         return redoOngoing;
     }
@@ -1813,7 +1814,7 @@ public final class Client implements IClient, IOracle, IVariant,
         server.clientConfirmedCatchup();
     }
 
-    public void confirmRelayedPeerRequest(String requestingClientName)
+    public void confirmRelayedPeerRequest(@RUntainted String requestingClientName)
     {
         server.peerRequestProcessed(requestingClientName);
     }
@@ -1847,7 +1848,7 @@ public final class Client implements IClient, IOracle, IVariant,
         return this.eventExecutor;
     }
 
-    public void setPlayerName(String playerName)
+    public void setPlayerName(@RUntainted String playerName)
     {
         this.owningPlayer.setName(playerName);
 
@@ -1857,11 +1858,11 @@ public final class Client implements IClient, IOracle, IVariant,
         connection.updatePlayerName(playerName);
     }
 
-    public void createSummonAngel(Legion legion)
+    public void createSummonAngel(@RUntainted Legion legion)
     {
         SummonInfo summonInfo = new SummonInfo();
 
-        List<Legion> possibleDonors = game.findLegionsWithSummonables(legion);
+        List<@RUntainted Legion> possibleDonors = game.findLegionsWithSummonables(legion);
         if (possibleDonors.size() < 1)
         {
             // Should not happen any more since I fixed it on server side.
@@ -1915,7 +1916,7 @@ public final class Client implements IClient, IOracle, IVariant,
 
     /** Present a dialog allowing the player to enter via land or teleport.
      *  Return true if the player chooses to teleport. */
-    private boolean chooseWhetherToTeleport(MasterHex hex)
+    private @RUntainted boolean chooseWhetherToTeleport(MasterHex hex)
     {
         if (autoplay.autoMasterMove())
         {
@@ -1936,7 +1937,7 @@ public final class Client implements IClient, IOracle, IVariant,
 
     /** Allow the player to choose whether to take a penalty (fewer dice
      *  or higher strike number) in order to be allowed to carry. */
-    public void askChooseStrikePenalty(List<String> choices)
+    public void askChooseStrikePenalty(@RUntainted List<@RUntainted String> choices)
     {
         if (isAutoplayActive() || sansLordAutoBattleApplies())
         {
@@ -1949,7 +1950,7 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void assignStrikePenalty(String prompt)
+    public void assignStrikePenalty(@RUntainted String prompt)
     {
         gui.highlightCrittersWithTargets();
         server.assignStrikePenalty(prompt);
@@ -1957,7 +1958,7 @@ public final class Client implements IClient, IOracle, IVariant,
 
     // TODO Move legion markers to slayer on client side.
     // TODO parameters should be PlayerState
-    public void tellPlayerElim(Player deadPlayer, Player slayer)
+    public void tellPlayerElim(@RUntainted Player deadPlayer, @RUntainted Player slayer)
     {
         assert deadPlayer != null;
         LOGGER.log(Level.FINEST, this.owningPlayer.getName()
@@ -1976,7 +1977,7 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void tellGameOver(String message, boolean disposeFollows, boolean suspended)
+    public void tellGameOver(@RUntainted String message, @RUntainted boolean disposeFollows, @RUntainted boolean suspended)
     {
         LOGGER.info("Client " + getOwningPlayer()
             + " received from server game over message: " + message);
@@ -1986,7 +1987,7 @@ public final class Client implements IClient, IOracle, IVariant,
         gui.actOnTellGameOver(message, disposeFollows, suspended);
     }
 
-    public void doFight(MasterHex hex)
+    public void doFight(@RUntainted MasterHex hex)
     {
         if (!isMyTurn())
         {
@@ -1998,7 +1999,7 @@ public final class Client implements IClient, IOracle, IVariant,
     // TODO: handle better (Mock, extend Client class?)
     public boolean testCaseAutoDontFlee = false;
 
-    public void askConcede(Legion ally, Legion enemy)
+    public void askConcede(@RUntainted Legion ally, @RUntainted Legion enemy)
     {
         if (testCaseAutoDontFlee)
         {
@@ -2015,7 +2016,7 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void askFlee(Legion ally, Legion enemy)
+    public void askFlee(@RUntainted Legion ally, @RUntainted Legion enemy)
     {
         if (testCaseAutoDontFlee)
         {
@@ -2047,12 +2048,12 @@ public final class Client implements IClient, IOracle, IVariant,
      * is disposed cleanly.
      * @param reply Whether to fleed/conced, or not.
      */
-    public void inactivityAutoFleeOrConcede(boolean reply)
+    public void inactivityAutoFleeOrConcede(@RUntainted boolean reply)
     {
         gui.inactivityAutoFleeOrConcede(reply);
     }
 
-    public void answerFlee(Legion ally, boolean answer)
+    public void answerFlee(@RUntainted Legion ally, boolean answer)
     {
         if (answer)
         {
@@ -2064,7 +2065,7 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void answerConcede(Legion legion, boolean answer)
+    public void answerConcede(@RUntainted Legion legion, boolean answer)
     {
         if (answer)
         {
@@ -2111,7 +2112,7 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     /** Inform this player about the other player's proposal. */
-    public void tellProposal(String proposalString)
+    public void tellProposal(@RUntainted String proposalString)
     {
         gui.tellProposal(proposalString);
     }
@@ -2154,9 +2155,9 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     public void tellStrikeResults(int strikerTag, int targetTag,
-        int strikeNumber, List<String> rolls, int damage, boolean killed,
-        boolean wasCarry, int carryDamageLeft,
-        Set<String> carryTargetDescriptions)
+        int strikeNumber, @RUntainted List<@RUntainted String> rolls, @RUntainted int damage, boolean killed,
+        boolean wasCarry, @RUntainted int carryDamageLeft,
+        Set<@RUntainted String> carryTargetDescriptions)
     {
         BattleCritter battleUnit = getBattleCS().getBattleUnit(strikerTag);
         if (battleUnit != null)
@@ -2202,7 +2203,7 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void nak(String reason, String errmsg)
+    public void nak(@RUntainted String reason, @RUntainted String errmsg)
     {
         LOGGER.log(Level.WARNING, owningPlayer.getName() + " got nak for "
             + reason + " " + errmsg);
@@ -2223,7 +2224,7 @@ public final class Client implements IClient, IOracle, IVariant,
         recoverFromNak(reason, errmsg);
     }
 
-    private void recoverFromNak(String reason, String errmsg)
+    private void recoverFromNak(@RUntainted String reason, @RUntainted String errmsg)
     {
         LOGGER.log(Level.FINEST, owningPlayer.getName() + " recoverFromNak "
             + reason + " " + errmsg);
@@ -2319,8 +2320,8 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    private void pickCarries(int carryDamage,
-        Set<String> carryTargetDescriptions)
+    private void pickCarries(@RUntainted int carryDamage,
+        Set<@RUntainted String> carryTargetDescriptions)
     {
         if (!isMyBattlePhase())
         {
@@ -2334,7 +2335,7 @@ public final class Client implements IClient, IOracle, IVariant,
         else if (carryTargetDescriptions.size() == 1
             && autoplay.autoCarrySingle())
         {
-            Iterator<String> it = carryTargetDescriptions.iterator();
+            Iterator<@RUntainted String> it = carryTargetDescriptions.iterator();
             String desc = it.next();
             String targetHexLabel = desc.substring(desc.length() - 2);
             BattleHex targetHex = game.getBattleSite().getTerrain()
@@ -2355,9 +2356,9 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void initBattle(MasterHex hex, int battleTurnNumber,
-        Player battleActivePlayer, BattlePhase battlePhase, Legion attacker,
-        Legion defender)
+    public void initBattle(MasterHex hex, @RUntainted int battleTurnNumber,
+        @RUntainted Player battleActivePlayer, BattlePhase battlePhase, @RUntainted Legion attacker,
+        @RUntainted Legion defender)
     {
         gui.cleanupNegotiationDialogs();
 
@@ -2372,12 +2373,12 @@ public final class Client implements IClient, IOracle, IVariant,
         gui.actOnInitBattle();
     }
 
-    public void messageFromServer(String message)
+    public void messageFromServer(@RUntainted String message)
     {
         gui.showMessageDialogAndWait(message);
     }
 
-    public void showMessageDialog(String message)
+    public void showMessageDialog(@RUntainted String message)
     {
         gui.showMessageDialogAndWait(message);
     }
@@ -2405,7 +2406,7 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     /** Used for human players only.  */
-    public void doRecruit(Legion legion)
+    public void doRecruit(@RUntainted Legion legion)
     {
         if (legion == null || !isMyTurn() || !isMyLegion(legion))
         {
@@ -2452,8 +2453,8 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     // TODO use CreatureType instead of String
-    public void doRecruit(Legion legion, String recruitName,
-        String recruiterName)
+    public void doRecruit(@RUntainted Legion legion, @RUntainted String recruitName,
+        @RUntainted String recruiterName)
     {
         CreatureType recruited = (recruitName == null) ? null : game
             .getVariant().getCreatureByName(recruitName);
@@ -2472,7 +2473,7 @@ public final class Client implements IClient, IOracle, IVariant,
 
     /** Always needs to call server.doRecruit(), even if no recruit is
      *  wanted, to get past the reinforcing phase. */
-    public void doReinforce(Legion legion)
+    public void doReinforce(@RUntainted Legion legion)
     {
         if (autoplay.autoReinforce())
         {
@@ -2495,7 +2496,7 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void didRecruit(Legion legion, CreatureType recruit,
+    public void didRecruit(Legion legion, @RUntainted CreatureType recruit,
         CreatureType recruiter, int numRecruiters)
     {
         List<CreatureType> recruiters = new ArrayList<CreatureType>();
@@ -2558,12 +2559,12 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     /** null means cancel.  "none" means no recruiter (tower creature). */
-    private String findRecruiterName(Legion legion, CreatureType recruit,
+    private @RUntainted String findRecruiterName(Legion legion, CreatureType recruit,
         String hexDescription)
     {
         String recruiterName = null;
 
-        List<String> recruiters = findEligibleRecruiters(legion, recruit);
+        List<@RUntainted String> recruiters = findEligibleRecruiters(legion, recruit);
 
         int numEligibleRecruiters = recruiters.size();
         if (numEligibleRecruiters == 0)
@@ -2608,7 +2609,7 @@ public final class Client implements IClient, IOracle, IVariant,
     /**
      * Called by server when activePlayer changes
      */
-    public void setupTurnState(Player activePlayer, int turnNumber)
+    public void setupTurnState(@RUntainted Player activePlayer, @RUntainted int turnNumber)
     {
         // "turn state is first time initialized" means also the game setup
         // is completed. GUI might now e.g. enable game saving menu actions.
@@ -2792,23 +2793,23 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void setupBattleSummon(Player battleActivePlayer,
-        int battleTurnNumber)
+    public void setupBattleSummon(@RUntainted Player battleActivePlayer,
+        @RUntainted int battleTurnNumber)
     {
         getBattleCS().setupPhase(BattlePhase.SUMMON, battleActivePlayer,
             battleTurnNumber);
         gui.actOnSetupBattleSummon();
     }
 
-    public void setupBattleRecruit(Player battleActivePlayer,
-        int battleTurnNumber)
+    public void setupBattleRecruit(@RUntainted Player battleActivePlayer,
+        @RUntainted int battleTurnNumber)
     {
         getBattleCS().setupPhase(BattlePhase.RECRUIT, battleActivePlayer,
             battleTurnNumber);
         gui.actOnSetupBattleRecruit();
     }
 
-    public void setupBattleMove(Player battleActivePlayer, int battleTurnNumber)
+    public void setupBattleMove(@RUntainted Player battleActivePlayer, @RUntainted int battleTurnNumber)
     {
         // TODO clean up order of stuff here
 
@@ -2875,7 +2876,7 @@ public final class Client implements IClient, IOracle, IVariant,
 
     /** Used for both strike and strikeback. */
     public void setupBattleFight(BattlePhase battlePhase,
-        Player battleActivePlayer)
+        @RUntainted Player battleActivePlayer)
     {
         getBattleCS().setupBattleFight(battlePhase, battleActivePlayer);
         gui.actOnSetupBattleFight();
@@ -2883,7 +2884,7 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     /** Create marker if necessary, and place it in hexLabel. */
-    public void tellLegionLocation(Legion legion, MasterHex hex)
+    public void tellLegionLocation(Legion legion, @RUntainted MasterHex hex)
     {
         legion.setCurrentHex(hex);
         gui.actOnTellLegionLocation(legion, hex);
@@ -2899,7 +2900,7 @@ public final class Client implements IClient, IOracle, IVariant,
         return getColor().getShortName();
     }
 
-    public Player getBattleActivePlayer()
+    public @RUntainted Player getBattleActivePlayer()
     {
         return game.getBattleActivePlayer();
     }
@@ -2916,20 +2917,20 @@ public final class Client implements IClient, IOracle, IVariant,
 
     // public for IOracle
     // TODO placeholder, move at some point fully to Game ?
-    public Legion getDefender()
+    public @RUntainted Legion getDefender()
     {
         return game.getEngagement().getDefendingLegion();
     }
 
     // public for IOracle
     // TODO placeholder, move at some point fully to Game ?
-    public Legion getAttacker()
+    public @RUntainted Legion getAttacker()
     {
         return game.getEngagement().getAttackingLegion();
     }
 
     // public for IOracle
-    public MasterHex getBattleSite()
+    public @RUntainted MasterHex getBattleSite()
     {
         return game.getBattleSite();
     }
@@ -2940,12 +2941,12 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     // public for IOracle and BattleBoard
-    public int getBattleTurnNumber()
+    public @RUntainted int getBattleTurnNumber()
     {
         return game.getBattleTurnNumber();
     }
 
-    public void doBattleMove(int tag, BattleHex hex)
+    public void doBattleMove(@RUntainted int tag, @RUntainted BattleHex hex)
     {
         server.doBattleMove(tag, hex);
     }
@@ -2974,7 +2975,7 @@ public final class Client implements IClient, IOracle, IVariant,
         kickBattleMove();
     }
 
-    private void handleFailedBattleMove(String errmsg)
+    private void handleFailedBattleMove(@RUntainted String errmsg)
     {
         LOGGER.log(Level.FINEST, owningPlayer.getName()
             + "handleFailedBattleMove");
@@ -3003,7 +3004,7 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     public void tellBattleMove(int tag, BattleHex startingHex,
-        BattleHex endingHex, boolean undo)
+        @RUntainted BattleHex endingHex, boolean undo)
     {
         boolean rememberForUndo = false;
 
@@ -3027,7 +3028,7 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     /** Attempt to have critter tag strike the critter in hex. */
-    public void strike(int tag, BattleHex hex)
+    public void strike(@RUntainted int tag, BattleHex hex)
     {
         gui.resetStrikeNumbers();
         server.strike(tag, hex);
@@ -3047,9 +3048,9 @@ public final class Client implements IClient, IOracle, IVariant,
 
     // TODO move to Battle
     /** Return a set of hexLabels. */
-    public Set<BattleHex> findMobileCritterHexes()
+    public Set<@RUntainted BattleHex> findMobileCritterHexes()
     {
-        Set<BattleHex> set = new HashSet<BattleHex>();
+        Set<@RUntainted BattleHex> set = new HashSet<@RUntainted BattleHex>();
         for (BattleCritter critter : getActiveBattleUnits())
         {
             if (!critter.hasMoved() && !isInContact(critter, false))
@@ -3075,25 +3076,25 @@ public final class Client implements IClient, IOracle, IVariant,
         return set;
     }
 
-    public Set<BattleHex> showBattleMoves(BattleCritter battleCritter)
+    public Set<@RUntainted BattleHex> showBattleMoves(BattleCritter battleCritter)
     {
         return battleMovement.showMoves(battleCritter);
     }
 
     // TODO move to Battle
-    public Set<BattleHex> findCrittersWithTargets()
+    public Set<@RUntainted BattleHex> findCrittersWithTargets()
     {
         return getBattleCS().findCrittersWithTargets(this);
     }
 
     // TODO move to Battle
-    public Set<BattleHex> findStrikes(int tag)
+    public Set<@RUntainted BattleHex> findStrikes(int tag)
     {
         return getBattleCS().findTargets(tag);
     }
 
     // Mostly for SocketClientThread
-    public Player getPlayerByName(String name)
+    public @RUntainted Player getPlayerByName(String name)
     {
         return game.getPlayerByName(name);
     }
@@ -3102,18 +3103,18 @@ public final class Client implements IClient, IOracle, IVariant,
     // NOTTODO ... I'd say it's not about "is one active or not" but which one
     // is the one... ?
 
-    public Player getActivePlayer()
+    public @RUntainted Player getActivePlayer()
     {
         return game.getActivePlayer();
     }
 
-    public Phase getPhase()
+    public @RUntainted Phase getPhase()
     {
         return game.getPhase();
     }
 
     // public for IOracle
-    public int getTurnNumber()
+    public @RUntainted int getTurnNumber()
     {
         return game.getTurnNumber();
     }
@@ -3157,7 +3158,7 @@ public final class Client implements IClient, IOracle, IVariant,
 
     public void askPickFirstMarker()
     {
-        Set<String> markersAvailable = getOwningPlayer().getMarkersAvailable();
+        Set<@RUntainted String> markersAvailable = getOwningPlayer().getMarkersAvailable();
         if (autoplay.autoPickMarker())
         {
             String markerId = ai.pickMarker(markersAvailable,
@@ -3170,12 +3171,12 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void assignFirstMarker(String markerId)
+    public void assignFirstMarker(@RUntainted String markerId)
     {
         server.assignFirstMarker(markerId);
     }
 
-    public void log(String message)
+    public void log(@RUntainted String message)
     {
         LOGGER.log(Level.INFO, message);
     }
@@ -3194,7 +3195,7 @@ public final class Client implements IClient, IOracle, IVariant,
      *
      * @param parent The legion selected to split
      */
-    public void doSplit(Legion parent)
+    public void doSplit(@RUntainted Legion parent)
     {
         LOGGER.log(Level.FINER,
             "Client.doSplit, marker=" + parent.getMarkerId());
@@ -3214,7 +3215,7 @@ public final class Client implements IClient, IOracle, IVariant,
             kickSplit();
             return;
         }
-        Set<String> markersAvailable = getOwningPlayer().getMarkersAvailable();
+        Set<@RUntainted String> markersAvailable = getOwningPlayer().getMarkersAvailable();
         // Need a legion marker to split.
         if (markersAvailable.size() < 1)
         {
@@ -3274,7 +3275,7 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public void doTheSplitting(Legion parent, String childId)
+    public void doTheSplitting(@RUntainted Legion parent, @RUntainted String childId)
     {
         if (childId != null)
         {
@@ -3290,7 +3291,7 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     /** Called by AI and by doSplit() */
-    public void sendDoSplitToServer(Legion parent, String childMarkerId,
+    public void sendDoSplitToServer(@RUntainted Legion parent, @RUntainted String childMarkerId,
         List<CreatureType> creatures)
     {
         LOGGER.log(Level.FINER,
@@ -3300,9 +3301,9 @@ public final class Client implements IClient, IOracle, IVariant,
         server.doSplit(parent, childMarkerId, creatures);
     }
 
-    public Set<MasterHex> findPendingSplitHexes()
+    public Set<@RUntainted MasterHex> findPendingSplitHexes()
     {
-        Set<MasterHex> hexes = new HashSet<MasterHex>();
+        Set<@RUntainted MasterHex> hexes = new HashSet<@RUntainted MasterHex>();
         for (Legion l : getOwningPlayer().getPendingSplitLegions())
         {
             hexes.add(l.getCurrentHex());
@@ -3310,9 +3311,9 @@ public final class Client implements IClient, IOracle, IVariant,
         return hexes;
     }
 
-    public Set<MasterHex> findPendingUndoSplitHexes()
+    public Set<@RUntainted MasterHex> findPendingUndoSplitHexes()
     {
-        Set<MasterHex> hexes = new HashSet<MasterHex>();
+        Set<@RUntainted MasterHex> hexes = new HashSet<@RUntainted MasterHex>();
         HashSet<Legion> legions = getOwningPlayer()
             .getPendingUndoSplitLegions();
         for (Legion l : legions)
@@ -3327,8 +3328,8 @@ public final class Client implements IClient, IOracle, IVariant,
      *
      * TODO childHeight is probably redundant now that we pass the legion object
      */
-    public void didSplit(MasterHex hex, Legion parent, Legion child,
-        int childHeight, List<CreatureType> splitoffs, int turn)
+    public void didSplit(@RUntainted MasterHex hex, @RUntainted Legion parent, @RUntainted Legion child,
+        @RUntainted int childHeight, List<CreatureType> splitoffs, @RUntainted int turn)
     {
         LOGGER.log(Level.FINEST, "Client.didSplit " + hex + " " + parent + " "
             + child + " " + childHeight + " " + turn);
@@ -3368,7 +3369,7 @@ public final class Client implements IClient, IOracle, IVariant,
         LOGGER.log(Level.FINEST, "called server.undoSplit");
     }
 
-    public void undidSplit(Legion splitoff, Legion survivor, int turn)
+    public void undidSplit(@RUntainted Legion splitoff, Legion survivor, @RUntainted int turn)
     {
         ((LegionClientSide)survivor).merge(splitoff);
         removeLegion(splitoff);
@@ -3413,9 +3414,9 @@ public final class Client implements IClient, IOracle, IVariant,
 
     }
 
-    private CreatureType figureTeleportingLord(Legion legion, MasterHex hex)
+    private @RUntainted CreatureType figureTeleportingLord(Legion legion, MasterHex hex)
     {
-        List<CreatureType> lords = listTeleportingLords(legion, hex);
+        List<@RUntainted CreatureType> lords = listTeleportingLords(legion, hex);
         switch (lords.size())
         {
             case 0:
@@ -3440,12 +3441,12 @@ public final class Client implements IClient, IOracle, IVariant,
     /**
      * List the lords eligible to teleport this legion to hexLabel.
      */
-    private List<CreatureType> listTeleportingLords(Legion legion,
+    private List<@RUntainted CreatureType> listTeleportingLords(Legion legion,
         MasterHex hex)
     {
         // Needs to be a List not a Set so that it can be passed as
         // an imageList.
-        List<CreatureType> lords = new ArrayList<CreatureType>();
+        List<@RUntainted CreatureType> lords = new ArrayList<@RUntainted CreatureType>();
 
         // Titan teleport
         List<Legion> legions = getGame().getLegionsByHex(hex);
@@ -3485,7 +3486,7 @@ public final class Client implements IClient, IOracle, IVariant,
      *  Also let user or AI pick teleporting Lord and/or entry side,
      *  if relevant.
      */
-    public boolean doMove(Legion mover, MasterHex hex)
+    public boolean doMove(@RUntainted Legion mover, @RUntainted MasterHex hex)
     {
         if (mover == null)
         {
@@ -3525,8 +3526,8 @@ public final class Client implements IClient, IOracle, IVariant,
 
         boolean teleport = false;
 
-        Set<MasterHex> teleports = listTeleportMoves(mover);
-        Set<MasterHex> normals = listNormalMoves(mover);
+        Set<@RUntainted MasterHex> teleports = listTeleportMoves(mover);
+        Set<@RUntainted MasterHex> normals = listNormalMoves(mover);
         if (teleports.contains(hex) && normals.contains(hex))
         {
             teleport = chooseWhetherToTeleport(hex);
@@ -3599,9 +3600,9 @@ public final class Client implements IClient, IOracle, IVariant,
         return true;
     }
 
-    public void didMove(Legion legion, MasterHex startingHex,
-        MasterHex currentHex, EntrySide entrySide, boolean teleport,
-        CreatureType teleportingLord, boolean splitLegionHasForcedMove)
+    public void didMove(@RUntainted Legion legion, @RUntainted MasterHex startingHex,
+        @RUntainted MasterHex currentHex, EntrySide entrySide, boolean teleport,
+        @RUntainted CreatureType teleportingLord, boolean splitLegionHasForcedMove)
     {
         legion.setCurrentHex(currentHex);
         legion.setMoved(true);
@@ -3625,7 +3626,7 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     public void undidMove(Legion legion, MasterHex formerHex,
-        MasterHex currentHex, boolean splitLegionHasForcedMove)
+        @RUntainted MasterHex currentHex, boolean splitLegionHasForcedMove)
     {
         legion.setRecruit(null);
         legion.setCurrentHex(currentHex);
@@ -3679,7 +3680,7 @@ public final class Client implements IClient, IOracle, IVariant,
         gui.actOnDoSummon();
     }
 
-    public void didSummon(Legion summoner, Legion donor, CreatureType summon)
+    public void didSummon(Legion summoner, Legion donor, @RUntainted CreatureType summon)
     {
         // Create summon event
         gui.didSummon(summoner, donor, summon);
@@ -3703,7 +3704,7 @@ public final class Client implements IClient, IOracle, IVariant,
      * Returns whether creature can still be recruited (=is available according
      * to caretakers stack plus reservations)
      */
-    public boolean reserveRecruit(CreatureType recruitType)
+    public boolean reserveRecruit(@RUntainted CreatureType recruitType)
     {
         boolean ok = false;
         int remain;
@@ -3774,7 +3775,7 @@ public final class Client implements IClient, IOracle, IVariant,
     /**
      * Return a list of Creatures (ignore reservations).
      */
-    public List<CreatureType> findEligibleRecruits(Legion legion, MasterHex hex)
+    public List<@RUntainted CreatureType> findEligibleRecruits(Legion legion, MasterHex hex)
     {
         return findEligibleRecruits(legion, hex, false);
     }
@@ -3787,13 +3788,13 @@ public final class Client implements IClient, IOracle, IVariant,
      * @param considerReservations Flag to determine if reservations should be considered.
      * @return A list of possible recruits for the legion in the hex.
      */
-    public List<CreatureType> findEligibleRecruits(Legion legion,
+    public List<@RUntainted CreatureType> findEligibleRecruits(Legion legion,
         MasterHex hex, boolean considerReservations)
     {
         // TODO why not: assert legion != null;
         assert hex != null : "Null hex given to find recruits in";
 
-        List<CreatureType> recruits = new ArrayList<CreatureType>();
+        List<@RUntainted CreatureType> recruits = new ArrayList<@RUntainted CreatureType>();
 
         if (legion == null)
         {
@@ -3802,7 +3803,7 @@ public final class Client implements IClient, IOracle, IVariant,
 
         MasterBoardTerrain terrain = hex.getTerrain();
 
-        List<CreatureType> tempRecruits = TerrainRecruitLoader
+        List<@RUntainted CreatureType> tempRecruits = TerrainRecruitLoader
             .getPossibleRecruits(terrain, hex);
         List<CreatureType> recruiters = TerrainRecruitLoader
             .getPossibleRecruiters(terrain, hex);
@@ -3852,7 +3853,7 @@ public final class Client implements IClient, IOracle, IVariant,
      *
      * TODO return List<CreatureType>
      */
-    public List<String> findEligibleRecruiters(Legion legion,
+    public @RUntainted List<@RUntainted String> findEligibleRecruiters(Legion legion,
         CreatureType recruit)
     {
         if (recruit == null)
@@ -3879,7 +3880,7 @@ public final class Client implements IClient, IOracle, IVariant,
             }
         }
 
-        List<String> strings = new ArrayList<String>();
+        List<@RUntainted String> strings = new ArrayList<@RUntainted String>();
         for (CreatureType creature : recruiters)
         {
             strings.add(creature.getName());
@@ -3891,9 +3892,9 @@ public final class Client implements IClient, IOracle, IVariant,
      * Return a set of hexes with legions that can (still) muster anything
      * and are not marked as skip.
      */
-    public Set<MasterHex> getPossibleRecruitHexes()
+    public Set<@RUntainted MasterHex> getPossibleRecruitHexes()
     {
-        Set<MasterHex> result = new HashSet<MasterHex>();
+        Set<@RUntainted MasterHex> result = new HashSet<@RUntainted MasterHex>();
 
         for (Legion legion : game.getActivePlayer().getLegions())
         {
@@ -3943,14 +3944,14 @@ public final class Client implements IClient, IOracle, IVariant,
     }
 
     /** Return a set of hexLabels. */
-    public Set<MasterHex> listTeleportMoves(Legion legion)
+    public Set<@RUntainted MasterHex> listTeleportMoves(Legion legion)
     {
         MasterHex hex = legion.getCurrentHex();
         return movement.listTeleportMoves(legion, hex, game.getMovementRoll());
     }
 
     /** Return a set of hexLabels. */
-    public Set<MasterHex> listNormalMoves(Legion legion)
+    public Set<@RUntainted MasterHex> listNormalMoves(Legion legion)
     {
         return movement.listNormalMoves(legion, legion.getCurrentHex(),
             game.getMovementRoll());
@@ -3984,8 +3985,8 @@ public final class Client implements IClient, IOracle, IVariant,
                 }
                 else
                 {
-                    Set<MasterHex> teleport = listTeleportMoves(legion);
-                    Set<MasterHex> normal = listNormalMoves(legion);
+                    Set<@RUntainted MasterHex> teleport = listTeleportMoves(legion);
+                    Set<@RUntainted MasterHex> normal = listNormalMoves(legion);
                     if (teleport.isEmpty() && normal.isEmpty())
                     {
                         legionStatus[Constants.legionStatusBlocked]++;
@@ -4003,10 +4004,10 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public Set<MasterHex> findUnmovedLegionHexes(
+    public Set<@RUntainted MasterHex> findUnmovedLegionHexes(
         boolean considerSkippedAsMoved, HashSet<Legion> pendingLegions)
     {
-        Set<MasterHex> result = new HashSet<MasterHex>();
+        Set<@RUntainted MasterHex> result = new HashSet<@RUntainted MasterHex>();
         for (Legion legion : game.getActivePlayer().getLegions())
         {
             if (!legion.hasMoved()
@@ -4023,7 +4024,7 @@ public final class Client implements IClient, IOracle, IVariant,
      * Return a set of hexLabels for the active player's legions with
      * 7 or more creatures, and which are not marked as skip this turn.
      */
-    public Set<MasterHex> findTallLegionHexes()
+    public Set<@RUntainted MasterHex> findTallLegionHexes()
     {
         return findTallLegionHexes(7, false);
     }
@@ -4035,10 +4036,10 @@ public final class Client implements IClient, IOracle, IVariant,
      * @param ignoreSkipFlag Set to true, legion will be considered even if
      * it was marked as "skip this time".
      */
-    public Set<MasterHex> findTallLegionHexes(int minHeight,
+    public Set<@RUntainted MasterHex> findTallLegionHexes(int minHeight,
         boolean ignoreSkipFlag)
     {
-        Set<MasterHex> result = new HashSet<MasterHex>();
+        Set<@RUntainted MasterHex> result = new HashSet<@RUntainted MasterHex>();
 
         for (Legion legion : game.getActivePlayer().getLegions())
         {
@@ -4084,7 +4085,7 @@ public final class Client implements IClient, IOracle, IVariant,
         return !spectator && owningPlayer.equals(legion.getPlayer());
     }
 
-    public boolean isMyTurn()
+    public @RUntainted boolean isMyTurn()
     {
         return !spectator && owningPlayer.equals(getActivePlayer());
     }
@@ -4098,7 +4099,7 @@ public final class Client implements IClient, IOracle, IVariant,
         return false;
     }
 
-    public boolean isMyBattlePhase()
+    public @RUntainted boolean isMyBattlePhase()
     {
         // check also for phase, because delayed callbacks could come
         // after our phase is over but activePlayerName not updated yet
@@ -4111,12 +4112,12 @@ public final class Client implements IClient, IOracle, IVariant,
         // Dummy, SocketClientThread handles this already.
     }
 
-    public void logMsgToServer(String severity, String message)
+    public void logMsgToServer(@RUntainted String severity, @RUntainted String message)
     {
         server.logMsgToServer(severity, message);
     }
 
-    public boolean testBattleMove(BattleCritter battleUnit, BattleHex hex)
+    public boolean testBattleMove(BattleCritter battleUnit, @RUntainted BattleHex hex)
     {
         if (showBattleMoves(battleUnit).contains(hex))
         {
@@ -4163,7 +4164,7 @@ public final class Client implements IClient, IOracle, IVariant,
         }
     }
 
-    public Game getGame()
+    public @RUntainted Game getGame()
     {
         return game;
     }
@@ -4196,7 +4197,7 @@ public final class Client implements IClient, IOracle, IVariant,
      *
      * {@link TerrainRecruitLoader#getPossibleRecruits(MasterBoardTerrain, MasterHex)}
      */
-    public List<CreatureType> getPossibleRecruits(MasterBoardTerrain terrain,
+    public List<@RUntainted CreatureType> getPossibleRecruits(MasterBoardTerrain terrain,
         MasterHex hex)
     {
         return TerrainRecruitLoader.getPossibleRecruits(terrain, hex);
@@ -4222,7 +4223,7 @@ public final class Client implements IClient, IOracle, IVariant,
      *
      * @return A collection containing all instances of {@link MasterBoardTerrain}.
      */
-    public Collection<MasterBoardTerrain> getTerrains()
+    public Collection<@RUntainted MasterBoardTerrain> getTerrains()
     {
         return game.getVariant().getTerrains();
     }
@@ -4245,12 +4246,12 @@ public final class Client implements IClient, IOracle, IVariant,
         gui.setPreferencesRadioButtonValue(name, value);
     }
 
-    public void editAddCreature(String markerId, String creatureType)
+    public void editAddCreature(String markerId, @RUntainted String creatureType)
     {
         localServer.getGame().editModeAddCreature(markerId, creatureType);
     }
 
-    public void editRemoveCreature(String markerId, String creatureType)
+    public void editRemoveCreature(String markerId, @RUntainted String creatureType)
     {
         localServer.getGame().editModeRemoveCreature(markerId, creatureType);
     }

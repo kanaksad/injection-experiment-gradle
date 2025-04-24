@@ -4,16 +4,17 @@ package net.sf.colossus.game.actions;
 import net.sf.colossus.common.Constants;
 import net.sf.colossus.game.Legion;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 // TODO why is there only one recruiter? Does it imply knowledge about how many creatures are needed?
 // Since there is always N of one type that could work.
 public class Recruitment extends AddCreatureAction
 {
-    private final CreatureType recruiter;
+    private final @RUntainted CreatureType recruiter;
 
-    public Recruitment(Legion legion, CreatureType recruited,
-        CreatureType recruiter)
+    public Recruitment(@RUntainted Legion legion, @RUntainted CreatureType recruited,
+        @RUntainted CreatureType recruiter)
     {
         super(legion, recruited);
         this.recruiter = recruiter;
@@ -24,7 +25,7 @@ public class Recruitment extends AddCreatureAction
         return getAddedCreatureType();
     }
 
-    public CreatureType getRecruiter()
+    public @RUntainted CreatureType getRecruiter()
     {
         return recruiter;
     }
@@ -36,7 +37,7 @@ public class Recruitment extends AddCreatureAction
     }
 
     @Override
-    public String getReason()
+    public @RUntainted String getReason()
     {
         // TODO distinguish between Constants.reasonRecruited and Constants.reasonReinforced
         return Constants.reasonRecruited;

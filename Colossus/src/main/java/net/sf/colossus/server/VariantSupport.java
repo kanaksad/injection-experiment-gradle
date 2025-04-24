@@ -39,6 +39,8 @@ import net.sf.colossus.xmlparser.MainVarFileLoader;
 import net.sf.colossus.xmlparser.StrategicMapLoader;
 import net.sf.colossus.xmlparser.TerrainRecruitLoader;
 import net.sf.colossus.xmlparser.TerrainRecruitLoader.NullTerrainRecruitLoader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
 
 
 /**
@@ -56,26 +58,26 @@ public final class VariantSupport
     private static final Logger LOGGER = Logger.getLogger(VariantSupport.class
         .getName());
 
-    private static String varDirectory = "";
+    private static @RUntainted String varDirectory = "";
     private static String varFilename = "";
-    private static String variantName = "";
-    private static String mapName = "";
-    private static String recruitsFileName = "";
-    private static String hintName = "";
-    private static List<String> lCreaturesName;
-    private static Document varREADME = null;
-    private static List<String> dependUpon = null;
+    private static @RUntainted String variantName = "";
+    private static @RUntainted String mapName = "";
+    private static @RUntainted String recruitsFileName = "";
+    private static @RUntainted String hintName = "";
+    private static List<@RUntainted String> lCreaturesName;
+    private static @RUntainted Document varREADME = null;
+    private static @RUntainted List<@RUntainted String> dependUpon = null;
 
     /** whether or not there is currently a valid variant loaded.
      *  TODO: perhaps superfluous - check CURRENT_VARIANT for null
      *  instead?
      */
     private static boolean loadedVariant = false;
-    private static Variant CURRENT_VARIANT;
+    private static @RUntainted Variant CURRENT_VARIANT;
 
-    private static int maxPlayers;
+    private static @RUntainted int maxPlayers;
     private static IVariantHint aihl = null;
-    private static Properties markerNames;
+    private static @RUntainted Properties markerNames;
 
     /**
      * Remove all variant data, so that next variant loading attempt
@@ -91,16 +93,16 @@ public final class VariantSupport
         loadedVariant = false;
     }
 
-    private static Map<String, String> rememberCustomDirs = new HashMap<String, String>();
+    private static Map<String, @RUntainted String> rememberCustomDirs = new HashMap<String, @RUntainted String>();
 
     public static void rememberFullPathFileForVariantName(String varName,
-        String varFullPathFilename)
+        @RUntainted String varFullPathFilename)
     {
 
         rememberCustomDirs.put(varName, varFullPathFilename);
     }
 
-    public static String getFullPathFileForVariantName(String varName)
+    public static @RUntainted String getFullPathFileForVariantName(String varName)
     {
         return rememberCustomDirs.get(varName);
     }
@@ -111,7 +113,7 @@ public final class VariantSupport
      * @param serverSide We're loading on a server.
      * @return The loaded variant.
      */
-    public static Variant loadVariantByName(String variantName,
+    public static @RUntainted Variant loadVariantByName(@RUntainted String variantName,
         boolean serverSide)
     {
         // if it's a variant earlier loaded with Load Extern Variant, find out the
@@ -144,7 +146,7 @@ public final class VariantSupport
      * @return The loaded variant.
      */
 
-    public static Variant loadVariantByFile(File varFile, boolean serverSide)
+    public static Variant loadVariantByFile(@RUntainted File varFile, boolean serverSide)
     {
         String tempVarFilename = varFile.getName();
         String tempVarDirectory = varFile.getParentFile().getAbsolutePath();
@@ -170,7 +172,7 @@ public final class VariantSupport
         return loadedVariant;
     }
 
-    private static String getVariantNameFromFilename(String varFilename)
+    private static @RPolyTainted String getVariantNameFromFilename(@RPolyTainted String varFilename)
         throws Exception
     {
         String result = null;
@@ -218,8 +220,8 @@ public final class VariantSupport
      * TODO right now variant name might sometimes be null, then we try a hack
      * to retrieve the variant name from the variant file name.
      */
-    public static synchronized Variant loadVariant(String tempVariantName,
-        String tempVarFilename, String tempVarDirectory, boolean serverSide)
+    public static synchronized @RUntainted Variant loadVariant(@RUntainted String tempVariantName,
+        @RUntainted String tempVarFilename, @RUntainted String tempVarDirectory, boolean serverSide)
     {
         if (tempVariantName == null)
         {
@@ -282,8 +284,8 @@ public final class VariantSupport
      * @return A variant object, perhaps newly created,
      *         perhaps re-used if same variant was used before.
      */
-    private static Variant tryLoadVariant(String tempVariantName,
-        String tempVarFilename, String tempVarDirectory, boolean serverSide)
+    private static @RUntainted Variant tryLoadVariant(@RUntainted String tempVariantName,
+        @RUntainted String tempVarFilename, @RUntainted String tempVarDirectory, boolean serverSide)
         throws VariantLoadException
     {
         if (loadedVariant && varFilename.equals(tempVarFilename)
@@ -313,7 +315,7 @@ public final class VariantSupport
         try
         {
             /* Can't use getVarDirectoriesList yet ! */
-            List<String> directories = new ArrayList<String>();
+            List<@RUntainted String> directories = new ArrayList<@RUntainted String>();
             directories.add(tempVarDirectory);
             directories.add(Constants.defaultDirName);
             task = "Load variant file \"" + tempVarFilename + "\"";
@@ -394,7 +396,7 @@ public final class VariantSupport
             IVariantInitializer trl = loadTerrainsAndRecruits(creatureTypes);
             // TODO add things as the variant package gets fleshed out
 
-            List<String> directoriesForMap = getVarDirectoriesList();
+            List<@RUntainted String> directoriesForMap = getVarDirectoriesList();
             InputStream mapIS = StaticResourceLoader.getInputStream(
                 VariantSupport.getMapName(), directoriesForMap);
             if (mapIS == null)
@@ -445,12 +447,12 @@ public final class VariantSupport
     }
 
     /** Call immediately after loading variant, before using creatures. */
-    public static AllCreatureType loadCreatures()
+    public static @RUntainted AllCreatureType loadCreatures()
     {
         CreatureLoader creatureLoader = new CreatureLoader();
         try
         {
-            List<String> directories = VariantSupport.getVarDirectoriesList();
+            List<@RUntainted String> directories = VariantSupport.getVarDirectoriesList();
             for (String creaturesName : VariantSupport.getCreaturesNames())
             {
                 InputStream creIS = StaticResourceLoader.getInputStream(
@@ -470,7 +472,7 @@ public final class VariantSupport
         return creatureLoader;
     }
 
-    private static Document getMissingReadmeNotification()
+    private static @RUntainted Document getMissingReadmeNotification()
     {
         StyledDocument txtdoc = new DefaultStyledDocument();
         try
@@ -510,24 +512,24 @@ public final class VariantSupport
         return variantName;
     }
 
-    public static String getMapName()
+    public static @RUntainted String getMapName()
     {
         return mapName;
     }
 
-    public static List<String> getCreaturesNames()
+    public static List<@RUntainted String> getCreaturesNames()
     {
         return lCreaturesName;
     }
 
-    public static List<String> getVarDirectoriesList()
+    public static @RUntainted List<@RUntainted String> getVarDirectoriesList()
     {
-        List<String> directories = new ArrayList<String>();
+        List<@RUntainted String> directories = new ArrayList<@RUntainted String>();
         if (!(varDirectory.equals(Constants.defaultDirName)))
         {
             directories.add(varDirectory);
         }
-        Iterator<String> it = dependUpon.iterator();
+        Iterator<@RUntainted String> it = dependUpon.iterator();
         while (it.hasNext())
         {
             directories.add(it.next());
@@ -536,11 +538,11 @@ public final class VariantSupport
         return directories;
     }
 
-    public static List<String> getVarDirectoriesList(String suffixPath)
+    public static @RUntainted List<@RUntainted String> getVarDirectoriesList(@RUntainted String suffixPath)
     {
-        List<String> directories = getVarDirectoriesList();
-        List<String> suffixedDirs = new ArrayList<String>();
-        Iterator<String> it = directories.iterator();
+        List<@RUntainted String> directories = getVarDirectoriesList();
+        List<@RUntainted String> suffixedDirs = new ArrayList<@RUntainted String>();
+        Iterator<@RUntainted String> it = directories.iterator();
         while (it.hasNext())
         {
             String dir = it.next();
@@ -550,18 +552,18 @@ public final class VariantSupport
         return suffixedDirs;
     }
 
-    public static List<String> getImagesDirectoriesList()
+    public static List<@RUntainted String> getImagesDirectoriesList()
     {
         return getVarDirectoriesList(Constants.imagesDirName);
     }
 
-    public static List<String> getBattlelandsDirectoriesList()
+    public static @RUntainted List<@RUntainted String> getBattlelandsDirectoriesList()
     {
         return getVarDirectoriesList(Constants.battlelandsDirName);
     }
 
-    public synchronized static IVariantInitializer loadTerrainsAndRecruits(
-        AllCreatureType creatureTypes)
+    public synchronized static @RPolyTainted IVariantInitializer loadTerrainsAndRecruits(
+        @RPolyTainted @RUntainted AllCreatureType creatureTypes)
     {
         // remove all old stuff in the custom recruitments system
         CustomRecruitBase.reset();
@@ -571,7 +573,7 @@ public final class VariantSupport
 
         try
         {
-            List<String> directories = getVarDirectoriesList();
+            List<@RUntainted String> directories = getVarDirectoriesList();
             InputStream terIS = StaticResourceLoader.getInputStream(
                 recruitsFileName, directories);
             if (terIS == null)
@@ -596,19 +598,19 @@ public final class VariantSupport
         return terrainRecruitLoader;
     }
 
-    private static Properties loadMarkerNamesProperties()
+    private static @RUntainted Properties loadMarkerNamesProperties()
     {
         Properties allNames = new Properties();
-        List<String> directories = getVarDirectoriesList();
+        List<@RUntainted String> directories = getVarDirectoriesList();
 
         /* unlike other, don't use file-level granularity ;
          load all files in order, so that we get the
          default mapping at the end */
-        ListIterator<String> it = directories.listIterator(directories.size());
+        ListIterator<@RUntainted String> it = directories.listIterator(directories.size());
         boolean foundOne = false;
         while (it.hasPrevious())
         {
-            List<String> singleDirectory = new ArrayList<String>();
+            List<@RUntainted String> singleDirectory = new ArrayList<@RUntainted String>();
             singleDirectory.add(it.previous());
             try
             {
@@ -635,7 +637,7 @@ public final class VariantSupport
         return allNames;
     }
 
-    public static Properties getMarkerNamesProperties()
+    public static @RUntainted Properties getMarkerNamesProperties()
     {
         return markerNames;
     }
@@ -681,15 +683,15 @@ public final class VariantSupport
 
     public synchronized static CreatureType getRecruitHint(
         MasterBoardTerrain terrain, IOracleLegion legion,
-        List<CreatureType> recruits, IHintOracle oracle)
+        List<@RUntainted CreatureType> recruits, IHintOracle oracle)
     {
         return getRecruitHint(terrain, legion, recruits, oracle,
             Collections.singletonList(IVariantHint.AIStyle.Any));
     }
 
-    public synchronized static CreatureType getRecruitHint(
+    public synchronized static @RUntainted CreatureType getRecruitHint(
         MasterBoardTerrain terrain, IOracleLegion legion,
-        List<CreatureType> recruits, IHintOracle oracle,
+        List<@RUntainted CreatureType> recruits, IHintOracle oracle,
         List<IVariantHint.AIStyle> aiStyles)
     {
         assert aihl != null : "No AIHintLoader available";
@@ -721,14 +723,14 @@ public final class VariantSupport
             Collections.singletonList(IVariantHint.AIStyle.Any));
     }
 
-    public synchronized static int getHintedRecruitmentValueOffset(
+    public synchronized static @RUntainted int getHintedRecruitmentValueOffset(
         CreatureType creature, List<IVariantHint.AIStyle> aiStyles)
     {
         return aihl.getHintedRecruitmentValueOffset(creature, aiStyles);
     }
 
     /** get maximum number of players in that variant */
-    public static int getMaxPlayers()
+    public static @RUntainted int getMaxPlayers()
     {
         return maxPlayers;
     }

@@ -5,6 +5,7 @@ import java.awt.Color;
 
 import net.sf.colossus.common.Constants;
 import net.sf.colossus.game.EntrySide;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -58,8 +59,8 @@ public class MasterHex extends Hex
     //          \              /                \        /
     //           4------------3                  4------3
 
-    public MasterHex(String label, MasterBoardTerrain terrain, int xCoord,
-        int yCoord)
+    public MasterHex(@RUntainted String label, MasterBoardTerrain terrain, @RUntainted int xCoord,
+        @RUntainted int yCoord)
     {
         super(label, xCoord, yCoord);
         this.terrain = terrain;
@@ -71,12 +72,12 @@ public class MasterHex extends Hex
     }
 
     @Override
-    public String getTerrainName()
+    public @RUntainted String getTerrainName()
     {
         return this.terrain.getId();
     }
 
-    public String getTerrainDisplayName()
+    public @RUntainted String getTerrainDisplayName()
     {
         return terrain.getDisplayName();
     }

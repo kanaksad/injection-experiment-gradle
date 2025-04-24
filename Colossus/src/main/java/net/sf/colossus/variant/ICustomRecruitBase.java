@@ -2,6 +2,7 @@ package net.sf.colossus.variant;
 
 
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public interface ICustomRecruitBase
@@ -25,7 +26,7 @@ public interface ICustomRecruitBase
      * @param hex The specific MasterHex considered for recruiting.
      * @return A List of possible special Recruiters in this hex.
      */
-    public List<CreatureType> getPossibleSpecialRecruiters(MasterHex hex);
+    public List<@RUntainted CreatureType> getPossibleSpecialRecruiters(MasterHex hex);
 
     /**
      * List creatures that can be recruited in this terrain
@@ -41,7 +42,7 @@ public interface ICustomRecruitBase
      * Number of recruiters needed to get a recruit
      * in a special way in this terrain now.
      */
-    public int numberOfRecruiterNeeded(CreatureType recruiter,
+    public @RUntainted int numberOfRecruiterNeeded(CreatureType recruiter,
         CreatureType recruit, MasterHex hex);
 
 }

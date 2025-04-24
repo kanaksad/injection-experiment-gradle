@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.colossus.common.WhatNextManager;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class RandomDotOrgFileReader
@@ -24,15 +25,15 @@ public class RandomDotOrgFileReader
 
     private static final String propertyName = "net.sf.colossus.randomDotOrgDirectory";
 
-    private final List<File> files = new ArrayList<File>();
+    private final @RUntainted List<@RUntainted File> files = new ArrayList<@RUntainted File>();
 
-    private final ArrayList<File> unusedFiles = new ArrayList<File>();
+    private final ArrayList<@RUntainted File> unusedFiles = new ArrayList<@RUntainted File>();
 
-    private File currentFile = null;
+    private @RUntainted File currentFile = null;
 
     private FileInputStream randomByteStream = null;
 
-    private final Random fallbackRandom = new Random();
+    private final @RUntainted Random fallbackRandom = new Random();
 
     public static boolean isPropertySet()
     {
@@ -63,7 +64,7 @@ public class RandomDotOrgFileReader
         // otherwise it falls back to standard Random class anyway
     }
 
-    public RandomDotOrgFileReader(String directoryPath)
+    public RandomDotOrgFileReader(@RUntainted String directoryPath)
     {
         init(directoryPath);
     }
@@ -78,7 +79,7 @@ public class RandomDotOrgFileReader
      * and randomByteStream will be null, so any call to nextRoll()
      * will fall back to the normal Java PRNG.
      */
-    private void init(String directoryPath)
+    private void init(@RUntainted String directoryPath)
     {
         try
         {
@@ -195,7 +196,7 @@ public class RandomDotOrgFileReader
         }
     }
 
-    private int oneByteFromFallback()
+    private @RUntainted int oneByteFromFallback()
     {
         return fallbackRandom.nextInt(255);
     }
@@ -208,7 +209,7 @@ public class RandomDotOrgFileReader
      *
      * @return
      */
-    private int nextSingleByte()
+    private @RUntainted int nextSingleByte()
     {
         if (randomByteStream == null)
         {
@@ -216,7 +217,7 @@ public class RandomDotOrgFileReader
         }
 
         int size = 1;
-        byte[] bytes = new byte[1];
+        @RUntainted byte[] bytes = new byte[1];
         try
         {
             int got = randomByteStream.read(bytes);
@@ -253,7 +254,7 @@ public class RandomDotOrgFileReader
      * read the byte and handle the evaluation ourself, instead of having
      * Random blindly requesting 32 bits, of which most is then wasted.
      */
-    public int nextRoll()
+    public @RUntainted int nextRoll()
     {
         int n = 6;
         int signedInt, result;

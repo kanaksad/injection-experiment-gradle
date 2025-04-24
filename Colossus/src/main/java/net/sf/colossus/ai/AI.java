@@ -14,6 +14,7 @@ import net.sf.colossus.game.SummonInfo;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -34,22 +35,22 @@ public interface AI
     boolean split();
 
     /** continue making splits.  Return true if done. */
-    boolean splitCallback(Legion parent, Legion child);
+    boolean splitCallback(@RUntainted Legion parent, @RUntainted Legion child);
 
     /** make recruits for current player */
     void muster();
 
     /** pick one reinforcement for legion */
-    void reinforce(Legion legion);
+    void reinforce(@RUntainted Legion legion);
 
     /** choose whether legion should flee from enemy */
-    boolean flee(Legion legion, Legion enemy);
+    @RUntainted boolean flee(@RUntainted Legion legion, @RUntainted Legion enemy);
 
     /** choose whether legion should concede to enemy */
-    boolean concede(Legion legion, Legion enemy);
+    boolean concede(@RUntainted Legion legion, @RUntainted Legion enemy);
 
     /** make battle strikes for legion */
-    boolean strike(Legion legion);
+    boolean strike(@RUntainted Legion legion);
 
     /** a Battle start */
     void initBattle();
@@ -68,29 +69,29 @@ public interface AI
         Set<EntrySide> entrySides);
 
     /** pick an engagement to resolve */
-    MasterHex pickEngagement();
+    @RUntainted MasterHex pickEngagement();
 
     /** choose whether to acquire an angel or archangel */
     CreatureType acquireAngel(Legion legion, List<CreatureType> recruits);
 
     /** choose whether to summon an angel or archangel */
-    SummonInfo summonAngel(Legion summoner, List<Legion> possibleDonors);
+    SummonInfo summonAngel(@RUntainted Legion summoner, List<@RUntainted Legion> possibleDonors);
 
     /** pick a color of legion markers */
     PlayerColor pickColor(List<PlayerColor> colors,
         List<PlayerColor> favoriteColors);
 
     /** pick a legion marker */
-    String pickMarker(Set<String> markerIds, String preferredShortColor);
+    @RUntainted String pickMarker(@RUntainted Set<@RUntainted String> markerIds, String preferredShortColor);
 
     /** choose carry target */
-    void handleCarries(int carryDamage, Set<String> carryTargets);
+    void handleCarries(@RUntainted int carryDamage, Set<@RUntainted String> carryTargets);
 
     /** pick an optional strike penalty */
-    String pickStrikePenalty(List<String> choices);
+    @RUntainted String pickStrikePenalty(@RUntainted List<@RUntainted String> choices);
 
-    CreatureType getVariantRecruitHint(LegionClientSide legion, MasterHex hex,
-        List<CreatureType> recruits);
+    @RUntainted CreatureType getVariantRecruitHint(LegionClientSide legion, MasterHex hex,
+        List<@RUntainted CreatureType> recruits);
 
     Caretaker getCaretaker();
 }

@@ -3,6 +3,7 @@ package net.sf.colossus.gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -12,7 +13,7 @@ import java.awt.Toolkit;
  */
 public final class Scale
 {
-    static int scale = 15;
+    static @RUntainted int scale = 15;
 
     static
     {
@@ -20,12 +21,12 @@ public final class Scale
     }
 
     // TODO neede to make public during GUI carveout
-    public static int get()
+    public static @RUntainted int get()
     {
         return scale;
     }
 
-    static void set(int scale)
+    static void set(@RUntainted int scale)
     {
         Scale.scale = scale;
     }

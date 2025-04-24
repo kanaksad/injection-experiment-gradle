@@ -2,6 +2,7 @@ package net.sf.colossus.variant;
 
 
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /** 
@@ -14,7 +15,7 @@ public abstract class Hazards implements HazardConstants
     /**
      * The name used for serialization.
      */
-    private final String name;
+    private final @RUntainted String name;
     private final char code;
 
     /**
@@ -37,10 +38,10 @@ public abstract class Hazards implements HazardConstants
     {
         public final EffectOnStrike effect;
         public final ScopeOfEffectOnStrike scope;
-        public final int adjustment;
+        public final @RUntainted int adjustment;
 
         CombatEffect(EffectOnStrike effect, ScopeOfEffectOnStrike scope,
-            int adjustment)
+            @RUntainted int adjustment)
         {
             this.effect = effect;
             this.scope = scope;
@@ -50,25 +51,25 @@ public abstract class Hazards implements HazardConstants
 
     /** CombatEffect to apply when a creature is struck in this terrain.
      */
-    public final CombatEffect defenseEffect;
+    public final @RUntainted CombatEffect defenseEffect;
     /** CombatEffect to apply when a creature strike out from this terrain.
      */
-    public final CombatEffect attackEffect;
+    public final @RUntainted CombatEffect attackEffect;
     /** CombatEffect to apply when a creature is rangestruck in this terrain.
      */
-    public final CombatEffect rangedDefenseEffect;
+    public final @RUntainted CombatEffect rangedDefenseEffect;
     /** CombatEffect to apply when a creature rangestrike out from this terrain.
      */
-    public final CombatEffect rangedAttackEffect;
+    public final @RUntainted CombatEffect rangedAttackEffect;
 
     public final RangeStrikeSpecialEffect rangeStrikeSpecial;
     public final SpecialEffect terrainSpecial;
 
-    public Hazards(String name, char code,
+    public Hazards(@RUntainted String name, char code,
         EffectOnMovement effectOnGroundMovement,
-        EffectOnMovement effectOnFlyerMovement, CombatEffect defenseEffect,
-        CombatEffect attackEffect, CombatEffect rangedDefenseEffect,
-        CombatEffect rangedAttackEffect,
+        EffectOnMovement effectOnFlyerMovement, @RUntainted CombatEffect defenseEffect,
+        @RUntainted CombatEffect attackEffect, @RUntainted CombatEffect rangedDefenseEffect,
+        @RUntainted CombatEffect rangedAttackEffect,
         RangeStrikeSpecialEffect RangeStrikeSpecial,
         SpecialEffect terrainSpecial)
     {
@@ -88,7 +89,7 @@ public abstract class Hazards implements HazardConstants
         LOGGER.finest("Create Hazards: " + name);
     }
 
-    public String getName()
+    public @RUntainted String getName()
     {
         return name;
     }

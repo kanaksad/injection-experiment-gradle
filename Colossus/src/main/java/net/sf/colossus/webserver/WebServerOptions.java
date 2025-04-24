@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -20,10 +21,10 @@ public class WebServerOptions
     private static final Logger LOGGER = Logger
         .getLogger(WebServerOptions.class.getName());
 
-    private final Properties props = new Properties();
-    private final String filename;
+    private final @RUntainted Properties props = new Properties();
+    private final @RUntainted String filename;
 
-    public WebServerOptions(String filename)
+    public WebServerOptions(@RUntainted String filename)
     {
         this.filename = filename;
     }
@@ -58,20 +59,20 @@ public class WebServerOptions
         setOption(optname, String.valueOf(value));
     }
 
-    public String getStringOption(String optname)
+    public @RUntainted String getStringOption(@RUntainted String optname)
     {
         String value = props.getProperty(optname);
         return value;
     }
 
-    public boolean getOption(String optname)
+    public boolean getOption(@RUntainted String optname)
     {
         String value = getStringOption(optname);
         return (value != null && value.equals("true"));
     }
 
     /** Return -1 if the option's value has not been set. */
-    public int getIntOption(String optname)
+    public @RUntainted int getIntOption(@RUntainted String optname)
     {
         String buf = getStringOption(optname);
         int value = -1;
@@ -86,7 +87,7 @@ public class WebServerOptions
         return value;
     }
 
-    public int getIntOptionNoUndef(String optname)
+    public @RUntainted int getIntOptionNoUndef(@RUntainted String optname)
     {
         int val = getIntOption(optname);
         if (val == -1)

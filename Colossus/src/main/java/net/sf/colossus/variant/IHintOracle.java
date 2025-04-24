@@ -1,4 +1,5 @@
 package net.sf.colossus.variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -15,7 +16,7 @@ public interface IHintOracle
     /**
      * A creature with the given name could be recruited.
      */
-    public boolean canRecruit(String name);
+    public boolean canRecruit(@RUntainted String name);
 
     /**
      * A terrain can be reached by the legion with one move.
@@ -25,7 +26,7 @@ public interface IHintOracle
     /**
      * The number of currently available creatures of the given type.
      */
-    public int creatureAvailable(String name);
+    public int creatureAvailable(@RUntainted String name);
 
     int creatureAvailable(CreatureType creatureType);
 

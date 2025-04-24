@@ -15,6 +15,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.RecruitingSubTree;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**

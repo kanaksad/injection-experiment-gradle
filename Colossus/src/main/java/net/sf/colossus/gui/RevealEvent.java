@@ -19,6 +19,7 @@ import net.sf.colossus.common.Constants;
 import net.sf.colossus.game.Legion;
 import net.sf.colossus.game.Player;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -32,28 +33,28 @@ public class RevealEvent
     private static final Logger LOGGER = Logger.getLogger(RevealEvent.class
         .getName());
 
-    private final int turnNumber;
+    private final @RUntainted int turnNumber;
     private final Player player;
     private int eventType;
-    private String markerId;
-    private int height;
-    private List<RevealedCreature> knownCreatures;
+    private @RUntainted String markerId;
+    private @RUntainted int height;
+    private @RUntainted List<RevealedCreature> knownCreatures;
     private RevealedCreature readyToDie = null;
 
     // child legion or summoner (for split or summon events)
-    private String markerId2;
-    private int height2;
+    private @RUntainted String markerId2;
+    private @RUntainted int height2;
 
     private final Legion legion1;
     private final Legion legion2;
 
     // for mulligan:
-    private int roll1;
-    private int roll2;
-    private String mulliganTitanBaseName; // for titan in place of solid marker
+    private @RUntainted int roll1;
+    private @RUntainted int roll2;
+    private @RUntainted String mulliganTitanBaseName; // for titan in place of solid marker
 
     private boolean undone = false;
-    private int scale;
+    private @RUntainted int scale;
     private JPanel p;
 
     private String info;
@@ -95,7 +96,7 @@ public class RevealEvent
     private final static String eventReinforceText = "Reinforce";
     private final static String eventExtraRollText = "Extra roll";
 
-    private static String[] eventTypeToString = { eventSplitText,
+    private static @RUntainted String[] eventTypeToString = { eventSplitText,
         eventRecruitText, eventSummonText, eventTeleportText,
         eventAcquireText, eventWonText, eventLostText, eventTurnChangeText,
         eventPlayerChangeText, eventMulliganText, eventMoveRollText,
@@ -110,8 +111,8 @@ public class RevealEvent
      * @param legion1 TODO
      * @param legion2 TODO
      */
-    public RevealEvent(int turnNumber, Player player, int eventType,
-        Legion legion1, List<RevealedCreature> knownCreatures, Legion legion2)
+    public RevealEvent(@RUntainted int turnNumber, Player player, int eventType,
+        Legion legion1, @RUntainted List<RevealedCreature> knownCreatures, Legion legion2)
     {
         this.turnNumber = turnNumber;
         // player in whose turn this event happens.
@@ -140,14 +141,14 @@ public class RevealEvent
     }
 
     // Turn or Player change
-    public RevealEvent(int turnNumber, Player player, int eventType)
+    public RevealEvent(@RUntainted int turnNumber, Player player, int eventType)
     {
         this(turnNumber, player, eventType, null, null, null);
     }
 
     // Mulligan or Movement roll
-    public RevealEvent(int turnNumber, Player player, int eventType,
-        int roll1, int roll2)
+    public RevealEvent(@RUntainted int turnNumber, Player player, int eventType,
+        @RUntainted int roll1, @RUntainted int roll2)
     {
         this.turnNumber = turnNumber;
         this.player = player;
@@ -283,14 +284,14 @@ public class RevealEvent
 
     // creatures were revealed some while after event was created.
     // E.g. engagements.
-    public void updateKnownCreatures(List<RevealedCreature> revealedCreatures)
+    public void updateKnownCreatures(@RUntainted List<RevealedCreature> revealedCreatures)
     {
         this.knownCreatures = revealedCreatures;
         makeCreaturesTitanChangeSafe(knownCreatures);
         this.height = knownCreatures.size();
     }
 
-    public void setCreatureDied(CreatureType type, int newHeight)
+    public void setCreatureDied(CreatureType type, @RUntainted int newHeight)
     {
         String name = type.getName();
         if (readyToDie != null && readyToDie.getName().equals(name))
@@ -392,12 +393,12 @@ public class RevealEvent
         return eventType;
     }
 
-    public String getEventTypeText()
+    public @RUntainted String getEventTypeText()
     {
         return eventTypeToString[eventType];
     }
 
-    public static String getEventTypeText(int type)
+    public static @RUntainted String getEventTypeText(int type)
     {
         return eventTypeToString[type];
     }
@@ -417,7 +418,7 @@ public class RevealEvent
      * in order to be able to handle re-colored captured markers properly.
      * @return The markerId of first involved legion.
      */
-    public String getLongMarkerId()
+    public @RUntainted String getLongMarkerId()
     {
         return markerId;
     }
@@ -432,12 +433,12 @@ public class RevealEvent
         return markerId2;
     }
 
-    public int getHeight()
+    public @RUntainted int getHeight()
     {
         return height;
     }
 
-    public int getTurn()
+    public @RUntainted int getTurn()
     {
         return turnNumber;
     }
@@ -448,7 +449,7 @@ public class RevealEvent
     }
 
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         String msg = "<unknown event?>";
         if (eventType == eventSplit)
@@ -539,7 +540,7 @@ public class RevealEvent
     }
 
     // Todo: paint height on top of marker possible?
-    private void addMarker(String markerId, int height)
+    private void addMarker(@RUntainted String markerId, int height)
     {
         if (markerId == null)
         {

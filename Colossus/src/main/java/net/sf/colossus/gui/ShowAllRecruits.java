@@ -10,6 +10,7 @@ import net.sf.colossus.common.IOptions;
 import net.sf.colossus.guiutil.SaveWindow;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -39,7 +40,7 @@ final class ShowAllRecruits extends AbstractShowRecruits
         }
         allTerrainsDisplayActive = true;
 
-        Collection<MasterBoardTerrain> terrains = variant.getTerrains();
+        Collection<@RUntainted MasterBoardTerrain> terrains = variant.getTerrains();
         for (MasterBoardTerrain terrain : terrains)
         {
             if (!terrain.isAlias())

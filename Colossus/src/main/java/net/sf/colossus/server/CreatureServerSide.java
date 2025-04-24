@@ -20,6 +20,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.HazardHexside;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -54,14 +55,14 @@ public class CreatureServerSide extends Creature implements BattleCritter
     private final GameServerSide game;
 
     /** Unique identifier for each critter. */
-    private final int tag;
+    private final @RUntainted int tag;
 
     /** Counter used to assign unique tags. */
-    private static int tagCounter = -1;
+    private static @RUntainted int tagCounter = -1;
     private final SortedSet<PenaltyOption> penaltyOptions = new TreeSet<PenaltyOption>();
     private boolean carryPossible;
 
-    public CreatureServerSide(CreatureType creature, Legion legion,
+    public CreatureServerSide(@RUntainted CreatureType creature, @RUntainted Legion legion,
         GameServerSide game)
     {
         super(creature, legion);
@@ -70,7 +71,7 @@ public class CreatureServerSide extends Creature implements BattleCritter
         tag = ++tagCounter;
     }
 
-    void setBattleInfo(BattleHex currentHex, BattleHex startingHex,
+    void setBattleInfo(@RUntainted BattleHex currentHex, @RUntainted BattleHex startingHex,
         BattleServerSide battle)
     {
         setCurrentHex(currentHex);
@@ -78,7 +79,7 @@ public class CreatureServerSide extends Creature implements BattleCritter
         this.battle = battle;
     }
 
-    void setLegion(LegionServerSide legion)
+    void setLegion(@RUntainted LegionServerSide legion)
     {
         this.legion = legion;
     }
@@ -88,7 +89,7 @@ public class CreatureServerSide extends Creature implements BattleCritter
         return game;
     }
 
-    public int getTag()
+    public @RUntainted int getTag()
     {
         return tag;
     }
@@ -132,7 +133,7 @@ public class CreatureServerSide extends Creature implements BattleCritter
     /** Calculate number of dice and strike number needed to hit target,
      *  and whether any carries and strike penalties are possible.
      *  The actual striking is now deferred to strike2(). */
-    void strike(CreatureServerSide target)
+    void strike(@RUntainted CreatureServerSide target)
     {
         battle.leaveCarryMode();
         carryPossible = true;
@@ -165,7 +166,7 @@ public class CreatureServerSide extends Creature implements BattleCritter
     }
 
     /** Side effects. */
-    void assignStrikePenalty(String prompt)
+    void assignStrikePenalty(@RUntainted String prompt)
     {
         if (prompt.equals(Constants.cancelStrike))
         {
@@ -215,7 +216,7 @@ public class CreatureServerSide extends Creature implements BattleCritter
     // rather than use side effects.
 
     /** Side effects on penaltyOptions, Battle.carryTargets */
-    void findCarries(CreatureServerSide target)
+    void findCarries(@RUntainted CreatureServerSide target)
     {
         battle.clearCarryTargets();
         penaltyOptions.clear();
@@ -256,7 +257,7 @@ public class CreatureServerSide extends Creature implements BattleCritter
 
     /** Return true if carries are possible to the hex in direction
      *  dir, considering only terrain. */
-    private boolean possibleCarryToDir(BattleHex targetHex, int dir)
+    private boolean possibleCarryToDir(BattleHex targetHex, @RUntainted int dir)
     {
         BattleHex hex = getCurrentHex();
         BattleHex neighbor = hex.getNeighbor(dir);
@@ -283,7 +284,7 @@ public class CreatureServerSide extends Creature implements BattleCritter
     /** For a strike on target, find any carries (including those
      *  only allowed via strike penalty) to the creature in neighbor
      *  Side effects on penaltyOptions, Battle.carryTargets */
-    private void findCarry(CreatureServerSide target, BattleHex neighbor)
+    private void findCarry(@RUntainted CreatureServerSide target, BattleHex neighbor)
     {
         final int dice = game.getBattleStrikeSS().getDice(this, target);
         final int strikeNumber = game.getBattleStrikeSS().getStrikeNumber(
@@ -346,9 +347,9 @@ public class CreatureServerSide extends Creature implements BattleCritter
 
     /** Called after strike penalties are chosen.
      *  Roll the dice and apply damage.  Highlight legal carry targets. */
-    private void strike2(CreatureServerSide target, int dice, int strikeNumber)
+    private void strike2(CreatureServerSide target, @RUntainted int dice, @RUntainted int strikeNumber)
     {
-        List<String> rolls = new ArrayList<String>();
+        List<@RUntainted String> rolls = new ArrayList<@RUntainted String>();
 
         int damage;
         if (game.getOption(Options.pbBattleHits))

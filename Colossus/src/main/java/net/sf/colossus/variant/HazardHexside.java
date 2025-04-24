@@ -4,6 +4,7 @@ package net.sf.colossus.variant;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -17,14 +18,14 @@ public class HazardHexside extends Hazards
     /**
     * A map from the serialization string of a Hexside to the instances.
     */
-    private final static Map<String, HazardHexside> HEXSIDE_MAP = new HashMap<String, HazardHexside>();
-    private final static Map<Character, HazardHexside> HEXSIDE_MAP_UGLY = new HashMap<Character, HazardHexside>();
+    private final static Map<String, @RUntainted HazardHexside> HEXSIDE_MAP = new HashMap<String, @RUntainted HazardHexside>();
+    private final static Map<Character, @RUntainted HazardHexside> HEXSIDE_MAP_UGLY = new HashMap<Character, @RUntainted HazardHexside>();
 
-    public HazardHexside(String name, char code,
+    public HazardHexside(@RUntainted String name, char code,
         EffectOnMovement effectOnGroundMovement,
-        EffectOnMovement effectOnFlyerMovement, CombatEffect defenseEffect,
-        CombatEffect attackEffect, CombatEffect rangedDefenseEffect,
-        CombatEffect rangedAttackEffect,
+        EffectOnMovement effectOnFlyerMovement, @RUntainted CombatEffect defenseEffect,
+        @RUntainted CombatEffect attackEffect, @RUntainted CombatEffect rangedDefenseEffect,
+        @RUntainted CombatEffect rangedAttackEffect,
         RangeStrikeSpecialEffect RangeStrikeSpecial,
         SpecialEffect terrainSpecial)
     {
@@ -42,7 +43,7 @@ public class HazardHexside extends Hazards
 
     /** deprecated because we want to get rid of the single char stuff */
     @Deprecated
-    public static HazardHexside getHexsideByCode(char code)
+    public static @RUntainted HazardHexside getHexsideByCode(char code)
     {
         return HEXSIDE_MAP_UGLY.get(new Character(code));
     }
@@ -55,12 +56,12 @@ public class HazardHexside extends Hazards
      *
      * TODO this should really be a question to ask a variant instance
      */
-    public static final Collection<HazardHexside> getAllHazardHexsides()
+    public static final Collection<@RUntainted HazardHexside> getAllHazardHexsides()
     {
         return HEXSIDE_MAP.values();
     }
 
-    public static final HazardHexside NOTHING = new HazardHexside(
+    public static final @RUntainted HazardHexside NOTHING = new HazardHexside(
         "Nothing",
         ' ',
         EffectOnMovement.FREEMOVE,

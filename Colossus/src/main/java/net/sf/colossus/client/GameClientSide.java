@@ -12,6 +12,7 @@ import net.sf.colossus.game.Player;
 import net.sf.colossus.util.Split;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class GameClientSide extends Game implements IOracle
@@ -26,11 +27,11 @@ public class GameClientSide extends Game implements IOracle
      * are not available. It seems to happen during startup (the not yet set case) and in
      * some GUI parts after battles, when battleActivePlayer has been reset already.
      */
-    private final PlayerClientSide noone;
+    private final @RUntainted PlayerClientSide noone;
 
-    private Player activePlayer;
+    private @RUntainted Player activePlayer;
 
-    public GameClientSide(Variant variant, String[] playerNames)
+    public GameClientSide(@RUntainted Variant variant, String[] playerNames)
     {
         super(variant, playerNames);
 
@@ -45,7 +46,7 @@ public class GameClientSide extends Game implements IOracle
         this.client = client;
     }
 
-    public PlayerClientSide initPlayerInfo(List<String> infoStrings,
+    public @RUntainted PlayerClientSide initPlayerInfo(List<@RUntainted String> infoStrings,
         String searchedName)
     {
         int numPlayers = infoStrings.size();
@@ -55,7 +56,7 @@ public class GameClientSide extends Game implements IOracle
         // own, too -- which has been a fake until now
         for (int i = 0; i < numPlayers; i++)
         {
-            List<String> data = Split.split(":", infoStrings.get(i));
+            List<@RUntainted String> data = Split.split(":", infoStrings.get(i));
             String playerName = data.get(1);
             PlayerClientSide player = new PlayerClientSide(this, playerName, i);
             addPlayer(player);
@@ -67,12 +68,12 @@ public class GameClientSide extends Game implements IOracle
         return owningPlayer;
     }
 
-    public Player getNoonePlayer()
+    public @RUntainted Player getNoonePlayer()
     {
         return noone;
     }
 
-    public void updatePlayerInfo(List<String> infoStrings)
+    public void updatePlayerInfo(List<@RUntainted String> infoStrings)
     {
         for (int i = 0; i < infoStrings.size(); i++)
         {
@@ -86,9 +87,9 @@ public class GameClientSide extends Game implements IOracle
      *    name:isDead:eliminatedPlayers:score:mulligans:mk01,mk01,...mk12
      * @param valuesString
      */
-    public void updatePlayerValues(String valuesString)
+    public void updatePlayerValues(@RUntainted String valuesString)
     {
-        List<String> values = Split.split(":", valuesString);
+        List<@RUntainted String> values = Split.split(":", valuesString);
         String playerName = values.remove(0);
         boolean isDead = Boolean.valueOf(values.remove(0)).booleanValue();
         String eliminatedPlayers = values.remove(0);
@@ -127,7 +128,7 @@ public class GameClientSide extends Game implements IOracle
      * @param playerName
      * @return Player object for given name.
      */
-    Player getPlayerByName(String playerName)
+    @RUntainted Player getPlayerByName(String playerName)
     {
         assert playerName != null : "Name for player to find must not be null!";
 
@@ -158,7 +159,7 @@ public class GameClientSide extends Game implements IOracle
         return battleUnit.getLegion().getPlayer();
     }
 
-    private Player getPlayerUsingColor(String shortColor)
+    private @RUntainted Player getPlayerUsingColor(String shortColor)
     {
         assert this.players.size() > 0 : "Client side player list not yet initialized";
         assert shortColor != null : "Parameter must not be null";
@@ -191,7 +192,7 @@ public class GameClientSide extends Game implements IOracle
         return null;
     }
 
-    public Player getPlayerByMarkerId(String markerId)
+    public @RUntainted Player getPlayerByMarkerId(String markerId)
     {
         assert markerId != null : "Parameter must not be null";
 
@@ -215,17 +216,17 @@ public class GameClientSide extends Game implements IOracle
 
     // TODO: move method from Client to here, or even to game.Game?
     @Override
-    public Legion getLegionByMarkerId(String markerId)
+    public @RUntainted Legion getLegionByMarkerId(@RUntainted String markerId)
     {
         return client.getLegion(markerId);
     }
 
-    public void setActivePlayer(Player player)
+    public void setActivePlayer(@RUntainted Player player)
     {
         activePlayer = player;
     }
 
-    public Player getActivePlayer()
+    public @RUntainted Player getActivePlayer()
     {
         return activePlayer;
     }
@@ -240,9 +241,9 @@ public class GameClientSide extends Game implements IOracle
         return activePlayer.equals(noone);
     }
 
-    public void initBattle(MasterHex hex, int battleTurnNumber,
-        Player battleActivePlayer, BattlePhase battlePhase, Legion attacker,
-        Legion defender)
+    public void initBattle(MasterHex hex, @RUntainted int battleTurnNumber,
+        @RUntainted Player battleActivePlayer, BattlePhase battlePhase, @RUntainted Legion attacker,
+        @RUntainted Legion defender)
     {
         this.battle = new BattleClientSide(this, attacker, defender, hex);
         getBattleCS().init(battleTurnNumber, battleActivePlayer, battlePhase);
@@ -274,23 +275,23 @@ public class GameClientSide extends Game implements IOracle
         return getBattleCS().getBattlePhase() == phase;
     }
 
-    public void setBattleActivePlayer(Player battleActivePlayer)
+    public void setBattleActivePlayer(@RUntainted Player battleActivePlayer)
     {
         getBattleCS().setBattleActivePlayer(battleActivePlayer);
     }
 
-    public void setBattleTurnNumber(int battleTurnNumber)
+    public void setBattleTurnNumber(@RUntainted int battleTurnNumber)
     {
         getBattleCS().setBattleTurnNumber(battleTurnNumber);
     }
 
     @Override
-    public int getBattleTurnNumber()
+    public @RUntainted int getBattleTurnNumber()
     {
         return getBattleCS().getBattleTurnNumber();
     }
 
-    public Player getBattleActivePlayer()
+    public @RUntainted Player getBattleActivePlayer()
     {
         if (battle == null)
         {
@@ -311,7 +312,7 @@ public class GameClientSide extends Game implements IOracle
     /** Return a list of Strings.  Use the proper string for titans and
      *  unknown creatures. */
     // public for IOracle
-    public List<String> getLegionImageNames(Legion legion)
+    public List<@RUntainted String> getLegionImageNames(Legion legion)
     {
         LegionClientSide info = (LegionClientSide)legion;
         if (info != null)

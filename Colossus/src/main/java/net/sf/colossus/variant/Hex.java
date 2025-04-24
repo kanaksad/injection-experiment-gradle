@@ -1,4 +1,5 @@
 package net.sf.colossus.variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -23,25 +24,25 @@ public abstract class Hex
     //              4---------3
 
     // Game state variables
-    final private String label;
-    private final int xCoord;
-    private final int yCoord;
+    final private @RUntainted String label;
+    private final @RUntainted int xCoord;
+    private final @RUntainted int yCoord;
 
-    public Hex(String label, int xCoord, int yCoord)
+    public Hex(@RUntainted String label, @RUntainted int xCoord, @RUntainted int yCoord)
     {
         this.label = label;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
     }
 
-    public String getLabel()
+    public @RUntainted String getLabel()
     {
         return label;
     }
 
-    public abstract String getTerrainName();
+    public abstract @RUntainted String getTerrainName();
 
-    public String getDescription()
+    public @RUntainted String getDescription()
     {
         return getTerrainName() + " hex " + getLabel();
     }
@@ -52,12 +53,12 @@ public abstract class Hex
         return getDescription();
     }
 
-    public int getXCoord()
+    public @RUntainted int getXCoord()
     {
         return xCoord;
     }
 
-    public int getYCoord()
+    public @RUntainted int getYCoord()
     {
         return yCoord;
     }

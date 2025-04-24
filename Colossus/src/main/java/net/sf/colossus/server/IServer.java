@@ -11,6 +11,7 @@ import net.sf.colossus.game.actions.Summoning;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -51,7 +52,7 @@ public interface IServer
 
     public void doneWithStrikes();
 
-    public void acquireAngel(Legion legion, CreatureType angelType);
+    public void acquireAngel(Legion legion, @RUntainted CreatureType angelType);
 
     /**
      * Handles a summon event
@@ -63,37 +64,37 @@ public interface IServer
     // TODO extend or subclass event to include recruiter
     public void doRecruit(Recruitment event);
 
-    public void engage(MasterHex hex);
+    public void engage(@RUntainted MasterHex hex);
 
-    public void concede(Legion legion);
+    public void concede(@RUntainted Legion legion);
 
     public void doNotConcede(Legion legion);
 
-    public void flee(Legion legion);
+    public void flee(@RUntainted Legion legion);
 
-    public void doNotFlee(Legion legion);
+    public void doNotFlee(@RUntainted Legion legion);
 
-    public void makeProposal(String proposalString);
+    public void makeProposal(@RUntainted String proposalString);
 
-    public void fight(MasterHex hex);
+    public void fight(@RUntainted MasterHex hex);
 
-    public void doBattleMove(int tag, BattleHex hex);
+    public void doBattleMove(@RUntainted int tag, @RUntainted BattleHex hex);
 
-    public void strike(int tag, BattleHex hex);
+    public void strike(@RUntainted int tag, BattleHex hex);
 
     public void applyCarries(BattleHex hex);
 
     public void undoBattleMove(BattleHex hex);
 
-    public void assignStrikePenalty(String prompt);
+    public void assignStrikePenalty(@RUntainted String prompt);
 
     public void mulligan();
 
     public void requestExtraRoll();
 
-    public void extraRollResponse(boolean approved, int requestId);
+    public void extraRollResponse(@RUntainted boolean approved, @RUntainted int requestId);
 
-    public void suspendResponse(boolean approved);
+    public void suspendResponse(@RUntainted boolean approved);
 
     public void undoSplit(Legion splitoff);
 
@@ -122,38 +123,38 @@ public interface IServer
      * @param childMarker A marker for the new legion.
      * @param creaturesToSplit The creatures to split out.
      */
-    public void doSplit(Legion parent, String childMarker,
+    public void doSplit(@RUntainted Legion parent, @RUntainted String childMarker,
         List<CreatureType> creaturesToSplit);
 
-    public void doMove(Legion legion, MasterHex hex, EntrySide entrySide,
-        boolean teleport, CreatureType teleportingLord);
+    public void doMove(@RUntainted Legion legion, @RUntainted MasterHex hex, @RUntainted EntrySide entrySide,
+        @RUntainted boolean teleport, @RUntainted CreatureType teleportingLord);
 
-    public void assignColor(PlayerColor color);
+    public void assignColor(@RUntainted PlayerColor color);
 
-    public void assignFirstMarker(String markerId);
+    public void assignFirstMarker(@RUntainted String markerId);
 
     // XXX Disallow the following methods in network games
     public void newGame();
 
-    public void loadGame(String filename);
+    public void loadGame(@RUntainted String filename);
 
-    public void saveGame(String filename);
+    public void saveGame(@RUntainted String filename);
 
     public void requestToSuspendGame(boolean save);
 
     public void checkServerConnection();
 
-    public void checkAllConnections(String requestingClientName);
+    public void checkAllConnections(@RUntainted String requestingClientName);
 
-    public void peerRequestReceived(String requestingClientName, int queueLen);
+    public void peerRequestReceived(@RUntainted String requestingClientName, @RUntainted int queueLen);
 
-    public void peerRequestProcessed(String requestingClientName);
+    public void peerRequestProcessed(@RUntainted String requestingClientName);
 
     public void clientConfirmedCatchup();
 
-    public void joinGame(String playerName);
+    public void joinGame(@RUntainted String playerName);
 
-    public void logMsgToServer(String severity, String message);
+    public void logMsgToServer(@RUntainted String severity, @RUntainted String message);
 
     public void cheatModeDestroyLegion(Legion legion);
 

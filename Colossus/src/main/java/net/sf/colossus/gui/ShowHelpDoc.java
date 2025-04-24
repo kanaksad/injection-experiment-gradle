@@ -4,6 +4,7 @@ package net.sf.colossus.gui;
 import javax.swing.JTextArea;
 
 import net.sf.colossus.guiutil.KFrame;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -17,7 +18,7 @@ import net.sf.colossus.guiutil.KFrame;
  */
 public final class ShowHelpDoc extends KFrame
 {
-    private static String title = "Pointer to Options documentation";
+    private static @RUntainted String title = "Pointer to Options documentation";
 
     ShowHelpDoc()
     {

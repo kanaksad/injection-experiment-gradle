@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -29,12 +30,12 @@ public class DevRandom extends Random
         .getName());
 
     private final static String PRNG = "PRNG";
-    private String source = null;
-    private File randomSource = null;
-    private FileInputStream randStream = null;
+    private @RUntainted String source = null;
+    private @RUntainted File randomSource = null;
+    private @RUntainted FileInputStream randStream = null;
 
     private static final String randomPropertyName = "net.sf.colossus.randomFile";
-    private static String randomPropertySource = null;
+    private static @RUntainted String randomPropertySource = null;
 
     public DevRandom()
     {
@@ -43,7 +44,7 @@ public class DevRandom extends Random
         init();
     }
 
-    public DevRandom(String sourcename)
+    public DevRandom(@RUntainted String sourcename)
     {
         super();
         source = sourcename;
@@ -57,7 +58,7 @@ public class DevRandom extends Random
      * If not set at all, return PRNG which makes the class using the default
      * random device.
      */
-    private String getRandomSourceFromProperties()
+    private @RUntainted String getRandomSourceFromProperties()
     {
         // did we check earlier? Use that remembered info
         // null means, not checked
@@ -110,7 +111,7 @@ public class DevRandom extends Random
         }
     }
 
-    private boolean tryOneSource(String src)
+    private boolean tryOneSource(@RUntainted String src)
     {
         if (src == null)
         {
@@ -161,7 +162,7 @@ public class DevRandom extends Random
     }
 
     @Override
-    protected int next(int bits)
+    protected int next(@RUntainted int bits)
     {
         int nbits = bits;
 
@@ -180,7 +181,7 @@ public class DevRandom extends Random
         int size = (nbits + 7) >> 3;
         // works even in nbits == 32
         int mask = (1 << nbits) - 1;
-        byte[] bytes = new byte[size];
+        @RUntainted byte[] bytes = new byte[size];
         try
         {
             int got = randStream.read(bytes);

@@ -2,6 +2,7 @@ package net.sf.colossus.client;
 
 
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -26,7 +27,7 @@ class CreatureInfo implements Cloneable
         this.atSplit = atSplit;
     }
 
-    final String getName()
+    final @RUntainted String getName()
     {
         if (type.isTitan())
         {

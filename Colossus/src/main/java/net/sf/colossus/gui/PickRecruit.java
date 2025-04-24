@@ -27,6 +27,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -47,7 +48,7 @@ final class PickRecruit extends KDialog
     private final ClientGUI gui;
     private final Legion legion;
 
-    private PickRecruit(JFrame parentFrame, List<CreatureType> recruits,
+    private PickRecruit(JFrame parentFrame, List<@RUntainted CreatureType> recruits,
         String hexDescription, Legion legion, ClientGUI gui)
     {
         super(parentFrame, gui.getOwningPlayer().getName()
@@ -74,9 +75,9 @@ final class PickRecruit extends KDialog
         legionMarker = new Marker(legion, scale, legion.getLongMarkerId());
         legionPane.add(legionMarker);
 
-        List<String> imageNames = gui.getGameClientSide().getLegionImageNames(
+        List<@RUntainted String> imageNames = gui.getGameClientSide().getLegionImageNames(
             legion);
-        Iterator<String> itName = imageNames.iterator();
+        Iterator<@RUntainted String> itName = imageNames.iterator();
         while (itName.hasNext())
         {
             String imageName = itName.next();
@@ -176,7 +177,7 @@ final class PickRecruit extends KDialog
 
     /** Return the creature recruited, or null if none. */
     static CreatureType pickRecruit(JFrame parentFrame,
-        List<CreatureType> recruits, String hexDescription, Legion legion,
+        List<@RUntainted CreatureType> recruits, String hexDescription, Legion legion,
         ClientGUI gui)
     {
         CreatureType recruit = null;

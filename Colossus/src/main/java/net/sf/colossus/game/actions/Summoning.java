@@ -4,26 +4,27 @@ package net.sf.colossus.game.actions;
 import net.sf.colossus.common.Constants;
 import net.sf.colossus.game.Legion;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class Summoning extends AddCreatureAction
 {
-    private final Legion donor;
+    private final @RUntainted Legion donor;
 
-    public Summoning(Legion targetLegion, Legion donor,
-        CreatureType summonedCreature)
+    public Summoning(@RUntainted Legion targetLegion, @RUntainted Legion donor,
+        @RUntainted CreatureType summonedCreature)
     {
         super(targetLegion, summonedCreature);
         this.donor = donor;
     }
 
     @Override
-    public String getReason()
+    public @RUntainted String getReason()
     {
         return Constants.reasonSummon;
     }
 
-    public Legion getDonor()
+    public @RUntainted Legion getDonor()
     {
         return donor;
     }

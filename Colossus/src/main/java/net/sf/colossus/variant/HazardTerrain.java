@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -18,13 +19,13 @@ public class HazardTerrain extends Hazards
     /**
      * A map from the serialization string of a terrain to the instances.
      */
-    private final static Map<String, HazardTerrain> TERRAIN_MAP = new HashMap<String, HazardTerrain>();
+    private final static Map<String, @RUntainted HazardTerrain> TERRAIN_MAP = new HashMap<String, @RUntainted HazardTerrain>();
 
-    public HazardTerrain(String name, char code,
+    public HazardTerrain(@RUntainted String name, char code,
         EffectOnMovement effectOnGroundMovement,
-        EffectOnMovement effectOnFlyerMovement, CombatEffect defenseEffect,
-        CombatEffect attackEffect, CombatEffect rangedDefenseEffect,
-        CombatEffect rangedAttackEffect,
+        EffectOnMovement effectOnFlyerMovement, @RUntainted CombatEffect defenseEffect,
+        @RUntainted CombatEffect attackEffect, @RUntainted CombatEffect rangedDefenseEffect,
+        @RUntainted CombatEffect rangedAttackEffect,
         RangeStrikeSpecialEffect RangeStrikeSpecial,
         SpecialEffect terrainSpecial)
     {
@@ -88,12 +89,12 @@ public class HazardTerrain extends Hazards
      * @param name The name of the terrain to access.
      * @return The terrain of the requested name.
      */
-    public static HazardTerrain getTerrainByName(String name)
+    public static @RUntainted HazardTerrain getTerrainByName(String name)
     {
         return TERRAIN_MAP.get(name);
     }
 
-    public static HazardTerrain getDefaultTerrain()
+    public static @RUntainted HazardTerrain getDefaultTerrain()
     {
         return getTerrainByName("Plains");
     }
@@ -106,7 +107,7 @@ public class HazardTerrain extends Hazards
      *
      * TODO this should really be a question to ask a variant instance
      */
-    public static final Collection<HazardTerrain> getAllHazardTerrains()
+    public static final Collection<@RUntainted HazardTerrain> getAllHazardTerrains()
     {
         return TERRAIN_MAP.values();
     }
@@ -121,7 +122,7 @@ public class HazardTerrain extends Hazards
      */
 
     /* genuine Titan Hazard, with no effect whatsoever */
-    static final HazardTerrain PLAINS = new HazardTerrain(
+    static final @RUntainted HazardTerrain PLAINS = new HazardTerrain(
         "Plains",
         ' ',
         EffectOnMovement.FREEMOVE,
@@ -376,8 +377,8 @@ public class HazardTerrain extends Hazards
      * @param ovalue The original adjustment of the effect
      * @return The final attacking or defending skill or power
      */
-    private int computeSkillOrPowerBonus(final boolean firstIsNative,
-        final boolean secondIsNative, final CombatEffect effect,
+    private @RUntainted int computeSkillOrPowerBonus(final boolean firstIsNative,
+        final boolean secondIsNative, final @RUntainted CombatEffect effect,
         final EffectOnStrike whichIsBonus, final EffectOnStrike whichIsPenalty)
     {
         /*
@@ -439,7 +440,7 @@ public class HazardTerrain extends Hazards
      * @param defenderIsNative Whether the defender is native from this HazardTerrain
      * @return The amount of bonus to apply (negative if it's a penalty).
      */
-    public int getSkillBonusStrikeFrom(boolean attackerIsNative,
+    public @RUntainted int getSkillBonusStrikeFrom(boolean attackerIsNative,
         boolean defenderIsNative)
     {
         return computeSkillOrPowerBonus(attackerIsNative, defenderIsNative,
@@ -456,7 +457,7 @@ public class HazardTerrain extends Hazards
      *      #getPowerBonusStrikeFrom(boolean, boolean)
      *      #getPowerPenaltyStrikeFrom(boolean, boolean)
      */
-    public int getSkillPenaltyStrikeFrom(boolean attackerIsNative,
+    public @RUntainted int getSkillPenaltyStrikeFrom(boolean attackerIsNative,
         boolean defenderIsNative)
     {
         return -getSkillBonusStrikeFrom(attackerIsNative, defenderIsNative);
@@ -468,7 +469,7 @@ public class HazardTerrain extends Hazards
      * @param defenderIsNative Whether the defender is native from this HazardTerrain
      * @return The amount of bonus to apply (negative if it's a penalty).
      */
-    public int getSkillBonusStruckIn(boolean attackerIsNative,
+    public @RUntainted int getSkillBonusStruckIn(boolean attackerIsNative,
         boolean defenderIsNative)
     {
         return computeSkillOrPowerBonus(defenderIsNative, attackerIsNative,
@@ -495,7 +496,7 @@ public class HazardTerrain extends Hazards
      * @param defenderIsNative Whether the defender is native from this HazardTerrain
      * @return The amount of bonus to apply (negative if it's a penalty).
      */
-    public int getPowerBonusStrikeFrom(boolean attackerIsNative,
+    public @RUntainted int getPowerBonusStrikeFrom(boolean attackerIsNative,
         boolean defenderIsNative)
     {
         return computeSkillOrPowerBonus(attackerIsNative, defenderIsNative,
@@ -702,7 +703,7 @@ public class HazardTerrain extends Hazards
      * @return The bonus to apply to the Strike Factor,
      *         negative if it's a penalty.
      */
-    public int getSkillBonusRangestrikeThrough(boolean rangestrikerIsNative)
+    public @RUntainted int getSkillBonusRangestrikeThrough(boolean rangestrikerIsNative)
     {
         if ((!rangestrikerIsNative)
             && (this.rangeStrikeSpecial == RangeStrikeSpecialEffect.RANGESTRIKESKILLPENALTY))
@@ -716,7 +717,7 @@ public class HazardTerrain extends Hazards
      * line-of-fire cross this hex.
      * @return The penalty to apply to the Strike Factor, negative if it's a bonus.
      */
-    public int getSkillPenaltyRangestrikeThrough(boolean rangestrikerIsNative)
+    public @RUntainted int getSkillPenaltyRangestrikeThrough(boolean rangestrikerIsNative)
     {
         return -(this.getSkillBonusRangestrikeThrough(rangestrikerIsNative));
     }

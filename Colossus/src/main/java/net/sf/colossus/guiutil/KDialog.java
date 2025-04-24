@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 
 import net.sf.colossus.common.IOptions;
 import net.sf.colossus.util.InstanceTracker;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -131,7 +132,7 @@ public class KDialog extends JDialog
      * @param defaultLocation to be used if no location was earlier stored:
      *        place there; give null to center on screen.
      */
-    public void useSaveWindow(IOptions options, String windowName,
+    public void useSaveWindow(IOptions options, @RUntainted String windowName,
         Point defaultLocation)
     {
         kSaveWindow = new SaveWindow(options, windowName);

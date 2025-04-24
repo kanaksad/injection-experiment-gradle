@@ -2,6 +2,7 @@
  *
  */
 package net.sf.colossus.webcommon;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -9,5 +10,5 @@ package net.sf.colossus.webcommon;
  */
 public interface IPortProvider
 {
-    public abstract int getFreePort(GameInfo gi);
+    public abstract @RUntainted int getFreePort(GameInfo gi);
 }

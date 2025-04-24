@@ -4,6 +4,7 @@ package net.sf.colossus.client;
 import java.util.Collection;
 
 import net.sf.colossus.server.IServer;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -20,13 +21,13 @@ public interface IServerConnection
 
     public String getReasonFail();
 
-    public String getVariantNameForInit();
+    public @RUntainted String getVariantNameForInit();
 
-    public Collection<String> getPreliminaryPlayerNames();
+    public Collection<@RUntainted String> getPreliminaryPlayerNames();
 
     public void startThread();
 
-    public void updatePlayerName(String playerName);
+    public void updatePlayerName(@RUntainted String playerName);
 
     public IServer getIServer();
 
@@ -36,9 +37,9 @@ public interface IServerConnection
 
     public void enforcedConnectionException();
 
-    public void requestSyncDelta(int lastRcvdMsgNr, int syncCounter);
+    public void requestSyncDelta(@RUntainted int lastRcvdMsgNr, @RUntainted int syncCounter);
 
-    public int abandonAndGetMessageCounter();
+    public @RUntainted int abandonAndGetMessageCounter();
 
     public int getDisposedQueueLen();
 

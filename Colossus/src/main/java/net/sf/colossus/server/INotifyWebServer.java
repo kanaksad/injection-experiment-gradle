@@ -1,4 +1,5 @@
 package net.sf.colossus.server;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public interface INotifyWebServer
@@ -14,13 +15,13 @@ public interface INotifyWebServer
 
     public abstract void readyToAcceptClients();
 
-    public abstract void gotClient(String playerName, boolean remote);
+    public abstract void gotClient(@RUntainted String playerName, boolean remote);
 
     public abstract void allClientsConnected();
 
     public abstract void gameStartupCompleted();
 
-    public abstract void gameStartupFailed(String reason);
+    public abstract void gameStartupFailed(@RUntainted String reason);
 
     public abstract void serverStoppedRunning();
 

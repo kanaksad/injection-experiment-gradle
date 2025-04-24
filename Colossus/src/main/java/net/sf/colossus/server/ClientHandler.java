@@ -31,6 +31,7 @@ import net.sf.colossus.util.Split;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -58,14 +59,14 @@ final class ClientHandler extends ClientHandlerStub implements IClient
     }
 
     // server is stored in ClientHandlerStub
-    private final SocketChannel socketChannel;
+    private final @RUntainted SocketChannel socketChannel;
     private final SelectionKey selectorKey;
-    private int clientVersion = 0;
-    private boolean spectator;
+    private @RUntainted int clientVersion = 0;
+    private @RUntainted boolean spectator;
     private ClientHandler replacedCH = null;
 
-    private String javaVersion = "not-set-yet";
-    private String osInfo = "not-set-yet";
+    private @RUntainted String javaVersion = "not-set-yet";
+    private @RUntainted String osInfo = "not-set-yet";
 
     private boolean didExplicitDisconnect = false;
     private boolean withdrawnAlready = false;
@@ -73,27 +74,27 @@ final class ClientHandler extends ClientHandlerStub implements IClient
     private boolean temporarilyDisconnected = false;
     private boolean obsolete = false;
 
-    private String incompleteInput = "";
-    private String incompleteText = "";
+    private @RUntainted String incompleteInput = "";
+    private @RUntainted String incompleteText = "";
 
     // Charset and encoder: by default according to the property,
     // fallback US-ASCII
-    private static final String DEFAULT_CHAR_SET = System
+    private static final @RUntainted String DEFAULT_CHAR_SET = System
         .getProperty("file.encoding");
-    private final String CHARSET_NAME = DEFAULT_CHAR_SET != null ? DEFAULT_CHAR_SET
+    private final @RUntainted String CHARSET_NAME = DEFAULT_CHAR_SET != null ? DEFAULT_CHAR_SET
         : "US-ASCII";
-    private final Charset charset = Charset.forName(CHARSET_NAME);
+    private final @RUntainted Charset charset = Charset.forName(CHARSET_NAME);
     private final CharsetEncoder encoder = charset.newEncoder();
-    private final CharsetDecoder decoder = charset.newDecoder();
+    private final @RUntainted CharsetDecoder decoder = charset.newDecoder();
 
     // sync-when-disconnected stuff
-    private int commitPointCounter = 0;
+    private @RUntainted int commitPointCounter = 0;
 
     private final static int MAX_KEEP_LINES = 5;
     private final ArrayList<String> recentlyProcessedLines = new ArrayList<String>(
         MAX_KEEP_LINES);
 
-    private long lastPingReplyReceived = -1;
+    private @RUntainted long lastPingReplyReceived = -1;
 
     private static int MAX_FAKE_MSG_COUNT = 3;
     private Level fakeMsgLogLevel = Level.WARNING;
@@ -103,7 +104,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
     // The two values above and the client value must fit together
     // that it does not cause a deadlock.
 
-    ClientHandler(Server server, SocketChannel channel, SelectionKey selKey)
+    ClientHandler(Server server, @RUntainted SocketChannel channel, SelectionKey selKey)
     {
         super(server);
 
@@ -119,7 +120,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
         return selectorKey;
     }
 
-    public SocketChannel getSocketChannel()
+    public @RUntainted SocketChannel getSocketChannel()
     {
         return socketChannel;
     }
@@ -183,7 +184,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
         return temporarilyDisconnected;
     }
 
-    public long getMillisSincePingReply()
+    public @RUntainted long getMillisSincePingReply()
     {
         // Should happen only the very first time this is called.
         if (lastPingReplyReceived < 0)
@@ -217,7 +218,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
     }
 
     // Called by Server's select reader
-    public void processInput(ByteBuffer byteBuffer)
+    public void processInput(@RUntainted ByteBuffer byteBuffer)
     {
         try
         {
@@ -232,7 +233,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
 
             int processed = 0;
 
-            String lines[] = msg.split("\r\n|\n|\r", -1);
+            @RUntainted String lines[] = msg.split("\r\n|\n|\r", -1);
             int len = lines.length;
             for (int i = 0; i < len; i++)
             {
@@ -240,7 +241,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
                 if (i < len - 1)
                 {
                     LOGGER.finest("before processing cmd '" + line + "'");
-                    List<String> li = Split.split(sep, line);
+                    List<@RUntainted String> li = Split.split(sep, line);
                     String method = li.remove(0);
                     if (signonName == null && !method.equals(Constants.signOn))
                     {
@@ -285,7 +286,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
         }
     }
 
-    private void sendViaChannel(String msg)
+    private void sendViaChannel(@RUntainted String msg)
     {
         sendViaChannelRaw(msg);
     }
@@ -410,7 +411,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
     }
 
     @Override
-    protected void enqueueToRedoQueue(int messageNr, String message)
+    protected void enqueueToRedoQueue(@RUntainted int messageNr, @RUntainted String message)
     {
         if (supportsReconnect())
         {
@@ -429,7 +430,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
 
     // private int newCounterHistory = 0;
 
-    private int newCounterRedo = 0;
+    private @RUntainted int newCounterRedo = 0;
 
     /*
     private void reEnqueueHistory(MessageForClient mfc)
@@ -834,11 +835,11 @@ final class ClientHandler extends ClientHandlerStub implements IClient
     }
 
     ByteBuffer bb;
-    String encodedMsg; // used only for logging
+    @RUntainted String encodedMsg; // used only for logging
     int should;
     int writtenTotal;
 
-    int previousRetries = 0;
+    @RUntainted int previousRetries = 0;
 
     private long temporarilyInTrouble = -1;
 
@@ -877,9 +878,9 @@ final class ClientHandler extends ClientHandlerStub implements IClient
         }
     }
 
-    String lastEncodedMsg = "";
+    @RUntainted String lastEncodedMsg = "";
 
-    private void handleEncoding(String msg)
+    private void handleEncoding(@RUntainted String msg)
     {
         try
         {
@@ -903,9 +904,9 @@ final class ClientHandler extends ClientHandlerStub implements IClient
         }
     }
 
-    private void debug_output(String msg)
+    private void debug_output(@RUntainted String msg)
     {
-        List<String> li = Split.split(sep, msg);
+        List<@RUntainted String> li = Split.split(sep, msg);
         String method = li.get(0);
         if (Constants.shouldSkipForDebugPrn(method))
         {
@@ -928,9 +929,9 @@ final class ClientHandler extends ClientHandlerStub implements IClient
      *  Usually empty; stuff piles up only when writing to socket fails,
      *  e.g. network or client too slow.
      */
-    LinkedList<String> queue = new LinkedList<String>();
+    LinkedList<@RUntainted String> queue = new LinkedList<@RUntainted String>();
 
-    private void sendViaChannelRaw(String msg)
+    private void sendViaChannelRaw(@RUntainted String msg)
     {
         if (_DEBUG_OUTPUT())
         {
@@ -980,7 +981,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
         }
     }
 
-    private String truncateMessage(String message)
+    private @RUntainted String truncateMessage(@RUntainted String message)
     {
         String printLine;
 
@@ -1102,7 +1103,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
             + "with same name connected");
     }
 
-    public String dumpLastProcessedLines()
+    public @RUntainted String dumpLastProcessedLines()
     {
         StringBuffer sb = new StringBuffer("## Last " + MAX_KEEP_LINES
             + " processed lines were:");
@@ -1115,8 +1116,8 @@ final class ClientHandler extends ClientHandlerStub implements IClient
         return sb.toString();
     }
 
-    private void doCallMethodInTryBlock(String line, String method,
-        List<String> li)
+    private void doCallMethodInTryBlock(@RUntainted String line, @RUntainted String method,
+        @RUntainted List<@RUntainted String> li)
     {
         try
         {
@@ -1147,7 +1148,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
      * @param method The method to execute
      * @param args   A list of argument Strings
      */
-    private void callMethod(String method, List<String> args)
+    private void callMethod(@RUntainted String method, @RUntainted List<@RUntainted String> args)
     {
         if (method.equals(Constants.signOn))
         {
@@ -1621,7 +1622,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
         }
     }
 
-    private BattleHex resolveBattleHex(String hexLabel)
+    private @RUntainted BattleHex resolveBattleHex(@RUntainted String hexLabel)
     {
         BattleHex hex = null;
         try
@@ -1654,7 +1655,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
 
     // TODO resolveX methods are on both sides of the network, they should
     // be extracted into some resolver object (or a base class)
-    private CreatureType resolveCreatureType(String name)
+    private @RUntainted CreatureType resolveCreatureType(@RUntainted String name)
     {
         return server.getGame().getVariant().getCreatureByName(name);
     }
@@ -1667,18 +1668,18 @@ final class ClientHandler extends ClientHandlerStub implements IClient
      * @param name Name of the creatureType to find, might be "null"
      * @return CreatureType for that name, or null if name is "null"
      */
-    private CreatureType resolveCreatureTypeNullOk(String name)
+    private @RUntainted CreatureType resolveCreatureTypeNullOk(@RUntainted String name)
     {
         return name.equals("null") ? null : resolveCreatureType(name);
     }
 
-    private MasterHex resolveMasterHex(String hexLabel)
+    private @RUntainted MasterHex resolveMasterHex(String hexLabel)
     {
         return server.getGame().getVariant().getMasterBoard()
             .getHexByLabel(hexLabel);
     }
 
-    private Legion resolveLegion(String markerId)
+    private @RUntainted Legion resolveLegion(@RUntainted String markerId)
     {
         // TODO: currently doSummon still allows a null legion (and thus legion marker
         //       on the network) to indicate that a summon was skipped. To disallow
@@ -1697,7 +1698,7 @@ final class ClientHandler extends ClientHandlerStub implements IClient
 
     // Wrapper for all the send-over-socket methods:
     @Override
-    protected void sendToClient(String message)
+    protected void sendToClient(@RUntainted String message)
     {
         enqueueToRedoQueue(messageCounter, message);
 

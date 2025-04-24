@@ -13,6 +13,7 @@ import net.sf.colossus.server.INotifyWebServer;
 import net.sf.colossus.server.StartGameForWebclient;
 import net.sf.colossus.webcommon.GameInfo;
 import net.sf.colossus.webcommon.IGameRunner;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class RunGameInSameJVM extends Thread implements IGameRunner,
@@ -28,16 +29,16 @@ public class RunGameInSameJVM extends Thread implements IGameRunner,
 
     private final WebClient webClient;
 
-    private final WhatNextManager whatNextManager;
+    private final @RUntainted WhatNextManager whatNextManager;
 
     private static WebClient initiatingWebClient = null;
 
-    private final String username;
+    private final @RUntainted String username;
 
     private final IStartHandler startHandler;
 
-    public RunGameInSameJVM(GameInfo gi, WhatNextManager whatNextMgr,
-        String username, WebClient webClient)
+    public RunGameInSameJVM(GameInfo gi, @RUntainted WhatNextManager whatNextMgr,
+        @RUntainted String username, WebClient webClient)
     {
         this.whatNextManager = whatNextMgr;
         this.username = username;
@@ -149,17 +150,17 @@ public class RunGameInSameJVM extends Thread implements IGameRunner,
         return wc;
     }
 
-    public String getHostingPlayerName()
+    public @RUntainted String getHostingPlayerName()
     {
         return username;
     }
 
-    public String getHostingHost()
+    public @RUntainted String getHostingHost()
     {
         return "localhost";
     }
 
-    public int getHostingPort()
+    public @RUntainted int getHostingPort()
     {
         return presetOptions.getIntOption(Options.serveAtPort);
     }
@@ -204,7 +205,7 @@ public class RunGameInSameJVM extends Thread implements IGameRunner,
         tellServerToInformOtherPlayers();
     }
 
-    public void gotClient(String playerName, boolean remote)
+    public void gotClient(@RUntainted String playerName, boolean remote)
     {
         LOGGER.info("SameJVM: Got " + (remote ? "remote" : "local")
             + " player " + playerName);
@@ -220,7 +221,7 @@ public class RunGameInSameJVM extends Thread implements IGameRunner,
         LOGGER.info("SameJVM: Game Startup completed!");
     }
 
-    public void gameStartupFailed(String reason)
+    public void gameStartupFailed(@RUntainted String reason)
     {
         LOGGER.info("SameJVM: Game Startup Failed, reason: " + reason);
     }

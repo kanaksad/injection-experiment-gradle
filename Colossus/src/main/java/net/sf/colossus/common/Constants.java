@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -32,7 +33,7 @@ public final class Constants
      * Default base path for save game and cf files;
      * Also used as start dir for Custom Variant loading dialog
      */
-    public static final String DEFAULT_COLOSSUS_HOME = System
+    public static final @RUntainted String DEFAULT_COLOSSUS_HOME = System
         .getProperty("user.home") + File.separator + ".colossus";
 
     // Constants related to the options config files
@@ -54,7 +55,7 @@ public final class Constants
     // Constants for savegames
 
     /** Must include trailing slash. */
-    public static final String SAVE_DIR_NAME = DEFAULT_COLOSSUS_HOME
+    public static final @RUntainted String SAVE_DIR_NAME = DEFAULT_COLOSSUS_HOME
         + File.separator + "saves" + File.separator;
     public static final String XML_EXTENSION = ".xml";
     public static final String XML_SNAPSHOT_START = "snap";
@@ -150,7 +151,7 @@ public final class Constants
     public static final String ai = "AI";
     public static final String anyAI = "A Random AI";
     public static final String defaultAI = anyAI;
-    public static final String[] aiArray = { "SimpleAI", "CowardSimpleAI",
+    public static final @RUntainted String[] aiArray = { "SimpleAI", "CowardSimpleAI",
         "RationalAI", "HumanHaterRationalAI", "MilvangAI",
         // Note that ExperimentalAI must be last, as long as we want to
         // disallow ExperimentalAI as "A Random AI" for normal users.
@@ -160,7 +161,7 @@ public final class Constants
     };
 
     // Auto play for human players uses SimpleAI:
-    public static final String autoplayAI = aiArray[0];
+    public static final @RUntainted String autoplayAI = aiArray[0];
 
     public static final int numAITypes = aiArray.length;
     public static final String aiPackage = "net.sf.colossus.ai.";
@@ -169,7 +170,7 @@ public final class Constants
     public static final String byColor = "<By color>";
     public static final String byType = "<By type>";
     public static final String byClient = "<By client>";
-    public static final String username = System.getProperty("user.name",
+    public static final @RUntainted String username = System.getProperty("user.name",
         byColor);
 
     public static final String titan = "Titan";
@@ -212,7 +213,7 @@ public final class Constants
 
     /** Available internal variants  Try to keep this list mostly
      *  alphabetized for easier searching, with Default at the top. */
-    public static final String[] variantArray = { "Default", "Abyssal3",
+    public static final @RUntainted String[] variantArray = { "Default", "Abyssal3",
         "Abyssal6", "Abyssal9", "Badlands", "Badlands-JDG", "Balrog",
         "Beelzebub", "Beelzebub12", "BeelzeGods12", "DinoTitan", "ExtTitan",
         "Infinite", "Outlands", "Pantheon", "SmallTitan", "TG-ConceptI",

@@ -13,6 +13,7 @@ import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.RecruitingSubTree;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -66,12 +67,12 @@ public abstract class AbstractObjectiveHelper implements IObjectiveHelper
 
     protected class ObjectiveEvalConstants
     {
-        final float DESTROY_TITAN_PRIORITY = 5.f;
-        final float ATTACKER_PRESERVE_TITAN_PRIORITY = 2.f;
-        final float DEFENDER_PRESERVE_TITAN_PRIORITY = 5.f;
-        final float DESTROY_IMPORTANT_CRITTER_PRIORITY = 1.f;
-        final float FIRST_WAVE_ATTACK_PRIORITY = 1.f;
-        final float SECOND_WAVE_ATTACK_PRIORITY = 0.5f;
+        final @RUntainted float DESTROY_TITAN_PRIORITY = 5.f;
+        final @RUntainted float ATTACKER_PRESERVE_TITAN_PRIORITY = 2.f;
+        final @RUntainted float DEFENDER_PRESERVE_TITAN_PRIORITY = 5.f;
+        final @RUntainted float DESTROY_IMPORTANT_CRITTER_PRIORITY = 1.f;
+        final @RUntainted float FIRST_WAVE_ATTACK_PRIORITY = 1.f;
+        final @RUntainted float SECOND_WAVE_ATTACK_PRIORITY = 0.5f;
     }
 
     /**
@@ -84,13 +85,13 @@ public abstract class AbstractObjectiveHelper implements IObjectiveHelper
         /** How many creature of the same type the player owns (in all its Legion) */
         final int playerNumber;
         /** How many creature of the same type are in this legion (including this one) */
-        final int stackNumber;
+        final @RUntainted int stackNumber;
         /** What can this creature recruits */
         final Set<CreatureType> recruits;
         /** The best possible recruit (by points value) this creature could someday recruit (anywhere) */
         final CreatureType bestRecruit;
         /** How many we need in the current terrain to recruit (BIGNUM if we can't recruit) */
-        final int numberNeededHere;
+        final @RUntainted int numberNeededHere;
         /** Whether the current Legion already has something better in the recruit tree (of this terrain) */
         final boolean thisStackHasBetter;
         /** Whether it's immediately useful to kill, i.e. we already have just enough to

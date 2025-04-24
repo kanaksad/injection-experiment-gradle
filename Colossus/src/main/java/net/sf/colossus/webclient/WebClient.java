@@ -84,6 +84,7 @@ import net.sf.colossus.webcommon.IGameRunner;
 import net.sf.colossus.webcommon.IWebClient;
 import net.sf.colossus.webcommon.IWebServer;
 import net.sf.colossus.webcommon.User;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -137,24 +138,24 @@ public class WebClient extends KFrame implements IWebClient
 
     public static final String PLAYERS_MISSING = "MissingPlayers";
 
-    private final WhatNextManager whatNextManager;
+    private final @RUntainted WhatNextManager whatNextManager;
 
-    private String hostname;
-    private int port;
-    private String login;
-    private String username;
-    private String password;
-    private String email;
+    private @RUntainted String hostname;
+    private @RUntainted int port;
+    private @RUntainted String login;
+    private @RUntainted String username;
+    private @RUntainted String password;
+    private @RUntainted String email;
 
     private boolean isAdmin = false;
 
-    private final Options options;
+    private final @RUntainted Options options;
     private Client gameClient;
     private RunGameInSameJVM gameRunner;
-    private Server localServer = null;
-    private String startedGameId = null;
-    private int startedAtPort;
-    private String startedAtHost;
+    private @RUntainted Server localServer = null;
+    private @RUntainted String startedGameId = null;
+    private @RUntainted int startedAtPort;
+    private @RUntainted String startedAtHost;
 
     private RegisterPasswordPanel registerPanel;
 
@@ -187,16 +188,16 @@ public class WebClient extends KFrame implements IWebClient
     private boolean failedDueToOwnCancel = false;
 
     private int state = NotLoggedIn;
-    private String enrolledInstantGameId = null;
+    private @RUntainted String enrolledInstantGameId = null;
     private String watchingInstantGameId = null;
     private boolean scheduledGamesMode;
 
-    private int usersLoggedIn = 0;
-    private int usersEnrolled = 0;
-    private int usersPlaying = 0;
-    private int usersDead = 0;
-    private long usersLogoffAgo = 0;
-    private String usersText = "";
+    private @RUntainted int usersLoggedIn = 0;
+    private @RUntainted int usersEnrolled = 0;
+    private @RUntainted int usersPlaying = 0;
+    private @RUntainted int usersDead = 0;
+    private @RUntainted long usersLogoffAgo = 0;
+    private @RUntainted String usersText = "";
 
     private IWebServer server = null;
     private WebClientSocketThread wcst = null;
@@ -216,12 +217,12 @@ public class WebClient extends KFrame implements IWebClient
     private JLabel statusLabel;
     private JLabel userinfoLabel; // Server/Login pane:
 
-    private JTextField webserverHostField;
-    private JTextField webserverPortField;
-    private JTextField loginField;
-    private JPasswordField passwordField;
+    private @RUntainted JTextField webserverHostField;
+    private @RUntainted JTextField webserverPortField;
+    private @RUntainted JTextField loginField;
+    private @RUntainted JPasswordField passwordField;
 
-    private JTextField commandField;
+    private @RUntainted JTextField commandField;
     private JLabel receivedField;
 
     private JButton loginLogoutButton;
@@ -236,31 +237,31 @@ public class WebClient extends KFrame implements IWebClient
     private JButton shutdownButton;
     private JButton dumpInfoButton;
 
-    private JTextField notifyMessageField;
-    private JTextField notifyUserField;
-    private JTextField beepCountField;
-    private JTextField beepIntervalField;
+    private @RUntainted JTextField notifyMessageField;
+    private @RUntainted JTextField notifyUserField;
+    private @RUntainted JTextField beepCountField;
+    private @RUntainted JTextField beepIntervalField;
 
     private JLabel statusField;
     private String statusText = "";
 
     // Game browsing pane:
-    private JComboBox<String> variantBox;
-    private JComboBox<String> viewmodeBox;
-    private JComboBox<String> eventExpiringBox;
+    private @RUntainted JComboBox<String> variantBox;
+    private @RUntainted JComboBox<String> viewmodeBox;
+    private @RUntainted JComboBox<String> eventExpiringBox;
 
-    private JSpinner spinner1;
-    private JSpinner spinner2;
-    private JSpinner spinner3;
+    private @RUntainted JSpinner spinner1;
+    private @RUntainted JSpinner spinner2;
+    private @RUntainted JSpinner spinner3;
     private JLabel maxLabel;
 
     private JLabel nowDateAndTimeLabel;
-    private JTextField atDateField;
-    private JTextField atTimeField;
-    private JTextField durationField;
-    private JTextField summaryText;
-    private DateFormat myDateFormat;
-    private DateFormat myTimeFormat;
+    private @RUntainted JTextField atDateField;
+    private @RUntainted JTextField atTimeField;
+    private @RUntainted JTextField durationField;
+    private @RUntainted JTextField summaryText;
+    private @RUntainted DateFormat myDateFormat;
+    private @RUntainted DateFormat myTimeFormat;
 
     private JButton proposeButton;
     private JButton cancelButton;
@@ -298,7 +299,7 @@ public class WebClient extends KFrame implements IWebClient
      * NOTE: shared with SocketThread, because WCST needs it to restore
      * game tokens to an GameInfo object
      */
-    private final HashMap<String, GameInfo> gameHash = new HashMap<String, GameInfo>();
+    private final @RUntainted HashMap<String, @RUntainted GameInfo> gameHash = new HashMap<String, @RUntainted GameInfo>();
 
     private final HashSet<String> deletedGames = new HashSet<String>();
 
@@ -307,13 +308,13 @@ public class WebClient extends KFrame implements IWebClient
     private final HashMap<String, JCheckBox> checkboxForOption = new HashMap<String, JCheckBox>();
 
     // Need a list to preserve order
-    private final List<String> gameOptions = new LinkedList<String>(
+    private final List<@RUntainted String> gameOptions = new LinkedList<@RUntainted String>(
         Arrays.asList(Options.unlimitedMulligans, Options.balancedTowers,
             Options.sansLordAutoBattle, Options.pbBattleHits,
             Options.inactivityTimeout));
 
     // Need a list to preserve order
-    private final List<String> teleportOptions = new LinkedList<String>(
+    private final List<@RUntainted String> teleportOptions = new LinkedList<@RUntainted String>(
         Arrays.asList(Options.noFirstTurnT2TTeleport,
             Options.noFirstTurnTeleport, Options.towerToTowerTeleportOnly,
             Options.noTowerTeleport, Options.noTitanTeleport,
@@ -324,18 +325,18 @@ public class WebClient extends KFrame implements IWebClient
     private JPanel propGamesCard;
 
     // proposed games
-    private JTable proposedGameTable;
+    private @RUntainted JTable proposedGameTable;
     private GameTableModel proposedGameDataModel;
 
     // running games
-    private JTable runGameTable;
+    private @RUntainted JTable runGameTable;
     private GameTableModel runGameDataModel;
     // private ListSelectionModel runGameListSelectionModel;
 
-    private JTable suspGameTable;
+    private @RUntainted JTable suspGameTable;
     private GameTableModel suspGameDataModel;
 
-    private static String windowTitle = "Web Client";
+    private static @RUntainted String windowTitle = "Web Client";
 
     private final static String LoginButtonText = "Login";
     private final static String LogoutButtonText = "Logout";
@@ -369,8 +370,8 @@ public class WebClient extends KFrame implements IWebClient
 
     private final static String defaultSummaryText = "Let's play!";
 
-    public WebClient(WhatNextManager whatNextManager, String hostname,
-        int port, String login, String password)
+    public WebClient(@RUntainted WhatNextManager whatNextManager, @RUntainted String hostname,
+        @RUntainted int port, @RUntainted String login, @RUntainted String password)
     {
         super(windowTitle);
 
@@ -414,13 +415,13 @@ public class WebClient extends KFrame implements IWebClient
         }
     }
 
-    public int getClientVersion()
+    public @RUntainted int getClientVersion()
     {
         return WEB_CLIENT_VERSION;
     }
 
-    private void initValues(String hostname, int port, String login,
-        String password)
+    private void initValues(@RUntainted String hostname, @RUntainted int port, @RUntainted String login,
+        @RUntainted String password)
     {
         if (hostname != null && !hostname.equals(""))
         {
@@ -865,7 +866,7 @@ public class WebClient extends KFrame implements IWebClient
         loginLogoutButton = new JButton(LoginButtonText);
         loginLogoutButton.addActionListener(new ActionListener()
         {
-            public void actionPerformed(ActionEvent e)
+            public void actionPerformed(@RUntainted ActionEvent e)
             {
                 loginLogoutButtonAction(e.getActionCommand());
             }
@@ -893,7 +894,7 @@ public class WebClient extends KFrame implements IWebClient
 
         ActionListener cbActionListener = new ActionListener()
         {
-            public void actionPerformed(ActionEvent e)
+            public void actionPerformed(@RUntainted ActionEvent e)
             {
                 handleAction(e);
             }
@@ -942,7 +943,7 @@ public class WebClient extends KFrame implements IWebClient
         }
     }
 
-    private void handleAction(ActionEvent e)
+    private void handleAction(@RUntainted ActionEvent e)
     {
         String text = e.getActionCommand();
         Object component = e.getSource();
@@ -1351,7 +1352,7 @@ public class WebClient extends KFrame implements IWebClient
      * @param hours
      * @return
      */
-    private Calendar getNowPlusOffset(Calendar now, int days, int hours)
+    private @RUntainted Calendar getNowPlusOffset(@RUntainted Calendar now, int days, int hours)
     {
         Calendar nowPlusOffset = now;
         nowPlusOffset.add(Calendar.DAY_OF_MONTH, days);
@@ -1558,7 +1559,7 @@ public class WebClient extends KFrame implements IWebClient
         createGamesTab.add(tpPanel);
     }
 
-    private void createTpCheckbox(final String optionName, Container cpPanel)
+    private void createTpCheckbox(final @RUntainted String optionName, Container cpPanel)
     {
         boolean optionValue = options.getOption(optionName);
         final JCheckBox checkbox = new JCheckBox(optionName, optionValue);
@@ -1980,7 +1981,7 @@ public class WebClient extends KFrame implements IWebClient
         }
     }
 
-    public String createLoginWebClientSocketThread(boolean force)
+    public String createLoginWebClientSocketThread(@RUntainted boolean force)
     {
         String reason = null;
         failedDueToDuplicateLogin = false;
@@ -2048,8 +2049,8 @@ public class WebClient extends KFrame implements IWebClient
         return reason;
     }
 
-    public String createRegisterWebClientSocketThread(String username,
-        String password, String email, String confCode)
+    public @RUntainted String createRegisterWebClientSocketThread(@RUntainted String username,
+        @RUntainted String password, @RUntainted String email, @RUntainted String confCode)
     {
         LOGGER.info("Creating a RegisterWCST, username " + username
             + " password " + password + " and confcode " + confCode);
@@ -2211,22 +2212,22 @@ public class WebClient extends KFrame implements IWebClient
 
     }
 
-    public String getSelectedGameIdFromProposedTable()
+    public @RUntainted String getSelectedGameIdFromProposedTable()
     {
         return getSelectedGameId(proposedGameTable);
     }
 
-    public String getSelectedGameIdFromRunTable()
+    public @RUntainted String getSelectedGameIdFromRunTable()
     {
         return getSelectedGameId(runGameTable);
     }
 
-    public String getSelectedGameIdFromSuspTable()
+    public @RUntainted String getSelectedGameIdFromSuspTable()
     {
         return getSelectedGameId(suspGameTable);
     }
 
-    public String getSelectedGameId(JTable table)
+    public @RUntainted String getSelectedGameId(@RUntainted JTable table)
     {
         String id = null;
 
@@ -2470,7 +2471,7 @@ public class WebClient extends KFrame implements IWebClient
 
     }
 
-    private boolean isScheduledGameAndStartable(String id)
+    private boolean isScheduledGameAndStartable(@RUntainted String id)
     {
         assert id != null : "Not a valid game id: " + id;
 
@@ -2681,7 +2682,7 @@ public class WebClient extends KFrame implements IWebClient
 
     // SocketThread needs this to find games when "reinstantiating" it
     // from tokens got from server
-    public HashMap<String, GameInfo> getGameHash()
+    public HashMap<String, @RUntainted GameInfo> getGameHash()
     {
         return gameHash;
     }
@@ -2692,7 +2693,7 @@ public class WebClient extends KFrame implements IWebClient
         return gi;
     }
 
-    private GameInfo findGameById(String gameId)
+    private GameInfo findGameById(@RUntainted String gameId)
     {
         GameInfo gi = gameHash.get(gameId);
         if (gi == null)
@@ -2704,7 +2705,7 @@ public class WebClient extends KFrame implements IWebClient
         return gi;
     }
 
-    private boolean isOwner(String gameId)
+    private boolean isOwner(@RUntainted String gameId)
     {
         GameInfo gi = findGameById(gameId);
         if (gi == null)
@@ -2956,7 +2957,7 @@ public class WebClient extends KFrame implements IWebClient
         }
     }
 
-    public String tryChangePassword(String name, String oldPW, String newPW1)
+    public @RUntainted String tryChangePassword(String name, String oldPW, @RUntainted String newPW1)
     {
         // email and isAdminObj are null, this signals: do not change them
         String email = null;
@@ -2979,7 +2980,7 @@ public class WebClient extends KFrame implements IWebClient
         }
     }
 
-    private void doCancel(String gameId)
+    private void doCancel(@RUntainted String gameId)
     {
         server.cancelGame(gameId, username);
         updateGUI();
@@ -2990,15 +2991,15 @@ public class WebClient extends KFrame implements IWebClient
         // just a dummy as long as we still have ScheduledGamesTab class...
     }
 
-    private void do_proposeGame(String variant, String viewmode, long startAt,
-        int duration, String summary, String expire, List<String> gameOptions,
-        List<String> teleportOptions, int min, int target, int max)
+    private void do_proposeGame(@RUntainted String variant, @RUntainted String viewmode, @RUntainted long startAt,
+        @RUntainted int duration, @RUntainted String summary, @RUntainted String expire, @RUntainted List<@RUntainted String> gameOptions,
+        @RUntainted List<@RUntainted String> teleportOptions, @RUntainted int min, @RUntainted int target, @RUntainted int max)
     {
         server.proposeGame(username, variant, viewmode, startAt, duration,
             summary, expire, gameOptions, teleportOptions, min, target, max);
     }
 
-    private long getStartTime()
+    private @RUntainted long getStartTime()
     {
         long when = -1;
 
@@ -3025,7 +3026,7 @@ public class WebClient extends KFrame implements IWebClient
         return when;
     }
 
-    private int getDuration()
+    private @RUntainted int getDuration()
     {
         int duration = -1;
 
@@ -3034,18 +3035,18 @@ public class WebClient extends KFrame implements IWebClient
         return duration;
     }
 
-    private String getSummaryText()
+    private @RUntainted String getSummaryText()
     {
         return summaryText.getText();
     }
 
-    private boolean doEnroll(String gameId)
+    private boolean doEnroll(@RUntainted String gameId)
     {
         server.enrollUserToGame(gameId, username);
         return true;
     }
 
-    private boolean doUnenroll(String gameId)
+    private boolean doUnenroll(@RUntainted String gameId)
     {
         server.unenrollUserFromGame(gameId, username);
         return true;
@@ -3057,7 +3058,7 @@ public class WebClient extends KFrame implements IWebClient
      * @param gameId
      * @return if things went OK or not (ATM always true)
      */
-    boolean doStart(String gameId)
+    boolean doStart(@RUntainted String gameId)
     {
         startButton.setEnabled(false);
         startLocallyButton.setEnabled(false);
@@ -3076,7 +3077,7 @@ public class WebClient extends KFrame implements IWebClient
      * @param gameId
      * @return if things went OK or not (ATM always true)
      */
-    boolean doResume(final String gameId)
+    boolean doResume(final @RUntainted String gameId)
     {
         String filename = "dummy";
         server.resumeGame(gameId, filename, new User(username));
@@ -3092,7 +3093,7 @@ public class WebClient extends KFrame implements IWebClient
      * @param gameId
      * @return if things went OK or not (ATM always true)
      */
-    boolean doDeleteSuspendedGame(String gameId)
+    boolean doDeleteSuspendedGame(@RUntainted String gameId)
     {
         server.deleteSuspendedGame(gameId, new User(username));
         return true;
@@ -3101,7 +3102,7 @@ public class WebClient extends KFrame implements IWebClient
     // Called when user presses the "Start Locally" button in
     // "Create or Join" tab
     // TODO: Dead functionality!!
-    private boolean doStartLocally(String gameId)
+    private boolean doStartLocally(@RUntainted String gameId)
     {
         startButton.setEnabled(false);
         startLocallyButton.setEnabled(false);
@@ -3115,8 +3116,8 @@ public class WebClient extends KFrame implements IWebClient
         return ok;
     }
 
-    public void informStartingOnPlayerHost(String hostingPlayer,
-        String hostingHost, int hostingPort)
+    public void informStartingOnPlayerHost(@RUntainted String hostingPlayer,
+        @RUntainted String hostingHost, @RUntainted int hostingPort)
     {
         server.startGameOnPlayerHost(getSelectedGameIdFromProposedTable(), hostingPlayer,
             hostingHost, hostingPort);
@@ -3132,7 +3133,7 @@ public class WebClient extends KFrame implements IWebClient
         server.informLocallyGameOver(this.startedGameId);
     }
 
-    public void setLocalServer(Server server)
+    public void setLocalServer(@RUntainted Server server)
     {
         localServer = server;
     }
@@ -3144,7 +3145,7 @@ public class WebClient extends KFrame implements IWebClient
         setAdmin(true);
     }
 
-    public void didEnroll(String gameId, String user)
+    public void didEnroll(@RUntainted String gameId, String user)
     {
         GameInfo gi = findGameById(gameId);
         if (gi.getGameState().equals(GameState.SUSPENDED))
@@ -3194,7 +3195,7 @@ public class WebClient extends KFrame implements IWebClient
         state = LoggedIn;
     }
 
-    public void gameStartsSoon(String gameId, String startUser)
+    public void gameStartsSoon(@RUntainted String gameId, @RUntainted String startUser)
     {
         LOGGER.fine("Game starts soon, gameid " + gameId);
         GameInfo gi = findGameById(gameId);
@@ -3282,9 +3283,9 @@ public class WebClient extends KFrame implements IWebClient
         }
     }
 
-    public void gameStartsNow(String gameId, int port, String hostingHost,
+    public void gameStartsNow(@RUntainted String gameId, @RUntainted int port, @RUntainted String hostingHost,
         final int inactivityCheckInterval,
-        final int inactivityWarningInterval, final int inactivityTimeout)
+        final @RUntainted int inactivityWarningInterval, final int inactivityTimeout)
     {
         LOGGER.info("Game starts now, gameid " + gameId);
         if (hostingHost == null || hostingHost.equals("null"))
@@ -3328,8 +3329,8 @@ public class WebClient extends KFrame implements IWebClient
         }
     }
 
-    public void startOwnClient(String gameId, int port, String hostingHost,
-        int inactivityWarningInterval)
+    public void startOwnClient(@RUntainted String gameId, @RUntainted int port, @RUntainted String hostingHost,
+        @RUntainted int inactivityWarningInterval)
     {
         LOGGER.info("StartingOwnClient for gameId " + gameId + " hostingHost "
             + hostingHost + " port " + port);
@@ -3436,8 +3437,8 @@ public class WebClient extends KFrame implements IWebClient
         }
     }
 
-    public void startSpectatorClient(String gameId, int port,
-        String hostingHost)
+    public void startSpectatorClient(@RUntainted String gameId, @RUntainted int port,
+        @RUntainted String hostingHost)
     {
         LOGGER.info("Starting Spectator Client for gameId " + gameId
             + " hostingHost " + hostingHost + " port " + port);
@@ -3574,7 +3575,7 @@ public class WebClient extends KFrame implements IWebClient
         }
     }
 
-    public void chatDeliver(String chatId, long when, String sender,
+    public void chatDeliver(String chatId, @RUntainted long when, String sender,
         String message, boolean resent)
     {
         if (chatId.equals(IWebServer.generalChatName))
@@ -3593,14 +3594,14 @@ public class WebClient extends KFrame implements IWebClient
         generalChat.setBackgroundColor(color);
     }
 
-    public void watchGameInfo(String gameId, String host, int port)
+    public void watchGameInfo(@RUntainted String gameId, @RUntainted String host, @RUntainted int port)
     {
         LOGGER.info("Got watchgame info for game " + gameId + ": host=" + host
             + ", port=" + port);
         startSpectatorClient(gameId, port, host);
     }
 
-    public void tellOwnInfo(String email)
+    public void tellOwnInfo(@RUntainted String email)
     {
         this.email = email;
     }
@@ -3680,7 +3681,7 @@ public class WebClient extends KFrame implements IWebClient
     }
 
     // TODO instead of to chat, add such stuff to a system log tab or similar
-    public void systemMessage(long when, String message)
+    public void systemMessage(@RUntainted long when, String message)
     {
         generalChat.chatDeliver(when, "SYSTEM", message, false);
     }
@@ -3694,8 +3695,8 @@ public class WebClient extends KFrame implements IWebClient
     }
 
     // Server tells us the amount of players in the different states
-    public void userInfo(int loggedin, int enrolled, int playing, int dead,
-        long ago, String text)
+    public void userInfo(@RUntainted int loggedin, @RUntainted int enrolled, @RUntainted int playing, @RUntainted int dead,
+        @RUntainted long ago, @RUntainted String text)
     {
         usersLoggedIn = loggedin;
         usersEnrolled = enrolled;
@@ -3712,7 +3713,7 @@ public class WebClient extends KFrame implements IWebClient
      *   when it is removed (cancelled or started)
      *
      **/
-    public void gameInfo(GameInfo gi)
+    public void gameInfo(@RUntainted GameInfo gi)
     {
         if (deletedGames.contains(gi.getGameId()))
         {
@@ -3910,7 +3911,7 @@ public class WebClient extends KFrame implements IWebClient
         doQuit();
     }
 
-    void loginLogoutButtonAction(final String command)
+    void loginLogoutButtonAction(final @RUntainted String command)
     {
         Runnable r = new Runnable()
         {
@@ -3924,7 +3925,7 @@ public class WebClient extends KFrame implements IWebClient
         doButtonAction.start();
     }
 
-    private void executeLoginLogoutButtonAction(String command)
+    private void executeLoginLogoutButtonAction(@RUntainted String command)
     {
         if (command.equals(LoginButtonText))
         {
@@ -3999,11 +4000,11 @@ public class WebClient extends KFrame implements IWebClient
         contactAdminButton.setEnabled(true);
     }
 
-    void sendTheMessageToAdmin(String senderName, String senderEmail,
-        String message)
+    void sendTheMessageToAdmin(@RUntainted String senderName, @RUntainted String senderEmail,
+        @RUntainted String message)
     {
         long now = new Date().getTime();
-        List<String> lines = Split.split("\n", message);
+        List<@RUntainted String> lines = Split.split("\n", message);
         server.messageToAdmin(now, senderName, senderEmail, lines);
     }
 
@@ -4188,7 +4189,7 @@ public class WebClient extends KFrame implements IWebClient
         int target = ((Integer)spinner2.getValue()).intValue();
         int max = ((Integer)spinner3.getValue()).intValue();
 
-        List<String> gameOptionsList = new ArrayList<String>();
+        List<@RUntainted String> gameOptionsList = new ArrayList<@RUntainted String>();
         for (String optionName : gameOptions)
         {
             if (checkboxForOption.get(optionName).isSelected())
@@ -4197,7 +4198,7 @@ public class WebClient extends KFrame implements IWebClient
             }
         }
 
-        List<String> teleportOptionsList = new ArrayList<String>();
+        List<@RUntainted String> teleportOptionsList = new ArrayList<@RUntainted String>();
         for (String optionName : teleportOptions)
         {
             if (checkboxForOption.get(optionName).isSelected())

@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -74,7 +75,7 @@ public class InstanceTracker
         interestedIn.add("net.sf.colossus.client.WebClient");
     }
 
-    public static synchronized void register(Object o, String id)
+    public static synchronized void register(@RUntainted Object o, @RUntainted String id)
     {
         String type = o.getClass().getName();
         if ((interestedIn.contains(type) || interestedInAll)
@@ -104,7 +105,7 @@ public class InstanceTracker
         }
     }
 
-    public static synchronized void setId(Object o, String id)
+    public static synchronized void setId(@RUntainted Object o, @RUntainted String id)
     {
         String type = o.getClass().getName();
         String shortType = InstanceGroup.shortType(type);
@@ -136,7 +137,7 @@ public class InstanceTracker
         LOGGER.log(Level.INFO, stat);
     }
 
-    private static synchronized String getPrintStatistics()
+    private static synchronized @RUntainted String getPrintStatistics()
     {
         StringBuilder stat = new StringBuilder();
         stat.append("==========\nObject instances statistics:");

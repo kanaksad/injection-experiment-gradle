@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import net.sf.colossus.common.Constants;
 import net.sf.colossus.util.Split;
 import net.sf.colossus.util.StaticResourceLoader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -28,15 +29,15 @@ final class FileServerThread extends Thread
     private static final Logger LOGGER = Logger
         .getLogger(FileServerThread.class.getName());
 
-    private ServerSocket fileServer;
+    private @RUntainted ServerSocket fileServer;
 
     private static final String separator = StaticResourceLoader.REQUEST_TOKEN_SEPARATOR;
 
     private final Server server;
-    private final int port;
+    private final @RUntainted int port;
     private boolean keepGoingOn = true;
 
-    FileServerThread(Server server, int port)
+    FileServerThread(@RUntainted Server server, @RUntainted int port)
     {
         super();
         setDaemon(true);
@@ -125,7 +126,7 @@ final class FileServerThread extends Thread
 
                         boolean ignoreFail = false;
 
-                        List<String> li = Split.split(separator, request);
+                        List<@RUntainted String> li = Split.split(separator, request);
 
                         String filename = li.remove(0);
 

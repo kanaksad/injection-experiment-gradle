@@ -3,6 +3,7 @@ package net.sf.colossus.game;
 
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -14,15 +15,15 @@ public interface BattleCritter
 
     CreatureType getType();
 
-    BattleHex getCurrentHex();
+    @RUntainted BattleHex getCurrentHex();
 
-    String getDescription();
+    @RUntainted String getDescription();
 
-    int getHits();
+    @RUntainted int getHits();
 
-    int getPointValue();
+    @RUntainted int getPointValue();
 
-    int getPower();
+    @RUntainted int getPower();
 
     int getPoisonDamage();
 
@@ -32,11 +33,11 @@ public interface BattleCritter
 
     int getSlowed();
 
-    int getSkill();
+    @RUntainted int getSkill();
 
-    BattleHex getStartingHex();
+    @RUntainted BattleHex getStartingHex();
 
-    int getTag();
+    @RUntainted int getTag();
 
     int getTitanPower();
 
@@ -44,7 +45,7 @@ public interface BattleCritter
 
     boolean hasStruck();
 
-    void moveToHex(BattleHex hex);
+    void moveToHex(@RUntainted BattleHex hex);
 
     boolean isDead();
 
@@ -60,9 +61,9 @@ public interface BattleCritter
 
     void setDead(boolean dead);
 
-    void setCurrentHex(BattleHex hex);
+    void setCurrentHex(@RUntainted BattleHex hex);
 
-    void setHits(int hits);
+    void setHits(@RUntainted int hits);
 
     void setMoved(boolean moved);
 

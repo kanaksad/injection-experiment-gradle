@@ -21,6 +21,7 @@ import net.sf.colossus.common.IOptions;
 import net.sf.colossus.game.PlayerColor;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**

@@ -4,6 +4,7 @@ package net.sf.colossus.game;
 import java.util.logging.Logger;
 
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -21,11 +22,11 @@ public class Engagement
     /**
      *  If engagement is ongoing, the masterBoard hex, attacker and defender
      */
-    private final Legion attacker;
-    private final Legion defender;
-    private final MasterHex location;
+    private final @RUntainted Legion attacker;
+    private final @RUntainted Legion defender;
+    private final @RUntainted MasterHex location;
 
-    public Engagement(MasterHex hex, Legion attacker, Legion defender)
+    public Engagement(@RUntainted MasterHex hex, @RUntainted Legion attacker, @RUntainted Legion defender)
     {
         this.location = hex;
         this.attacker = attacker;
@@ -34,7 +35,7 @@ public class Engagement
             + " defender " + defender);
     }
 
-    public MasterHex getLocation()
+    public @RUntainted MasterHex getLocation()
     {
         return location;
     }
@@ -44,18 +45,18 @@ public class Engagement
         return location.getLabel();
     }
 
-    public Legion getDefendingLegion()
+    public @RUntainted Legion getDefendingLegion()
     {
         return defender;
     }
 
-    public Legion getAttackingLegion()
+    public @RUntainted Legion getAttackingLegion()
     {
         return attacker;
     }
 
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         return location + " attacker " + attacker + " defender " + defender;
     }

@@ -10,6 +10,7 @@ import net.sf.colossus.util.CompareDoubles;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.HazardTerrain;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -21,13 +22,13 @@ abstract public class Battle
         .getName());
 
     protected final Game game;
-    protected final Legion attacker;
-    protected final Legion defender;
+    protected final @RUntainted Legion attacker;
+    protected final @RUntainted Legion defender;
     private final MasterHex location;
 
-    protected int battleTurnNumber;
+    protected @RUntainted int battleTurnNumber;
 
-    public Battle(Game game, Legion attacker, Legion defender,
+    public Battle(Game game, @RUntainted Legion attacker, @RUntainted Legion defender,
         MasterHex location)
     {
         this.game = game;
@@ -42,12 +43,12 @@ abstract public class Battle
         return game;
     }
 
-    public Legion getAttackingLegion()
+    public @RUntainted Legion getAttackingLegion()
     {
         return attacker;
     }
 
-    public Legion getDefendingLegion()
+    public @RUntainted Legion getDefendingLegion()
     {
         return defender;
     }
@@ -77,7 +78,7 @@ abstract public class Battle
      * is set, the direction further left will be given.  Otherwise,
      * the direction further right will be given.
      */
-    public static int getDirection(BattleHex hex1, BattleHex hex2, boolean left)
+    public static @RUntainted int getDirection(BattleHex hex1, BattleHex hex2, boolean left)
     {
         if (hex1 == hex2)
         {
@@ -217,8 +218,8 @@ abstract public class Battle
      * that should be fixed.
      */
     @Deprecated
-    private int countBrambleHexesDir(BattleHex hex1, BattleHex hex2,
-        boolean left, int previousCount)
+    private @RUntainted int countBrambleHexesDir(BattleHex hex1, BattleHex hex2,
+        boolean left, @RUntainted int previousCount)
     {
         int count = previousCount;
 
@@ -257,7 +258,7 @@ abstract public class Battle
      * that should be fixed.
      */
     @Deprecated
-    public int countBrambleHexes(BattleHex hex1, BattleHex hex2)
+    public @RUntainted int countBrambleHexes(BattleHex hex1, BattleHex hex2)
     {
         if (hex1 == hex2)
         {
@@ -330,7 +331,7 @@ abstract public class Battle
      * Return the range in hexes from hex1 to hex2.  Titan ranges are
      * inclusive at both ends.
      */
-    public static int getRange(BattleHex hex1, BattleHex hex2,
+    public static @RUntainted int getRange(BattleHex hex1, BattleHex hex2,
         boolean allowEntrance)
     {
         if (hex1 == null || hex2 == null)
@@ -393,7 +394,7 @@ abstract public class Battle
     /**
      * Return the minimum range from any neighbor of hex1 to hex2.
      */
-    private static int minRangeToNeighbor(BattleHex hex1, BattleHex hex2)
+    private static @RUntainted int minRangeToNeighbor(BattleHex hex1, BattleHex hex2)
     {
         int min = Constants.OUT_OF_RANGE;
         for (int i = 0; i < 6; i++)
@@ -640,8 +641,8 @@ abstract public class Battle
         return true;
     }
 
-    private int computeSkillPenaltyRangestrikeThroughDir(BattleHex hex1,
-        BattleHex hex2, Creature c, boolean left, int previousCount)
+    private @RUntainted int computeSkillPenaltyRangestrikeThroughDir(BattleHex hex1,
+        BattleHex hex2, Creature c, boolean left, @RUntainted int previousCount)
     {
         int count = previousCount;
 
@@ -681,7 +682,7 @@ abstract public class Battle
      * @param c The rangestriker
      * @return The penalty to the Skill Factor of the rangestriker from intervening hex.
      */
-    public int computeSkillPenaltyRangestrikeThrough(BattleHex hex1,
+    public @RUntainted int computeSkillPenaltyRangestrikeThrough(BattleHex hex1,
         BattleHex hex2, Creature c)
     {
         if (hex1 == hex2)
@@ -768,17 +769,17 @@ abstract public class Battle
         return location;
     }
 
-    public void setBattleTurnNumber(int battleTurnNumber)
+    public void setBattleTurnNumber(@RUntainted int battleTurnNumber)
     {
         this.battleTurnNumber = battleTurnNumber;
     }
 
-    public int getBattleTurnNumber()
+    public @RUntainted int getBattleTurnNumber()
     {
         return battleTurnNumber;
     }
 
-    public BattleCritter getCritter(BattleHex hex)
+    public @RUntainted BattleCritter getCritter(BattleHex hex)
     {
         assert hex != null;
         for (BattleCritter critter : getAllCritters())
@@ -804,13 +805,13 @@ abstract public class Battle
         return false;
     }
 
-    abstract public Legion getBattleActiveLegion();
+    abstract public @RUntainted Legion getBattleActiveLegion();
 
     /** Get all BattleCritters / BattleUnits
      *  Abstract because currently implementation is different, but needed
      *  on both side, e.g. for BattleMovement
      */
-    abstract protected List<BattleCritter> getAllCritters();
+    abstract protected List<@RUntainted BattleCritter> getAllCritters();
 
     abstract public boolean isInContact(BattleCritter striker,
         boolean countDead);

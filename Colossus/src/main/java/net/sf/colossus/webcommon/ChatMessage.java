@@ -2,16 +2,17 @@
  *
  */
 package net.sf.colossus.webcommon;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class ChatMessage
 {
-    String chatId;
-    long when;
-    String sender;
-    String message;
+    @RUntainted String chatId;
+    @RUntainted long when;
+    @RUntainted String sender;
+    @RUntainted String message;
 
-    public ChatMessage(String chatId, long when, String sender, String message)
+    public ChatMessage(@RUntainted String chatId, @RUntainted long when, @RUntainted String sender, @RUntainted String message)
     {
         this.chatId = chatId;
         this.when = when;
@@ -19,22 +20,22 @@ public class ChatMessage
         this.message = message;
     }
 
-    public String getChatId()
+    public @RUntainted String getChatId()
     {
         return this.chatId;
     }
 
-    public long getWhen()
+    public @RUntainted long getWhen()
     {
         return this.when;
     }
 
-    public String getSender()
+    public @RUntainted String getSender()
     {
         return this.sender;
     }
 
-    public String getMessage()
+    public @RUntainted String getMessage()
     {
         return this.message;
     }

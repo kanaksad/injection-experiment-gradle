@@ -3,6 +3,7 @@ package net.sf.colossus.util;
 
 import java.util.Collection;
 import java.util.Iterator;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -51,7 +52,7 @@ public final class Glob
         return Glob.glob(Glob.sep, a);
     }
 
-    public static String glob(String sep, Collection<?> col)
+    public static @RUntainted String glob(String sep, Collection<?> col)
     {
         StringBuilder sb = new StringBuilder();
         if (col != null)
@@ -74,7 +75,7 @@ public final class Glob
         return sb.toString();
     }
 
-    public static String glob(Collection<?> col)
+    public static @RUntainted String glob(Collection<?> col)
     {
         return Glob.glob(Glob.sep, col);
     }

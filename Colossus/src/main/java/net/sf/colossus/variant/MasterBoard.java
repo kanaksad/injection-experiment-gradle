@@ -14,6 +14,7 @@ import net.sf.colossus.common.Constants;
 import net.sf.colossus.common.Constants.HexsideGates;
 import net.sf.colossus.util.ArrayHelper;
 import net.sf.colossus.util.NullCheckPredicate;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -45,7 +46,7 @@ public class MasterBoard
      * TODO do something more OO, don't use arrays, fold {@link #show} into
      * it somehow (even using null seems better than the split).
      */
-    private final MasterHex[][] plainHexArray;
+    private final @RUntainted MasterHex[][] plainHexArray;
 
     /**
      * The hexes in the horizSize*vertSize array that actually exist are
@@ -56,12 +57,12 @@ public class MasterBoard
     /**
      * A Set of all Tower hexes.
      */
-    private final Set<MasterHex> towerSet;
+    private final Set<@RUntainted MasterHex> towerSet;
 
     /**
      * A cache for faster lookup of hexes using their labels.
      */
-    private final Map<String, MasterHex> hexByLabelCache = new HashMap<String, MasterHex>();
+    private final Map<String, @RUntainted MasterHex> hexByLabelCache = new HashMap<String, @RUntainted MasterHex>();
 
     public MasterBoard(int horizSize, int vertSize, boolean show[][],
         MasterHex[][] plainHexArray)
@@ -87,7 +88,7 @@ public class MasterBoard
         return boardParity;
     }
 
-    public MasterHex[][] getPlainHexArray()
+    public @RUntainted MasterHex[][] getPlainHexArray()
     {
         return plainHexArray;
     }
@@ -392,7 +393,7 @@ public class MasterBoard
 
     private void initHexByLabelCache()
     {
-        for (MasterHex[] row : plainHexArray)
+        for (@RUntainted MasterHex[] row : plainHexArray)
         {
             for (MasterHex masterHex : row)
             {
@@ -410,7 +411,7 @@ public class MasterBoard
      * @param label The label to find the hex for. Valid label, not null.
      * @return The label found.
      */
-    public MasterHex getHexByLabel(final String label)
+    public @RUntainted MasterHex getHexByLabel(final String label)
     {
         MasterHex hex = hexByLabelCache.get(label);
         // TODO such an assertion would be nice, but seems to fail when loading
@@ -419,7 +420,7 @@ public class MasterBoard
         return hex;
     }
 
-    public Set<MasterHex> getTowerSet()
+    public Set<@RUntainted MasterHex> getTowerSet()
     {
         return Collections.unmodifiableSet(towerSet);
     }
@@ -430,7 +431,7 @@ public class MasterBoard
             new NullCheckPredicate<MasterHex>(false)
             {
                 @Override
-                public boolean matchesNonNullValue(MasterHex hex)
+                public boolean matchesNonNullValue(@RUntainted MasterHex hex)
                 {
                     if (hex.getTerrain().isTower())
                     {
@@ -452,7 +453,7 @@ public class MasterBoard
     /**
      * Return a set of all hex labels.
      */
-    public Collection<MasterHex> getAllHexes()
+    public Collection<@RUntainted MasterHex> getAllHexes()
     {
         return hexByLabelCache.values();
     }

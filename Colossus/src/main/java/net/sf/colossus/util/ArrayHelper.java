@@ -2,6 +2,7 @@ package net.sf.colossus.util;
 
 
 import java.util.Arrays;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -19,7 +20,7 @@ public class ArrayHelper
      * @param predicate The match condition. Not null.
      * @return The first match or null if there is none.
      */
-    public static <T> T findFirstMatch(T[] input, Predicate<T> predicate)
+    public static <T> T findFirstMatch(@RUntainted T[] input, Predicate<T> predicate)
     {
         assert input != null : "Illegal null value as parameter";
         assert predicate != null : "Illegal null value as parameter";

@@ -18,6 +18,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.game.Player;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -32,14 +33,14 @@ final class PickMarker extends KDialog
 {
     private final ClientGUI gui;
 
-    private final Set<String> markerIds;
+    private final Set<@RUntainted String> markerIds;
 
     private final SaveWindow saveWindow;
 
     // if null, it's pick initial marker, otherwise it's for split legion
-    private final Legion parent;
+    private final @RUntainted Legion parent;
 
-    PickMarker(ClientGUI gui, Set<String> markerIds, Legion parent)
+    PickMarker(ClientGUI gui, Set<@RUntainted String> markerIds, @RUntainted Legion parent)
     {
         super(gui.getBoard().getFrame(), "dummy title", true);
         this.gui = gui;
@@ -127,7 +128,7 @@ final class PickMarker extends KDialog
      * if dialog was closed without choosing.
      *
      */
-    private void cleanup(String pickedMarkerId)
+    private void cleanup(@RUntainted String pickedMarkerId)
     {
         saveWindow.saveLocation(getLocation());
         dispose();

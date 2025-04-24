@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import net.sf.colossus.client.LegionClientSide;
 import net.sf.colossus.common.Options;
 import net.sf.colossus.util.HTMLColor;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -24,7 +25,7 @@ public final class LegionInfoPanel extends JPanel
 {
     private String valueText = "";
 
-    public LegionInfoPanel(LegionClientSide legion, int scale, int margin,
+    public LegionInfoPanel(LegionClientSide legion, @RUntainted int scale, int margin,
         int padding, boolean usePlayerColor, int viewMode, boolean isMyLegion,
         boolean dubiousAsBlanks, boolean showLegionValue, boolean showMarker)
     {
@@ -115,7 +116,7 @@ public final class LegionInfoPanel extends JPanel
     }
 
     private void viewAll(LegionClientSide legion, boolean usePlayerColor,
-        int scale, int margin, int padding, boolean dubiousAsBlanks,
+        @RUntainted int scale, int margin, int padding, boolean dubiousAsBlanks,
         boolean hideAll, boolean showLegionValue, boolean showMarker)
     {
         setLayout(null);
@@ -145,7 +146,7 @@ public final class LegionInfoPanel extends JPanel
             i++;
         }
 
-        List<String> imageNames = legion.getImageNames();
+        List<@RUntainted String> imageNames = legion.getImageNames();
         List<Boolean> certain = legion.getCertainties();
         boolean allCertain = !hideAll;
 
@@ -154,11 +155,11 @@ public final class LegionInfoPanel extends JPanel
         // (just unnecessary work if hideAll is set.)
         if (dubiousAsBlanks && !hideAll)
         {
-            Iterator<String> iIt = imageNames.iterator();
+            Iterator<@RUntainted String> iIt = imageNames.iterator();
             Iterator<Boolean> cIt = certain.iterator();
-            List<String> cNames = new ArrayList<String>();
+            List<@RUntainted String> cNames = new ArrayList<@RUntainted String>();
             List<Boolean> cCertain = new ArrayList<Boolean>();
-            List<String> ucNames = new ArrayList<String>();
+            List<@RUntainted String> ucNames = new ArrayList<@RUntainted String>();
             List<Boolean> ucCertain = new ArrayList<Boolean>();
             while (iIt.hasNext())
             {
@@ -189,7 +190,7 @@ public final class LegionInfoPanel extends JPanel
             ucCertain.clear();
         }
 
-        Iterator<String> it = imageNames.iterator();
+        Iterator<@RUntainted String> it = imageNames.iterator();
         Iterator<Boolean> it2 = certain.iterator();
 
         // now add the chits one by one to the panel:

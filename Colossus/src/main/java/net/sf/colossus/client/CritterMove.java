@@ -3,6 +3,7 @@ package net.sf.colossus.client;
 
 import net.sf.colossus.game.BattleCritter;
 import net.sf.colossus.variant.BattleHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -15,11 +16,11 @@ public class CritterMove
 {
     private int value;
     private final BattleCritter critter;
-    private final BattleHex startingHex;
-    private final BattleHex endingHex;
+    private final @RUntainted BattleHex startingHex;
+    private final @RUntainted BattleHex endingHex;
 
-    public CritterMove(BattleCritter critter, BattleHex startingHex,
-        BattleHex endingHex)
+    public CritterMove(BattleCritter critter, @RUntainted BattleHex startingHex,
+        @RUntainted BattleHex endingHex)
     {
         super();
         this.critter = critter;
@@ -47,12 +48,12 @@ public class CritterMove
         return critter.getTag();
     }
 
-    public BattleHex getStartingHex()
+    public @RUntainted BattleHex getStartingHex()
     {
         return startingHex;
     }
 
-    public BattleHex getEndingHex()
+    public @RUntainted BattleHex getEndingHex()
     {
         return endingHex;
     }

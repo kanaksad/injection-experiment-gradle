@@ -13,6 +13,7 @@ import javax.swing.text.Document;
 import net.sf.colossus.guiutil.KFrame;
 import net.sf.colossus.util.StaticResourceLoader;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**

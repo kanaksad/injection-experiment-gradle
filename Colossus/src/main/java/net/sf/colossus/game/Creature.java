@@ -9,6 +9,7 @@ import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.HazardHexside;
 import net.sf.colossus.variant.HazardTerrain;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -71,20 +72,20 @@ public class Creature
 
     private static final Logger LOGGER = Logger.getLogger(Creature.class
         .getName());
-    final private CreatureType type;
-    protected Legion legion;
-    private BattleHex currentHex;
-    private BattleHex startingHex;
+    final private @RUntainted CreatureType type;
+    protected @RUntainted Legion legion;
+    private @RUntainted BattleHex currentHex;
+    private @RUntainted BattleHex startingHex;
 
     /**
      * Damage taken
      */
-    private int hits = 0;
-    private int poisonDamage = 0;
+    private @RUntainted int hits = 0;
+    private @RUntainted int poisonDamage = 0;
     private int slowed = 0;
     private boolean struck;
 
-    public Creature(CreatureType type, Legion legion)
+    public Creature(@RUntainted CreatureType type, @RUntainted Legion legion)
     {
         this.type = type;
         this.legion = legion;
@@ -92,7 +93,7 @@ public class Creature
         startingHex = null;
     }
 
-    public CreatureType getType()
+    public @RUntainted CreatureType getType()
     {
         return type;
     }
@@ -110,8 +111,8 @@ public class Creature
      * @param targetHexside Type of hexside hazard between the target hex and the current hex
      * @return The Power Factor of the current Creature when all modifiers are factored in
      */
-    public int getStrikingPower(Creature target, int myElevation,
-        int targetElevation, HazardTerrain myHexTerrain,
+    public @RUntainted int getStrikingPower(Creature target, @RUntainted int myElevation,
+        @RUntainted int targetElevation, HazardTerrain myHexTerrain,
         HazardTerrain targetHexTerrain, HazardHexside myHexside,
         HazardHexside targetHexside)
     {
@@ -162,8 +163,8 @@ public class Creature
      * @param targetHexside Type of hexside hazard between the target hex and the current hex
      * @return The Skill Factor of the current Creature when all modifiers are factored in
      */
-    public int getStrikingSkill(Creature target, int myElevation,
-        int targetElevation, HazardTerrain myHexTerrain,
+    public @RUntainted int getStrikingSkill(Creature target, @RUntainted int myElevation,
+        @RUntainted int targetElevation, HazardTerrain myHexTerrain,
         HazardTerrain targetHexTerrain, HazardHexside myHexside,
         HazardHexside targetHexside)
     {
@@ -203,7 +204,7 @@ public class Creature
         return attackerSkill;
     }
 
-    public Legion getLegion()
+    public @RUntainted Legion getLegion()
     {
         return legion;
     }
@@ -213,7 +214,7 @@ public class Creature
         return legion.getPlayer();
     }
 
-    public int getPower()
+    public @RUntainted int getPower()
     {
         if (isTitan())
         {
@@ -222,7 +223,7 @@ public class Creature
         return getType().getPower();
     }
 
-    public int getTitanPower()
+    public @RUntainted int getTitanPower()
     {
         Player player = getPlayer();
         if (player != null)
@@ -242,7 +243,7 @@ public class Creature
         return legion.getMarkerId();
     }
 
-    public String getName()
+    public @RUntainted String getName()
     {
         return getType().getName();
     }
@@ -252,32 +253,32 @@ public class Creature
         return getType().isTitan();
     }
 
-    public String getDescription()
+    public @RUntainted String getDescription()
     {
         return getName() + " in " + getCurrentHex().getDescription();
     }
 
-    public BattleHex getStartingHex()
+    public @RUntainted BattleHex getStartingHex()
     {
         return startingHex;
     }
 
-    public void setStartingHex(BattleHex hex)
+    public void setStartingHex(@RUntainted BattleHex hex)
     {
         this.startingHex = hex;
     }
 
-    public BattleHex getCurrentHex()
+    public @RUntainted BattleHex getCurrentHex()
     {
         return currentHex;
     }
 
-    public void setCurrentHex(BattleHex hex)
+    public void setCurrentHex(@RUntainted BattleHex hex)
     {
         this.currentHex = hex;
     }
 
-    public void moveToHex(BattleHex hex)
+    public void moveToHex(@RUntainted BattleHex hex)
     {
         setCurrentHex(hex);
     }
@@ -348,29 +349,29 @@ public class Creature
         return getType().isNativeIn(terrain);
     }
 
-    public int getPointValue()
+    public @RUntainted int getPointValue()
     {
         // Must use our local, Titan-aware getPower()
         // return getCreature().getPointValue();
         return getPower() * getSkill();
     }
 
-    public int getSkill()
+    public @RUntainted int getSkill()
     {
         return getType().getSkill();
     }
 
-    public int getHits()
+    public @RUntainted int getHits()
     {
         return hits;
     }
 
-    public int getPoison()
+    public @RUntainted int getPoison()
     {
         return getType().getPoison();
     }
 
-    public int getPoisonDamage()
+    public @RUntainted int getPoisonDamage()
     {
         return poisonDamage;
     }
@@ -390,17 +391,17 @@ public class Creature
         return struck;
     }
 
-    public void setHits(int hits)
+    public void setHits(@RUntainted int hits)
     {
         this.hits = hits;
     }
 
-    public void setPoisonDamage(int damage)
+    public void setPoisonDamage(@RUntainted int damage)
     {
         poisonDamage = damage;
     }
 
-    public void addPoisonDamage(int damage)
+    public void addPoisonDamage(@RUntainted int damage)
     {
         poisonDamage += damage;
     }
@@ -468,7 +469,7 @@ public class Creature
      * Apply damage or healing to this critter.  Return the amount of excess damage
      * done, which may sometimes carry to another target.
      */
-    public int adjustHits(int damage)
+    public @RUntainted int adjustHits(@RUntainted int damage)
     {
         int excess = 0;
         int tmp_hits = getHits();

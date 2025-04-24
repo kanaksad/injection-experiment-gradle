@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.colossus.webserver.WebServerClient;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class UserDB
@@ -22,18 +23,18 @@ public class UserDB
     private static final Logger LOGGER = Logger.getLogger(UserDB.class
         .getName());
 
-    private final int maxUsers;
+    private final @RUntainted int maxUsers;
 
-    private final String usersFile;
+    private final @RUntainted String usersFile;
 
     private final HashMap<String, User> userMap = new HashMap<String, User>();
-    private final HashMap<String, User> loggedInUserMap = new HashMap<String, User>();
+    private final @RUntainted HashMap<String, User> loggedInUserMap = new HashMap<String, User>();
 
     private final HashMap<String, User> pendingRegistrations = new HashMap<String, User>();
 
-    private long highestExistingId;
+    private @RUntainted long highestExistingId;
 
-    public UserDB(String filename, int maxUsersVal)
+    public UserDB(@RUntainted String filename, @RUntainted int maxUsersVal)
     {
         maxUsers = maxUsersVal;
         usersFile = filename;
@@ -79,7 +80,7 @@ public class UserDB
         }
     }
 
-    public Collection<User> getLoggedInUsers()
+    public @RUntainted Collection<User> getLoggedInUsers()
     {
         synchronized (loggedInUserMap)
         {
@@ -121,24 +122,24 @@ public class UserDB
     }
 
     // still dummy
-    public int getDeadCount()
+    public @RUntainted int getDeadCount()
     {
         return 0;
     }
 
     // still dummy
-    public int getEnrolledCount()
+    public @RUntainted int getEnrolledCount()
     {
         return 0;
     }
 
     // still dummy
-    public int getPlayingCount()
+    public @RUntainted int getPlayingCount()
     {
         return 0;
     }
 
-    public int getLoggedInCount()
+    public @RUntainted int getLoggedInCount()
     {
         synchronized (loggedInUserMap)
         {
@@ -163,7 +164,7 @@ public class UserDB
      * @param password
      * @return reasonLoginFailed (String), null if login ok
      **/
-    public String verifyLogin(String username, String password)
+    public @RUntainted String verifyLogin(String username, String password)
     {
         String reasonLoginFailed = null;
 
@@ -185,7 +186,7 @@ public class UserDB
         return reasonLoginFailed;
     }
 
-    public String registerUser(String username, String password, String email,
+    public @RUntainted String registerUser(@RUntainted String username, @RUntainted String password, @RUntainted String email,
         IColossusMail mailObject)
     {
         boolean isAdmin = false;
@@ -237,14 +238,14 @@ public class UserDB
         }
     }
 
-    public String sendConfirmationMail(String username, String email,
-        String confCode, IColossusMail mailObject)
+    public @RUntainted String sendConfirmationMail(@RUntainted String username, @RUntainted String email,
+        @RUntainted String confCode, IColossusMail mailObject)
     {
         // this is in webcommon package:
         return mailObject.sendConfirmationMail(username, email, confCode);
     }
 
-    public String confirmRegistration(String username, String confirmationCode)
+    public @RUntainted String confirmRegistration(@RUntainted String username, @RUntainted String confirmationCode)
     {
         String reason = "";
         if (confirmationCode == null || confirmationCode.equals("null")
@@ -262,7 +263,7 @@ public class UserDB
         return reason;
     }
 
-    private String confirmIfCorrectCode(String username,
+    private @RUntainted String confirmIfCorrectCode(@RUntainted String username,
         String tryConfirmationCode)
     {
         User u = pendingRegistrations.get(username);
@@ -286,8 +287,8 @@ public class UserDB
         return null;
     }
 
-    public String changeProperties(String username, String oldPW,
-        String newPW, String email, Boolean isAdmin)
+    public @RUntainted String changeProperties(String username, String oldPW,
+        @RUntainted String newPW, @RUntainted String email, @RUntainted Boolean isAdmin)
     {
         String reason;
 

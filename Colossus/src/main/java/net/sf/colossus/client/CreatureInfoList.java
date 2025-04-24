@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -35,9 +36,9 @@ class CreatureInfoList extends ArrayList<CreatureInfo>
         LOGGER.log(Level.SEVERE, "No uncertain creatures");
     }
 
-    List<String> getCreatureNames()
+    List<@RUntainted String> getCreatureNames()
     {
-        List<String> list = new ArrayList<String>();
+        List<@RUntainted String> list = new ArrayList<@RUntainted String>();
         for (CreatureInfo ci : this)
         {
             list.add(ci.getName());
@@ -57,7 +58,7 @@ class CreatureInfoList extends ArrayList<CreatureInfo>
 
     /** Deep copy */
     @Override
-    public CreatureInfoList clone()
+    public @RUntainted CreatureInfoList clone()
     {
         CreatureInfoList dupe = new CreatureInfoList();
         for (CreatureInfo ci : this)

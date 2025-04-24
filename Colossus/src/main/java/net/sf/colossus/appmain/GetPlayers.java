@@ -53,6 +53,7 @@ import net.sf.colossus.util.BuildInfo;
 import net.sf.colossus.util.StaticResourceLoader;
 import net.sf.colossus.util.SystemInfo;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -86,7 +87,7 @@ public final class GetPlayers extends KFrame
     private JScrollPane readmeScrollPane;
     private final JTabbedPane tabbedPane;
 
-    private final JComboBox<String> variantBox;
+    private final @RUntainted JComboBox<String> variantBox;
     private final Vector<String> variantVector;
     private final JComboBox<String> viewModeBox;
     private final JComboBox<String> eventExpiringBox;
@@ -562,7 +563,7 @@ public final class GetPlayers extends KFrame
         }
     }
 
-    private void actOnVariantChange(int oldMaxPlayers, String newVarName)
+    private void actOnVariantChange(int oldMaxPlayers, @RUntainted String newVarName)
     {
         Variant variant = VariantSupport.loadVariantByName(newVarName, true);
         Document doc = variant.getReadme();
@@ -654,7 +655,7 @@ public final class GetPlayers extends KFrame
         typeChoices.add(Constants.none);
     }
 
-    private void doOnePlayer(final int i, Container allPlayersPane)
+    private void doOnePlayer(final @RUntainted int i, Container allPlayersPane)
     {
         JPanel onePlayerPane = new JPanel();
         onePlayerPane.setLayout(new GridLayout(0, 3));
@@ -796,7 +797,7 @@ public final class GetPlayers extends KFrame
         }
     }
 
-    private void addCheckbox(final String optname, Container pane)
+    private void addCheckbox(final @RUntainted String optname, Container pane)
     {
         JCheckBox cb = new JCheckBox(optname);
         cb.setSelected(options.getOption(optname));

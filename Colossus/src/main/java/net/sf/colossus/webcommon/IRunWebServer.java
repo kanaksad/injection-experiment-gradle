@@ -1,4 +1,5 @@
 package net.sf.colossus.webcommon;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -15,19 +16,19 @@ package net.sf.colossus.webcommon;
  */
 public interface IRunWebServer
 {
-    public void tellEnrolledGameStartsSoon(GameInfo gi);
+    public void tellEnrolledGameStartsSoon(@RUntainted GameInfo gi);
 
-    public void tellEnrolledGameStartsNow(GameInfo gi, String host, int port);
+    public void tellEnrolledGameStartsNow(@RUntainted GameInfo gi, @RUntainted String host, @RUntainted int port);
 
-    public void gameStarted(GameInfo gi);
+    public void gameStarted(@RUntainted GameInfo gi);
 
-    public void allTellGameInfo(GameInfo gi);
+    public void allTellGameInfo(@RUntainted GameInfo gi);
 
-    public void gameFailed(GameInfo gi, String reason);
+    public void gameFailed(GameInfo gi, @RUntainted String reason);
 
-    public void informAllEnrolledAbout(GameInfo gi, String message);
+    public void informAllEnrolledAbout(GameInfo gi, @RUntainted String message);
 
-    public void unregisterGame(GameInfo gi, int port);
+    public void unregisterGame(@RUntainted GameInfo gi, int port);
 
     public IPortProvider getPortProvider();
 }

@@ -1,4 +1,5 @@
 package net.sf.colossus.util;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -31,7 +32,7 @@ public class NullCheckPredicate<T> implements Predicate<T>
         this.nullValue = nullValue;
     }
 
-    public final boolean matches(T object)
+    public final boolean matches(@RUntainted T object)
     {
         if (object == null)
         {
@@ -50,7 +51,7 @@ public class NullCheckPredicate<T> implements Predicate<T>
      * @return True iff the object matches. In the default implementation the
      *     opposite of the null value.
      */
-    protected boolean matchesNonNullValue(T object)
+    protected boolean matchesNonNullValue(@RUntainted T object)
     {
         assert object != null;
         return !nullValue;

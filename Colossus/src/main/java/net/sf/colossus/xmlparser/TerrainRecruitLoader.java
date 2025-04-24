@@ -36,6 +36,7 @@ import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.RecruitingSubTree;
 import net.sf.colossus.variant.Variant.AcquirableData;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -68,7 +69,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
     private int aquirableRecruitmentsValue;
 
     /** Base amount of points needed for Titan improvement. */
-    private int titanImprove = 100;
+    private @RUntainted int titanImprove = 100;
 
     /** Amount of points needed for Titan Teleport. */
     private int titanTeleport = 400;
@@ -105,7 +106,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
     /**
      * A map from the terrain names to the terrains.
      */
-    private static Map<String, MasterBoardTerrain> terrains = new HashMap<String, MasterBoardTerrain>();
+    private static Map<String, @RUntainted MasterBoardTerrain> terrains = new HashMap<String, @RUntainted MasterBoardTerrain>();
 
     /**
      * The list of Acquirable Creature, as acquirableData.
@@ -115,7 +116,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
 
     /** support for the custom recruiting functions ; map the class name to an
      instance of the class. */
-    private static Map<String, CustomRecruitBase> nameToInstance = new HashMap<String, CustomRecruitBase>();
+    private static Map<String, @RUntainted CustomRecruitBase> nameToInstance = new HashMap<String, @RUntainted CustomRecruitBase>();
 
     /**
      * Representation of the Recruiting Graph (for use)
@@ -129,7 +130,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
     /** The AllCreatureType object to use, needed to convert from String (name)
      * to the actual CreatureType.
      */
-    private final AllCreatureType creatureTypes;
+    private final @RUntainted AllCreatureType creatureTypes;
 
     /**
      * set the Caretaker used by the graph
@@ -154,7 +155,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
      * Add an entire terrain recruiting list to the Recruiting Graph.
      * @param rl The list of RecruitNumber to add to the graph.
      */
-    private static void addToGraph(List<RecruitNumber> rl, MasterBoardTerrain t)
+    private static void addToGraph(List<RecruitNumber> rl, @RUntainted MasterBoardTerrain t)
     {
         Iterator<RecruitNumber> it = rl.iterator();
         String v1 = null;
@@ -254,8 +255,8 @@ public class TerrainRecruitLoader implements IVariantInitializer
 
     // we need to cast since JDOM is not generified
     @SuppressWarnings("unchecked")
-    public TerrainRecruitLoader(InputStream terIS,
-        AllCreatureType creatureTypes)
+    public TerrainRecruitLoader(@RUntainted InputStream terIS,
+        @RUntainted AllCreatureType creatureTypes)
     {
         this.creatureTypes = creatureTypes;
         SAXBuilder builder = new SAXBuilder();
@@ -264,12 +265,12 @@ public class TerrainRecruitLoader implements IVariantInitializer
             Document doc = builder.build(terIS);
             Element root = doc.getRootElement();
 
-            List<Element> lterrains = root.getChildren("terrain");
+            List<@RUntainted Element> lterrains = root.getChildren("terrain");
             for (Element el : lterrains)
             {
                 handleTerrain(el);
             }
-            List<Element> aliases = root.getChildren("alias");
+            List<@RUntainted Element> aliases = root.getChildren("alias");
             for (Element el : aliases)
             {
                 handleAlias(el);
@@ -279,7 +280,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
             {
                 acquirableList = new ArrayList<AcquirableData>();
             }
-            List<Element> acquirables = root.getChildren("acquirable");
+            List<@RUntainted Element> acquirables = root.getChildren("acquirable");
             for (Element el : acquirables)
             {
                 handleAcquirable(el);
@@ -313,7 +314,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
 
     // we need to cast since JDOM is not generified
     @SuppressWarnings("unchecked")
-    private void handleTerrain(Element el) throws JDOMException
+    private void handleTerrain(@RUntainted Element el) throws JDOMException
     {
         String name = el.getAttributeValue("name");
         String displayName = el.getAttributeValue("display_name");
@@ -329,7 +330,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
         ArrayList<RecruitNumber> rl = new ArrayList<RecruitNumber>();
         boolean regularRecruit = el.getAttribute("regular_recruit")
             .getBooleanValue();
-        List<Element> recruits = el.getChildren("recruit");
+        List<@RUntainted Element> recruits = el.getChildren("recruit");
         for (Element recruit : recruits)
         {
             String recruitName = recruit.getAttributeValue("name");
@@ -339,7 +340,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
         }
 
         ArrayList<StartingNumber> sl = new ArrayList<StartingNumber>();
-        List<Element> starters = el.getChildren("starting");
+        List<@RUntainted Element> starters = el.getChildren("starting");
         int total = 0;
         for (Element starter : starters)
         {
@@ -379,7 +380,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
         terrain.setRecruitingSubTree(rst);
     }
 
-    private RecruitingSubTree buildRecruitingSubTree(List<RecruitNumber> rl,
+    private @RUntainted RecruitingSubTree buildRecruitingSubTree(List<RecruitNumber> rl,
         boolean regularRecruit)
     {
         RecruitingSubTree rst = new RecruitingSubTree(this.creatureTypes);
@@ -450,7 +451,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
     }
 
     // we need to cast since JDOM is not generified
-    private void handleAlias(Element el) throws ParseException
+    private void handleAlias(@RUntainted Element el) throws ParseException
     {
         String name = el.getAttributeValue("name");
         String source = el.getAttributeValue("source");
@@ -492,7 +493,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
         terrain.setRecruitingSubTree(source_terrain.getRecruitingSubTree());
     }
 
-    private void handleAcquirable(Element el) throws JDOMException,
+    private void handleAcquirable(@RUntainted Element el) throws JDOMException,
         ParseException
     {
         String name = el.getAttribute("name").getValue();
@@ -553,7 +554,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
      *
      * @return A collection containing all instances of {@link MasterBoardTerrain}.
      */
-    public Collection<MasterBoardTerrain> getTerrains()
+    public Collection<@RUntainted MasterBoardTerrain> getTerrains()
     {
         return Collections.unmodifiableCollection(terrains.values());
     }
@@ -583,12 +584,12 @@ public class TerrainRecruitLoader implements IVariantInitializer
         /**
          * The Name
          */
-        private final String name;
+        private final @RUntainted String name;
 
         /**
          * The number in the pair
          */
-        private final int number;
+        private final @RUntainted int number;
 
         private boolean checked = false;
 
@@ -596,13 +597,13 @@ public class TerrainRecruitLoader implements IVariantInitializer
          * @param n The Name of the creature
          * @param i The Number
          */
-        public CreatureAndNumber(String n, int i)
+        public CreatureAndNumber(@RUntainted String n, @RUntainted int i)
         {
             name = n;
             number = i;
         }
 
-        String getName()
+        @RUntainted String getName()
         {
             return name;
         }
@@ -630,7 +631,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
             return creature;
         }
 
-        int getNumber()
+        @RUntainted int getNumber()
         {
             return number;
         }
@@ -660,7 +661,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
          * @param i Number of creatures needed to recruit it in the
          * terrain considered.
          */
-        public RecruitNumber(String n, int i)
+        public RecruitNumber(@RUntainted String n, @RUntainted int i)
         {
             super(n, i);
         }
@@ -679,13 +680,13 @@ public class TerrainRecruitLoader implements IVariantInitializer
          * @param n Name of the creature
          * @param i Number of creatures when starting.
          */
-        public StartingNumber(String n, int i)
+        public StartingNumber(@RUntainted String n, @RUntainted int i)
         {
             super(n, i);
         }
     }
 
-    public static ICustomRecruitBase getCustomRecruitBase(String specialString)
+    public static @RUntainted ICustomRecruitBase getCustomRecruitBase(@RUntainted String specialString)
     {
         CustomRecruitBase cri = nameToInstance.get(specialString);
         if (cri != null)
@@ -920,7 +921,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
                     ICustomRecruitBase cri = getCustomRecruitBase(tr.getName());
                     if (cri != null)
                     {
-                        List<CreatureType> temp = cri
+                        List<@RUntainted CreatureType> temp = cri
                             .getPossibleSpecialRecruiters(hex);
                         re.addAll(temp);
                     }
@@ -928,7 +929,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
             }
         }
 
-        Set<CreatureType> theSet = terrain.getRecruitingSubTree()
+        Set<@RUntainted CreatureType> theSet = terrain.getRecruitingSubTree()
             .getPossibleRecruiters(hex);
         Set<CreatureType> theSet2 = new TreeSet<CreatureType>(re);
         if (!theSet.equals(theSet2))
@@ -1004,7 +1005,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
      * To obtain the base amount of points needed for Titan improvement.
      * @return The base amount of points needed for Titan improvement.
      */
-    public int getTitanImprovementValue()
+    public @RUntainted int getTitanImprovementValue()
     {
         return titanImprove;
     }
@@ -1070,13 +1071,13 @@ public class TerrainRecruitLoader implements IVariantInitializer
             return new ArrayList<AcquirableData>();
         }
 
-        public Collection<MasterBoardTerrain> getTerrains()
+        public Collection<@RUntainted MasterBoardTerrain> getTerrains()
         {
             // TODO Auto-generated method stub
             return new ArrayList<MasterBoardTerrain>();
         }
 
-        public int getTitanImprovementValue()
+        public @RUntainted int getTitanImprovementValue()
         {
             // TODO Auto-generated method stub
             warnThatNullTerrainRecruitLoader("getTitanImprovementValue");
@@ -1089,7 +1090,7 @@ public class TerrainRecruitLoader implements IVariantInitializer
             return 400;
         }
 
-        private void warnThatNullTerrainRecruitLoader(String message)
+        private void warnThatNullTerrainRecruitLoader(@RUntainted String message)
         {
             if (showNullWarning)
             {

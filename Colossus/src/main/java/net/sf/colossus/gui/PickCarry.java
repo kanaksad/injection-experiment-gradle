@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
 import net.sf.colossus.variant.BattleHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -26,13 +27,13 @@ import net.sf.colossus.variant.BattleHex;
 final class PickCarry extends KDialog
 {
     private final ClientGUI gui;
-    private final Set<String> choices;
+    private final Set<@RUntainted String> choices;
     private static final String cancel = "Decline carry";
     private final SaveWindow saveWindow;
 
     /** Each choice is a String of form "Warbear in Plains Hex G3" */
     PickCarry(JFrame parentFrame, ClientGUI clientGui, int carryDamage,
-        Set<String> choices)
+        Set<@RUntainted String> choices)
     {
         super(parentFrame, "Apply " + carryDamage
             + (carryDamage == 1 ? " carry to:" : " carries to:"), false);
@@ -81,7 +82,7 @@ final class PickCarry extends KDialog
         JButton button = new JButton(text);
         button.addActionListener(new ActionListener()
         {
-            public void actionPerformed(ActionEvent e)
+            public void actionPerformed(@RUntainted ActionEvent e)
             {
                 String desc = e.getActionCommand();
                 handleCarryToDescription(desc);
@@ -99,7 +100,7 @@ final class PickCarry extends KDialog
      * Check whether the clicked hex is a potential carry
      * and if yes, return choice the description string
      */
-    public String findCarryChoiceForHex(String hex)
+    public @RUntainted String findCarryChoiceForHex(String hex)
     {
         for (String desc : choices)
         {
@@ -119,7 +120,7 @@ final class PickCarry extends KDialog
      *
      * @param desc String denoting a carry target choice
      */
-    public void handleCarryToDescription(String desc)
+    public void handleCarryToDescription(@RUntainted String desc)
     {
         if (desc.equals(cancel))
         {

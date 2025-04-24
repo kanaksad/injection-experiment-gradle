@@ -20,6 +20,7 @@ import net.sf.colossus.game.Player;
 import net.sf.colossus.game.actions.SummonUndo;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -50,7 +51,7 @@ public final class BattleServerSide extends Battle
     private LegionTags activeLegionTag;
     private BattlePhase phase;
     private AngelSummoningStates summonState = AngelSummoningStates.NO_KILLS;
-    private int carryDamage;
+    private @RUntainted int carryDamage;
     private boolean attackerElim;
     private boolean defenderElim;
     private boolean battleOver;
@@ -67,8 +68,8 @@ public final class BattleServerSide extends Battle
 
     private final BattleMovementServerSide battleMovement;
 
-    BattleServerSide(GameServerSide game, Legion attacker, Legion defender,
-        LegionTags activeLegionTag, MasterHex masterHex, BattlePhase phase)
+    BattleServerSide(GameServerSide game, @RUntainted Legion attacker, @RUntainted Legion defender,
+        LegionTags activeLegionTag, @RUntainted MasterHex masterHex, BattlePhase phase)
     {
         super(game, attacker, defender, masterHex);
 
@@ -197,12 +198,12 @@ public final class BattleServerSide extends Battle
     }
 
     @Override
-    public Legion getBattleActiveLegion()
+    public @RUntainted Legion getBattleActiveLegion()
     {
         return getLegion(activeLegionTag);
     }
 
-    Player getBattleActivePlayer()
+    @RUntainted Player getBattleActivePlayer()
     {
         return getBattleActiveLegion().getPlayer();
     }
@@ -211,7 +212,7 @@ public final class BattleServerSide extends Battle
      * Override with covariant return type to ease transition into new model.
      */
     @Override
-    public LegionServerSide getAttackingLegion()
+    public @RUntainted LegionServerSide getAttackingLegion()
     {
         return (LegionServerSide)super.getAttackingLegion();
     }
@@ -220,7 +221,7 @@ public final class BattleServerSide extends Battle
      * Override with covariant return type to ease transition into new model.
      */
     @Override
-    public LegionServerSide getDefendingLegion()
+    public @RUntainted LegionServerSide getDefendingLegion()
     {
         return (LegionServerSide)super.getDefendingLegion();
     }
@@ -236,7 +237,7 @@ public final class BattleServerSide extends Battle
             : LegionTags.ATTACKER);
     }
 
-    private LegionServerSide getLegion(LegionTags legionTag)
+    private @RUntainted LegionServerSide getLegion(LegionTags legionTag)
     {
         switch (legionTag)
         {
@@ -512,7 +513,7 @@ public final class BattleServerSide extends Battle
         return carryDamage;
     }
 
-    void setCarryDamage(int carryDamage)
+    void setCarryDamage(@RUntainted int carryDamage)
     {
         this.carryDamage = carryDamage;
     }
@@ -682,10 +683,10 @@ public final class BattleServerSide extends Battle
         {
             return;
         }
-        List<CreatureServerSide> critters = legion.getCreatures();
+        List<@RUntainted CreatureServerSide> critters = legion.getCreatures();
         if (critters != null)
         {
-            Iterator<CreatureServerSide> it = critters.iterator();
+            Iterator<@RUntainted CreatureServerSide> it = critters.iterator();
             while (it.hasNext())
             {
                 CreatureServerSide critter = it.next();
@@ -710,7 +711,7 @@ public final class BattleServerSide extends Battle
         }
     }
 
-    private void cleanupOneDeadCritter(Creature critter)
+    private void cleanupOneDeadCritter(@RUntainted Creature critter)
     {
         LegionServerSide legion = (LegionServerSide)critter.getLegion();
         LegionServerSide donor = null;
@@ -987,9 +988,9 @@ public final class BattleServerSide extends Battle
         return Collections.unmodifiableSet(carryTargets);
     }
 
-    Set<String> getCarryTargetDescriptions()
+    Set<@RUntainted String> getCarryTargetDescriptions()
     {
-        Set<String> set = new HashSet<String>();
+        Set<@RUntainted String> set = new HashSet<@RUntainted String>();
         for (BattleHex hex : getCarryTargets())
         {
             CreatureServerSide critter = getCreatureSS(hex);
@@ -1046,7 +1047,7 @@ public final class BattleServerSide extends Battle
     }
 
     /** If legal, move critter to hex and return true. Else return false. */
-    String doMove(int tag, BattleHex hex)
+    @RUntainted String doMove(@RUntainted int tag, @RUntainted BattleHex hex)
     {
         String reasonFail = null;
 
@@ -1101,7 +1102,7 @@ public final class BattleServerSide extends Battle
     }
 
     private void moveCritterToHexAndInformClients(CreatureServerSide critter,
-        BattleHex hex)
+        @RUntainted BattleHex hex)
     {
         critter.moveToHex(hex);
         getGame().getServer().allTellBattleMove(critter.getTag(),
@@ -1116,9 +1117,9 @@ public final class BattleServerSide extends Battle
     }
 
     @Override
-    public List<BattleCritter> getAllCritters()
+    public List<@RUntainted BattleCritter> getAllCritters()
     {
-        List<BattleCritter> critters = new ArrayList<BattleCritter>();
+        List<@RUntainted BattleCritter> critters = new ArrayList<@RUntainted BattleCritter>();
         LegionServerSide defender = getDefendingLegion();
         if (defender != null)
         {
@@ -1133,7 +1134,7 @@ public final class BattleServerSide extends Battle
     }
 
     // TODO use getCritter() instead
-    CreatureServerSide getCreatureSS(BattleHex hex)
+    @RUntainted CreatureServerSide getCreatureSS(BattleHex hex)
     {
         return (CreatureServerSide)getCritter(hex);
     }

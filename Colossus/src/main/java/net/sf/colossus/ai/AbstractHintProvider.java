@@ -9,6 +9,7 @@ import net.sf.colossus.variant.IVariantHint;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -30,7 +31,7 @@ public abstract class AbstractHintProvider implements IVariantHint
     /**
      * No creature gets an offset by default, subclasses can override.
      */
-    public int getHintedRecruitmentValueOffset(CreatureType creature,
+    public @RUntainted int getHintedRecruitmentValueOffset(CreatureType creature,
         List<AIStyle> styles)
     {
         return 0;
@@ -41,7 +42,7 @@ public abstract class AbstractHintProvider implements IVariantHint
         return variant;
     }
 
-    protected CreatureType getCreatureType(String creatureName)
+    protected CreatureType getCreatureType(@RUntainted String creatureName)
     {
         return variant.getCreatureByName(creatureName);
     }

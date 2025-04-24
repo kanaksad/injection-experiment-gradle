@@ -2,6 +2,7 @@ package net.sf.colossus.util;
 
 
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class ResourceLoader
@@ -9,10 +10,10 @@ public class ResourceLoader
     private static final Logger LOGGER = Logger.getLogger(ResourceLoader.class
         .getName());
 
-    private final String host;
-    private final int port;
+    private final @RUntainted String host;
+    private final @RUntainted int port;
 
-    public ResourceLoader(String hostArg, int portArg)
+    public ResourceLoader(@RUntainted String hostArg, @RUntainted int portArg)
     {
         this.host = hostArg;
         this.port = portArg;
@@ -25,7 +26,7 @@ public class ResourceLoader
     }
 
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         return "ResourceLoader with DataServer " + host + ":" + port;
     }

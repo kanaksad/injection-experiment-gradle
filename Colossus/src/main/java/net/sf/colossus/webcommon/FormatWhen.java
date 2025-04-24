@@ -6,6 +6,7 @@ package net.sf.colossus.webcommon;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class FormatWhen
@@ -13,11 +14,11 @@ public class FormatWhen
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "HH:mm:ss";
 
-    private final SimpleDateFormat dateFormatter;
-    private final SimpleDateFormat timeFormatter;
+    private final @RUntainted SimpleDateFormat dateFormatter;
+    private final @RUntainted SimpleDateFormat timeFormatter;
 
     private String datePrev;
-    private String changedDateString = null;
+    private @RUntainted String changedDateString = null;
 
     public FormatWhen()
     {
@@ -30,12 +31,12 @@ public class FormatWhen
     /* call this *after* timeAsString() call
      * It will return the new date, if changed, null otherwise */
 
-    public String hasDateChanged()
+    public @RUntainted String hasDateChanged()
     {
         return changedDateString;
     }
 
-    public String timeAsString(long when)
+    public @RUntainted String timeAsString(@RUntainted long when)
     {
         Date whenDate = new Date(when);
         String timeNow = timeFormatter.format(whenDate);
@@ -54,7 +55,7 @@ public class FormatWhen
         return timeNow;
     }
 
-    public String timeAndDateAsString(long when)
+    public @RUntainted String timeAndDateAsString(@RUntainted long when)
     {
         Date whenDate = new Date(when);
         String timeNow = timeFormatter.format(whenDate);

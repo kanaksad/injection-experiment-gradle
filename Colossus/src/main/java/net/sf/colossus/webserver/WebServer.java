@@ -41,6 +41,7 @@ import net.sf.colossus.webcommon.IWebClient;
 import net.sf.colossus.webcommon.IWebServer;
 import net.sf.colossus.webcommon.User;
 import net.sf.colossus.webcommon.UserDB;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -70,7 +71,7 @@ public class WebServer implements IWebServer, IRunWebServer
     private final int INACTIVITY_WARNING_INTERVAL = 30;
     private final int INACTIVITY_TIMEOUT = 90;
 
-    private final static ArrayList<String> loginMessage = new ArrayList<String>();
+    private final static ArrayList<@RUntainted String> loginMessage = new ArrayList<@RUntainted String>();
 
     /**
      * Controls whether the GUI is shown or not.
@@ -84,27 +85,27 @@ public class WebServer implements IWebServer, IRunWebServer
 
     private boolean shutdownRequested = false;
 
-    private String proposedGamesFilename;
+    private @RUntainted String proposedGamesFilename;
     private boolean proposedGamesListModified = false;
 
-    private final int maxClients;
+    private final @RUntainted int maxClients;
 
     private UserDB userDB;
-    private final HashMap<String, GameInfo> allGames = new HashMap<String, GameInfo>();
+    private final @RUntainted HashMap<String, @RUntainted GameInfo> allGames = new HashMap<String, @RUntainted GameInfo>();
 
-    private final ArrayList<GameInfo> proposedGames = new ArrayList<GameInfo>();
-    private final ArrayList<GameInfo> runningGames = new ArrayList<GameInfo>();
-    private final ArrayList<GameInfo> suspendedGames = new ArrayList<GameInfo>();
-    private final ArrayList<GameInfo> endingGames = new ArrayList<GameInfo>();
+    private final ArrayList<@RUntainted GameInfo> proposedGames = new ArrayList<@RUntainted GameInfo>();
+    private final @RUntainted ArrayList<@RUntainted GameInfo> runningGames = new ArrayList<@RUntainted GameInfo>();
+    private final @RUntainted ArrayList<@RUntainted GameInfo> suspendedGames = new ArrayList<@RUntainted GameInfo>();
+    private final @RUntainted ArrayList<GameInfo> endingGames = new ArrayList<GameInfo>();
 
     // Used also as separator for storing proposed games to file:
     private final static String sep = IWebServer.WebProtocolSeparator;
 
     /** Server port where we listen for WebClient connections */
-    private final int serverPort;
+    private final @RUntainted int serverPort;
 
     /** Server actual socket where we listen for WebClient connections */
-    private ServerSocket serverSocket;
+    private @RUntainted ServerSocket serverSocket;
 
     private final ChatChannel generalChat;
 
@@ -147,7 +148,7 @@ public class WebServer implements IWebServer, IRunWebServer
         //        System.exit() after a few seconds...?
     }
 
-    public WebServer(String optionsFile)
+    public WebServer(@RUntainted String optionsFile)
     {
         this.options = new WebServerOptions(optionsFile);
         options.loadOptions();
@@ -376,7 +377,7 @@ public class WebServer implements IWebServer, IRunWebServer
     // OR     by WebServerSocketThread.shutdownServer().
     // If the latter ( = admin user requested it remotely), need to close
     // also the GUI window -- if there is one.
-    public void initiateShutdown(String byUserName)
+    public void initiateShutdown(@RUntainted String byUserName)
     {
         if (byUserName == null)
         {
@@ -564,7 +565,7 @@ public class WebServer implements IWebServer, IRunWebServer
         return userDB.findUserByName(name);
     }
 
-    public String verifyLogin(String username, String password)
+    public @RUntainted String verifyLogin(String username, String password)
     {
         return userDB.verifyLogin(username, password);
     }
@@ -597,7 +598,7 @@ public class WebServer implements IWebServer, IRunWebServer
             + " ports in use");
     }
 
-    public void watchGame(String gameId, String userName)
+    public void watchGame(@RUntainted String gameId, @RUntainted String userName)
     {
         LOGGER.info("Got request from client " + userName + " to watch game "
             + gameId);
@@ -616,8 +617,8 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void sendWatchGameInfo(String userName, String gameId, String host,
-        int port)
+    public void sendWatchGameInfo(@RUntainted String userName, @RUntainted String gameId, @RUntainted String host,
+        @RUntainted int port)
     {
         IWebClient client = null;
         String reasonFail = null;
@@ -768,10 +769,10 @@ public class WebServer implements IWebServer, IRunWebServer
         return null;
     }
 
-    public GameInfo proposeGame(String initiator, String variant,
-        String viewmode, long startAt, int duration, String summary,
-        String expire, List<String> gameOptions, List<String> teleportOptions,
-        int min, int target, int max)
+    public GameInfo proposeGame(@RUntainted String initiator, @RUntainted String variant,
+        @RUntainted String viewmode, @RUntainted long startAt, @RUntainted int duration, @RUntainted String summary,
+        @RUntainted String expire, @RUntainted List<@RUntainted String> gameOptions, @RUntainted List<@RUntainted String> teleportOptions,
+        @RUntainted int min, @RUntainted int target, @RUntainted int max)
     {
         if (GameInfo.wouldBeInstantGame(startAt))
         {
@@ -844,7 +845,7 @@ public class WebServer implements IWebServer, IRunWebServer
         IWebClient client = newclient;
         User newUser = newclient.getUser();
 
-        ArrayList<GameInfo> games = new ArrayList<GameInfo>(allGames.values());
+        ArrayList<@RUntainted GameInfo> games = new ArrayList<@RUntainted GameInfo>(allGames.values());
         for (GameInfo gi : games)
         {
             if (gi.reEnrollIfNecessary(newUser) && gi.isProposedOrDue())
@@ -861,7 +862,7 @@ public class WebServer implements IWebServer, IRunWebServer
     }
 
     public void tellAllGamesFromListToOne(WebServerClient client,
-        ArrayList<GameInfo> games)
+        ArrayList<@RUntainted GameInfo> games)
     {
         Iterator<GameInfo> it = games.iterator();
         while (it.hasNext())
@@ -886,7 +887,7 @@ public class WebServer implements IWebServer, IRunWebServer
         tellAllGamesFromListToOne(client, suspendedGames);
     }
 
-    public void allTellGameInfo(GameInfo gi)
+    public void allTellGameInfo(@RUntainted GameInfo gi)
     {
         Collection<User> users = userDB.getLoggedInUsers();
         for (User u : users)
@@ -899,7 +900,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void tellEnrolledGameStartsSoon(GameInfo gi)
+    public void tellEnrolledGameStartsSoon(@RUntainted GameInfo gi)
     {
         String gameId = gi.getGameId();
 
@@ -935,7 +936,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void tellEnrolledGameStartsNow(GameInfo gi, String host, int port)
+    public void tellEnrolledGameStartsNow(@RUntainted GameInfo gi, @RUntainted String host, @RUntainted int port)
     {
         String gameId = gi.getGameId();
         gi.setState(GameState.READY_TO_CONNECT);
@@ -965,7 +966,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void gameStarted(GameInfo gi)
+    public void gameStarted(@RUntainted GameInfo gi)
     {
         gi.setState(GameState.RUNNING);
         proposedGames.remove(gi);
@@ -976,7 +977,7 @@ public class WebServer implements IWebServer, IRunWebServer
         allTellGameInfo(gi);
     }
 
-    public void gameFailed(GameInfo gi, String reason)
+    public void gameFailed(GameInfo gi, @RUntainted String reason)
     {
         LOGGER.log(Level.WARNING, "GAME starting/running failed!!! Reason: "
             + reason);
@@ -984,7 +985,7 @@ public class WebServer implements IWebServer, IRunWebServer
 
     // =========== Client actions ==========
 
-    public void enrollUserToGame(String gameId, String username)
+    public void enrollUserToGame(@RUntainted String gameId, @RUntainted String username)
     {
         User user = userDB.findUserByName(username);
         GameInfo gi = findByGameId(gameId);
@@ -1038,7 +1039,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void unenrollUserFromGame(String gameId, String username)
+    public void unenrollUserFromGame(@RUntainted String gameId, @RUntainted String username)
     {
         GameInfo gi = findByGameId(gameId);
         User user = userDB.findUserByName(username);
@@ -1083,7 +1084,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void cancelGame(String gameId, String byUser)
+    public void cancelGame(@RUntainted String gameId, @RUntainted String byUser)
     {
         LOGGER.info("User " + byUser + " requests to cancel game " + gameId);
         GameInfo gi = findByGameId(gameId);
@@ -1135,7 +1136,7 @@ public class WebServer implements IWebServer, IRunWebServer
         updateGUI();
     }
 
-    public void startGame(String gameId, User byUser)
+    public void startGame(@RUntainted String gameId, User byUser)
     {
         GameInfo gi = findByGameId(gameId);
         if (gi != null)
@@ -1153,7 +1154,7 @@ public class WebServer implements IWebServer, IRunWebServer
 
     }
 
-    public void resumeGame(String gameId, String loadGame, User byUser)
+    public void resumeGame(@RUntainted String gameId, @RUntainted String loadGame, User byUser)
     {
         LOGGER.info("User " + byUser.getName() + " wants to resume game "
             + gameId + ", from file " + loadGame);
@@ -1173,7 +1174,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void deleteSuspendedGame(String gameId, User user)
+    public void deleteSuspendedGame(@RUntainted String gameId, User user)
     {
         LOGGER.info("User " + user.getName()
             + " wants to delete suspended game " + gameId);
@@ -1192,7 +1193,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    private void attemptStartOnServer(GameInfo gi, User byUser)
+    private void attemptStartOnServer(@RUntainted GameInfo gi, User byUser)
     {
         // if (!gi.allEnrolledOnline())
         // {
@@ -1237,8 +1238,8 @@ public class WebServer implements IWebServer, IRunWebServer
      *
      *  AT THE MOMENT THIS FUNCTIONALITY IS NOT IN USE AT ALL!
      */
-    public void startGameOnPlayerHost(String gameId, String hostingPlayer,
-        String playerHost, int port)
+    public void startGameOnPlayerHost(@RUntainted String gameId, @RUntainted String hostingPlayer,
+        @RUntainted String playerHost, @RUntainted int port)
     {
         GameInfo gi = findByGameId(gameId);
         if (gi != null)
@@ -1264,7 +1265,7 @@ public class WebServer implements IWebServer, IRunWebServer
         proposedGamesListModified = true;
     }
 
-    public void informStartedByPlayer(String gameId)
+    public void informStartedByPlayer(@RUntainted String gameId)
     {
         LOGGER.info("Tell enrolled players that game " + gameId
             + " was started by a player.");
@@ -1281,7 +1282,7 @@ public class WebServer implements IWebServer, IRunWebServer
         proposedGamesListModified = true;
     }
 
-    public void informAllEnrolledAbout(GameInfo gi, String message)
+    public void informAllEnrolledAbout(GameInfo gi, @RUntainted String message)
     {
         long when = new Date().getTime();
         ArrayList<User> users = gi.getPlayers();
@@ -1300,7 +1301,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void systemMessageToAll(String message)
+    public void systemMessageToAll(@RUntainted String message)
     {
         long when = new Date().getTime();
         Collection<User> users = userDB.getLoggedInUsers();
@@ -1319,7 +1320,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void informAllEnrolledThatStartFailed(GameInfo gi, String reason,
+    public void informAllEnrolledThatStartFailed(GameInfo gi, @RUntainted String reason,
         User byUser)
     {
         ArrayList<User> users = gi.getPlayers();
@@ -1355,9 +1356,9 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void requestUserAttention(long when, String sender,
-        boolean isAdmin, String recipient, String message, int beepCount,
-        long beepInterval, boolean windows)
+    public void requestUserAttention(@RUntainted long when, @RUntainted String sender,
+        @RUntainted boolean isAdmin, @RUntainted String recipient, @RUntainted String message, @RUntainted int beepCount,
+        @RUntainted long beepInterval, @RUntainted boolean windows)
     {
         IWebClient recipientClient = null;
         String reasonFail = null;
@@ -1388,7 +1389,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    private void informPingDone(String sender, String recipient, String message)
+    private void informPingDone(@RUntainted String sender, @RUntainted String recipient, @RUntainted String message)
     {
         if ("SYSTEM".equals(sender))
         {
@@ -1413,7 +1414,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    private void informPingFailed(String sender, String reasonFail,
+    private void informPingFailed(String sender, @RUntainted String reasonFail,
         String message)
     {
         User senderUser = userDB.findUserByName(sender);
@@ -1435,7 +1436,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void informLocallyGameOver(String gameId)
+    public void informLocallyGameOver(@RUntainted String gameId)
     {
         LOGGER.info("WebServer informLocallyGameOver id " + gameId);
         GameInfo gi = findFromRunningGames(gameId);
@@ -1448,7 +1449,7 @@ public class WebServer implements IWebServer, IRunWebServer
         int connected = userDB.getLoggedInCount();
         allTellUserCounts();
         gui.setUserInfo(connected + " users connected.");
-        ArrayList<GameInfo> games = new ArrayList<GameInfo>(allGames.values());
+        ArrayList<@RUntainted GameInfo> games = new ArrayList<@RUntainted GameInfo>(allGames.values());
         for (GameInfo gi : games)
         {
             // returns true if changed
@@ -1493,12 +1494,12 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void chatSubmit(String chatId, String sender, String message)
+    public void chatSubmit(String chatId, @RUntainted String sender, @RUntainted String message)
     {
         generalChat.createStoreAndDeliverMessage(sender, message);
     }
 
-    public void handlePingQuotedName(String sender, String pingCommand)
+    public void handlePingQuotedName(@RUntainted String sender, @RUntainted String pingCommand)
     {
         long when = new Date().getTime();
         boolean isAdmin = userDB.findUserByName(sender).isAdmin();
@@ -1507,7 +1508,7 @@ public class WebServer implements IWebServer, IRunWebServer
         String args = pingCommand.substring(7);
         // split at the closing quote, eat up trailing spaces in name and
         // leading spaces of the message
-        String[] tokens = args.split(" *\" *", 2);
+        @RUntainted String[] tokens = args.split(" *\" *", 2);
         if (tokens.length != 2)
         {
             LOGGER.warning("invalid pingCommand with quotes '" + pingCommand
@@ -1529,11 +1530,11 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void handlePing(String sender, String pingCommand)
+    public void handlePing(@RUntainted String sender, @RUntainted String pingCommand)
     {
         long when = new Date().getTime();
         boolean isAdmin = userDB.findUserByName(sender).isAdmin();
-        String[] tokens = pingCommand.split(" +", 3);
+        @RUntainted String[] tokens = pingCommand.split(" +", 3);
         if (tokens.length < 2)
         {
             // Just  /ping   : inform about the usage:
@@ -1553,7 +1554,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public void tellLastChatMessagesToOne(WebServerClient client, String chatId)
+    public void tellLastChatMessagesToOne(WebServerClient client, @RUntainted String chatId)
     {
         if (!chatId.equals(IWebServer.generalChatName))
         {
@@ -1565,7 +1566,7 @@ public class WebServer implements IWebServer, IRunWebServer
         generalChat.tellLastMessagesToOne(client);
     }
 
-    public void sendMessageOfTheDayToOne(WebServerClient client, String chatId)
+    public void sendMessageOfTheDayToOne(WebServerClient client, @RUntainted String chatId)
     {
         if (!chatId.equals(IWebServer.generalChatName))
         {
@@ -1579,7 +1580,7 @@ public class WebServer implements IWebServer, IRunWebServer
     }
 
     public void sendOldVersionWarningToOne(WebServerClient client,
-        String userName, String chatId)
+        @RUntainted String userName, @RUntainted String chatId)
     {
         if (!chatId.equals(IWebServer.generalChatName))
         {
@@ -1590,7 +1591,7 @@ public class WebServer implements IWebServer, IRunWebServer
         generalChat.deliverOldVersionWarning(chatId, userName, client);
     }
 
-    private void readLoginMessageFromFile(String filename)
+    private void readLoginMessageFromFile(@RUntainted String filename)
     {
         try
         {
@@ -1604,7 +1605,7 @@ public class WebServer implements IWebServer, IRunWebServer
                 LOGGER.info("Reading login message from file " + filename);
             }
 
-            ArrayList<String> temp = new ArrayList<String>();
+            ArrayList<@RUntainted String> temp = new ArrayList<@RUntainted String>();
             BufferedReader loginMessagesReader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(loginMessageFile),
                     WebServerConstants.charset));
@@ -1642,28 +1643,28 @@ public class WebServer implements IWebServer, IRunWebServer
         // only listed here to satisfy the interface.
     }
 
-    public void messageToAdmin(long when, String fromUser, String fromMail,
-        List<String> message)
+    public void messageToAdmin(@RUntainted long when, @RUntainted String fromUser, @RUntainted String fromMail,
+        List<@RUntainted String> message)
     {
         generalChat.writeMessageToAdminToChatlog(when, fromUser, fromMail, message);
         mailObject.sendMessageToAdminMail(when, fromUser, fromMail, message);
     }
 
-    public String registerUser(String username, String password, String email)
+    public @RUntainted String registerUser(@RUntainted String username, @RUntainted String password, @RUntainted String email)
     {
         String reason = userDB.registerUser(username, password, email,
             mailObject);
         return reason;
     }
 
-    public String confirmRegistration(String username, String confirmationCode)
+    public @RUntainted String confirmRegistration(@RUntainted String username, @RUntainted String confirmationCode)
     {
         String reason = userDB.confirmRegistration(username, confirmationCode);
         return reason;
     }
 
-    public String changeProperties(String username, String oldPW,
-        String newPW, String email, Boolean isAdminObj)
+    public @RUntainted String changeProperties(String username, String oldPW,
+        @RUntainted String newPW, @RUntainted String email, @RUntainted Boolean isAdminObj)
     {
         String reason = userDB.changeProperties(username, oldPW, newPW, email,
             isAdminObj);
@@ -1709,12 +1710,12 @@ public class WebServer implements IWebServer, IRunWebServer
         return count;
     }
 
-    private GameInfo findByGameId(String gameId)
+    private @RUntainted GameInfo findByGameId(String gameId)
     {
         return allGames.get(gameId);
     }
 
-    private GameInfo findFromRunningGames(String gameId)
+    private @RUntainted GameInfo findFromRunningGames(String gameId)
     {
         GameInfo foundGi = null;
         for (GameInfo gi : runningGames)
@@ -1728,7 +1729,7 @@ public class WebServer implements IWebServer, IRunWebServer
         return foundGi;
     }
 
-    private GameInfo findFromSuspendedGames(String gameId)
+    private @RUntainted GameInfo findFromSuspendedGames(String gameId)
     {
         GameInfo foundGi = null;
         for (GameInfo gi : suspendedGames)
@@ -1742,7 +1743,7 @@ public class WebServer implements IWebServer, IRunWebServer
         return foundGi;
     }
 
-    private IGameRunner getGameOnServer(GameInfo gi)
+    private @RUntainted IGameRunner getGameOnServer(GameInfo gi)
     {
         assert gi != null : "Cannot find GameOnServer for GameInfo that is null!";
 
@@ -1755,7 +1756,7 @@ public class WebServer implements IWebServer, IRunWebServer
         return gr;
     }
 
-    private String startOneGame(GameInfo gi)
+    private @RUntainted String startOneGame(@RUntainted GameInfo gi)
     {
         // Reason for failure
         String reason = null;
@@ -1787,7 +1788,7 @@ public class WebServer implements IWebServer, IRunWebServer
      * unregister a game from runningGames (or proposedGames),
      * and keep in endingGames until it's reaped
      */
-    public void unregisterGame(GameInfo gi, int port)
+    public void unregisterGame(@RUntainted GameInfo gi, int port)
     {
         synchronized (allGames)
         {
@@ -1875,7 +1876,7 @@ public class WebServer implements IWebServer, IRunWebServer
     * unregister a game (run on player's PC) from runningGames,
     * keep in endingGames until it's reaped
     */
-    public void unregisterGamePlayerPC(GameInfo gi)
+    public void unregisterGamePlayerPC(@RUntainted GameInfo gi)
     {
         if (gi == null)
         {
@@ -1906,7 +1907,7 @@ public class WebServer implements IWebServer, IRunWebServer
         updateGUI();
     }
 
-    private void readGamesFromFile(String filename)
+    private void readGamesFromFile(@RUntainted String filename)
     {
         int maximumFileId = getMaximumGameIdFromFiles();
         GameInfo.setNextFreeGameId(maximumFileId + 1);
@@ -1943,7 +1944,7 @@ public class WebServer implements IWebServer, IRunWebServer
                     // GameInfo.fromString expects the token[0]
                     // to be the command name:
                     String lineWithCmd = "Dummy" + sep + line;
-                    String[] tokens = lineWithCmd.split(sep);
+                    @RUntainted String[] tokens = lineWithCmd.split(sep);
                     GameInfo gi = GameInfo.fromString(tokens, allGames, true);
                     if (gi.getGameState().equals(GameState.PROPOSED))
                     {
@@ -1988,7 +1989,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    private void storeGamesToFile(String filename)
+    private void storeGamesToFile(@RUntainted String filename)
     {
         if (filename == null)
         {
@@ -2072,7 +2073,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    public String getStringOption(String key)
+    public String getStringOption(@RUntainted String key)
     {
         return this.options.getStringOption(key);
     }
@@ -2109,7 +2110,7 @@ public class WebServer implements IWebServer, IRunWebServer
         }
     }
 
-    private boolean handleGamesFromList(List<GameInfo> list, String listName)
+    private boolean handleGamesFromList(@RUntainted List<GameInfo> list, @RUntainted String listName)
     {
         boolean didSomething = false;
         if (!list.isEmpty())
@@ -2204,7 +2205,7 @@ public class WebServer implements IWebServer, IRunWebServer
      * @return The highest game number for which a directory already exists,
      * (otherwise 0 if therre is no dir at all)
      */
-    private int getMaximumGameIdFromFiles()
+    private @RUntainted int getMaximumGameIdFromFiles()
     {
         // Server will create next as maxId + 1
         int maxId = 0;
@@ -2219,7 +2220,7 @@ public class WebServer implements IWebServer, IRunWebServer
 
             Pattern p = Pattern.compile("(\\d+)-\\d+");
 
-            String[] dirNames = baseDir.list();
+            @RUntainted String[] dirNames = baseDir.list();
             if (dirNames != null && dirNames.length > 0)
             {
                 for (int grp = 0; grp < dirNames.length; grp++)
@@ -2243,7 +2244,7 @@ public class WebServer implements IWebServer, IRunWebServer
                     File groupDir = new File(baseDir, maxGroup);
                     if (groupDir.isDirectory())
                     {
-                        String[] names = groupDir.list();
+                        @RUntainted String[] names = groupDir.list();
                         for (int i = 0; i < names.length; i++)
                         {
                             String name = names[i];

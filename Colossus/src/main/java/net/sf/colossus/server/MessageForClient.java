@@ -2,6 +2,7 @@ package net.sf.colossus.server;
 
 
 import net.sf.colossus.common.Constants;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -10,14 +11,14 @@ import net.sf.colossus.common.Constants;
  */
 class MessageForClient
 {
-    private static int MAX_PRINT_LEN = 100;
+    private static @RUntainted int MAX_PRINT_LEN = 100;
 
-    private final int messageNumber;
+    private final @RUntainted int messageNumber;
     private final int commitNumber;
-    private final String message;
+    private final @RUntainted String message;
     private final String method;
 
-    public MessageForClient(int messageNr, int commitNr, String message)
+    public MessageForClient(@RUntainted int messageNr, int commitNr, @RUntainted String message)
     {
         this.messageNumber = messageNr;
         this.commitNumber = commitNr;
@@ -38,7 +39,7 @@ class MessageForClient
      * @param original The original MessageForClient to clone from
      * @param newMsgNumber the MessageNumber to used instead
      */
-    public MessageForClient(MessageForClient original, int newMsgNumber)
+    public MessageForClient(MessageForClient original, @RUntainted int newMsgNumber)
     {
         this.messageNumber = newMsgNumber;
         this.commitNumber = original.commitNumber;
@@ -46,7 +47,7 @@ class MessageForClient
         this.method = original.method;
     }
 
-    public int getMessageNr()
+    public @RUntainted int getMessageNr()
     {
         return messageNumber;
     }
@@ -56,12 +57,12 @@ class MessageForClient
         return commitNumber;
     }
 
-    public String getMessage()
+    public @RUntainted String getMessage()
     {
         return message;
     }
 
-    public String getShortenedMessage()
+    public @RUntainted String getShortenedMessage()
     {
         String shortMessage;
         if (message.length() < MAX_PRINT_LEN)

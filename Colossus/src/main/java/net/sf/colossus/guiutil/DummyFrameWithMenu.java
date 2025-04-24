@@ -12,6 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import net.sf.colossus.util.InstanceTracker;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -36,7 +37,7 @@ public class DummyFrameWithMenu extends KFrame
 
     private AbstractAction closeBoardAction;
 
-    public DummyFrameWithMenu(String nr)
+    public DummyFrameWithMenu(@RUntainted String nr)
     {
         super("dummyFrame " + nr);
         id = nr;
@@ -44,7 +45,7 @@ public class DummyFrameWithMenu extends KFrame
         setupGUI();
     }
 
-    public static void doOneDummyFrame(String id)
+    public static void doOneDummyFrame(@RUntainted String id)
     {
         DummyFrameWithMenu fdebug = new DummyFrameWithMenu(id);
         fdebug.setVisible(false);

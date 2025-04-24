@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -193,7 +194,7 @@ public final class HTMLColor // NO_UCD
     public static final Color PineColossus = forestGreen;
     public static final Color IndigoColossus = indigo;
 
-    public static Color stringToColor(String colorName)
+    public static @RUntainted Color stringToColor(@RUntainted String colorName)
     {
         Color theColor;
         try

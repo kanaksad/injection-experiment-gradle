@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 import net.sf.colossus.util.HTMLColor;
 import net.sf.colossus.webcommon.FormatWhen;
 import net.sf.colossus.webcommon.IWebServer;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class ChatHandler
@@ -37,7 +38,7 @@ public class ChatHandler
     private final static int textAreaHeight = 20;
     private final String id;
     private final String title;
-    private String username;
+    private @RUntainted String username;
     private IWebServer server = null;
 
     private final JPanel chatTab;
@@ -46,14 +47,14 @@ public class ChatHandler
     private final JTextArea displayArea;
     private final JScrollPane displayScrollPane;
     private final JScrollBar displayScrollBar;
-    private final JTextField newMessage;
+    private final @RUntainted JTextField newMessage;
 
     private final FormatWhen whenFormatter;
     private boolean loginState = false;
 
     private long lastMsgWhen = -1;
     private boolean resentMode = false;
-    private long afterResentWhen = -1;
+    private @RUntainted long afterResentWhen = -1;
     private String afterResentSender = null;
     private String afterResentMessage = null;
 
@@ -67,7 +68,7 @@ public class ChatHandler
     private String unsentMessage = "";
 
     public ChatHandler(String id, String title, IWebServer server,
-        String username)
+        @RUntainted String username)
     {
         this.id = id;
         this.title = title;
@@ -186,7 +187,7 @@ public class ChatHandler
     }
 
     public void setLoginState(boolean loggedIn, IWebServer server,
-        String username)
+        @RUntainted String username)
     {
         this.server = server;
         if (loggedIn != loginState)
@@ -249,7 +250,7 @@ public class ChatHandler
         }
     }
 
-    public void chatDeliver(long when, String sender, String message,
+    public void chatDeliver(@RUntainted long when, String sender, String message,
         boolean resent)
     {
         if (resent)
@@ -303,7 +304,7 @@ public class ChatHandler
         }
     }
 
-    private void chatDisplay(long when, String sender, String message)
+    private void chatDisplay(@RUntainted long when, String sender, String message)
     {
         String whenTime = whenFormatter.timeAsString(when);
         String dateChange = whenFormatter.hasDateChanged();

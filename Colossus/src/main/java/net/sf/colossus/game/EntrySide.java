@@ -1,4 +1,5 @@
 package net.sf.colossus.game;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -10,14 +11,14 @@ public enum EntrySide // NO_UCD
         "Bottom"), LEFT_DEFENSE("Left defense"), LEFT("Left"), NOT_SET(
         "Not set");
 
-    private final String label;
+    private final @RUntainted String label;
 
-    private EntrySide(String label)
+    private EntrySide(@RUntainted String label)
     {
         this.label = label;
     }
 
-    public String getLabel()
+    public @RUntainted String getLabel()
     {
         return label;
     }
@@ -32,7 +33,7 @@ public enum EntrySide // NO_UCD
         return values()[(ordinal() + 3) % 6];
     }
 
-    public static EntrySide fromLabel(String label)
+    public static @RUntainted EntrySide fromLabel(String label)
     {
         for (EntrySide entrySide : values())
         {

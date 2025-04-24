@@ -4,6 +4,7 @@ package net.sf.colossus.util;
 import java.util.WeakHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -34,7 +35,7 @@ public class ViableEntityManager
 
     private static boolean debug = false;
 
-    private static WeakHashMap<Object, String> viableEntities = new WeakHashMap<Object, String>();
+    private static @RUntainted WeakHashMap<Object, String> viableEntities = new WeakHashMap<Object, String>();
     private static int waiting = 0;
     private static Object mutex = new Object();
 

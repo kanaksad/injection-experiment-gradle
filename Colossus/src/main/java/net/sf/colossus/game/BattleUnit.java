@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -28,18 +29,18 @@ public final class BattleUnit implements BattleCritter
     private static final Logger LOGGER = Logger.getLogger(BattleUnit.class
         .getName());
 
-    private final int tag;
-    private final String id;
-    private final boolean defender;
-    private final CreatureType creatureType;
+    private final @RUntainted int tag;
+    private final @RUntainted String id;
+    private final @RUntainted boolean defender;
+    private final @RUntainted CreatureType creatureType;
     private final Legion legion;
-    private int hits = 0;
+    private @RUntainted int hits = 0;
     private int poisonDamage = 0;
     private int poison = 0;
     private int slows = 0;
     private int slowed = 0;
-    private BattleHex currentHex;
-    private BattleHex startingHex;
+    private @RUntainted BattleHex currentHex;
+    private @RUntainted BattleHex startingHex;
     private boolean moved;
     private boolean struck;
     private boolean dead;
@@ -49,8 +50,8 @@ public final class BattleUnit implements BattleCritter
      */
     private final Set<Listener> listeners = new HashSet<Listener>();
 
-    public BattleUnit(String id, boolean defender, int tag,
-        BattleHex currentHex, CreatureType type, Legion legion)
+    public BattleUnit(@RUntainted String id, @RUntainted boolean defender, @RUntainted int tag,
+        @RUntainted BattleHex currentHex, @RUntainted CreatureType type, Legion legion)
     {
         if (id == null)
         {
@@ -71,17 +72,17 @@ public final class BattleUnit implements BattleCritter
         return legion;
     }
 
-    public int getTag()
+    public @RUntainted int getTag()
     {
         return tag;
     }
 
-    public int getHits()
+    public @RUntainted int getHits()
     {
         return hits;
     }
 
-    public void setHits(int hits)
+    public void setHits(@RUntainted int hits)
     {
         this.hits = hits;
         notifyListeners();
@@ -149,22 +150,22 @@ public final class BattleUnit implements BattleCritter
         return dead;
     }
 
-    public BattleHex getCurrentHex()
+    public @RUntainted BattleHex getCurrentHex()
     {
         return currentHex;
     }
 
-    public BattleHex getStartingHex()
+    public @RUntainted BattleHex getStartingHex()
     {
         return startingHex;
     }
 
-    public void setCurrentHex(BattleHex hex)
+    public void setCurrentHex(@RUntainted BattleHex hex)
     {
         this.currentHex = hex;
     }
 
-    public void moveToHex(BattleHex hex)
+    public void moveToHex(@RUntainted BattleHex hex)
     {
         startingHex = currentHex;
         currentHex = hex;
@@ -192,12 +193,12 @@ public final class BattleUnit implements BattleCritter
         this.struck = struck;
     }
 
-    public CreatureType getType()
+    public @RUntainted CreatureType getType()
     {
         return creatureType;
     }
 
-    public boolean isDefender()
+    public @RUntainted boolean isDefender()
     {
         return defender;
     }
@@ -222,7 +223,7 @@ public final class BattleUnit implements BattleCritter
         return getType().isDemiLord();
     }
 
-    public int getPower()
+    public @RUntainted int getPower()
     {
         if (isTitan())
         {
@@ -240,7 +241,7 @@ public final class BattleUnit implements BattleCritter
     // Creature.java is doing it) is only temporary; on the long run get
     // rid of the parsing based method.
 
-    public int getTitanPower()
+    public @RUntainted int getTitanPower()
     {
         int parsedPower = getIdBasedTitanPower();
         int playerBasedPower = getTitanPowerViaLegionAndPlayer();
@@ -254,7 +255,7 @@ public final class BattleUnit implements BattleCritter
 
     }
 
-    public int getIdBasedTitanPower()
+    public @RUntainted int getIdBasedTitanPower()
     {
         if (!id.startsWith("Titan-"))
         {
@@ -262,11 +263,11 @@ public final class BattleUnit implements BattleCritter
                 + getType() + "'!");
             return -1;
         }
-        String[] parts = id.split("-");
+        @RUntainted String[] parts = id.split("-");
         return Integer.parseInt(parts[1]);
     }
 
-    public int getTitanPowerViaLegionAndPlayer()
+    public @RUntainted int getTitanPowerViaLegionAndPlayer()
     {
         Player player = legion.getPlayer();
         if (player != null)
@@ -281,12 +282,12 @@ public final class BattleUnit implements BattleCritter
         }
     }
 
-    public int getSkill()
+    public @RUntainted int getSkill()
     {
         return getType().getSkill();
     }
 
-    public int getPointValue()
+    public @RUntainted int getPointValue()
     {
         return getPower() * getSkill();
     }
@@ -322,7 +323,7 @@ public final class BattleUnit implements BattleCritter
     }
 
     // TODO does this give plain Titan name or user specific one?
-    public String getDescription()
+    public @RUntainted String getDescription()
     {
         return getType().getName() + " in " + getCurrentHex().getLabel();
     }

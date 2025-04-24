@@ -18,6 +18,7 @@ import net.sf.colossus.util.Probs;
 import net.sf.colossus.util.ValueRecorder;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.MasterBoardTerrain;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /** The objective of sending all of a CreatureType into battle, presumably
@@ -33,7 +34,7 @@ class CreatureAttackTacticalObjective extends AbstractTacticalObjective
     private final AbstractAI ai;
     private final BattleEvalConstants bec;
 
-    CreatureAttackTacticalObjective(float priority, Client client,
+    CreatureAttackTacticalObjective(@RUntainted float priority, Client client,
         Legion liveLegion, Creature creature, AbstractAI ai,
         BattleEvalConstants bec)
     {
@@ -45,12 +46,12 @@ class CreatureAttackTacticalObjective extends AbstractTacticalObjective
         this.bec = bec;
     }
 
-    public boolean objectiveAttained()
+    public @RUntainted boolean objectiveAttained()
     {
         return getCount() == 0;
     }
 
-    public int getCount()
+    public @RUntainted int getCount()
     {
         return liveLegion.numCreature(creature.getType());
     }
@@ -78,7 +79,7 @@ class CreatureAttackTacticalObjective extends AbstractTacticalObjective
             {
                 final int skill = critter.getSkill();
                 final int power = critter.getPower();
-                Set<BattleHex> targetHexes = client.findStrikes(critter
+                Set<@RUntainted BattleHex> targetHexes = client.findStrikes(critter
                     .getTag());
                 String desc = creature.getName() + " #" + which;
                 which++;
@@ -281,7 +282,7 @@ class CreatureAttackTacticalObjective extends AbstractTacticalObjective
         return value;
     }
 
-    public String getDescription()
+    public @RUntainted String getDescription()
     {
         return "Using " + creature.getName() + " to attack (" + getPriority()
             + ")";

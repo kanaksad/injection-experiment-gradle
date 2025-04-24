@@ -27,6 +27,7 @@ import net.sf.colossus.variant.IVariant;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -35,7 +36,7 @@ import net.sf.colossus.variant.Variant;
  */
 public class HexRecruitTreePanel extends Box
 {
-    private final Map<Chit, CreatureType> chitToCreatureMap = new HashMap<Chit, CreatureType>();
+    private final Map<Chit, @RUntainted CreatureType> chitToCreatureMap = new HashMap<Chit, @RUntainted CreatureType>();
 
     private final List<ShowCreatureDetails> creatureWindows = new ArrayList<ShowCreatureDetails>();
 
@@ -95,9 +96,9 @@ public class HexRecruitTreePanel extends Box
         terrainLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(terrainLabel);
 
-        List<CreatureType> creatures = ivariant.getPossibleRecruits(terrain,
+        List<@RUntainted CreatureType> creatures = ivariant.getPossibleRecruits(terrain,
             hex);
-        Iterator<CreatureType> it = creatures.iterator();
+        Iterator<@RUntainted CreatureType> it = creatures.iterator();
         boolean firstTime = true;
         int scale = 4 * Scale.get();
         CreatureType prevCreature = VariantSupport.getCurrentVariant()

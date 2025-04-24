@@ -18,6 +18,7 @@ import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -33,12 +34,12 @@ public class Game
     /**
      * The variant played in this game.
      */
-    private final Variant variant;
+    private final @RUntainted Variant variant;
 
     /**
      * The state of the different players in the game.
      */
-    protected final List<Player> players = new ArrayList<Player>();
+    protected final @RUntainted List<@RUntainted Player> players = new ArrayList<@RUntainted Player>();
 
     /**
      * The caretaker takes care of managing the available and dead creatures.
@@ -48,17 +49,17 @@ public class Game
     /**
      * The current turn number. Advance when every player has done his move
      */
-    protected int turnNumber = -1;
+    protected @RUntainted int turnNumber = -1;
 
     /**
      * The current game phase (Split, Move, Fight, Muster)
      */
-    protected Phase phase;
+    protected @RUntainted Phase phase;
 
     /**
      * Last movement roll for any player.
      */
-    private int movementRoll = -1;
+    private @RUntainted int movementRoll = -1;
 
     /**
      *  Status for Game is over and message for it
@@ -66,7 +67,7 @@ public class Game
      *      If the game is over, then quitting does not require confirmation.
      */
     private boolean gameOver = false;
-    private String gameOverMessage = null;
+    private @RUntainted String gameOverMessage = null;
 
     private boolean suspended;
 
@@ -82,7 +83,7 @@ public class Game
      * @param variant The variant object, not null
      * @param playerNames Names of the players, not used yet
      */
-    public Game(Variant variant, String[] playerNames)
+    public Game(@RUntainted Variant variant, String[] playerNames)
     {
         assert variant != null : "Can't create game with null variant!";
 
@@ -93,17 +94,17 @@ public class Game
         this.battleStrike = new BattleStrike(this);
     }
 
-    public Variant getVariant()
+    public @RUntainted Variant getVariant()
     {
         return variant;
     }
 
-    public void addPlayer(Player p)
+    public void addPlayer(@RUntainted Player p)
     {
         players.add(p);
     }
 
-    public Collection<Player> getPlayers()
+    public Collection<@RUntainted Player> getPlayers()
     {
         assert players.size() != 0 : "getPlayers called before player info set (size==0)!";
         return Collections.unmodifiableCollection(players);
@@ -126,13 +127,13 @@ public class Game
         return prePlayerNames;
     }
 
-    public int getNumPlayers()
+    public @RUntainted int getNumPlayers()
     {
         assert players.size() != 0 : "getNumPlayers called before player info set (size==0)!";
         return players.size();
     }
 
-    public int getNumLivingPlayers()
+    public @RUntainted int getNumLivingPlayers()
     {
         int alive = 0;
         for (Player info : players)
@@ -199,12 +200,12 @@ public class Game
         return caretaker;
     }
 
-    public int getMovementRoll()
+    public @RUntainted int getMovementRoll()
     {
         return movementRoll;
     }
 
-    public void setMovementRoll(int roll)
+    public void setMovementRoll(@RUntainted int roll)
     {
         movementRoll = roll;
     }
@@ -224,19 +225,19 @@ public class Game
         return this.suspended;
     }
 
-    public String getGameOverMessage()
+    public @RUntainted String getGameOverMessage()
     {
         return this.gameOverMessage;
     }
 
-    public void setGameOver(boolean gameOver, String message)
+    public void setGameOver(boolean gameOver, @RUntainted String message)
     {
         this.gameOver = gameOver;
         this.gameOverMessage = message;
     }
 
-    public void createEngagement(MasterHex hex, Legion attacker,
-        Legion defender)
+    public void createEngagement(@RUntainted MasterHex hex, @RUntainted Legion attacker,
+        @RUntainted Legion defender)
     {
         this.engagement = new Engagement(hex, attacker, defender);
     }
@@ -261,12 +262,12 @@ public class Game
         return this.battle;
     }
 
-    public Legion getBattleActiveLegion()
+    public @RUntainted Legion getBattleActiveLegion()
     {
         return battle.getBattleActiveLegion();
     }
 
-    public MasterHex getBattleSite()
+    public @RUntainted MasterHex getBattleSite()
     {
         return engagement == null ? null : engagement.getLocation();
     }
@@ -310,9 +311,9 @@ public class Game
         int score)
     {
         List<CreatureType> recruits = new ArrayList<CreatureType>();
-        List<String> allRecruits = getVariant().getRecruitableAcquirableList(
+        List<@RUntainted String> allRecruits = getVariant().getRecruitableAcquirableList(
             terrain, score);
-        Iterator<String> it = allRecruits.iterator();
+        Iterator<@RUntainted String> it = allRecruits.iterator();
         while (it.hasNext())
         {
             String name = it.next();
@@ -327,18 +328,18 @@ public class Game
     }
 
     /** Return a list of all legions of all players. */
-    public List<Legion> getAllLegions()
+    public List<@RUntainted Legion> getAllLegions()
     {
-        List<Legion> list = new ArrayList<Legion>();
+        List<@RUntainted Legion> list = new ArrayList<@RUntainted Legion>();
         for (Player player : players)
         {
-            List<? extends Legion> legions = player.getLegions();
+            List<? extends @RUntainted Legion> legions = player.getLegions();
             list.addAll(legions);
         }
         return list;
     }
 
-    public int getNumLivingCreatures(CreatureType type)
+    public @RUntainted int getNumLivingCreatures(CreatureType type)
     {
         int livingCount = 0;
         for (Player player : players)
@@ -352,7 +353,7 @@ public class Game
         return livingCount;
     }
 
-    public List<Legion> getLegionsByHex(MasterHex masterHex)
+    public @RUntainted List<Legion> getLegionsByHex(MasterHex masterHex)
     {
         assert masterHex != null : "No hex given to find legions on.";
 
@@ -393,11 +394,11 @@ public class Game
         return count;
     }
 
-    public List<Legion> getFriendlyLegions(final MasterHex hex,
+    public List<@RUntainted Legion> getFriendlyLegions(final MasterHex hex,
         final Player player)
     {
         return CollectionHelper.selectAsList(player.getLegions(),
-            new Predicate<Legion>()
+            new Predicate<@RUntainted Legion>()
             {
                 public boolean matches(Legion legion)
                 {
@@ -407,9 +408,9 @@ public class Game
     }
 
     /** Return a list of all legions not belonging to player. */
-    public List<Legion> getEnemyLegions(final Player player)
+    public List<@RUntainted Legion> getEnemyLegions(final Player player)
     {
-        List<Legion> result = new ArrayList<Legion>();
+        List<@RUntainted Legion> result = new ArrayList<@RUntainted Legion>();
         for (Player otherPlayer : players)
         {
             if (!otherPlayer.equals(player))
@@ -458,7 +459,7 @@ public class Game
     }
     */
 
-    public Legion getFirstFriendlyLegion(MasterHex masterHex, Player player)
+    public @RUntainted Legion getFirstFriendlyLegion(@RUntainted MasterHex masterHex, Player player)
     {
         for (Legion legion : player.getLegions())
         {
@@ -487,7 +488,7 @@ public class Game
         return false;
     }
 
-    public Legion getFirstLegion(MasterHex masterHex)
+    public @RUntainted Legion getFirstLegion(MasterHex masterHex)
     {
         for (Legion legion : getAllLegions())
         {
@@ -525,7 +526,7 @@ public class Game
      * @return the first legion that is in the specified hex and does not
      *         belong to the given player, null if no such legion exists
      */
-    public Legion getFirstEnemyLegion(MasterHex masterHex, Player player)
+    public @RUntainted Legion getFirstEnemyLegion(MasterHex masterHex, Player player)
     {
         assert masterHex != null : "Hex needs to be specified";
         assert player != null : "Player needs to be specified";
@@ -547,9 +548,9 @@ public class Game
      *      else occupies any of the same
      */
     // TODO This is the client side version
-    public Set<MasterHex> findEngagements()
+    public @RUntainted Set<@RUntainted MasterHex> findEngagements()
     {
-        Set<MasterHex> result = new HashSet<MasterHex>();
+        Set<@RUntainted MasterHex> result = new HashSet<@RUntainted MasterHex>();
         Map<MasterHex, Player> playersOnHex = new HashMap<MasterHex, Player>();
         for (Player player : players)
         {
@@ -617,9 +618,9 @@ public class Game
      * Return a set of all other unengaged legions of the legion's player
      * that have summonables (not sorted in any particular order).
      */
-    public List<Legion> findLegionsWithSummonables(Legion summoner)
+    public @RUntainted List<@RUntainted Legion> findLegionsWithSummonables(Legion summoner)
     {
-        List<Legion> result = new ArrayList<Legion>();
+        List<@RUntainted Legion> result = new ArrayList<@RUntainted Legion>();
         Player player = summoner.getPlayer();
         for (Legion legion : player.getLegions())
         {
@@ -633,7 +634,7 @@ public class Game
     }
 
     // For making Proposals needed both client and server side
-    public Legion getLegionByMarkerId(String markerId)
+    public @RUntainted Legion getLegionByMarkerId(@RUntainted String markerId)
     {
         LOGGER.severe("getLegionByMarkerId called for markerId " + markerId
             + "in the non-overriden method of game.Game class!!");
@@ -647,7 +648,7 @@ public class Game
      *
      * @param turn Set this number as current turn number
      */
-    public void setTurnNumber(int turn)
+    public void setTurnNumber(@RUntainted int turn)
     {
         this.turnNumber = turn;
     }
@@ -656,22 +657,22 @@ public class Game
      * Returns the current turn in the game
      * @return returns the current turn number
      */
-    public int getTurnNumber()
+    public @RUntainted int getTurnNumber()
     {
         return turnNumber;
     }
 
-    public boolean isPhase(Phase phase)
+    public @RUntainted boolean isPhase(@RUntainted Phase phase)
     {
         return this.phase == phase;
     }
 
-    public void setPhase(Phase phase)
+    public void setPhase(@RUntainted Phase phase)
     {
         this.phase = phase;
     }
 
-    public Phase getPhase()
+    public @RUntainted Phase getPhase()
     {
         return phase;
     }
@@ -688,7 +689,7 @@ public class Game
         }
     }
 
-    public int getBattleTurnNumber()
+    public @RUntainted int getBattleTurnNumber()
     {
         return battle.getBattleTurnNumber();
     }

@@ -22,6 +22,7 @@ import net.sf.colossus.webcommon.GameInfo.GameState;
 import net.sf.colossus.webcommon.IGameRunner;
 import net.sf.colossus.webcommon.IRunWebServer;
 import net.sf.colossus.webcommon.User;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -40,29 +41,29 @@ public class RunGameInOwnJVM extends Thread implements IGameRunner
     private static final Logger LOGGER = Logger
         .getLogger(RunGameInOwnJVM.class.getName());
 
-    private int hostingPort;
+    private @RUntainted int hostingPort;
     private String hostingHost;
 
     private final IRunWebServer server;
     private final WebServerOptions options;
-    private final GameInfo gi;
-    private final String gameId;
+    private final @RUntainted GameInfo gi;
+    private final @RUntainted String gameId;
 
-    private String workFilesBaseDir;
-    private String statisticsBaseDir;
+    private @RUntainted String workFilesBaseDir;
+    private @RUntainted String statisticsBaseDir;
 
-    private String template;
-    private String javaCommand;
-    private String colossusJar;
+    private @RUntainted String template;
+    private @RUntainted String javaCommand;
+    private @RUntainted String colossusJar;
 
-    private File flagFile;
+    private @RUntainted File flagFile;
     private File suspendedFlagfile;
 
     private boolean alreadyStarted;
-    private String reasonStartFailed;
+    private @RUntainted String reasonStartFailed;
 
     public RunGameInOwnJVM(IRunWebServer server, WebServerOptions options,
-        GameInfo gi)
+        @RUntainted GameInfo gi)
     {
         this.server = server;
         this.options = options;
@@ -118,7 +119,7 @@ public class RunGameInOwnJVM extends Thread implements IGameRunner
         return hostingHost;
     }
 
-    public String getReasonStartFailed()
+    public @RUntainted String getReasonStartFailed()
     {
         return reasonStartFailed;
     }
@@ -240,7 +241,7 @@ public class RunGameInOwnJVM extends Thread implements IGameRunner
         }
     }
 
-    private boolean createServerCfgFile(File gameDir, File diceStatisticsFile)
+    private boolean createServerCfgFile(@RUntainted File gameDir, @RUntainted File diceStatisticsFile)
     {
         boolean ok = true;
 
@@ -356,7 +357,7 @@ public class RunGameInOwnJVM extends Thread implements IGameRunner
         }
     }
 
-    private void waitForGameShutdown(Process p, NullDumper ndout,
+    private void waitForGameShutdown(@RUntainted Process p, NullDumper ndout,
         NullDumper nderr)
     {
         try
@@ -464,7 +465,7 @@ public class RunGameInOwnJVM extends Thread implements IGameRunner
         return up;
     }
 
-    private String waitForLine(BufferedReader in, int checkInterval)
+    private @RUntainted String waitForLine(BufferedReader in, int checkInterval)
     {
         String line = null;
 
@@ -495,7 +496,7 @@ public class RunGameInOwnJVM extends Thread implements IGameRunner
         return line;
     }
 
-    private String getMissingPlayers(List<String> names)
+    private @RUntainted String getMissingPlayers(List<String> names)
     {
         StringBuilder missing = new StringBuilder();
         for (User u : gi.getPlayers())
@@ -513,7 +514,7 @@ public class RunGameInOwnJVM extends Thread implements IGameRunner
         return missing.toString();
     }
 
-    public String listAsString(List<String> names)
+    public @RUntainted String listAsString(List<String> names)
     {
         StringBuilder namesSB = new StringBuilder();
         for (String oneName : names)
@@ -662,11 +663,11 @@ public class RunGameInOwnJVM extends Thread implements IGameRunner
         Process process;
         boolean toNull;
         BufferedReader reader;
-        String prefix;
+        @RUntainted String prefix;
         Thread thread;
 
         public NullDumper(Process p, boolean toNull, InputStream is,
-            String prefix)
+            @RUntainted String prefix)
         {
             this.process = p;
             this.toNull = toNull;

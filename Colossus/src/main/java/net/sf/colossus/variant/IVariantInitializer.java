@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sf.colossus.variant.Variant.AcquirableData;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -17,10 +18,10 @@ public interface IVariantInitializer
 
     public List<AcquirableData> getAcquirablesList();
 
-    public int getTitanImprovementValue();
+    public @RUntainted int getTitanImprovementValue();
 
     public int getTitanTeleportValue();
 
-    public Collection<MasterBoardTerrain> getTerrains();
+    public Collection<@RUntainted MasterBoardTerrain> getTerrains();
 
 }

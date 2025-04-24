@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.colossus.util.Glob;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
 
 
 /**
@@ -45,30 +47,30 @@ public class User
 
     private IWebClient webserverClient;
 
-    private long id;
-    private final String name;
-    private String password;
-    private String email;
-    private boolean isAdmin;
-    private String created;
-    private String lastLogin;
-    private String lastLogout;
-    private long onlineSecs;
-    private long sessionStarted = -1L;
+    private @RUntainted long id;
+    private final @RUntainted String name;
+    private @RUntainted String password;
+    private @RUntainted String email;
+    private @RUntainted boolean isAdmin;
+    private @RUntainted String created;
+    private @RUntainted String lastLogin;
+    private @RUntainted String lastLogout;
+    private @RUntainted long onlineSecs;
+    private @RUntainted long sessionStarted = -1L;
 
     // Only needed during registration:
-    private String lastSentConfirmationCode;
+    private @RUntainted String lastSentConfirmationCode;
 
     private final List<String> ignoredUsers = new ArrayList<String>();
 
-    public User(String name)
+    public User(@RUntainted String name)
     {
         this.name = name;
     }
 
-    public User(long id, String name, String password, String email,
-        boolean isAdmin, String created, String lastLogin, String lastLogout,
-        long onlineSecs)
+    public User(@RUntainted long id, @RUntainted String name, @RUntainted String password, @RUntainted String email,
+        @RUntainted boolean isAdmin, @RUntainted String created, @RUntainted String lastLogin, @RUntainted String lastLogout,
+        @RUntainted long onlineSecs)
     {
         this.id = id;
         this.name = name;
@@ -95,12 +97,12 @@ public class User
         }
     }
 
-    public long getId()
+    public @RUntainted long getId()
     {
         return this.id;
     }
 
-    public String getName()
+    public @RUntainted String getName()
     {
         return this.name;
     }
@@ -110,29 +112,29 @@ public class User
         return providedPassword.equals(this.password);
     }
 
-    public String getEmail()
+    public @RUntainted String getEmail()
     {
         return email;
     }
 
-    public String getCreated()
+    public @RUntainted String getCreated()
     {
         return this.created;
     }
 
-    public long getOnlineTime()
+    public @RUntainted long getOnlineTime()
     {
         return this.onlineSecs;
     }
 
     // Make sure it is a 2 digit number, to avoid problems in
     // comparison between "56 5 12" and "56 05 12".
-    private static long atLeast10(long original)
+    private static @RPolyTainted long atLeast10(@RPolyTainted long original)
     {
         return (original < 10L ? original + 10L : original);
     }
 
-    public static String makeConfirmationCode()
+    public static @RUntainted String makeConfirmationCode()
     {
         long n1 = atLeast10(Math.round((MAX_RANDOM * Math.random())));
         long n2 = atLeast10((new Date().getTime()) % MAX_RANDOM);
@@ -149,22 +151,22 @@ public class User
     }
 
     // Only used during while registration is pending.
-    String getLastConfirmationCode()
+    @RUntainted String getLastConfirmationCode()
     {
         return lastSentConfirmationCode;
     }
 
-    public boolean isAdmin()
+    public @RUntainted boolean isAdmin()
     {
         return isAdmin;
     }
 
-    public void setIsAdmin(boolean val)
+    public void setIsAdmin(@RUntainted boolean val)
     {
         isAdmin = val;
     }
 
-    public void setProperties(String pw, String email, Boolean isAdminObj)
+    public void setProperties(@RUntainted String pw, @RUntainted String email, @RUntainted Boolean isAdminObj)
     {
         if (pw != null)
         {
@@ -192,7 +194,7 @@ public class User
         this.webserverClient = wsc;
     }
 
-    private String makeUserlineDate(long when)
+    private @RUntainted String makeUserlineDate(@RUntainted long when)
     {
         Date whenDate = new Date(when);
         String whenString = userlineDateFormatter.format(whenDate);
@@ -231,9 +233,9 @@ public class User
         sessionStarted = -1;
     }
 
-    public static User makeUserFromUserLine(String line)
+    public static User makeUserFromUserLine(@RUntainted String line)
     {
-        List<String> tokens = new LinkedList<String>();
+        List<@RUntainted String> tokens = new LinkedList<@RUntainted String>();
         tokens.addAll(Arrays.asList(line.split(SEP)));
         if (tokens.size() != 9)
         {
@@ -271,7 +273,7 @@ public class User
         return u;
     }
 
-    public String makeLine()
+    public @RUntainted String makeLine()
     {
         String type = (isAdmin ? TYPE_ADMIN : TYPE_USER);
 

@@ -13,6 +13,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -25,16 +26,16 @@ public class MainVarFileLoader
     private static final Logger LOGGER = Logger
         .getLogger(MainVarFileLoader.class.getName());
 
-    private String map;
-    private String ter;
-    final private List<String> cre = new ArrayList<String>();
-    private String hintName;
-    private int maxPlayers = 0;
-    private final List<String> depends = new ArrayList<String>();
+    private @RUntainted String map;
+    private @RUntainted String ter;
+    final private List<@RUntainted String> cre = new ArrayList<@RUntainted String>();
+    private @RUntainted String hintName;
+    private @RUntainted int maxPlayers = 0;
+    private final @RUntainted List<String> depends = new ArrayList<String>();
 
     // no generics in JDOM
     @SuppressWarnings("unchecked")
-    public MainVarFileLoader(InputStream varIS)
+    public MainVarFileLoader(@RUntainted InputStream varIS)
     {
         SAXBuilder builder = new SAXBuilder();
         try
@@ -63,7 +64,7 @@ public class MainVarFileLoader
             {
                 map = strategicMap.getAttributeValue("filename");
             }
-            List<Element> lcreatures = root.getChildren("creatures");
+            List<@RUntainted Element> lcreatures = root.getChildren("creatures");
             for (Element creatures : lcreatures)
             {
                 cre.add(creatures.getAttributeValue("filename"));
@@ -90,33 +91,33 @@ public class MainVarFileLoader
         }
     }
 
-    public String getMap()
+    public @RUntainted String getMap()
     {
         return map;
     }
 
-    public String getTer()
+    public @RUntainted String getTer()
     {
         return ter;
     }
 
-    public List<String> getCre()
+    public List<@RUntainted String> getCre()
     {
         assert !cre.isEmpty() : "No Creatures file listed in variant.";
         return Collections.unmodifiableList(cre);
     }
 
-    public String getHintName()
+    public @RUntainted String getHintName()
     {
         return hintName;
     }
 
-    public int getMaxPlayers()
+    public @RUntainted int getMaxPlayers()
     {
         return maxPlayers;
     }
 
-    public List<String> getDepends()
+    public @RUntainted List<String> getDepends()
     {
         return Collections.unmodifiableList(depends);
     }

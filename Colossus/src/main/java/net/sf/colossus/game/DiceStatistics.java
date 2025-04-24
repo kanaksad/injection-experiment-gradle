@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.colossus.util.Glob;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 @SuppressWarnings("boxing")
@@ -21,12 +22,12 @@ public class DiceStatistics
 
     private PrintStream statisticsOutputStream;
 
-    public DiceStatistics(String statisticsFileName)
+    public DiceStatistics(@RUntainted String statisticsFileName)
     {
         openStatisticsFile(statisticsFileName);
     }
 
-    private void openStatisticsFile(String statisticsFileName)
+    private void openStatisticsFile(@RUntainted String statisticsFileName)
     {
         this.statisticsOutputStream = null;
         if (statisticsFileName != null)
@@ -52,8 +53,8 @@ public class DiceStatistics
         }
     }
 
-    public void addOneSet(int turn, int battleTurn, Creature striker,
-        Creature target, int strikeNumber, List<String> rollsString)
+    public void addOneSet(@RUntainted int turn, @RUntainted int battleTurn, Creature striker,
+        Creature target, int strikeNumber, List<@RUntainted String> rollsString)
     {
         LOGGER.finer("Adding rollset for turn " + turn + " battleturn "
             + battleTurn + " Striker " + striker.getDescription());
@@ -119,10 +120,10 @@ public class DiceStatistics
 
         private final int strikeNumber;
 
-        private final List<String> rolls;
+        private final List<@RUntainted String> rolls;
 
         DiceRollSet(Player player, int turn, int battleTurn, Creature striker,
-            Creature target, int strikeNumber, List<String> rollsString)
+            Creature target, int strikeNumber, List<@RUntainted String> rollsString)
         {
             this.player = player;
             this.turn = turn;

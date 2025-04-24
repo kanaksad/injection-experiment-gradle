@@ -11,6 +11,7 @@ import net.sf.colossus.game.BattleCritter;
 import net.sf.colossus.game.Creature;
 import net.sf.colossus.game.Game;
 import net.sf.colossus.variant.BattleHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -29,11 +30,11 @@ final class PenaltyOption implements Comparable<PenaltyOption>
     private final Creature striker;
     private final Creature target;
     private final Set<BattleHex> carryTargets = new HashSet<BattleHex>();
-    private final int dice;
-    private final int strikeNumber;
+    private final @RUntainted int dice;
+    private final @RUntainted int strikeNumber;
 
-    PenaltyOption(Game game, Creature striker, Creature target, int dice,
-        int strikeNumber)
+    PenaltyOption(Game game, Creature striker, Creature target, @RUntainted int dice,
+        @RUntainted int strikeNumber)
     {
         this.game = game;
         this.striker = striker;
@@ -57,12 +58,12 @@ final class PenaltyOption implements Comparable<PenaltyOption>
         return target;
     }
 
-    int getDice()
+    @RUntainted int getDice()
     {
         return dice;
     }
 
-    int getStrikeNumber()
+    @RUntainted int getStrikeNumber()
     {
         return strikeNumber;
     }
@@ -141,7 +142,7 @@ final class PenaltyOption implements Comparable<PenaltyOption>
     }
 
     @Override
-    public String toString()
+    public @RUntainted String toString()
     {
         StringBuilder sb = new StringBuilder();
         sb.append(striker.getDescription());

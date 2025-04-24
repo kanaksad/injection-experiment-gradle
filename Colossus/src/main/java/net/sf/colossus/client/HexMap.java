@@ -36,6 +36,7 @@ import net.sf.colossus.variant.HazardTerrain;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.xmlparser.BattlelandLoader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -364,7 +365,7 @@ public class HexMap extends JPanel
         }
     }
 
-    protected void selectHexes(Set<BattleHex> battleHexes)
+    protected void selectHexes(Set<@RUntainted BattleHex> battleHexes)
     {
         for (GUIBattleHex hex : hexes)
         {
@@ -395,7 +396,7 @@ public class HexMap extends JPanel
         return null;
     }
 
-    public BattleHex getHexByLabel(String hexLabel)
+    public @RUntainted BattleHex getHexByLabel(@RUntainted String hexLabel)
     {
         return masterHex.getTerrain().getHexByLabel(hexLabel);
     }
@@ -430,7 +431,7 @@ public class HexMap extends JPanel
     }
 
     @Override
-    public void paintComponent(Graphics g)
+    public void paintComponent(@RUntainted Graphics g)
     {
         // TODO the hexes should be on a separate background component
         // that is below the other components, then we wouldn't need

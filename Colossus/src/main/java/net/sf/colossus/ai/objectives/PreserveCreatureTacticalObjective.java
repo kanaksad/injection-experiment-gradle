@@ -9,6 +9,7 @@ import net.sf.colossus.game.BattleCritter;
 import net.sf.colossus.game.Creature;
 import net.sf.colossus.game.Legion;
 import net.sf.colossus.util.ValueRecorder;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /** The tactical objective of preserving all of a specific CreatureType.
@@ -34,7 +35,7 @@ class PreserveCreatureTacticalObjective extends AbstractTacticalObjective
     private final Client client;
     private final int count;
 
-    PreserveCreatureTacticalObjective(float priority, Client client,
+    PreserveCreatureTacticalObjective(@RUntainted float priority, Client client,
         Legion liveLegion, Creature critter)
     {
         super(priority);
@@ -49,7 +50,7 @@ class PreserveCreatureTacticalObjective extends AbstractTacticalObjective
         }
     }
 
-    public boolean objectiveAttained()
+    public @RUntainted boolean objectiveAttained()
     {
         if (liveLegion.numCreature(critter.getType()) >= count)
         {
@@ -98,7 +99,7 @@ class PreserveCreatureTacticalObjective extends AbstractTacticalObjective
         return value;
     }
 
-    public String getDescription()
+    public @RUntainted String getDescription()
     {
         return "Preserving all " + critter.getName() + " (" + getPriority()
             + ")";

@@ -3,6 +3,7 @@ package net.sf.colossus.common;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 public class WhatNextManager
@@ -12,8 +13,8 @@ public class WhatNextManager
 
     private final Options startOptions;
     private boolean interactive;
-    private WhatToDoNext whatToDoNext;
-    private int howManyGamesLeft;
+    private @RUntainted WhatToDoNext whatToDoNext;
+    private @RUntainted int howManyGamesLeft;
 
     public WhatNextManager(Options startOpts)
     {
@@ -22,7 +23,7 @@ public class WhatNextManager
         this.howManyGamesLeft = Options.getHowManyStresstestRoundsProperty();
     }
 
-    public WhatToDoNext getWhatToDoNext()
+    public @RUntainted WhatToDoNext getWhatToDoNext()
     {
         return whatToDoNext;
     }
@@ -46,7 +47,7 @@ public class WhatNextManager
      * @param triggerQuitTimer
      * @param interactive
      */
-    public void setWhatToDoNext(WhatToDoNext whatToDoNext,
+    public void setWhatToDoNext(@RUntainted WhatToDoNext whatToDoNext,
         boolean triggerQuitTimer, boolean interactive)
     {
         this.whatToDoNext = whatToDoNext;
@@ -65,7 +66,7 @@ public class WhatNextManager
      * @param whatToDoNext
      * @param triggerQuitTimer
      */
-    public void setWhatToDoNext(WhatToDoNext whatToDoNext,
+    public void setWhatToDoNext(@RUntainted WhatToDoNext whatToDoNext,
         boolean triggerQuitTimer)
     {
         setWhatToDoNext(whatToDoNext, triggerQuitTimer, false);
@@ -80,7 +81,7 @@ public class WhatNextManager
         return startOptions;
     }
 
-    public void setWhatToDoNext(WhatToDoNext whatToDoNext, String loadFile,
+    public void setWhatToDoNext(@RUntainted WhatToDoNext whatToDoNext, String loadFile,
         boolean interactive)
     {
         setWhatToDoNext(whatToDoNext, false, interactive);
@@ -142,7 +143,7 @@ public class WhatNextManager
             .getLogger(TimedJvmQuit.class.getName());
 
         private static final String defaultName = "TimedJvmQuit thread";
-        private final String name;
+        private final @RUntainted String name;
 
         // For now, on the web server, 120, because there were cases where
         // in case of a draw Clients did not catch up.
@@ -197,9 +198,9 @@ public class WhatNextManager
             "GetPlayers dialog"), NET_CLIENT_DIALOG("Network Client dialog"), QUIT_ALL(
             "Quit All");
 
-        private final String activity;
+        private final @RUntainted String activity;
 
-        private WhatToDoNext(String act)
+        private WhatToDoNext(@RUntainted String act)
         {
             this.activity = act;
         }
@@ -208,7 +209,7 @@ public class WhatNextManager
          * Returns a non-localized UI string for the "whatToDoNext" activity.
          */
         @Override
-        public String toString()
+        public @RUntainted String toString()
         {
             return activity;
         }

@@ -3,6 +3,7 @@ package net.sf.colossus.server;
 
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -46,7 +47,7 @@ public class RemoteLogHandler extends Handler
     }
 
     @Override
-    public void publish(LogRecord record)
+    public void publish(@RUntainted LogRecord record)
     {
         if (PUBLISH_TO_REMOTE_LOGGERS)
         {

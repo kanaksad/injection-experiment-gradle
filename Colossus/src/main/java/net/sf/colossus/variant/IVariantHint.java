@@ -2,6 +2,7 @@ package net.sf.colossus.variant;
 
 
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -55,8 +56,8 @@ public interface IVariantHint
      * @return The suggested recruit type, a null means recruiting should be
      *         skipped.
      */
-    public CreatureType getRecruitHint(MasterBoardTerrain terrain,
-        IOracleLegion legion, List<CreatureType> recruits, IHintOracle oracle,
+    public @RUntainted CreatureType getRecruitHint(MasterBoardTerrain terrain,
+        IOracleLegion legion, List<@RUntainted CreatureType> recruits, IHintOracle oracle,
         List<AIStyle> aiStyles);
 
     /**
@@ -77,6 +78,6 @@ public interface IVariantHint
      * @param styles List of AI styles to hint for
      * @return An offset to the Point Value of the creature.
      */
-    public int getHintedRecruitmentValueOffset(CreatureType creature,
+    public @RUntainted int getHintedRecruitmentValueOffset(CreatureType creature,
         List<AIStyle> styles);
 }

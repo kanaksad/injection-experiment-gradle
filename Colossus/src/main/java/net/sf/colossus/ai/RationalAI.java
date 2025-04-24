@@ -29,6 +29,8 @@ import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterBoardTerrain;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.xmlparser.TerrainRecruitLoader;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
 
 
 /**
@@ -44,9 +46,9 @@ public class RationalAI extends SimpleAI
         .getName());
 
     boolean I_HATE_HUMANS = false;
-    private final List<Legion> legionsToSplit = new LinkedList<Legion>();
+    private final @RUntainted List<@RUntainted Legion> legionsToSplit = new LinkedList<@RUntainted Legion>();
     private Map<MasterHex, List<Legion>>[] enemyAttackMap;
-    private final Map<String, Integer> evaluateMoveMap = new HashMap<String, Integer>();
+    private final Map<String, @RUntainted Integer> evaluateMoveMap = new HashMap<String, @RUntainted Integer>();
     private List<LegionBoardMove> bestMoveList;
     private Iterator<LegionBoardMove> bestMoveListIter;
 
@@ -55,7 +57,7 @@ public class RationalAI extends SimpleAI
         super(client);
     }
 
-    private static double r3(double value)
+    private static @RPolyTainted double r3(@RPolyTainted double value)
     {
         return Math.round(1000. * value) / 1000.;
     }
@@ -108,7 +110,7 @@ public class RationalAI extends SimpleAI
     /** If parentId and childId are null, this is a callback to
      * an undo split */
     @Override
-    public boolean splitCallback(Legion parent, Legion child)
+    public boolean splitCallback(@RUntainted Legion parent, @RUntainted Legion child)
     {
         logger.log(Level.FINEST, "RationalAI.splitCallback " + parent + " "
             + child);
@@ -120,8 +122,8 @@ public class RationalAI extends SimpleAI
     // Compute the expected value of a split legion
     // If we want to compute just a single legion, pass null for
     // the child_legion
-    private double expectedValueSplitLegion(LegionClientSide legion,
-        LegionClientSide child_legion)
+    private @RUntainted double expectedValueSplitLegion(@RUntainted LegionClientSide legion,
+        @RUntainted LegionClientSide child_legion)
     {
         double split_value = 0.0;
 
@@ -149,7 +151,7 @@ public class RationalAI extends SimpleAI
         for (int roll = 1; roll <= 6; roll++)
         {
             logger.log(Level.FINEST, "expectedValueSplitLegion: Roll " + roll);
-            Set<MasterHex> moves = client.getMovement().listAllMoves(legion,
+            Set<@RUntainted MasterHex> moves = client.getMovement().listAllMoves(legion,
                 legion.getCurrentHex(), roll);
 
             int size1 = moves.size() + 1;
@@ -164,8 +166,8 @@ public class RationalAI extends SimpleAI
                 size2 = 2;
             }
 
-            double[] valueStack1 = new double[size1];
-            double[] valueStack2 = new double[size2];
+            @RUntainted double[] valueStack1 = new double[size1];
+            @RUntainted double[] valueStack2 = new double[size2];
             int move_i = 0;
 
             for (MasterHex hex : moves)
@@ -229,7 +231,7 @@ public class RationalAI extends SimpleAI
     }
 
     /** Return true if done, false if waiting for callback. */
-    boolean splitOneLegion(Player player, Legion legion)
+    boolean splitOneLegion(Player player, @RUntainted Legion legion)
     {
         logger.log(Level.FINEST, "splitOneLegion()");
 
@@ -309,8 +311,8 @@ public class RationalAI extends SimpleAI
     }
 
     /** Return true if done, false if waiting for undo split */
-    private boolean splitOneLegionCallback(LegionClientSide parent,
-        LegionClientSide child)
+    private boolean splitOneLegionCallback(@RUntainted LegionClientSide parent,
+        @RUntainted LegionClientSide child)
     {
         if (parent == null && child == null)
         {
@@ -379,7 +381,7 @@ public class RationalAI extends SimpleAI
 
     /** Find value of recruiting, including possibly attacking an enemy
      set enemy = null to indicate no enemy */
-    private double recruitValue(Legion legion, MasterHex hex, Legion enemy,
+    private @RUntainted double recruitValue(@RUntainted Legion legion, MasterHex hex, @RUntainted Legion enemy,
         MasterBoardTerrain terrain)
     {
         int value = 0;
@@ -388,7 +390,7 @@ public class RationalAI extends SimpleAI
         // the mobility value of a particular hex in evaluateMove
 
         // Consider recruiting.
-        List<CreatureType> recruits = client.findEligibleRecruits(legion, hex);
+        List<@RUntainted CreatureType> recruits = client.findEligibleRecruits(legion, hex);
 
         if (!recruits.isEmpty())
         {
@@ -418,9 +420,9 @@ public class RationalAI extends SimpleAI
 
             while ((currentScore + pointValue) >= nextScore)
             {
-                List<String> ral = variant.getRecruitableAcquirableList(
+                List<@RUntainted String> ral = variant.getRecruitableAcquirableList(
                     terrain, nextScore);
-                Iterator<String> it = ral.iterator();
+                Iterator<@RUntainted String> it = ral.iterator();
 
                 while (it.hasNext())
                 {
@@ -452,7 +454,7 @@ public class RationalAI extends SimpleAI
     // Given a list of creatures sorted by value, figure out which ones are
     // redundant / have mustered.
     // Removes any creatures that have mustered from the original sorted list
-    private List<CreatureType> removeMustered(
+    private @RUntainted List<CreatureType> removeMustered(
         List<CreatureType> sortedCreatures)
     {
         // Look at 4 lowest valued creatures
@@ -518,7 +520,7 @@ public class RationalAI extends SimpleAI
 
     // Sort creatures first by value then by name.
     // Exclude titan.
-    private List<CreatureType> sortCreaturesByValueName(Legion legion)
+    private @RUntainted List<CreatureType> sortCreaturesByValueName(Legion legion)
     {
         List<CreatureType> sortedCreatures = new ArrayList<CreatureType>();
 
@@ -675,14 +677,14 @@ public class RationalAI extends SimpleAI
     // little helper class to store possible moves by legion
     private class LegionBoardMove
     {
-        final Legion legion;
+        final @RUntainted Legion legion;
         final MasterHex fromHex;
-        final MasterHex toHex;
-        final double val;
+        final @RUntainted MasterHex toHex;
+        final @RUntainted double val;
         final boolean noMove;
 
-        LegionBoardMove(Legion legion, MasterHex fromHex, MasterHex toHex,
-            double val, boolean noMove)
+        LegionBoardMove(@RUntainted Legion legion, MasterHex fromHex, @RUntainted MasterHex toHex,
+            @RUntainted double val, boolean noMove)
         {
             this.legion = legion;
             this.fromHex = fromHex;
@@ -775,7 +777,7 @@ public class RationalAI extends SimpleAI
         return true;
     }
 
-    private boolean findMoveList(List<? extends Legion> legions,
+    private boolean findMoveList(List<? extends @RUntainted Legion> legions,
         List<List<LegionBoardMove>> all_legionMoves,
         MultiSet<MasterHex> occupiedHexes, boolean teleportsOnly)
     {
@@ -807,7 +809,7 @@ public class RationalAI extends SimpleAI
             }
 
             // find the expected value of all moves for this legion
-            Set<MasterHex> set;
+            Set<@RUntainted MasterHex> set;
             if (!teleportsOnly)
             {
                 // exclude teleport moves
@@ -853,7 +855,7 @@ public class RationalAI extends SimpleAI
         logger.log(Level.FINEST, "handleVoluntaryMoves()");
 
         boolean moved = false;
-        List<? extends Legion> legions = player.getLegions();
+        List<? extends @RUntainted Legion> legions = player.getLegions();
         List<List<LegionBoardMove>> all_legionMoves = new ArrayList<List<LegionBoardMove>>();
 
         MultiSet<MasterHex> occupiedHexes = new MultiSet<MasterHex>();
@@ -942,7 +944,7 @@ public class RationalAI extends SimpleAI
     private boolean handleForcedSplitMoves(Player player)
     {
         int roll = client.getGame().getMovementRoll();
-        ArrayList<MasterHex> unsplitHexes = new ArrayList<MasterHex>();
+        ArrayList<@RUntainted MasterHex> unsplitHexes = new ArrayList<@RUntainted MasterHex>();
 
         /* Consider one hex after another. It is not necessary to look at
          * the individual legions, because
@@ -965,7 +967,7 @@ public class RationalAI extends SimpleAI
         }
         for (MasterHex hex : unsplitHexes)
         {
-            List<Legion> friendlyLegions = client.getGameClientSide()
+            List<@RUntainted Legion> friendlyLegions = client.getGameClientSide()
                 .getFriendlyLegions(hex, player);
 
             // pick just any legion for asking the getMovement
@@ -997,7 +999,7 @@ public class RationalAI extends SimpleAI
                     }
                 }
 
-                Set<MasterHex> set = client.getMovement().listNormalMoves(
+                Set<@RUntainted MasterHex> set = client.getMovement().listNormalMoves(
                     minLegion, minLegion.getCurrentHex(), roll);
 
                 if (set.size() == 0)
@@ -1017,7 +1019,7 @@ public class RationalAI extends SimpleAI
                     for (MasterHex targetHex : set)
                     {
                         // The set of moves includes still hexes occupied by our own legions.
-                        List<Legion> targetOwnLegions = client
+                        List<@RUntainted Legion> targetOwnLegions = client
                             .getGameClientSide().getFriendlyLegions(targetHex,
                                 player);
                         if (targetOwnLegions.size() == 0)
@@ -1075,11 +1077,11 @@ public class RationalAI extends SimpleAI
 
         // first we have to find out those that can move at all:
 
-        ArrayList<Legion> movableLegions = new ArrayList<Legion>();
+        ArrayList<@RUntainted Legion> movableLegions = new ArrayList<@RUntainted Legion>();
 
         for (Legion legion : player.getLegions())
         {
-            Set<MasterHex> set = client.getMovement().listNormalMoves(legion,
+            Set<@RUntainted MasterHex> set = client.getMovement().listNormalMoves(legion,
                 legion.getCurrentHex(), roll);
 
             if (set.size() > 0)
@@ -1146,14 +1148,14 @@ public class RationalAI extends SimpleAI
         assert minValueLegion != null : "There should be at least one legion we can move";
 
         // Now decide where we move this unlucky one to:
-        Set<MasterHex> minValueMoves = client.getMovement().listNormalMoves(
+        Set<@RUntainted MasterHex> minValueMoves = client.getMovement().listNormalMoves(
             minValueLegion, minValueLegion.getCurrentHex(), roll);
 
         int bestValue = -1;
         MasterHex bestHex = null;
         for (MasterHex targetHex : minValueMoves)
         {
-            List<Legion> targetOwnLegions = client.getGameClientSide()
+            List<@RUntainted Legion> targetOwnLegions = client.getGameClientSide()
                 .getFriendlyLegions(targetHex, player);
             if (targetOwnLegions.size() == 0)
             {
@@ -1192,10 +1194,10 @@ public class RationalAI extends SimpleAI
 
     private class MoveFinder
     {
-        private List<LegionBoardMove> bestMove = null;
+        private @RUntainted List<LegionBoardMove> bestMove = null;
         private double bestScore;
         private boolean mustMove;
-        private long nodesExplored = 0;
+        private @RUntainted long nodesExplored = 0;
 
         // initial score is some value that should be smaller that the
         // worst move
@@ -1260,7 +1262,7 @@ public class RationalAI extends SimpleAI
          * @param performedMoves
          * @return
          */
-        private List<LegionBoardMove> getValidMove(
+        private @RUntainted List<LegionBoardMove> getValidMove(
             List<LegionBoardMove> performedMoves)
         {
             if (mustMove)
@@ -1334,7 +1336,7 @@ public class RationalAI extends SimpleAI
                 }
                 // now we know we have a split legion not moving since
                 // that is the only way to have a noMove conflict
-                Set<MasterHex> moves = client.getMovement().listNormalMoves(
+                Set<@RUntainted MasterHex> moves = client.getMovement().listNormalMoves(
                     lm.legion, lm.legion.getCurrentHex(),
                     client.getGame().getMovementRoll());
                 for (MasterHex dest : moves)
@@ -1353,7 +1355,7 @@ public class RationalAI extends SimpleAI
         }
 
         private void branchAndBound(List<LegionBoardMove> performedMoves,
-            List<List<LegionBoardMove>> availableMoves, double currentValue)
+            List<List<LegionBoardMove>> availableMoves, @RUntainted double currentValue)
         {
             nodesExplored++;
             if (timeIsUp)
@@ -1511,7 +1513,7 @@ public class RationalAI extends SimpleAI
 
     // Compute risk of being attacked
     // Value returned is expected point value cost
-    private double hexRisk(Legion legion, MasterHex hex, boolean invert)
+    private @RUntainted double hexRisk(Legion legion, MasterHex hex, boolean invert)
     {
         double risk = 0.0;
 
@@ -1563,7 +1565,7 @@ public class RationalAI extends SimpleAI
         return risk;
     }
 
-    private int evaluateCombat(Legion attacker, Legion defender, MasterHex hex)
+    private @RUntainted int evaluateCombat(Legion attacker, Legion defender, MasterHex hex)
     {
         if (attacker.getPlayer().equals(defender.getPlayer()))
         {
@@ -1692,7 +1694,7 @@ public class RationalAI extends SimpleAI
     static final int RECRUIT_TRUE = 1; // allow recruiting by attacker
     static final int RECRUIT_AT_7 = 2; // allow recruiting by attacker 7 high
 
-    private int evaluateHexAttack(Legion attacker, MasterHex hex,
+    private @RUntainted int evaluateHexAttack(@RUntainted Legion attacker, MasterHex hex,
         int canRecruitHere)
     {
         int value = 0;
@@ -1748,7 +1750,7 @@ public class RationalAI extends SimpleAI
     }
 
     /** Memoizing wrapper for evaluateMoveInner */
-    private int evaluateMove(Legion legion, MasterHex hex, int canRecruitHere,
+    private @RUntainted int evaluateMove(@RUntainted Legion legion, MasterHex hex, int canRecruitHere,
         int depth, boolean addHexRisk)
     {
         String sep = "~";
@@ -1774,7 +1776,7 @@ public class RationalAI extends SimpleAI
     // cheap, inaccurate evaluation function.  Returns an expected value for
     // moving this legion to this hex.  The value defines a distance
     // metric over the set of all possible moves.
-    private int evaluateMoveInner(Legion legion, MasterHex hex,
+    private @RUntainted int evaluateMoveInner(@RUntainted Legion legion, MasterHex hex,
         int canRecruitHere, int depth, boolean normalHexRisk)
     {
 
@@ -1827,9 +1829,9 @@ public class RationalAI extends SimpleAI
         // value of next turn
         for (int roll = 1; roll <= 6; roll++)
         {
-            Set<MasterHex> normal_moves = client.getMovement()
+            Set<@RUntainted MasterHex> normal_moves = client.getMovement()
                 .listNormalMoves(legion, hex, roll);
-            Set<MasterHex> tele_moves = client.getMovement()
+            Set<@RUntainted MasterHex> tele_moves = client.getMovement()
                 .listTeleportMoves(legion, hex, roll);
             double bestMoveVal = stay_at_hex; // can always stay here
             boolean no_attack = false;
@@ -1879,12 +1881,12 @@ public class RationalAI extends SimpleAI
 
     static class BattleResults
     {
-        private final double ev; // expected value of attack
-        private final int att_dead;
-        private final int def_dead;
-        private List<String> log = new ArrayList<String>();
+        private final @RUntainted double ev; // expected value of attack
+        private final @RUntainted int att_dead;
+        private final @RUntainted int def_dead;
+        private List<@RUntainted String> log = new ArrayList<@RUntainted String>();
 
-        public BattleResults(double e, int a, int d)
+        public BattleResults(@RUntainted double e, @RUntainted int a, @RUntainted int d)
         {
             ev = e;
             att_dead = a;
@@ -1897,8 +1899,8 @@ public class RationalAI extends SimpleAI
          * @param def_dead
          * @param log
          */
-        public BattleResults(double ev, int att_dead, int def_dead,
-            List<String> log)
+        public BattleResults(@RUntainted double ev, @RUntainted int att_dead, @RUntainted int def_dead,
+            List<@RUntainted String> log)
         {
             super();
             this.ev = ev;
@@ -1910,22 +1912,22 @@ public class RationalAI extends SimpleAI
         /**
          * @return Returns the log.
          */
-        public List<String> getLog()
+        public List<@RUntainted String> getLog()
         {
             return log;
         }
 
-        public double getExpectedValue()
+        public @RUntainted double getExpectedValue()
         {
             return ev;
         }
 
-        public int getAttackerDead()
+        public @RUntainted int getAttackerDead()
         {
             return att_dead;
         }
 
-        public int getDefenderDead()
+        public @RUntainted int getDefenderDead()
         {
             return def_dead;
         }
@@ -1949,7 +1951,7 @@ public class RationalAI extends SimpleAI
     // add in value of points received for killing group / 100
     // * (fraction of angel value = angel + arch = 24 + 12/5
     //    + titan value = 10 -- arbitrary, it's worth more than 4)
-    final double KILLPOINTS = (24.0 + 12.0 / 5.0 + 10.0) / 100.0;
+    final @RUntainted double KILLPOINTS = (24.0 + 12.0 / 5.0 + 10.0) / 100.0;
 
     private BattleResults estimateBattleResults(Legion attacker,
         Legion defender, MasterHex hex, CreatureType callable)
@@ -1974,7 +1976,7 @@ public class RationalAI extends SimpleAI
         int defenderKilled = 0;
         int defenderMuster = 0;
         int round;
-        List<String> log = new ArrayList<String>(14);
+        List<@RUntainted String> log = new ArrayList<@RUntainted String>(14);
 
         round_loop: for (round = 2; round <= 7; round++)
         {
@@ -2174,7 +2176,7 @@ public class RationalAI extends SimpleAI
         if (round < 4 && defenderCreatures.size() > 1)
         {
             // add in enemy's most likely turn 4 recruit
-            List<CreatureType> recruits = client.findEligibleRecruits(
+            List<@RUntainted CreatureType> recruits = client.findEligibleRecruits(
                 defender, hex);
 
             if (!recruits.isEmpty())
@@ -2218,7 +2220,7 @@ public class RationalAI extends SimpleAI
     }
 
     @Override
-    public boolean flee(Legion legion, Legion enemy)
+    public @RUntainted boolean flee(@RUntainted Legion legion, @RUntainted Legion enemy)
     {
         logger.log(Level.FINEST, "flee called.");
         if ((legion).hasTitan())
@@ -2262,7 +2264,7 @@ public class RationalAI extends SimpleAI
 
         // find attacker's most likely recruit
         double deniedMuster = 0;
-        List<CreatureType> recruits = client.findEligibleRecruits(enemy,
+        List<@RUntainted CreatureType> recruits = client.findEligibleRecruits(enemy,
             legion.getCurrentHex());
 
         if (!recruits.isEmpty())
@@ -2338,7 +2340,7 @@ public class RationalAI extends SimpleAI
     }
 
     @Override
-    public boolean concede(Legion legion, Legion enemy)
+    public boolean concede(@RUntainted Legion legion, @RUntainted Legion enemy)
     {
         // Never concede titan legion.
         if ((legion).hasTitan())
@@ -2392,7 +2394,7 @@ public class RationalAI extends SimpleAI
         return false;
     }
 
-    public List<PowerSkill> getCombatList(Legion legion,
+    public @RUntainted List<PowerSkill> getCombatList(Legion legion,
         MasterBoardTerrain terrain, boolean defender)
     {
         List<PowerSkill> powerskills = new ArrayList<PowerSkill>();

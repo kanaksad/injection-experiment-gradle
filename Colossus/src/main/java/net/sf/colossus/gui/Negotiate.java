@@ -25,6 +25,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.game.Proposal;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -34,8 +35,8 @@ import net.sf.colossus.guiutil.SaveWindow;
  */
 final class Negotiate extends KDialog
 {
-    private final Legion attacker;
-    private final Legion defender;
+    private final @RUntainted Legion attacker;
+    private final @RUntainted Legion defender;
     private final List<Chit> attackerChits = new ArrayList<Chit>();
     private final List<Chit> defenderChits = new ArrayList<Chit>();
     private final ClientGUI gui;
@@ -45,7 +46,7 @@ final class Negotiate extends KDialog
     private final Marker attackerMarker;
     private final Marker defenderMarker;
 
-    Negotiate(ClientGUI gui, Legion attacker, Legion defender)
+    Negotiate(ClientGUI gui, @RUntainted Legion attacker, @RUntainted Legion defender)
     {
         super(gui.getBoard().getFrame(), gui.getOwningPlayer().getName()
             + ": " + attacker + " Negotiates with " + defender, false);
@@ -138,9 +139,9 @@ final class Negotiate extends KDialog
         pane.add(marker);
         pane.add(Box.createRigidArea(new Dimension(scale / 4, 0)));
 
-        List<String> imageNames = ((gui.getOracle())
+        List<@RUntainted String> imageNames = ((gui.getOracle())
             .getLegionImageNames(legion));
-        Iterator<String> it = imageNames.iterator();
+        Iterator<@RUntainted String> it = imageNames.iterator();
         while (it.hasNext())
         {
             String imageName = it.next();
@@ -260,7 +261,7 @@ final class Negotiate extends KDialog
             }
 
             // Remove all dead creatures from the winning legion.
-            List<String> winnerLosses = new ArrayList<String>();
+            List<@RUntainted String> winnerLosses = new ArrayList<@RUntainted String>();
             it = winnerChits.iterator();
             while (it.hasNext())
             {

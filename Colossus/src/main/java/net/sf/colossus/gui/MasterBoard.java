@@ -84,6 +84,7 @@ import net.sf.colossus.util.SystemInfo;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -127,7 +128,7 @@ public final class MasterBoard extends JPanel
      * user clicks on an engagement while there is still the server response
      * missing for the last one
      */
-    private MasterHex engagingPendingHex = null;
+    private @RUntainted MasterHex engagingPendingHex = null;
 
     /**
      * In that time while we got tellEngagement but nothing else
@@ -253,7 +254,7 @@ public final class MasterBoard extends JPanel
 
     private SaveWindow saveWindow;
 
-    private String cachedPlayerName = "<not set yet>";
+    private @RUntainted String cachedPlayerName = "<not set yet>";
 
     EditLegion editLegionOngoing = null;
     EditLegion relocateOngoing = null;
@@ -1287,7 +1288,7 @@ public final class MasterBoard extends JPanel
 
     private ItemListener itemHandler = new MasterBoardItemHandler();
 
-    private JCheckBoxMenuItem addCheckBox(JMenu menu, String name, int mnemonic)
+    private JCheckBoxMenuItem addCheckBox(JMenu menu, @RUntainted String name, int mnemonic)
     {
         JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(name);
         cbmi.setMnemonic(mnemonic);
@@ -2105,10 +2106,10 @@ public final class MasterBoard extends JPanel
     {
         unselectAllHexes();
 
-        Set<MasterHex> teleport = client.listTeleportMoves(legion);
+        Set<@RUntainted MasterHex> teleport = client.listTeleportMoves(legion);
         selectHexes(teleport, HTMLColor.purple);
 
-        Set<MasterHex> normal = client.listNormalMoves(legion);
+        Set<@RUntainted MasterHex> normal = client.listNormalMoves(legion);
         selectHexes(normal, Color.white);
 
         Set<MasterHex> combo = new HashSet<MasterHex>();
@@ -2126,19 +2127,19 @@ public final class MasterBoard extends JPanel
 
     void highlightEngagements()
     {
-        Set<MasterHex> set = gui.getGameClientSide().findEngagements();
+        Set<@RUntainted MasterHex> set = gui.getGameClientSide().findEngagements();
         unselectAllHexes();
         selectHexes(set);
     }
 
     private void setupIcon()
     {
-        List<String> directories = new ArrayList<String>();
+        List<@RUntainted String> directories = new ArrayList<@RUntainted String>();
         directories.add(Constants.defaultDirName
             + StaticResourceLoader.getPathSeparator()
             + Constants.imagesDirName);
 
-        String[] iconNames = {
+        @RUntainted String[] iconNames = {
             Constants.masterboardIconImage,
             Constants.masterboardIconText + "-Name-"
                 + Constants.masterboardIconTextColor,
@@ -2288,7 +2289,7 @@ public final class MasterBoard extends JPanel
             });
     }
 
-    private void selectHexes(final Set<MasterHex> hexes)
+    private void selectHexes(final Set<@RUntainted MasterHex> hexes)
     {
         ArrayHelper.findFirstMatch(guiHexArray,
             new NullCheckPredicate<GUIMasterHex>(false)
@@ -2306,7 +2307,7 @@ public final class MasterBoard extends JPanel
             });
     }
 
-    private void selectHexes(final Set<MasterHex> hexes, final Color color)
+    private void selectHexes(final Set<@RUntainted MasterHex> hexes, final Color color)
     {
         ArrayHelper.findFirstMatch(guiHexArray,
             new NullCheckPredicate<GUIMasterHex>(false)
@@ -2516,7 +2517,7 @@ public final class MasterBoard extends JPanel
         }
     }
 
-    private void actOnLegion(LegionClientSide legion, MasterHex hex)
+    private void actOnLegion(@RUntainted LegionClientSide legion, @RUntainted MasterHex hex)
     {
         if (!gui.isMyTurn())
         {
@@ -2560,7 +2561,7 @@ public final class MasterBoard extends JPanel
         }
     }
 
-    private void actOnHex(MasterHex hex)
+    private void actOnHex(@RUntainted MasterHex hex)
     {
         if (!gui.client.ensureThatConnected())
         {
@@ -2665,7 +2666,7 @@ public final class MasterBoard extends JPanel
         defenderFleePhase = false;
     }
 
-    private void attemptEngage(MasterHex hex)
+    private void attemptEngage(@RUntainted MasterHex hex)
     {
         // If we're in FIGHT phase and there are two opposing legions here,
         // initiate the engaging; if already engaging or engaged, inform
@@ -2750,7 +2751,7 @@ public final class MasterBoard extends JPanel
                 cachedPlayerName);
         }
 
-        public void itemStateChanged(ItemEvent e)
+        public void itemStateChanged(@RUntainted ItemEvent e)
         {
             JMenuItem source = (JMenuItem)e.getSource();
             String text = source.getText();
@@ -2775,7 +2776,7 @@ public final class MasterBoard extends JPanel
     }
 
     @Override
-    public void paintComponent(Graphics g)
+    public void paintComponent(@RUntainted Graphics g)
     {
         // Abort if called too early.
         if (g.getClipBounds() == null)
@@ -2852,7 +2853,7 @@ public final class MasterBoard extends JPanel
     }
 
     /** Paint markers in z-order. */
-    private void paintMarkers(Graphics g)
+    private void paintMarkers(@RUntainted Graphics g)
     {
         synchronized (legionToMarkerMap)
         {
@@ -2866,7 +2867,7 @@ public final class MasterBoard extends JPanel
         }
     }
 
-    public void paintRecruitedChits(Graphics g)
+    public void paintRecruitedChits(@RUntainted Graphics g)
     {
         for (Chit chit : recruitedChits.values())
         {
@@ -2881,11 +2882,11 @@ public final class MasterBoard extends JPanel
         clearPossibleRecruitChits();
 
         // set is a set of possible target hexes
-        List<CreatureType> oneElemList = new ArrayList<CreatureType>();
+        List<@RUntainted CreatureType> oneElemList = new ArrayList<@RUntainted CreatureType>();
 
         for (MasterHex hex : hexes)
         {
-            List<CreatureType> recruits = client.findEligibleRecruits(legion,
+            List<@RUntainted CreatureType> recruits = client.findEligibleRecruits(legion,
                 hex);
 
             if (recruits != null && recruits.size() > 0)
@@ -2941,7 +2942,7 @@ public final class MasterBoard extends JPanel
     }
 
     // all possible recruit chits, one hex
-    private void addPossibleRecruitChits(List<CreatureType> imageNameList,
+    private void addPossibleRecruitChits(List<@RUntainted CreatureType> imageNameList,
         MasterHex masterHex)
     {
         List<Chit> list = new ArrayList<Chit>();
@@ -2988,7 +2989,7 @@ public final class MasterBoard extends JPanel
         }
     }
 
-    private void paintPossibleRecruitChits(Graphics g)
+    private void paintPossibleRecruitChits(@RUntainted Graphics g)
     {
         // Each returned list is the list of chits for one hex
         for (List<Chit> chits : possibleRecruitChits.values())
@@ -3000,7 +3001,7 @@ public final class MasterBoard extends JPanel
         }
     }
 
-    private void paintMovementDie(Graphics g)
+    private void paintMovementDie(@RUntainted Graphics g)
     {
         if (client != null)
         {

@@ -2,6 +2,7 @@ package net.sf.colossus.game;
 
 
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -15,12 +16,12 @@ import net.sf.colossus.variant.CreatureType;
  */
 public class SummonInfo
 {
-    final private Legion target;
-    final private Legion donor;
-    final private CreatureType unit;
+    final private @RUntainted Legion target;
+    final private @RUntainted Legion donor;
+    final private @RUntainted CreatureType unit;
     final private boolean noSummoningWanted;
 
-    public SummonInfo(Legion target, Legion donor, CreatureType unit)
+    public SummonInfo(@RUntainted Legion target, @RUntainted Legion donor, @RUntainted CreatureType unit)
     {
         this.target = target;
         this.donor = donor;
@@ -36,17 +37,17 @@ public class SummonInfo
         this.noSummoningWanted = true;
     }
 
-    public Legion getTarget()
+    public @RUntainted Legion getTarget()
     {
         return target;
     }
 
-    public Legion getDonor()
+    public @RUntainted Legion getDonor()
     {
         return donor;
     }
 
-    public CreatureType getUnit()
+    public @RUntainted CreatureType getUnit()
     {
         return unit;
     }

@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.Variant;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -29,7 +30,7 @@ public final class PredictSplits
     private final PredictSplitNode root; // All contents of root must be known.
     private final NodeTurnComparator nodeTurnComparator = new NodeTurnComparator();
 
-    PredictSplits(String rootId, List<CreatureType> creatureTypes,
+    PredictSplits(@RUntainted String rootId, List<CreatureType> creatureTypes,
         Variant variant)
     {
         assert variant != null;

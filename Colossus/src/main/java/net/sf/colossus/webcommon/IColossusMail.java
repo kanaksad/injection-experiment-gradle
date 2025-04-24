@@ -2,6 +2,7 @@ package net.sf.colossus.webcommon;
 
 
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -29,8 +30,8 @@ public interface IColossusMail
      *        in order to complete the registration
      * @return The reason why it failed, or null if all is fine.
      */
-    public String sendConfirmationMail(String username, String email,
-        String confirmationCode);
+    public @RUntainted String sendConfirmationMail(@RUntainted String username, @RUntainted String email,
+        @RUntainted String confirmationCode);
 
     /**
      * Send the message that a user submitted via the "Contact Admin"
@@ -42,6 +43,6 @@ public interface IColossusMail
      * @param message  Message body, as a List<String>
      * @return
      */
-    public String sendMessageToAdminMail(long when, String fromUser,
-        String hisMail, List<String> message);
+    public String sendMessageToAdminMail(@RUntainted long when, @RUntainted String fromUser,
+        @RUntainted String hisMail, List<@RUntainted String> message);
 }

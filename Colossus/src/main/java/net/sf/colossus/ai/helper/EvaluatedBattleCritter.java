@@ -4,6 +4,7 @@ package net.sf.colossus.ai.helper;
 import net.sf.colossus.game.BattleCritter;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -13,8 +14,8 @@ import net.sf.colossus.variant.CreatureType;
 public class EvaluatedBattleCritter implements BattleCritter
 {
     private final BattleCritter parent;
-    private BattleHex startingHex;
-    private BattleHex currentHex;
+    private @RUntainted BattleHex startingHex;
+    private @RUntainted BattleHex currentHex;
 
     EvaluatedBattleCritter(BattleCritter parent)
     {
@@ -28,17 +29,17 @@ public class EvaluatedBattleCritter implements BattleCritter
         return parent.getType();
     }
 
-    public BattleHex getCurrentHex()
+    public @RUntainted BattleHex getCurrentHex()
     {
         return currentHex;
     }
 
-    public String getDescription()
+    public @RUntainted String getDescription()
     {
         return parent.getDescription();
     }
 
-    public int getHits()
+    public @RUntainted int getHits()
     {
         return parent.getHits();
     }
@@ -83,27 +84,27 @@ public class EvaluatedBattleCritter implements BattleCritter
         return parent.getSlows();
     }
 
-    public int getPointValue()
+    public @RUntainted int getPointValue()
     {
         return parent.getPointValue();
     }
 
-    public int getPower()
+    public @RUntainted int getPower()
     {
         return parent.getPower();
     }
 
-    public int getSkill()
+    public @RUntainted int getSkill()
     {
         return parent.getSkill();
     }
 
-    public BattleHex getStartingHex()
+    public @RUntainted BattleHex getStartingHex()
     {
         return startingHex;
     }
 
-    public int getTag()
+    public @RUntainted int getTag()
     {
         return parent.getTag();
     }
@@ -123,7 +124,7 @@ public class EvaluatedBattleCritter implements BattleCritter
         return parent.hasStruck();
     }
 
-    public void moveToHex(BattleHex hex)
+    public void moveToHex(@RUntainted BattleHex hex)
     {
         startingHex = currentHex;
         currentHex = hex;
@@ -164,7 +165,7 @@ public class EvaluatedBattleCritter implements BattleCritter
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void setCurrentHex(BattleHex hex)
+    public void setCurrentHex(@RUntainted BattleHex hex)
     {
         currentHex = hex;
     }

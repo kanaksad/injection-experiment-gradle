@@ -2,6 +2,7 @@ package net.sf.colossus.webcommon;
 
 
 import java.util.List;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -51,49 +52,49 @@ public interface IWebServer
 
     // does not really return a GI object over socket, but method needs
     // that return value (internally) when used in server side.
-    public GameInfo proposeGame(String initiator, String variant,
-        String viewmode, long startAt, int duration, String summary,
-        String expire, List<String> gameOptions, List<String> teleportOptions,
-        int min, int target, int max);
+    public GameInfo proposeGame(@RUntainted String initiator, @RUntainted String variant,
+        @RUntainted String viewmode, @RUntainted long startAt, @RUntainted int duration, @RUntainted String summary,
+        @RUntainted String expire, @RUntainted List<@RUntainted String> gameOptions, @RUntainted List<@RUntainted String> teleportOptions,
+        @RUntainted int min, @RUntainted int target, @RUntainted int max);
 
-    public void enrollUserToGame(String gameId, String username);
+    public void enrollUserToGame(@RUntainted String gameId, @RUntainted String username);
 
     // the next 3 would not really need to send the user over network,
     // since at server side the socketthread would know it; but the
     // interface to between socket and server needs it...
     // so we handle it "properly" also on client side, even if
     // functionally unnecessary.
-    public void unenrollUserFromGame(String gameId, String username);
+    public void unenrollUserFromGame(@RUntainted String gameId, @RUntainted String username);
 
-    public void cancelGame(String gameId, String byUser);
+    public void cancelGame(@RUntainted String gameId, @RUntainted String byUser);
 
     /**
      *  A game was started by a WebClient user locally on his computer
      *  and is ready to accept the other players as remote client;
      *  so we notify them and tell them host and port to where to connect.
      */
-    public void startGameOnPlayerHost(String gameId, String hostingPlayer,
-        String playerHost, int port);
+    public void startGameOnPlayerHost(@RUntainted String gameId, @RUntainted String hostingPlayer,
+        @RUntainted String playerHost, @RUntainted int port);
 
-    public void startGame(String gameId, User user);
+    public void startGame(@RUntainted String gameId, User user);
 
-    public void resumeGame(String gameId, String loadGame, User user);
+    public void resumeGame(@RUntainted String gameId, @RUntainted String loadGame, User user);
 
-    public void deleteSuspendedGame(String gameId, User user);
+    public void deleteSuspendedGame(@RUntainted String gameId, User user);
 
     // Game started on players computer, tell WebServer that
     // he can inform all WebClient that game started successfully
-    public void informStartedByPlayer(String gameId);
+    public void informStartedByPlayer(@RUntainted String gameId);
 
-    public void informLocallyGameOver(String gameId);
+    public void informLocallyGameOver(@RUntainted String gameId);
 
-    public void chatSubmit(String chatId, String sender, String message);
+    public void chatSubmit(@RUntainted String chatId, @RUntainted String sender, @RUntainted String message);
 
-    public void requestUserAttention(long when, String sender,
-        boolean isAdmin, String recipient, String message, int beepCount,
-        long beepInterval, boolean windows);
+    public void requestUserAttention(@RUntainted long when, @RUntainted String sender,
+        @RUntainted boolean isAdmin, @RUntainted String recipient, @RUntainted String message, @RUntainted int beepCount,
+        @RUntainted long beepInterval, @RUntainted boolean windows);
 
-    public void watchGame(String gameId, String username);
+    public void watchGame(@RUntainted String gameId, @RUntainted String username);
 
     // public void submitAnyText(String text);
 
@@ -103,11 +104,11 @@ public interface IWebServer
 
     public void dumpInfo();
 
-    public String changeProperties(String username, String oldPW,
-        String newPW, String email, Boolean isAdminObj);
+    public @RUntainted String changeProperties(String username, String oldPW,
+        @RUntainted String newPW, @RUntainted String email, @RUntainted Boolean isAdminObj);
 
     public void logout();
 
-    public void messageToAdmin(long when, String username, String mail,
-        List<String> message);
+    public void messageToAdmin(@RUntainted long when, @RUntainted String username, @RUntainted String mail,
+        List<@RUntainted String> message);
 }

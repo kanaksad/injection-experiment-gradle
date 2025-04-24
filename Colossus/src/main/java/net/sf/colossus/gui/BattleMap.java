@@ -15,6 +15,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.util.InstanceTracker;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -31,7 +32,7 @@ public final class BattleMap extends HexMap
     private static final Logger LOGGER = Logger.getLogger(BattleMap.class
         .getName());
 
-    private static int count = 1;
+    private static @RUntainted int count = 1;
 
     private final Client client;
     private final ClientGUI gui;
@@ -98,7 +99,7 @@ public final class BattleMap extends HexMap
     }
 
     @Override
-    public void selectHexes(Set<BattleHex> set)
+    public void selectHexes(Set<@RUntainted BattleHex> set)
     {
         super.selectHexes(set);
     }
@@ -142,7 +143,7 @@ public final class BattleMap extends HexMap
     /** Select all hexes containing critters eligible to move. */
     public void highlightMobileCritters()
     {
-        Set<BattleHex> set = client.findMobileCritterHexes();
+        Set<@RUntainted BattleHex> set = client.findMobileCritterHexes();
         unselectAllHexes();
         unselectEntranceHexes();
         selectHexes(set);
@@ -152,14 +153,14 @@ public final class BattleMap extends HexMap
     /** Select hexes containing critters that have valid strike targets. */
     public void highlightCrittersWithTargets()
     {
-        Set<BattleHex> set = client.findCrittersWithTargets();
+        Set<@RUntainted BattleHex> set = client.findCrittersWithTargets();
         unselectAllHexes();
         selectHexes(set);
         // XXX Needed?
         repaint();
     }
 
-    public void selectEntranceHexes(Set<BattleHex> modelHexes)
+    public void selectEntranceHexes(Set<@RUntainted BattleHex> modelHexes)
     {
         for (BattleHex battleHex : modelHexes)
         {
@@ -185,7 +186,7 @@ public final class BattleMap extends HexMap
     }
 
     @Override
-    public void paintComponent(Graphics g)
+    public void paintComponent(@RUntainted Graphics g)
     {
         super.paintComponent(g);
         Rectangle rectClip = g.getClipBounds();

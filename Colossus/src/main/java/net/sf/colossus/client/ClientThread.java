@@ -22,6 +22,7 @@ import net.sf.colossus.util.Split;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -47,13 +48,13 @@ public class ClientThread extends Thread implements EventExecutor
     private static final Logger LOGGER = Logger.getLogger(ClientThread.class
         .getName());
 
-    private static int threadNumberCounter = 0;
+    private static @RUntainted int threadNumberCounter = 0;
 
-    private final int threadNr;
+    private final @RUntainted int threadNr;
 
     private final Client client;
 
-    private final LinkedBlockingQueue<ServerEvent> queue;
+    private final @RUntainted LinkedBlockingQueue<ServerEvent> queue;
 
     private boolean done = false;
 
@@ -75,24 +76,24 @@ public class ClientThread extends Thread implements EventExecutor
         queue = new LinkedBlockingQueue<ServerEvent>();
     }
 
-    private static synchronized int nextThreadNumber()
+    private static synchronized @RUntainted int nextThreadNumber()
     {
         return ++threadNumberCounter;
     }
 
-    public int getThreadNumber()
+    public @RUntainted int getThreadNumber()
     {
         return this.threadNr;
     }
 
-    public void enqueue(String method, List<String> args)
+    public void enqueue(@RUntainted String method, List<@RUntainted String> args)
     {
         queue.offer(new ServerEvent(ClientThread.getNow(), method, args));
     }
 
     // Client checks whether still something to do from "here" before
     // switching to new connectio (after reconnect)
-    public int getQueueLen()
+    public @RUntainted int getQueueLen()
     {
         return queue.size();
     }
@@ -102,7 +103,7 @@ public class ClientThread extends Thread implements EventExecutor
      * them as a String, separated by comma.
      * @return String with list of method names, comma-separated
      */
-    public String getQueueContentSummary()
+    public @RUntainted String getQueueContentSummary()
     {
         Object items[] = queue.toArray();
         List<String> methodNameList = new LinkedList<String>();
@@ -154,7 +155,7 @@ public class ClientThread extends Thread implements EventExecutor
         client.setClosedByServer();
     }
 
-    public String getNameMaybe()
+    public @RUntainted String getNameMaybe()
     {
         if (client != null && client.getOwningPlayer() != null)
         {
@@ -288,12 +289,12 @@ public class ClientThread extends Thread implements EventExecutor
         client.appendToConnectionLog(s);
     }
 
-    static int _MAXLEN = 80;
+    static @RUntainted int _MAXLEN = 80;
 
     private void callMethod(ServerEvent event)
     {
         String method = event.getMethod();
-        List<String> args = event.getArgs();
+        List<@RUntainted String> args = event.getArgs();
         if (client != null && !client.getOwningPlayer().isAI()
             && client.isFightPhase())
         {
@@ -343,7 +344,7 @@ public class ClientThread extends Thread implements EventExecutor
         }
         else if (method.equals(Constants.updatePlayerInfo))
         {
-            List<String> infoStrings = Split.split(Glob.sep, args.remove(0));
+            List<@RUntainted String> infoStrings = Split.split(Glob.sep, args.remove(0));
             client.updatePlayerInfo(infoStrings);
         }
         else if (method.equals(Constants.updateChangedValues))
@@ -402,7 +403,7 @@ public class ClientThread extends Thread implements EventExecutor
         {
             String markerId = args.remove(0);
             String namesString = args.remove(0);
-            List<String> names = Split.split(Glob.sep, namesString);
+            List<@RUntainted String> names = Split.split(Glob.sep, namesString);
 
             // safeguard against getting empty string list from server
             // TODO: should split be fixed instead??
@@ -503,7 +504,7 @@ public class ClientThread extends Thread implements EventExecutor
         else if (method.equals(Constants.askChooseStrikePenalty))
         {
             rememberEvent(event);
-            List<String> choices = Split.split(Glob.sep, args.remove(0));
+            List<@RUntainted String> choices = Split.split(Glob.sep, args.remove(0));
             client.askChooseStrikePenalty(choices);
         }
         else if (method.equals(Constants.tellGameOver))
@@ -573,19 +574,19 @@ public class ClientThread extends Thread implements EventExecutor
             int strikerTag = Integer.parseInt(args.remove(0));
             int targetTag = Integer.parseInt(args.remove(0));
             int strikeNumber = Integer.parseInt(args.remove(0));
-            List<String> rolls = Split.split(Glob.sep, args.remove(0));
+            List<@RUntainted String> rolls = Split.split(Glob.sep, args.remove(0));
             int damage = Integer.parseInt(args.remove(0));
             boolean killed = Boolean.valueOf(args.remove(0)).booleanValue();
             boolean wasCarry = Boolean.valueOf(args.remove(0)).booleanValue();
             int carryDamageLeft = Integer.parseInt(args.remove(0));
 
-            Set<String> carryTargetDescriptions = new HashSet<String>();
+            Set<@RUntainted String> carryTargetDescriptions = new HashSet<@RUntainted String>();
             if (!args.isEmpty())
             {
                 String buf = args.remove(0);
                 if (buf != null && buf.length() > 0)
                 {
-                    List<String> ctdList = Split.split(Glob.sep, buf);
+                    List<@RUntainted String> ctdList = Split.split(Glob.sep, buf);
                     carryTargetDescriptions.addAll(ctdList);
                 }
             }
@@ -810,7 +811,7 @@ public class ClientThread extends Thread implements EventExecutor
         else if (method.equals(Constants.askPickColor))
         {
             rememberEvent(event);
-            List<String> clList = Split.split(Glob.sep, args.remove(0));
+            List<@RUntainted String> clList = Split.split(Glob.sep, args.remove(0));
             List<PlayerColor> colorsLeft = new ArrayList<PlayerColor>();
             for (String colorName : clList)
             {
@@ -954,7 +955,7 @@ public class ClientThread extends Thread implements EventExecutor
             + "' finished method processing");
     }
 
-    private void showDebugOutputMaybe(String method, List<String> args)
+    private void showDebugOutputMaybe(String method, List<@RUntainted String> args)
     {
         if (!_DEBUG_MSGS)
         {
@@ -1046,7 +1047,7 @@ public class ClientThread extends Thread implements EventExecutor
 
     }
 
-    private MasterHex resolveHex(String label)
+    private @RUntainted MasterHex resolveHex(String label)
     {
         MasterHex hexByLabel = client.getGame().getVariant().getMasterBoard()
             .getHexByLabel(label);
@@ -1055,18 +1056,18 @@ public class ClientThread extends Thread implements EventExecutor
         return hexByLabel;
     }
 
-    private BattleHex resolveBattleHex(String hexLabel)
+    private @RUntainted BattleHex resolveBattleHex(@RUntainted String hexLabel)
     {
         return client.getGame().getBattleSite().getTerrain()
             .getHexByLabel(hexLabel);
     }
 
-    private List<CreatureType> resolveCreatureTypes(String nameList)
+    private List<CreatureType> resolveCreatureTypes(@RUntainted String nameList)
     {
         List<CreatureType> creatures = new ArrayList<CreatureType>();
         if (!nameList.equals(""))
         {
-            List<String> names = Split.split(Glob.sep, nameList);
+            List<@RUntainted String> names = Split.split(Glob.sep, nameList);
             for (String creatureName : names)
             {
                 creatures.add(resolveCreatureType(creatureName));
@@ -1075,7 +1076,7 @@ public class ClientThread extends Thread implements EventExecutor
         return creatures;
     }
 
-    private CreatureType resolveCreatureType(String creatureName)
+    private @RUntainted CreatureType resolveCreatureType(@RUntainted String creatureName)
     {
         if ((creatureName == null) || (creatureName.equals("null")))
         {
@@ -1088,7 +1089,7 @@ public class ClientThread extends Thread implements EventExecutor
         return creatureByName;
     }
 
-    private Legion resolveLegion(String markerId)
+    private @RUntainted Legion resolveLegion(@RUntainted String markerId)
     {
         Legion legion = client.getLegion(markerId);
 
@@ -1115,24 +1116,24 @@ public class ClientThread extends Thread implements EventExecutor
         return legion;
     }
 
-    public static long getNow()
+    public static @RUntainted long getNow()
     {
         return new Date().getTime();
     }
 
     public static class ServerEvent
     {
-        private final long received;
-        private final long enqueued;
-        private long executionStarted;
-        private long executionCompleted;
+        private final @RUntainted long received;
+        private final @RUntainted long enqueued;
+        private @RUntainted long executionStarted;
+        private @RUntainted long executionCompleted;
 
-        private final String method;
-        private final List<String> args;
+        private final @RUntainted String method;
+        private final List<@RUntainted String> args;
 
         private boolean isRetriggered = false;
 
-        public ServerEvent(long received, String method, List<String> args)
+        public ServerEvent(@RUntainted long received, @RUntainted String method, List<@RUntainted String> args)
         {
             this.received = received;
             this.enqueued = ClientThread.getNow();
@@ -1140,7 +1141,7 @@ public class ClientThread extends Thread implements EventExecutor
             this.args = new ArrayList<String>(args);
         }
 
-        public String getMethod()
+        public @RUntainted String getMethod()
         {
             return method;
         }
@@ -1163,12 +1164,12 @@ public class ClientThread extends Thread implements EventExecutor
          * LinkedList suits actually better for processing, since
          * the argument deserialisation use remove(0).
          */
-        public List<String> getArgs()
+        public @RUntainted List<@RUntainted String> getArgs()
         {
             return new LinkedList<String>(args);
         }
 
-        public void executionStarts(long when)
+        public void executionStarts(@RUntainted long when)
         {
             this.executionStarted = when;
         }
@@ -1178,7 +1179,7 @@ public class ClientThread extends Thread implements EventExecutor
             return this.executionStarted;
         }
 
-        public void executionCompleted(long when)
+        public void executionCompleted(@RUntainted long when)
         {
             this.executionCompleted = when;
         }

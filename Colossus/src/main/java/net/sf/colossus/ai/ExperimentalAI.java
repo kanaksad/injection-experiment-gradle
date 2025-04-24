@@ -23,6 +23,7 @@ import net.sf.colossus.server.VariantSupport;
 import net.sf.colossus.util.ValueRecorder;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.MasterBoardTerrain;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -53,7 +54,7 @@ public class ExperimentalAI extends SimpleAI // NO_UCD
 
     @Override
     Collection<LegionMove> findLegionMoves(
-        final List<List<CritterMove>> allCritterMoves)
+        final List<@RUntainted List<CritterMove>> allCritterMoves)
     {
         long realcount = 1;
         for (List<CritterMove> lcm : allCritterMoves)
@@ -86,7 +87,7 @@ public class ExperimentalAI extends SimpleAI // NO_UCD
     @Override
     protected void evaluateCritterMove_Titan(final BattleCritter critter,
         ValueRecorder value, final MasterBoardTerrain terrain,
-        final BattleHex hex, final Legion legion, final int turn)
+        final BattleHex hex, final Legion legion, final @RUntainted int turn)
     {
         if (hex.isEntrance())
         {

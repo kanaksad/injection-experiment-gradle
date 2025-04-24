@@ -23,6 +23,7 @@ import net.sf.colossus.common.Constants;
 import net.sf.colossus.game.Legion;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -34,11 +35,11 @@ final class PickRecruiter extends KDialog
 {
     private final List<Chit> recruiterChits = new ArrayList<Chit>();
     private final Marker legionMarker;
-    private String recruiterName;
+    private @RUntainted String recruiterName;
     private final SaveWindow saveWindow;
 
     /** recruiters is a list of creature name strings */
-    private PickRecruiter(JFrame parentFrame, List<String> recruiters,
+    private PickRecruiter(JFrame parentFrame, List<@RUntainted String> recruiters,
         String hexDescription, Legion legion, ClientGUI gui)
     {
         super(parentFrame, gui.getOwningPlayer().getName()
@@ -68,9 +69,9 @@ final class PickRecruiter extends KDialog
         legionMarker = new Marker(legion, scale, legion.getLongMarkerId());
         legionPane.add(legionMarker);
 
-        List<String> imageNames = gui.getGameClientSide().getLegionImageNames(
+        List<@RUntainted String> imageNames = gui.getGameClientSide().getLegionImageNames(
             legion);
-        Iterator<String> it = imageNames.iterator();
+        Iterator<@RUntainted String> it = imageNames.iterator();
         while (it.hasNext())
         {
             String imageName = it.next();
@@ -134,12 +135,12 @@ final class PickRecruiter extends KDialog
         repaint();
     }
 
-    private String getRecruiterName()
+    private @RUntainted String getRecruiterName()
     {
         return recruiterName;
     }
 
-    static String pickRecruiter(JFrame parentFrame, List<String> recruiters,
+    static @RUntainted String pickRecruiter(JFrame parentFrame, List<@RUntainted String> recruiters,
         String hexDescription, Legion legion, ClientGUI gui)
     {
         PickRecruiter pr = new PickRecruiter(parentFrame, recruiters,

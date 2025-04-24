@@ -35,6 +35,7 @@ import net.sf.colossus.util.SystemInfo;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterHex;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -55,7 +56,7 @@ final class SocketClientThread extends Thread implements IServer,
     // already received but not processed (= still in queue)
     private ClientThread disposedClientThread = null;
 
-    private Socket socket;
+    private @RUntainted Socket socket;
     private BufferedReader in;
     private PrintWriter out;
     private boolean goingDown = false;
@@ -65,11 +66,11 @@ final class SocketClientThread extends Thread implements IServer,
     /**
      * Those are stored at the moment only to be able to reconnect
      */
-    private final String host;
-    private final int port;
-    private String playerName;
-    private final boolean remote;
-    private final boolean spectator;
+    private final @RUntainted String host;
+    private final @RUntainted int port;
+    private @RUntainted String playerName;
+    private final @RUntainted boolean remote;
+    private final @RUntainted boolean spectator;
     private final boolean internalSpectator;
 
     // The two below are only needed for debugging:
@@ -83,20 +84,20 @@ final class SocketClientThread extends Thread implements IServer,
     private final static String sep = Constants.protocolTermSeparator;
 
     private String reasonFail = null;
-    private String initialLine = null;
+    private @RUntainted String initialLine = null;
 
-    private String variantNameForInit;
-    private Collection<String> preliminaryPlayerNames;
+    private @RUntainted String variantNameForInit;
+    private Collection<@RUntainted String> preliminaryPlayerNames;
 
     private final Object isWaitingLock = new Object();
     private boolean isWaiting = false;
 
-    private int ownMessageCounter = -1;
+    private @RUntainted int ownMessageCounter = -1;
 
-    private int connectionId = -1;
+    private @RUntainted int connectionId = -1;
 
-    public static SocketClientThread createConnection(String host, int port,
-        String initialName, boolean remote, boolean spectator)
+    public static SocketClientThread createConnection(@RUntainted String host, @RUntainted int port,
+        @RUntainted String initialName, @RUntainted boolean remote, @RUntainted boolean spectator)
         throws ConnectionInitException
     {
         LOGGER.info("SCT: trying recreateConnection to host " + host
@@ -169,8 +170,8 @@ final class SocketClientThread extends Thread implements IServer,
      * @param spectator
      * @param prevId     Id of connection to replace, or -1 if initial
      */
-    SocketClientThread(String host, int port, String initialName,
-        boolean isRemote, boolean spectator, int prevId)
+    SocketClientThread(@RUntainted String host, @RUntainted int port, @RUntainted String initialName,
+        @RUntainted boolean isRemote, @RUntainted boolean spectator, @RUntainted int prevId)
     {
         super("SCT-" + initialName);
 
@@ -332,7 +333,7 @@ final class SocketClientThread extends Thread implements IServer,
         }
     }
 
-    private String readOneLine() throws IOException
+    private @RUntainted String readOneLine() throws IOException
     {
         String line = in.readLine();
         showDebugOutput(line);
@@ -522,7 +523,7 @@ final class SocketClientThread extends Thread implements IServer,
         return null;
     }
 
-    public String getReasonFail()
+    public @RUntainted String getReasonFail()
     {
         return reasonFail;
     }
@@ -535,12 +536,12 @@ final class SocketClientThread extends Thread implements IServer,
         }
     }
 
-    public String getVariantNameForInit()
+    public @RUntainted String getVariantNameForInit()
     {
         return variantNameForInit;
     }
 
-    public Collection<String> getPreliminaryPlayerNames()
+    public Collection<@RUntainted String> getPreliminaryPlayerNames()
     {
         return Collections.unmodifiableCollection(this.preliminaryPlayerNames);
     }
@@ -733,7 +734,7 @@ final class SocketClientThread extends Thread implements IServer,
         }
     }
 
-    private String waitForLine()
+    private @RUntainted String waitForLine()
     {
         String line = null;
 
@@ -895,7 +896,7 @@ final class SocketClientThread extends Thread implements IServer,
     // call the "dispose whole client" functionality.
     private boolean abandoned = false;
 
-    public int abandonAndGetMessageCounter()
+    public @RUntainted int abandonAndGetMessageCounter()
     {
         if (abandoned)
         {
@@ -906,17 +907,17 @@ final class SocketClientThread extends Thread implements IServer,
         return ownMessageCounter;
     }
 
-    private synchronized void parseLine(String s)
+    private synchronized void parseLine(@RUntainted String s)
     {
         if (!goingDown)
         {
-            List<String> li = Split.split(sep, s);
+            List<@RUntainted String> li = Split.split(sep, s);
             String method = li.remove(0);
             callMethod(method, li);
         }
     }
 
-    private void callMethod(String method, List<String> args)
+    private void callMethod(@RUntainted String method, List<@RUntainted String> args)
     {
         if (method.equals(Constants.pingRequest))
         {
@@ -1051,7 +1052,7 @@ final class SocketClientThread extends Thread implements IServer,
         }
     }
 
-    private String getPrintName()
+    private @RUntainted String getPrintName()
     {
         // at the moment, initially "SCT-<initialName>", e.g. SCT-<byName>,
         // but as soon as server "fixed" our name it is SCT-<realPlayerName>
@@ -1059,12 +1060,12 @@ final class SocketClientThread extends Thread implements IServer,
         return getName();
     }
 
-    private int getConnectionId()
+    private @RUntainted int getConnectionId()
     {
         return this.connectionId;
     }
 
-    private void sendToServer(String message)
+    private void sendToServer(@RUntainted String message)
     {
         if (socket != null)
         {
@@ -1101,8 +1102,8 @@ final class SocketClientThread extends Thread implements IServer,
     }
 
     // Setup method
-    private void signOn(String loginName, boolean isRemote, int version,
-        String buildInfo, boolean spectator, int prevConnId)
+    private void signOn(@RUntainted String loginName, @RUntainted boolean isRemote, @RUntainted int version,
+        @RUntainted String buildInfo, @RUntainted boolean spectator, @RUntainted int prevConnId)
     {
         out.println(Constants.signOn + sep + loginName + sep + isRemote + sep
             + version + sep + buildInfo + sep + spectator + sep + prevConnId);
@@ -1121,7 +1122,7 @@ final class SocketClientThread extends Thread implements IServer,
     }
 
     /* Server tells client changed name, Client calls us to keep in sync */
-    public void updatePlayerName(String playerName)
+    public void updatePlayerName(@RUntainted String playerName)
     {
         // was initialized to initialName, which might have been "<bySomething>"
         this.playerName = playerName;
@@ -1148,7 +1149,7 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.doneWithStrikes);
     }
 
-    public void acquireAngel(Legion legion, CreatureType angelType)
+    public void acquireAngel(Legion legion, @RUntainted CreatureType angelType)
     {
         sendToServer(Constants.acquireAngel + sep + legion.getMarkerId() + sep
             + angelType);
@@ -1183,7 +1184,7 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.engage + sep + hex.getLabel());
     }
 
-    public void concede(Legion legion)
+    public void concede(@RUntainted Legion legion)
     {
         sendToServer(Constants.concede + sep + legion);
     }
@@ -1193,17 +1194,17 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.doNotConcede + sep + legion.getMarkerId());
     }
 
-    public void flee(Legion legion)
+    public void flee(@RUntainted Legion legion)
     {
         sendToServer(Constants.flee + sep + legion);
     }
 
-    public void doNotFlee(Legion legion)
+    public void doNotFlee(@RUntainted Legion legion)
     {
         sendToServer(Constants.doNotFlee + sep + legion);
     }
 
-    public void makeProposal(String proposalString)
+    public void makeProposal(@RUntainted String proposalString)
     {
         sendToServer(Constants.makeProposal + sep + proposalString);
     }
@@ -1213,12 +1214,12 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.fight + sep + hex.getLabel());
     }
 
-    public void doBattleMove(int tag, BattleHex hex)
+    public void doBattleMove(@RUntainted int tag, BattleHex hex)
     {
         sendToServer(Constants.doBattleMove + sep + tag + sep + hex.getLabel());
     }
 
-    public synchronized void strike(int tag, BattleHex hex)
+    public synchronized void strike(@RUntainted int tag, BattleHex hex)
     {
         sendToServer(Constants.strike + sep + tag + sep + hex.getLabel());
     }
@@ -1233,7 +1234,7 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.undoBattleMove + sep + hex.getLabel());
     }
 
-    public void assignStrikePenalty(String prompt)
+    public void assignStrikePenalty(@RUntainted String prompt)
     {
         sendToServer(Constants.assignStrikePenalty + sep + prompt);
     }
@@ -1248,7 +1249,7 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.requestExtraRoll);
     }
 
-    public void extraRollResponse(boolean approved, int requestId)
+    public void extraRollResponse(@RUntainted boolean approved, @RUntainted int requestId)
     {
         sendToServer(Constants.extraRollResponse + sep + approved + sep + requestId);
     }
@@ -1306,7 +1307,7 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.stopGame);
     }
 
-    public void doSplit(Legion parent, String childMarker,
+    public void doSplit(Legion parent, @RUntainted String childMarker,
         List<CreatureType> creaturesToSplit)
     {
         sendToServer(Constants.doSplit + sep + parent.getMarkerId() + sep
@@ -1314,7 +1315,7 @@ final class SocketClientThread extends Thread implements IServer,
     }
 
     public void doMove(Legion legion, MasterHex hex, EntrySide entrySide,
-        boolean teleport, CreatureType teleportingLord)
+        @RUntainted boolean teleport, @RUntainted CreatureType teleportingLord)
     {
         sendToServer(Constants.doMove + sep + legion.getMarkerId() + sep
             + hex.getLabel() + sep + entrySide.getLabel() + sep + teleport
@@ -1326,7 +1327,7 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.assignColor + sep + color.getName());
     }
 
-    public void assignFirstMarker(String markerId)
+    public void assignFirstMarker(@RUntainted String markerId)
     {
         sendToServer(Constants.assignFirstMarker + sep + markerId);
     }
@@ -1336,7 +1337,7 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.newGame);
     }
 
-    public void loadGame(String filename)
+    public void loadGame(@RUntainted String filename)
     {
         sendToServer(Constants.loadGame + sep + filename);
     }
@@ -1344,7 +1345,7 @@ final class SocketClientThread extends Thread implements IServer,
     // TODO Can this be removed, because save game is done directly
     // instead of via socket message? Or do we keep it, for games
     // that are run on the "Web Server" ?
-    public void saveGame(String filename)
+    public void saveGame(@RUntainted String filename)
     {
         sendToServer(Constants.saveGame + sep + filename);
     }
@@ -1354,7 +1355,7 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.suspendGame);
     }
 
-    public void suspendResponse(boolean approved)
+    public void suspendResponse(@RUntainted boolean approved)
     {
         sendToServer(Constants.suspendResponse + sep + approved);
     }
@@ -1364,7 +1365,7 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.checkConnection);
     }
 
-    public void checkAllConnections(String requestingClientName)
+    public void checkAllConnections(@RUntainted String requestingClientName)
     {
         sendToServer(Constants.checkAllConnections + sep
             + requestingClientName);
@@ -1375,7 +1376,7 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.catchupConfirmation);
     }
 
-    public void logMsgToServer(String severity, String message)
+    public void logMsgToServer(@RUntainted String severity, @RUntainted String message)
     {
         sendToServer(Constants.logMsgToServer + sep + severity + sep + message);
     }
@@ -1386,7 +1387,7 @@ final class SocketClientThread extends Thread implements IServer,
             + legion.getMarkerId());
     }
 
-    public void joinGame(String playerName)
+    public void joinGame(@RUntainted String playerName)
     {
         sendToServer(Constants.joinGame + sep + playerName);
     }
@@ -1396,26 +1397,26 @@ final class SocketClientThread extends Thread implements IServer,
         sendToServer(Constants.watchGame);
     }
 
-    public void requestSyncDelta(int msgNr, int syncCounter)
+    public void requestSyncDelta(@RUntainted int msgNr, @RUntainted int syncCounter)
     {
         sendToServer(Constants.requestSyncDelta + sep + msgNr + sep
             + syncCounter);
     }
 
-    public void peerRequestReceived(String requestingClientName, int queueLen)
+    public void peerRequestReceived(@RUntainted String requestingClientName, @RUntainted int queueLen)
     {
         sendToServer(Constants.peerRequestReceived + sep
             + requestingClientName + sep + queueLen);
     }
 
-    public void peerRequestProcessed(String requestingClientName)
+    public void peerRequestProcessed(@RUntainted String requestingClientName)
     {
         sendToServer(Constants.peerRequestProcessed + sep
             + requestingClientName);
     }
 
-    public void replyToPing(int requestNr, long requestSent,
-        long requestReceived)
+    public void replyToPing(@RUntainted int requestNr, @RUntainted long requestSent,
+        @RUntainted long requestReceived)
     {
         out.println(Constants.replyToPing + sep + requestNr + sep
             + requestSent + sep + requestReceived);

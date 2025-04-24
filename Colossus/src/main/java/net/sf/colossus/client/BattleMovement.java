@@ -11,6 +11,7 @@ import net.sf.colossus.game.Game;
 import net.sf.colossus.variant.BattleHex;
 import net.sf.colossus.variant.CreatureType;
 import net.sf.colossus.variant.MasterBoardTerrain;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -45,10 +46,10 @@ final class BattleMovement
 
     /** Recursively find moves from this hex.  Return a set of all
      * legal destinations.  Do not double back.  */
-    private Set<BattleHex> findMoves(BattleHex hex, CreatureType creature,
+    private Set<@RUntainted BattleHex> findMoves(BattleHex hex, CreatureType creature,
         boolean flies, int movesLeft, int cameFrom, boolean first)
     {
-        Set<BattleHex> set = new HashSet<BattleHex>();
+        Set<@RUntainted BattleHex> set = new HashSet<@RUntainted BattleHex>();
         for (int i = 0; i < 6; i++)
         {
             // Do not double back.
@@ -105,10 +106,10 @@ final class BattleMovement
      *  so we know that there are no enemies on board, and all allies
      *  are mobile.
      */
-    private Set<BattleHex> findUnoccupiedStartlistHexes(
+    private Set<@RUntainted BattleHex> findUnoccupiedStartlistHexes(
         MasterBoardTerrain terrain)
     {
-        Set<BattleHex> set = new HashSet<BattleHex>();
+        Set<@RUntainted BattleHex> set = new HashSet<@RUntainted BattleHex>();
         for (String hexLabel : terrain.getStartList())
         {
             BattleHex hex = terrain.getHexByLabel(hexLabel);
@@ -121,9 +122,9 @@ final class BattleMovement
     }
 
     /** Find all legal moves for this critter.*/
-    public Set<BattleHex> showMoves(BattleCritter critter)
+    public Set<@RUntainted BattleHex> showMoves(BattleCritter critter)
     {
-        Set<BattleHex> set = new HashSet<BattleHex>();
+        Set<@RUntainted BattleHex> set = new HashSet<@RUntainted BattleHex>();
         if (!critter.hasMoved()
             && !game.getBattle().isInContact(critter, false))
         {

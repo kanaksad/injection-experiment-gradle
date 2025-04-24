@@ -31,6 +31,7 @@ import net.sf.colossus.game.Legion;
 import net.sf.colossus.guiutil.KDialog;
 import net.sf.colossus.guiutil.SaveWindow;
 import net.sf.colossus.server.VariantSupport;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -127,8 +128,8 @@ final class EngagementResults extends KDialog
     void addData(
         Legion winner, // null on mutual elim, flee, concede, negotiate
         String method, int points, int turns,
-        List<String> attackerStartingContents,
-        List<String> defenderStartingContents,
+        List<@RUntainted String> attackerStartingContents,
+        List<@RUntainted String> defenderStartingContents,
         List<Boolean> attackerStartingCertainities,
         List<Boolean> defenderStartingCertainities, boolean attackersTurn)
     {
@@ -295,7 +296,7 @@ final class EngagementResults extends KDialog
     }
 
     private Component createLegionComponent(Legion legion,
-        List<String> imageNames, List<Boolean> certainList, boolean isDefender)
+        List<@RUntainted String> imageNames, List<Boolean> certainList, boolean isDefender)
     {
         // prepare my box
         Box panel = Box.createHorizontalBox();
@@ -440,20 +441,20 @@ final class EngagementResults extends KDialog
         private final String method;
         private final int points;
         private final int turns;
-        private final List<String> attackerStartingContents;
-        private final List<String> defenderStartingContents;
+        private final List<@RUntainted String> attackerStartingContents;
+        private final List<@RUntainted String> defenderStartingContents;
         final List<Boolean> attackerStartingCertainities;
         final List<Boolean> defenderStartingCertainities;
         private final String hexLabel;
         private final int gameTurn;
-        private final List<String> attackerEndingContents;
-        private final List<String> defenderEndingContents;
+        private final List<@RUntainted String> attackerEndingContents;
+        private final List<@RUntainted String> defenderEndingContents;
         final List<Boolean> attackerEndingCertainties;
         final List<Boolean> defenderEndingCertainties;
 
         public Engagement(Legion winner, String method, int points, int turns,
-            List<String> attackerStartingContents,
-            List<String> defenderStartingContents,
+            List<@RUntainted String> attackerStartingContents,
+            List<@RUntainted String> defenderStartingContents,
             List<Boolean> attackerStartingCertainities,
             List<Boolean> defenderStartingCertainities, IOracle oracle)
         {

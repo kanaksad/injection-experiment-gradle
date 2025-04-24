@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -85,7 +86,7 @@ public final class Options implements IOptions
     public static final String viewableEver = "Ever revealed (or concludable) since start";
     public static final String viewableAll = "True content for all legions";
 
-    public static final String[] viewModeArray = { viewableOwn, viewableEver,
+    public static final @RUntainted String[] viewModeArray = { viewableOwn, viewableEver,
         viewableAll };
 
     public static final int viewableOwnNum = 1;
@@ -95,7 +96,7 @@ public final class Options implements IOptions
 
     public static final String eventExpiring = "EventExpire";
     public static final String eventExpiringNever = "never";
-    public static final String[] eventExpiringChoices = { "1", "2", "5", "10",
+    public static final @RUntainted String[] eventExpiringChoices = { "1", "2", "5", "10",
         eventExpiringNever };
 
     public static final String balancedTowers = "Balanced starting towers";
@@ -121,7 +122,7 @@ public final class Options implements IOptions
     // Those are global options which need to be transferred to clients, even if
     // not set (meaning false), but if Client has them stored from earlier synchronizations
     // (e.g. removed server.cf file, or now playing on public server)
-    public static final String[] globalGameOptions = { cumulativeSlow,
+    public static final @RUntainted String[] globalGameOptions = { cumulativeSlow,
         oneHexAllowed, fixedSequenceBattleDice, sansLordAutoBattle,
         noFirstTurnT2TTeleport, noFirstTurnTeleport, towerToTowerTeleportOnly,
         noTowerTeleport, noTitanTeleport, unlimitedMulligans,
@@ -234,9 +235,9 @@ public final class Options implements IOptions
     public static final String editModeActive = "Edit Mode";
     public static final String legionListByMarkerId = "Sort legion list by marker Id";
 
-    private final Properties props = new Properties();
-    private final String owner; // playerName, or Constants.optionsServerName
-    private final String dataPath; // WebServer sets to create a server.cfg file
+    private final @RUntainted Properties props = new Properties();
+    private final @RUntainted String owner; // playerName, or Constants.optionsServerName
+    private final @RUntainted String dataPath; // WebServer sets to create a server.cfg file
     // AIs and the "startOption" do not read nor write to an actual file
     private boolean noFile;
     // Unit and functional tests read a file, but should not write anything back
@@ -244,7 +245,7 @@ public final class Options implements IOptions
 
     private final Map<String, List<Listener>> listeners = new HashMap<String, List<Listener>>();
 
-    public Options(String owner, String customPath, boolean noFile,
+    public Options(@RUntainted String owner, @RUntainted String customPath, boolean noFile,
         boolean readOnly)
     {
         this.owner = owner;
@@ -253,7 +254,7 @@ public final class Options implements IOptions
         this.readOnly = readOnly;
     }
 
-    public Options(String owner, String customPath, boolean noFile)
+    public Options(@RUntainted String owner, @RUntainted String customPath, boolean noFile)
     {
         this.owner = owner;
         this.dataPath = customPath;
@@ -261,17 +262,17 @@ public final class Options implements IOptions
         this.readOnly = false;
     }
 
-    public Options(String owner)
+    public Options(@RUntainted String owner)
     {
         this(owner, Constants.DEFAULT_COLOSSUS_HOME, false);
     }
 
-    public Options(String owner, boolean noFile)
+    public Options(@RUntainted String owner, boolean noFile)
     {
         this(owner, Constants.DEFAULT_COLOSSUS_HOME, noFile);
     }
 
-    public String getOptionsFilename()
+    public @RUntainted String getOptionsFilename()
     {
         return dataPath + "/" + Constants.OPTIONS_BASE + owner
             + Constants.OPTIONS_EXTENSION;
@@ -385,7 +386,7 @@ public final class Options implements IOptions
         }
     }
 
-    synchronized public void setOption(String optname, String value)
+    synchronized public void setOption(@RUntainted String optname, String value)
     {
         String oldValue = getStringOption(optname);
         if (!value.equals(oldValue))
@@ -395,7 +396,7 @@ public final class Options implements IOptions
         }
     }
 
-    synchronized public void setOption(String optname, boolean value)
+    synchronized public void setOption(@RUntainted String optname, boolean value)
     {
         boolean undefined = isOptionUndefined(optname);
         boolean oldValue = getOption(optname);
@@ -406,7 +407,7 @@ public final class Options implements IOptions
         }
     }
 
-    synchronized public void setOption(String optname, int value)
+    synchronized public void setOption(@RUntainted String optname, int value)
     {
         int oldValue = getIntOption(optname);
         if (oldValue != value)
@@ -416,20 +417,20 @@ public final class Options implements IOptions
         }
     }
 
-    synchronized public String getStringOption(String optname)
+    synchronized public @RUntainted String getStringOption(@RUntainted String optname)
     {
         String value = props.getProperty(optname);
         return value;
     }
 
-    synchronized public String getStringOption(String optname,
-        String defaultValue)
+    synchronized public @RUntainted String getStringOption(@RUntainted String optname,
+        @RUntainted String defaultValue)
     {
         String value = props.getProperty(optname, defaultValue);
         return value;
     }
 
-    synchronized public boolean getOption(String optname)
+    synchronized public @RUntainted boolean getOption(@RUntainted String optname)
     {
         // the "if start with "Auto "... removed, that part is
         // now handled by AutoPlay class.
@@ -437,7 +438,7 @@ public final class Options implements IOptions
         return (value != null && value.equals("true"));
     }
 
-    synchronized public boolean getOption(String optname, boolean defaultValue)
+    synchronized public boolean getOption(@RUntainted String optname, boolean defaultValue)
     {
         String value = getStringOption(optname, (defaultValue ? "true"
             : "false"));
@@ -445,7 +446,7 @@ public final class Options implements IOptions
     }
 
     /** Return -1 if the option's value has not been set. */
-    synchronized public int getIntOption(String optname)
+    synchronized public @RUntainted int getIntOption(@RUntainted String optname)
     {
         String buf = getStringOption(optname);
         int value = -1;
@@ -460,7 +461,7 @@ public final class Options implements IOptions
         return value;
     }
 
-    public boolean isOptionUndefined(String optname)
+    public boolean isOptionUndefined(@RUntainted String optname)
     {
         return (getStringOption(optname) == null);
     }
@@ -472,7 +473,7 @@ public final class Options implements IOptions
 
     // we know we didn't mistreat Properties by adding non-Strings
     @SuppressWarnings("unchecked")
-    synchronized public Enumeration<String> propertyNames()
+    synchronized public Enumeration<@RUntainted String> propertyNames()
     {
         return (Enumeration<String>)props.propertyNames();
     }
@@ -480,7 +481,7 @@ public final class Options implements IOptions
     /** Remove all playerName and playerType entries. */
     synchronized public void clearPlayerInfo()
     {
-        Enumeration<String> en = propertyNames();
+        Enumeration<@RUntainted String> en = propertyNames();
         while (en.hasMoreElements())
         {
             String name = en.nextElement();
@@ -648,14 +649,14 @@ public final class Options implements IOptions
         return startupTestOngoing;
     }
 
-    private static String propNameStresstestRounds = "net.sf.colossus.stressTestRounds";
+    private static @RUntainted String propNameStresstestRounds = "net.sf.colossus.stressTestRounds";
 
     public static boolean isStresstest()
     {
         return System.getProperty(propNameStresstestRounds) != null;
     }
 
-    synchronized public static int getHowManyStresstestRoundsProperty()
+    synchronized public static @RUntainted int getHowManyStresstestRoundsProperty()
     {
         String propHowMany = System.getProperty(propNameStresstestRounds);
         int howMany = 0;

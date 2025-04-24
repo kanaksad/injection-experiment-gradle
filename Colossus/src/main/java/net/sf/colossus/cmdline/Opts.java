@@ -3,6 +3,7 @@ package net.sf.colossus.cmdline;
 
 import java.util.Collection;
 import java.util.TreeMap;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -39,7 +40,7 @@ public class Opts
     }
 
     /** Parse args and return a CmdLine. */
-    public CmdLine parse(String[] args)
+    public CmdLine parse(@RUntainted String[] args)
     {
         return new CmdLine(this, args);
     }

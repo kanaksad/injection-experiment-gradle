@@ -8,6 +8,7 @@ import net.sf.colossus.game.BattlePhase;
 import net.sf.colossus.game.Engagement;
 import net.sf.colossus.game.Legion;
 import net.sf.colossus.game.Player;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 
 /**
@@ -29,7 +30,7 @@ public interface IOracle
 
     int getTurnNumber();
 
-    List<String> getLegionImageNames(Legion legion);
+    List<@RUntainted String> getLegionImageNames(Legion legion);
 
     List<Boolean> getLegionCreatureCertainties(Legion legion);
 
