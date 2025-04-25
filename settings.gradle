@@ -1,6 +1,6 @@
 rootProject.name = 'injection-experiement'
 include 'abagil'
-include 'colossus'
+include 'Colossus'
 include 'emergencysnrest'
 include 'farmtycoon'
 //include 'jclosterzone'
