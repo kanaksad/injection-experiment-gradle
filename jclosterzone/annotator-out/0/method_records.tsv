@@ -1,0 +1,380 @@
+id	class	method	parent	flags	annotations	visibility	non-primitive-return	path
+1	ui.swing.TitleScreen	TitleScreen()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TitleScreen.java
+2	ui.swing.TitleScreen$3	paint(java.awt.Graphics)	3	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TitleScreen.java
+4	ui.swing.TitleScreen	updateLang()	0	[]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TitleScreen.java
+5	ui.swing.TitleScreen$ButtonListener	ButtonListener(java.lang.String)	0	[false]		package	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TitleScreen.java
+6	ui.swing.TitleScreen$ButtonListener	mouseExited(java.awt.event.MouseEvent)	7	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TitleScreen.java
+8	ui.swing.TitleScreen$ButtonListener	mouseEntered(java.awt.event.MouseEvent)	9	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TitleScreen.java
+10	ui.swing.TitleScreen$ButtonListener	mouseClicked(java.awt.event.MouseEvent)	11	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TitleScreen.java
+12	ui.swing.TitleScreen$LangButton	LangButton(java.lang.String,int)	0	[false, false]		package	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TitleScreen.java
+13	ui.swing.TitleScreen$LangButton$1	mouseClicked(java.awt.event.MouseEvent)	11	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TitleScreen.java
+14	ui.swing.TitleScreen$LangButton	paint(java.awt.Graphics)	3	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TitleScreen.java
+15	ui.swing.GameScreen$UpdateTask	run()	16	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+17	ui.swing.GameScreen	GameScreen(domain.Game)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+18	ui.swing.GameScreen$1	mouseClicked(java.awt.event.MouseEvent)	11	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+19	ui.swing.GameScreen$2	mouseClicked(java.awt.event.MouseEvent)	11	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+20	ui.swing.GameScreen$3	mouseClicked(java.awt.event.MouseEvent)	11	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+21	ui.swing.GameScreen$4	mouseClicked(java.awt.event.MouseEvent)	11	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+22	ui.swing.GameScreen	select(ui.swing.TilePanel)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+23	ui.swing.GameScreen	getSelected()	0	[]		package	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+24	ui.swing.GameScreen	setUpdate(int)	0	[false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+25	ui.swing.GameScreen	updateMarket()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+26	ui.swing.GameScreen	showMarket()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+27	ui.swing.GameScreen	componentResized(java.awt.event.ComponentEvent)	28	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+29	ui.swing.GameScreen	componentHidden(java.awt.event.ComponentEvent)	30	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+31	ui.swing.GameScreen	componentMoved(java.awt.event.ComponentEvent)	32	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+33	ui.swing.GameScreen	componentShown(java.awt.event.ComponentEvent)	34	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+35	ui.swing.GameScreen	windowActivated(java.awt.event.WindowEvent)	36	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+37	ui.swing.GameScreen	windowClosed(java.awt.event.WindowEvent)	38	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+39	ui.swing.GameScreen	windowClosing(java.awt.event.WindowEvent)	40	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+41	ui.swing.GameScreen	windowDeactivated(java.awt.event.WindowEvent)	42	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+43	ui.swing.GameScreen	windowDeiconified(java.awt.event.WindowEvent)	44	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+45	ui.swing.GameScreen	windowIconified(java.awt.event.WindowEvent)	46	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+47	ui.swing.GameScreen	windowOpened(java.awt.event.WindowEvent)	48	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameScreen.java
+49	ui.swing.GameBoard	GameBoard(domain.Game,ui.swing.GameScreen)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameBoard.java
+50	ui.swing.GameBoard	initGUI()	0	[]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameBoard.java
+51	ui.swing.GameBoard$1	mouseClicked(java.awt.event.MouseEvent)	11	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameBoard.java
+52	ui.swing.GameBoard	update()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/GameBoard.java
+53	ui.swing.SideBar$ActionButton	ActionButton(api.TileAction)	0	[false]		package	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+54	ui.swing.SideBar$ActionButton$1	mouseClicked(java.awt.event.MouseEvent)	11	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+55	ui.swing.SideBar$ActionButton	execute()	0	[]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+56	ui.swing.SideBar	SideBar(domain.Game,ui.swing.GameScreen)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+57	ui.swing.SideBar	initGUI()	0	[]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+58	ui.swing.SideBar$1	paintComponent(java.awt.Graphics)	59	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+60	ui.swing.SideBar	update()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+61	ui.swing.SideBar	componentResized(java.awt.event.ComponentEvent)	28	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+62	ui.swing.SideBar	componentHidden(java.awt.event.ComponentEvent)	30	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+63	ui.swing.SideBar	componentMoved(java.awt.event.ComponentEvent)	32	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+64	ui.swing.SideBar	componentShown(java.awt.event.ComponentEvent)	34	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/SideBar.java
+65	domain.Game	Game(boolean)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+66	domain.Game	getFarm()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+67	domain.Game	getClock()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+68	domain.Game	getCash()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+69	domain.Game	adjustCash(int)	0	[false]		package	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+70	domain.Game	save()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+71	domain.Game	getTileInfo(api.Coordinate)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+72	domain.Game	getTileActions(api.Coordinate)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+73	domain.Game	executeAction(api.Coordinate,api.TileAction)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+74	domain.Game	skipDay()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+75	domain.Game	speedUp()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+76	domain.Game	slowDown()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+77	domain.Game	getGame()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+78	domain.Game	getInv()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+79	domain.Game	updateInv()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+80	domain.Game	sell(domain.Product)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+81	domain.Game	getInfection()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+82	domain.Game	update()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Game.java
+83	ui.swing.TilePanel	TilePanel(domain.Game,api.Coordinate)	0	[false, false]		package	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TilePanel.java
+84	ui.swing.TilePanel	initGUI()	0	[]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TilePanel.java
+85	ui.swing.TilePanel	update()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TilePanel.java
+86	ui.swing.TilePanel	paintComponent(java.awt.Graphics)	59	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TilePanel.java
+87	ui.swing.TilePanel	getCoords()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/TilePanel.java
+88	ui.swing.MarketWindow	MarketWindow(domain.Game)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/MarketWindow.java
+89	ui.swing.MarketWindow	doUpdate()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/MarketWindow.java
+90	ui.swing.MarketWindow$SellButton	SellButton(domain.Product)	0	[false]		package	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/MarketWindow.java
+91	ui.swing.MarketWindow$SellButton	actionPerformed(java.awt.event.ActionEvent)	92	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/MarketWindow.java
+93	api.Coordinate	Coordinate(int,int)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/Coordinate.java
+94	api.Coordinate	getX()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/Coordinate.java
+95	api.Coordinate	getY()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/Coordinate.java
+96	api.Coordinate	hashCode()	97	[]	java.lang.Override	public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/Coordinate.java
+98	api.Coordinate	equals(java.lang.Object)	99	[false]	java.lang.Override	public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/Coordinate.java
+100	api.Coordinate	forHash(int)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/Coordinate.java
+101	api.Coordinate	getCoordSet(api.Coordinate,api.Coordinate)	0	[false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/Coordinate.java
+102	api.Coordinate	toString()	103	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/Coordinate.java
+104	domain.Farm	Farm()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+105	domain.Farm	Farm(int,boolean,long,long)	0	[false, false, false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+106	domain.Farm	getWidth()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+107	domain.Farm	getHeight()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+108	domain.Farm	getCash()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+109	domain.Farm	adjustCash(int)	0	[false]		package	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+110	domain.Farm	getTile(api.Coordinate)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+111	domain.Farm	getMarket()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+112	domain.Farm	getId()	113	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+114	domain.Farm	save()	115	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+116	domain.Farm	getTiles()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+117	domain.Farm	objPrinter(java.lang.String[])	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+118	domain.Farm	update()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+119	domain.Farm	getInfecion()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+120	domain.Farm	getStorm()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+121	domain.Farm	countBarn()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Farm.java
+113	domain.Savable	getId()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Savable.java
+115	domain.Savable	save()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Savable.java
+122	domain.Savable	load(java.lang.Class,int)	0	[false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Savable.java
+123	domain.Savable	loadAll(java.lang.Class)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Savable.java
+124	domain.Clock	Clock()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+125	domain.Clock	Clock(double)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+126	domain.Clock	Clock(double,long)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+127	domain.Clock	getOffset()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+128	domain.Clock	getMultiplier()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+129	domain.Clock	getTime()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+130	domain.Clock	getDate()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+131	domain.Clock	setMultiplier(double)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+132	domain.Clock	setTime(java.util.Date)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+133	domain.Clock	setTime(long)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+134	domain.Clock	skipDay()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Clock.java
+135	domain.Inventory	Inventory(int)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+136	domain.Inventory	setBarnCount(int)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+137	domain.Inventory	spaceLeft()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+138	domain.Inventory	getSize()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+139	domain.Inventory	count()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+140	domain.Inventory	add(domain.Product)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+141	domain.Inventory	add(domain.Product,int)	0	[false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+142	domain.Inventory	remove(domain.Product,int)	0	[false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+143	domain.Inventory	save()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+144	domain.Inventory	load()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+145	domain.Inventory	put(domain.Product,java.lang.Integer)	146	[false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+147	domain.Inventory	clear()	148	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+149	domain.Inventory	keySet()	150	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+151	domain.Inventory	values()	152	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+153	domain.Inventory	entrySet()	154	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+155	domain.Inventory$KeySet	iterator()	156	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+157	domain.Inventory$KeySet$1	get(int)	158	[false]		protected	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+159	domain.Inventory$KeySet	size()	160	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+161	domain.Inventory$Values	iterator()	162	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+163	domain.Inventory$Values$1	get(int)	158	[false]		protected	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+164	domain.Inventory$Values	size()	165	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+166	domain.Inventory$EntrySet	iterator()	156	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+167	domain.Inventory$EntrySet$1	get(int)	158	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+168	domain.Inventory$EntrySet	size()	160	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+169	domain.Inventory$InventoryIterator	hasNext()	170	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+171	domain.Inventory$InventoryIterator	remove()	172	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+173	domain.Inventory$InventoryIterator	next()	174	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+158	domain.Inventory$InventoryIterator	get(int)	0	[false]		protected	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+175	domain.Inventory$InvItem	InvItem(int)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+176	domain.Inventory$InvItem	getKey()	177	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+178	domain.Inventory$InvItem	getValue()	179	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+180	domain.Inventory$InvItem	toString()	103	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+181	domain.Inventory$InvItem	setValue(java.lang.Integer)	182	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Inventory.java
+183	domain.Product	getPrice()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Product.java
+184	domain.Product	Product(int)	0	[false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Product.java
+185	api.TileInfo	TileInfo(java.lang.String,java.lang.String,java.lang.String)	0	[false, false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileInfo.java
+186	api.TileInfo	TileInfo(java.lang.String,java.lang.String,java.lang.String,long)	0	[false, false, false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileInfo.java
+187	api.TileInfo	getField()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileInfo.java
+188	api.TileInfo	getSubtype()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileInfo.java
+189	api.TileInfo	getState()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileInfo.java
+190	api.TileInfo	getExpiryTime()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileInfo.java
+191	api.TileInfo	toString()	103	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileInfo.java
+192	api.TileAction$Defaults	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileAction.java
+194	api.TileAction$Defaults	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileAction.java
+196	api.TileAction	name()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileAction.java
+193	api.TileAction	getCost()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileAction.java
+195	api.TileAction	getTime()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/TileAction.java
+197	domain.Infection	Infection(long)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Infection.java
+198	domain.Infection	forecastnext()	0	[]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Infection.java
+199	domain.Infection	spreadFrom(api.Coordinate,long)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Infection.java
+200	domain.Infection	doInfect(long)	0	[false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Infection.java
+201	domain.Infection	update()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Infection.java
+202	domain.Infection	getNext()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Infection.java
+203	domain.Infection	name()	196	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Infection.java
+204	domain.Infection	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Infection.java
+205	domain.Infection	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Infection.java
+206	domain.Tile	Tile(api.Coordinate)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+207	domain.Tile	Tile(api.Coordinate,domain.TileState,long)	0	[false, false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+208	domain.Tile	setState(domain.TileState)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+209	domain.Tile	getCoordinate()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+210	domain.Tile	getId()	113	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+211	domain.Tile	getActions()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+212	domain.Tile	getExpiryTime()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+213	domain.Tile	getState()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+214	domain.Tile	executeAction(api.TileAction)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+215	domain.Tile	executeAction(api.TileAction,long)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+216	domain.Tile	update()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+217	domain.Tile	getInfo()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Tile.java
+218	domain.tiles.Market	Market()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Market.java
+219	domain.tiles.Market	getActions()	220	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Market.java
+221	domain.tiles.Market$1	name()	196	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Market.java
+222	domain.tiles.Market$1	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Market.java
+223	domain.tiles.Market$1	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Market.java
+224	domain.tiles.Market	executeAction(api.TileAction,domain.Tile,long)	225	[false, false, false]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Market.java
+226	domain.tiles.Market	getExpiryTime()	227	[]	java.lang.Override	public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Market.java
+228	domain.tiles.Market	getInfo()	229	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Market.java
+220	domain.TileState	getActions()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/TileState.java
+225	domain.TileState	executeAction(api.TileAction,domain.Tile,long)	0	[false, false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/TileState.java
+227	domain.TileState	getExpiryTime()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/TileState.java
+229	domain.TileState	getInfo()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/TileState.java
+230	domain.Storm	Storm(long)	0	[false]		package	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Storm.java
+231	domain.Storm	forecastnext()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Storm.java
+232	domain.Storm	doStorm(long)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Storm.java
+233	domain.Storm	update()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Storm.java
+234	domain.Storm	getNext()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Storm.java
+235	domain.Storm	name()	196	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Storm.java
+236	domain.Storm	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Storm.java
+237	domain.Storm	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Storm.java
+238	ui.swing.Images	getImage(java.lang.String)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/Images.java
+239	ui.swing.Images	getImage(java.lang.String,java.awt.Dimension)	0	[false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/Images.java
+240	ui.swing.StartUp	StartUp()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/StartUp.java
+241	ui.swing.StartUp	newGame()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/StartUp.java
+242	ui.swing.StartUp	loadGame()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/swing/StartUp.java
+243	ui.cli.ConsoleApp	ConsoleApp()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/cli/ConsoleApp.java
+244	ui.cli.ConsoleApp	getController()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/cli/ConsoleApp.java
+245	ui.cli.ConsoleApp	welcome()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/cli/ConsoleApp.java
+246	ui.cli.ConsoleApp	askLoad()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/cli/ConsoleApp.java
+247	domain.Controller	getInstance()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Controller.java
+248	domain.Controller	saveExists()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Controller.java
+249	domain.Controller	loadGame()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Controller.java
+250	domain.Controller	newGame()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Controller.java
+251	domain.Controller	getGame()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/Controller.java
+252	ui.Translator	getBundle()	0	[]		private	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+253	ui.Translator	getBundle(java.lang.String[])	0	[false]		private	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+254	ui.Translator	setLocale(java.lang.String)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+255	ui.Translator	setLocale(java.lang.String,java.lang.String)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+256	ui.Translator	setLocale(java.lang.String,java.lang.String,java.lang.String)	0	[false, false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+257	ui.Translator	setLocale(java.util.Locale)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+258	ui.Translator	getString(java.lang.String)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+259	ui.Translator	getStringArray(java.lang.String)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+260	ui.Translator	getObject(java.lang.String)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+261	ui.Translator	getObject(java.lang.String,java.lang.Boolean)	0	[false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+262	ui.Translator	matchStringToArray(java.lang.String,java.lang.String)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+263	ui.Translator	timeFormat(long)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+264	ui.Translator	timeFormat(java.util.Date)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/ui/Translator.java
+265	locale.lang_fr	getContents()	266	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/locale/lang_fr.java
+267	locale.lang_no	getContents()	266	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/locale/lang_no.java
+268	locale.lang_en	getContents()	266	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/locale/lang_en.java
+269	locale.lang_nl	getContents()	266	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/locale/lang_nl.java
+270	persistence.Mapper	load(persistence.DBmap)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/Mapper.java
+271	persistence.Mapper	save(domain.Savable)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/Mapper.java
+272	persistence.Mapper	getFields()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/Mapper.java
+273	persistence.DBmap	DBmap(persistence.Mapper,java.sql.ResultSet)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+274	persistence.DBmap	DBmap(persistence.Mapper)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+275	persistence.DBmap	DBmap(persistence.Mapper,java.lang.String[],java.lang.Object[])	0	[false, false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+276	persistence.DBmap	getInt(java.lang.String)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+277	persistence.DBmap	getDouble(java.lang.String)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+278	persistence.DBmap	getStr(java.lang.String)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+279	persistence.DBmap	getLong(java.lang.String)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+280	persistence.DBmap	getUpdateSql()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+281	persistence.DBmap	getUpdateSql(int)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+282	persistence.DBmap	getInsertSql()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+283	persistence.DBmap	getInsertSql(int)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+284	persistence.DBmap	format(java.lang.Object)	0	[false]		private	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DBmap.java
+285	persistence.PersistenceController	getInstance()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/PersistenceController.java
+286	persistence.PersistenceController	PersistenceController()	0	[]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/PersistenceController.java
+287	persistence.PersistenceController	setSaveName(java.lang.String)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/PersistenceController.java
+288	persistence.PersistenceController	getDB()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/PersistenceController.java
+289	persistence.PersistenceController	saveExists()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/PersistenceController.java
+290	persistence.PersistenceController	sync()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/PersistenceController.java
+291	persistence.DB	DB()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DB.java
+292	persistence.DB	DB(java.lang.String)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DB.java
+293	persistence.DB	sync()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DB.java
+294	persistence.DB	close()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DB.java
+295	persistence.DB	getConnection()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DB.java
+296	persistence.DB	finalize()	297	[]		protected	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/DB.java
+298	persistence.MapperList	MapperList(persistence.Mapper)	0	[false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/MapperList.java
+299	persistence.MapperList	save(domain.Savable)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/MapperList.java
+300	persistence.MapperList	initIfNeed()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/MapperList.java
+301	persistence.MapperList	loadById(int)	0	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/MapperList.java
+302	persistence.MapperList	loadAll()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/MapperList.java
+303	persistence.MapperList	getNextID()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/MapperList.java
+304	persistence.mappers.Farm	load(persistence.DBmap)	270	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Farm.java
+305	persistence.mappers.Farm	save(domain.Savable)	271	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Farm.java
+306	persistence.mappers.Farm	getFields()	272	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Farm.java
+307	persistence.mappers.Tile	load(persistence.DBmap)	270	[false]	java.lang.SuppressWarnings	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Tile.java
+308	persistence.mappers.Tile	save(domain.Savable)	271	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Tile.java
+309	persistence.mappers.Tile	getFields()	272	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Tile.java
+310	persistence.mappers.Factory	load(persistence.DBmap)	270	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Factory.java
+311	persistence.mappers.Factory	save(domain.Savable)	271	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Factory.java
+312	persistence.mappers.Factory	getFields()	272	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Factory.java
+313	domain.tiles.Factory$Actions	Actions(int)	0	[false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+314	domain.tiles.Factory$Actions	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+315	domain.tiles.Factory$Actions	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+316	domain.tiles.Factory$Factories	Factories(int,domain.Product,int,domain.Product[])	0	[false, false, false, false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+317	domain.tiles.Factory$Factories	getInput()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+318	domain.tiles.Factory$Factories	getOutput()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+319	domain.tiles.Factory$Factories	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+320	domain.tiles.Factory$Factories	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+321	domain.tiles.Factory	Factory(java.lang.String,long,long,java.lang.String)	0	[false, false, false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+322	domain.tiles.Factory	Factory()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+323	domain.tiles.Factory	getActions()	220	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+324	domain.tiles.Factory	executeAction(api.TileAction,domain.Tile,long)	225	[false, false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+325	domain.tiles.Factory	takeInput()	0	[]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+326	domain.tiles.Factory	checkInput()	0	[]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+327	domain.tiles.Factory	getExpiryTime()	227	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+328	domain.tiles.Factory	getInfo()	229	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+329	domain.tiles.Factory	getType()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+330	domain.tiles.Factory	getStart()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+331	domain.tiles.Factory	getState()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+332	domain.tiles.Factory	getDamage()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Factory.java
+333	persistence.mappers.Crop	load(persistence.DBmap)	270	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Crop.java
+334	persistence.mappers.Crop	save(domain.Savable)	271	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Crop.java
+335	persistence.mappers.Crop	getFields()	272	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Crop.java
+336	domain.tiles.Crop$Actions	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+337	domain.tiles.Crop$Actions	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+338	domain.tiles.Crop$Actions	Actions(int,int)	0	[false, false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+339	domain.tiles.Crop	Crop(java.lang.String,long,java.lang.String)	0	[false, false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+340	domain.tiles.Crop	Crop(domain.tiles.Crops)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+341	domain.tiles.Crop	Crop(domain.tiles.Crops,long,domain.tiles.Crop.State)	0	[false, false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+342	domain.tiles.Crop	getType()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+343	domain.tiles.Crop	getPlanted()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+344	domain.tiles.Crop	getActions()	220	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+345	domain.tiles.Crop	executeAction(api.TileAction,domain.Tile,long)	225	[false, false, false]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+346	domain.tiles.Crop	getExpiryTime()	227	[]	java.lang.Override	public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+347	domain.tiles.Crop	getInfo()	229	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+348	domain.tiles.Crop	getState()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crop.java
+349	domain.tiles.Crops	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crops.java
+350	domain.tiles.Crops	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crops.java
+351	domain.tiles.Crops	getProduct()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crops.java
+352	domain.tiles.Crops	Crops(int,int,domain.Product)	0	[false, false, false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Crops.java
+353	persistence.mappers.InvItem	load(persistence.DBmap)	270	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/InvItem.java
+354	persistence.mappers.InvItem	save(domain.Savable)	271	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/InvItem.java
+355	persistence.mappers.InvItem	getFields()	272	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/InvItem.java
+356	persistence.mappers.Animal	load(persistence.DBmap)	270	[false]	java.lang.SuppressWarnings	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Animal.java
+357	persistence.mappers.Animal	save(domain.Savable)	271	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Animal.java
+358	persistence.mappers.Animal	getFields()	272	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Animal.java
+359	domain.tiles.Animal$Animals	Animals(int,int,domain.Product)	0	[false, false, false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+360	domain.tiles.Animal$Animals	getProduct()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+361	domain.tiles.Animal$Animals	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+362	domain.tiles.Animal$Animals	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+363	domain.tiles.Animal$Actions	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+364	domain.tiles.Animal$Actions	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+365	domain.tiles.Animal$Actions	Actions(int,int)	0	[false, false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+366	domain.tiles.Animal	Animal()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+367	domain.tiles.Animal	Animal(java.lang.String,long)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+368	domain.tiles.Animal	Animal(domain.tiles.Animal.Animals)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+369	domain.tiles.Animal	Animal(domain.tiles.Animal.Animals,java.util.Date)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+370	domain.tiles.Animal	getType()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+371	domain.tiles.Animal	getStart()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+372	domain.tiles.Animal	getActions()	220	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+373	domain.tiles.Animal	executeAction(api.TileAction,domain.Tile,long)	225	[false, false, false]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+374	domain.tiles.Animal	getExpiryTime()	227	[]	java.lang.Override	public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+375	domain.tiles.Animal	getInfo()	229	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Animal.java
+376	persistence.mappers.Clock	load(persistence.DBmap)	270	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Clock.java
+377	persistence.mappers.Clock	save(domain.Savable)	271	[false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Clock.java
+378	persistence.mappers.Clock	getFields()	272	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/persistence/mappers/Clock.java
+379	api.Message	getTime()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/Message.java
+380	api.Message	getMessage()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/Message.java
+381	api.StringJoiner	StringJoiner(java.lang.String,java.lang.Object[])	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/StringJoiner.java
+382	api.StringJoiner	StringJoiner(java.lang.String)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/StringJoiner.java
+383	api.StringJoiner	add(java.lang.Object)	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/StringJoiner.java
+384	api.StringJoiner	toString()	103	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/api/StringJoiner.java
+385	StartUp	main(java.lang.String[])	0	[false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/StartUp.java
+386	StartUp	StartUp()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/StartUp.java
+387	domain.tiles.Barn	getActions()	220	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Barn.java
+388	domain.tiles.Barn$1	name()	196	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Barn.java
+389	domain.tiles.Barn$1	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Barn.java
+390	domain.tiles.Barn$1	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Barn.java
+391	domain.tiles.Barn	executeAction(api.TileAction,domain.Tile,long)	225	[false, false, false]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Barn.java
+392	domain.tiles.Barn	getExpiryTime()	227	[]	java.lang.Override	public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Barn.java
+393	domain.tiles.Barn	getInfo()	229	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Barn.java
+394	domain.tiles.Plowing	Plowing()	0	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Plowing.java
+395	domain.tiles.Plowing	getActions()	220	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Plowing.java
+396	domain.tiles.Plowing	executeAction(api.TileAction,domain.Tile,long)	225	[false, false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Plowing.java
+397	domain.tiles.Plowing	getExpiryTime()	227	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Plowing.java
+398	domain.tiles.Plowing	getInfo()	229	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Plowing.java
+399	domain.tiles.None$Actions	getCost()	193	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/None.java
+400	domain.tiles.None$Actions	getTime()	195	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/None.java
+401	domain.tiles.None$Actions	Actions(int,int)	0	[false, false]		private	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/None.java
+402	domain.tiles.None	getActions()	220	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/None.java
+403	domain.tiles.None	executeAction(api.TileAction,domain.Tile,long)	225	[false, false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/None.java
+404	domain.tiles.None	getExpiryTime()	227	[]	java.lang.Override	public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/None.java
+405	domain.tiles.None	getInfo()	229	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/None.java
+406	domain.tiles.Plowed	getActions()	220	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Plowed.java
+407	domain.tiles.Plowed	executeAction(api.TileAction,domain.Tile,long)	225	[false, false, false]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Plowed.java
+408	domain.tiles.Plowed	getExpiryTime()	227	[]	java.lang.Override	public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Plowed.java
+409	domain.tiles.Plowed	getInfo()	229	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/tiles/Plowed.java
+410	domain.MsgQue$Msg	Msg(java.lang.String,long)	0	[false, false]		package	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/MsgQue.java
+411	domain.MsgQue$Msg	getTime()	379	[]	java.lang.Override	public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/MsgQue.java
+412	domain.MsgQue$Msg	getMessage()	380	[]	java.lang.Override	public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/MsgQue.java
+413	domain.MsgQue	get()	0	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/MsgQue.java
+414	domain.MsgQue	hasNext()	170	[]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/MsgQue.java
+415	domain.MsgQue	next()	174	[]		public	true	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/MsgQue.java
+416	domain.MsgQue	put(java.lang.String,long)	0	[false, false]		public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/MsgQue.java
+417	domain.MsgQue	remove()	172	[]	java.lang.Override	public	false	/Users/kknock/RIPLE/taint/injection-experiment-gradle/farmtycoon/src/main/java/domain/MsgQue.java

@@ -1,0 +1,49 @@
+➜ python3 log_parser.py
+Method: <init>, Arg: 0
+  com/lbp/jspclasses/DBConnection.java:60
+
+Method: addBatch, Arg: 0
+  com/lbp/jspclasses/PositionUpdate.java:59
+  com/lbp/jspclasses/PositionUpdate.java:60
+  com/lbp/jspclasses/PositionUpdate.java:61
+  com/lbp/jspclasses/StartGame.java:58
+  com/lbp/jspclasses/StartGame.java:59
+  com/lbp/servletclasses/CreateGame.java:75
+  com/lbp/servletclasses/join.java:73
+  com/lbp/servletclasses/join.java:74
+
+Method: executeQuery, Arg: 0
+  com/lbp/SessionListenerClasses/RemoveSession.java:25
+  com/lbp/SessionListenerClasses/RemoveSession.java:27
+  com/lbp/SessionListenerClasses/RemoveSession.java:28
+  com/lbp/SessionListenerClasses/RemoveSession.java:31
+  com/lbp/jspclasses/Chance.java:52
+  com/lbp/jspclasses/CheckBname.java:53
+  com/lbp/jspclasses/CheckPassP.java:52
+  com/lbp/jspclasses/CheckStarted.java:56
+  com/lbp/jspclasses/CheckUname.java:51
+  com/lbp/jspclasses/GetColors.java:49
+  com/lbp/jspclasses/GetDetails.java:54
+  com/lbp/jspclasses/GetFullDetails.java:56
+  com/lbp/jspclasses/GetGamerDetails.java:52
+  com/lbp/jspclasses/GetPlayerNames.java:19
+  com/lbp/jspclasses/PositionUpdate.java:56
+  com/lbp/jspclasses/StartGame.java:53
+  com/lbp/servletclasses/CreateGame.java:59
+  com/lbp/servletclasses/Login.java:52
+  com/lbp/servletclasses/Login.java:58
+  com/lbp/servletclasses/join.java:54
+  com/lbp/servletclasses/join.java:57
+  com/lbp/servletclasses/join.java:70
+
+Method: executeUpdate, Arg: 0
+  com/lbp/servletclasses/Contact.java:53
+  com/lbp/servletclasses/Registration.java:66
+
+Method: print, Arg: 0
+  com/lbp/jspclasses/GetDetails.java:56
+  com/lbp/jspclasses/GetFullDetails.java:61
+  com/lbp/jspclasses/PositionUpdate.java:64
+
+Method: println, Arg: 0
+  com/lbp/jspclasses/GetGamerDetails.java:73

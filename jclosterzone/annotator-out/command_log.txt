@@ -1,0 +1,10 @@
+2024-12-30T23:32:17.957225:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jclosterzone
+
+2024-12-30T23:36:56.088277:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jclosterzone
+
+2024-12-30T23:37:28.572402:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jclosterzone
+
+2024-12-30T23:37:32.522077:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jclosterzone
+
+2024-12-30T23:37:33.197834:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh jclosterzone
+

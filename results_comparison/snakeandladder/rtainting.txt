@@ -1,0 +1,34 @@
+com/lbp/jspclasses/Chance.java:53: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/jspclasses/CheckBname.java:54: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/jspclasses/CheckPassP.java:53: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/jspclasses/CheckStarted.java:57: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/jspclasses/CheckUname.java:52: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/servletclasses/Contact.java:54: warning: [argument] incompatible argument for parameter arg0 of Statement.executeUpdate.
+com/lbp/servletclasses/CreateGame.java:60: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/servletclasses/CreateGame.java:76: warning: [argument] incompatible argument for parameter arg0 of Statement.addBatch.
+com/lbp/servletclasses/CreateGame.java:79: warning: [argument] incompatible argument for parameter arg1 of HttpSession.setAttribute.
+com/lbp/jspclasses/GetColors.java:49: warning: [argument] incompatible argument for parameter s of DBConnection.trustMe.
+com/lbp/jspclasses/GetDetails.java:55: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/jspclasses/GetFullDetails.java:57: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/jspclasses/GetGamerDetails.java:53: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/servletclasses/Login.java:53: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/servletclasses/Login.java:59: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/servletclasses/Login.java:61: warning: [argument] incompatible argument for parameter arg1 of HttpSession.setAttribute.
+com/lbp/jspclasses/Logout.java:34: warning: [argument] incompatible argument for parameter uname of RemoveSession.removeSession.
+com/lbp/jspclasses/PositionUpdate.java:57: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/jspclasses/PositionUpdate.java:60: warning: [argument] incompatible argument for parameter arg0 of Statement.addBatch.
+com/lbp/jspclasses/PositionUpdate.java:61: warning: [argument] incompatible argument for parameter arg0 of Statement.addBatch.
+com/lbp/jspclasses/PositionUpdate.java:62: warning: [argument] incompatible argument for parameter arg0 of Statement.addBatch.
+com/lbp/jspclasses/PositionUpdate.java:65: warning: [argument] incompatible argument for parameter name of GetPlayerNames.getPlayerNames.
+com/lbp/servletclasses/Registration.java:67: warning: [argument] incompatible argument for parameter arg0 of Statement.executeUpdate.
+com/lbp/jspclasses/StartGame.java:54: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/jspclasses/StartGame.java:59: warning: [argument] incompatible argument for parameter arg0 of Statement.addBatch.
+com/lbp/jspclasses/StartGame.java:60: warning: [argument] incompatible argument for parameter arg0 of Statement.addBatch.
+com/lbp/servletclasses/join.java:55: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/servletclasses/join.java:58: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/servletclasses/join.java:71: warning: [argument] incompatible argument for parameter arg0 of Statement.executeQuery.
+com/lbp/servletclasses/join.java:74: warning: [argument] incompatible argument for parameter arg0 of Statement.addBatch.
+com/lbp/servletclasses/join.java:75: warning: [argument] incompatible argument for parameter arg0 of Statement.addBatch.
+com/lbp/servletclasses/join.java:77: warning: [argument] incompatible argument for parameter arg1 of HttpSession.setAttribute.
+
+Total: 32

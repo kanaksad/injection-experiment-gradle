@@ -1,0 +1,367 @@
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/ArrayHelper.java:58: warning: [argument] incompatible argument for parameter object of Predicate.matches.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/variant/BattleHex.java:101: warning: [cast.unsafe] cast from "@RPolyTainted int" to "@RUntainted char" cannot be statically verified
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/BattleMap.java:221: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/BattlelandLoader.java:85: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/BattlelandLoader.java:90: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/BattlelandLoader.java:108: warning: [argument] incompatible argument for parameter elevation of BattleHex.setElevation.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/BuildInfo.java:39: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatChannel.java:126: warning: [argument] incompatible argument for parameter lines of ChatChannel.sendLinesToClient.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatChannel.java:137: warning: [argument] incompatible argument for parameter lines of ChatChannel.sendLinesToClient.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatChannel.java:145: warning: [argument] incompatible argument for parameter lines of ChatChannel.sendLinesToClient.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatChannel.java:158: warning: [argument] incompatible argument for parameter lines of ChatChannel.sendLinesToClient.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatChannel.java:165: warning: [argument] incompatible argument for parameter lines of ChatChannel.sendLinesToClient.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatChannel.java:177: warning: [argument] incompatible argument for parameter lines of ChatChannel.sendLinesToClient.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatChannel.java:269: warning: [argument] incompatible argument for parameter lines of ChatChannel.sendLinesToClient.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatChannel.java:421: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatMsgStorage.java:112: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatMsgStorage.java:155: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ChatMsgStorage.java:162: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/Chit.java:228: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/Chit.java:234: warning: [argument] incompatible argument for parameter imageFilenames of Chit.getImage.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/Chit.java:280: warning: [argument] incompatible argument for parameter imageFilenames of Chit.getImage.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/Chit.java:301: warning: [argument] incompatible argument for parameter imageFilenames of Chit.getImage.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/Chit.java:317: warning: [argument] incompatible argument for parameter imageFilenames of Chit.getImage.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:332: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:528: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:536: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:759: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:1321: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:1321: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:1338: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:1338: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:1698: warning: [override.param] Incompatible parameter type for creatures.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:1914: warning: [argument] incompatible argument for parameter angelType of IServer.acquireAngel.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:3156: warning: [argument] incompatible argument for parameter color of IServer.assignColor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:3598: warning: [argument] incompatible argument for parameter entrySide of IServer.doMove.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:3807: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:3861: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:4146: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/Client.java:4203: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:410: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:415: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:447: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:549: warning: [argument] incompatible argument for parameter message of Client.logMsgToServer.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:558: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:613: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:613: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:1817: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:1902: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:1907: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:2198: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:2948: warning: [override.param] Incompatible parameter type for choices.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:3380: warning: [override.param] Incompatible parameter type for rolls.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:3706: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ClientGUI.java:3707: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandler.java:83: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandler.java:285: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandler.java:903: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandler.java:903: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandler.java:1053: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandler.java:1053: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandler.java:1477: warning: [argument] incompatible argument for parameter name of ClientHandler.resolveCreatureType.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandler.java:1651: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandler.java:1701: warning: [override.param] Incompatible parameter type for message.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandlerStub.java:163: warning: [argument] incompatible argument for parameter message of ClientHandlerStub.enqueueToRedoQueue.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandlerStub.java:332: warning: [override.param] Incompatible parameter type for creatures.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandlerStub.java:435: warning: [override.param] Incompatible parameter type for choices.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandlerStub.java:484: warning: [override.param] Incompatible parameter type for rolls.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ClientHandlerStub.java:486: warning: [override.param] Incompatible parameter type for carryTargetDescriptions.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/ClientThread.java:69: warning: [argument] incompatible argument for parameter args of ServerEvent constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/ClientThread.java:1169: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/CmdLineWebClient.java:93: warning: [argument] incompatible argument for parameter username of CmdLineWebClient.login.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/CmdLineWebClient.java:93: warning: [argument] incompatible argument for parameter password of CmdLineWebClient.login.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/CmdLineWebClient.java:185: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ColossusMail.java:102: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ColossusMail.java:166: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ColossusMail.java:179: warning: [argument] incompatible argument for parameter msg of Logger.severe.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ColossusMail.java:188: warning: [override.param] Incompatible parameter type for message.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ColossusMail.java:246: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/ColossusMail.java:260: warning: [argument] incompatible argument for parameter msg of Logger.severe.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/Combos.java:21: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/Concede.java:116: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/common/Constants.java:37: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/CreatureLoader.java:49: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/CreatureLoader.java:76: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/CreatureLoader.java:80: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/CreatureLoader.java:84: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/DevRandom.java:101: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/DevRandom.java:102: warning: [argument] incompatible argument for parameter src of DevRandom.tryOneSource.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/DevRandom.java:104: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/DevRandom.java:106: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/DevRandom.java:151: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/game/DiceStatistics.java:43: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/game/EntrySide.java:42: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/FileServerThread.java:52: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/FileServerThread.java:83: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/FileServerThread.java:183: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/FileServerThread.java:196: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/FileServerThread.java:204: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/GUIBattleHex.java:382: warning: [argument] incompatible argument for parameter directories of StaticResourceLoader.getImage.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/GUIMasterHex.java:456: warning: [argument] incompatible argument for parameter directories of StaticResourceLoader.getImage.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/GameClientSide.java:39: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/GameClientSide.java:62: warning: [argument] incompatible argument for parameter p of Game.addPlayer.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/GameClientSide.java:68: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/GameClientSide.java:322: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webcommon/GameInfo.java:278: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webcommon/GameInfo.java:279: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameLoading.java:180: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameLoading.java:181: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/GameManager.java:85: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/GameManager.java:98: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/GameManager.java:132: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/GameManager.java:136: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameSaving.java:491: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameSaving.java:523: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameSaving.java:596: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:291: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:333: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:333: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:381: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:458: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:477: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:1039: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:1052: warning: [argument] incompatible argument for parameter p of Game.addPlayer.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:1053: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:1734: warning: [argument] incompatible argument for parameter leg of GameServerSide.readLegion.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:1831: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:1886: warning: [argument] incompatible argument for parameter legion of Player.addLegion.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:1926: warning: [argument] incompatible argument for parameter critter of LegionServerSide.addCritter.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:2158: warning: [argument] incompatible argument for parameter msg of Logger.info.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:3203: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/GameServerSide.java:3215: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/GameTableModel.java:216: warning: [argument] incompatible argument for parameter state of GameInfo.setState.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/HTMLColor.java:210: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/HexMap.java:168: warning: [argument] incompatible argument for parameter directories of StaticResourceLoader.getInputStream.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/HexMap.java:172: warning: [argument] incompatible argument for parameter startList of MasterBoardTerrain.setStartList.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/HexMap.java:200: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/HexMap.java:243: warning: [argument] incompatible argument for parameter model of GUIHex.setHexModel.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/HexMap.java:251: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/HexMap.java:251: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/History.java:415: warning: [argument] incompatible argument for parameter msg of Logger.info.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/History.java:416: warning: [argument] incompatible argument for parameter el of History.fireEventFromElement.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/History.java:531: warning: [argument] incompatible argument for parameter playerName of GameServerSide.getPlayerByName.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/History.java:582: warning: [argument] incompatible argument for parameter creatureTypes of LegionServerSide constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/History.java:585: warning: [argument] incompatible argument for parameter legion of Player.addLegion.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/History.java:595: warning: [argument] incompatible argument for parameter child of Server.allTellDidSplit.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/game/Legion.java:329: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/LegionClientSide.java:81: warning: [argument] incompatible argument for parameter arg0 of List.add.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/LegionClientSide.java:101: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/LegionServerSide.java:79: warning: [argument] incompatible argument for parameter arg0 of List.add.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/LegionServerSide.java:332: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/LegionServerSide.java:468: warning: [argument] incompatible argument for parameter arg0 of List.add.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/LegionServerSide.java:554: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/LegionServerSide.java:656: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/LegionServerSide.java:694: warning: [argument] incompatible argument for parameter legion of Player.addLegion.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/LegionServerSide.java:699: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/LegionServerSide.java:706: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/MainVarFileLoader.java:86: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/MainVarFileLoader.java:90: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ManagedGame.java:46: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ManagedGame.java:100: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ManagedGame.java:106: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/ManagedGame.java:175: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/variant/MasterBoard.java:73: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/variant/MasterBoard.java:77: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/MasterBoard.java:1200: warning: [argument] incompatible argument for parameter pathname of File constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/MasterBoard.java:1207: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/MasterBoard.java:1216: warning: [argument] incompatible argument for parameter pathname of File constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/MasterBoard.java:2804: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/MasterBoard.java:2820: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/variant/MasterBoardTerrain.java:81: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/variant/MasterBoardTerrain.java:218: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/variant/MasterBoardTerrain.java:238: warning: [argument] incompatible argument for parameter startList of MasterBoardTerrain.setStartList.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/variant/MasterBoardTerrain.java:316: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/variant/MasterBoardTerrain.java:556: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/game/Movement.java:89: warning: [argument] incompatible argument for parameter arg0 of Set.add.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/game/Movement.java:332: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/appmain/NetworkClientDialog.java:205: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/NotifyWebServerViaFile.java:146: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/NotifyWebServerViaFile.java:171: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/NullClientGUI.java:272: warning: [override.param] Incompatible parameter type for rolls.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/NullClientGUI.java:372: warning: [override.param] Incompatible parameter type for carryTargetDescriptions.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/NullClientGUI.java:390: warning: [override.param] Incompatible parameter type for lords.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/NullClientGUI.java:396: warning: [override.param] Incompatible parameter type for markersAvailable.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/NullClientGUI.java:402: warning: [override.param] Incompatible parameter type for markersAvailable.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/NullClientGUI.java:414: warning: [override.param] Incompatible parameter type for recruiters.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/NullClientGUI.java:428: warning: [override.param] Incompatible parameter type for choices.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/NullClientGUI.java:434: warning: [override.param] Incompatible parameter type for possibleDonors.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/helper/OnTheFlyLegionMove.java:460: warning: [argument] incompatible argument for parameter msg of Logger.finer.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/helper/OnTheFlyLegionMove.java:754: warning: [argument] incompatible argument for parameter msg of Logger.finer.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/common/Options.java:328: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/common/Options.java:371: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/common/Options.java:385: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/common/Options.java:478: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/common/Options.java:676: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/common/Options.java:679: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/common/Options.java:732: warning: [argument] incompatible argument for parameter newValue of Listener.stringOptionChanged.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/ParallelEvaluatorAI.java:196: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/game/Phase.java:28: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/PlayerClientSide.java:43: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/game/PlayerColor.java:78: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/PlayerServerSide.java:243: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/PortBookKeeper.java:229: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/QueuedSocketWriter.java:55: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/RandomDotOrgFileReader.java:62: warning: [argument] incompatible argument for parameter directoryPath of RandomDotOrgFileReader.init.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/RandomDotOrgFileReader.java:96: warning: [argument] incompatible argument for parameter arg0 of List.addAll.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/RationalAI.java:961: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/RationalAI.java:1094: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/RationalAI.java:1130: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/RationalAI.java:2009: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/RationalAI.java:2165: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/game/RecruitGraph.java:263: warning: [argument] incompatible argument for parameter arg1 of Map.put.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/game/RecruitGraph.java:265: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/variant/RecruitingSubTree.java:34: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/variant/RecruitingSubTree.java:35: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/RegisterPasswordPanel.java:398: warning: [argument] incompatible argument for parameter confCode of WebClient.createRegisterWebClientSocketThread.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/RevealEvent.java:562: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/RevealEvent.java:592: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/RunGameInOwnJVM.java:225: warning: [argument] incompatible argument for parameter command of Runtime.exec.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/RunGameInOwnJVM.java:240: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/RunGameInOwnJVM.java:240: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/RunGameInOwnJVM.java:383: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/RunGameInOwnJVM.java:383: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/RunGameInOwnJVM.java:384: warning: [argument] incompatible argument for parameter reason of IRunWebServer.gameFailed.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/RunGameInOwnJVM.java:483: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/RunGameInOwnJVM.java:488: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/RunGameInOwnJVM.java:544: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/RunGameInOwnJVM.java:749: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:402: warning: [argument] incompatible argument for parameter msg of Logger.severe.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:416: warning: [argument] incompatible argument for parameter msg of Logger.severe.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:554: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:559: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:563: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:829: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:846: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:910: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:910: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:923: warning: [argument] incompatible argument for parameter gotException of Server.withdrawFromGameIfRelevant.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:1038: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:1152: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:1206: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/Server.java:3417: warning: [argument] incompatible argument for parameter creaturesToSplit of GameServerSide.doSplit.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ShowCreatureDetails.java:121: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ShowCreatureDetails.java:348: warning: [argument] incompatible argument for parameter hazard of SimulatedCritter.setNewHazardHex.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/gui/ShowCreatureDetails.java:353: warning: [argument] incompatible argument for parameter hexside of SimulatedCritter.setHexsideHazard.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:837: warning: [argument] incompatible argument for parameter legion of MoveInfo constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:837: warning: [argument] incompatible argument for parameter value of MoveInfo constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:846: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:864: warning: [argument] incompatible argument for parameter legion of MoveInfo constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:864: warning: [argument] incompatible argument for parameter hex of MoveInfo constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:864: warning: [argument] incompatible argument for parameter value of MoveInfo constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:865: warning: [argument] incompatible argument for parameter difference of MoveInfo constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:878: warning: [argument] incompatible argument for parameter legion of SimpleAI.doMove.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:878: warning: [argument] incompatible argument for parameter hex of SimpleAI.doMove.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:886: warning: [argument] incompatible argument for parameter msg of Logger.finer.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:894: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1073: warning: [argument] incompatible argument for parameter msg of Logger.finest.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1099: warning: [argument] incompatible argument for parameter msg of Logger.finest.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1170: warning: [argument] incompatible argument for parameter msg of Logger.finest.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1200: warning: [argument] incompatible argument for parameter msg of Logger.finest.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1208: warning: [argument] incompatible argument for parameter msg of Logger.finest.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1324: warning: [argument] incompatible argument for parameter msg of Logger.finest.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1333: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1356: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1387: warning: [argument] incompatible argument for parameter msg of Logger.finest.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1392: warning: [argument] incompatible argument for parameter msg of Logger.finest.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/ai/SimpleAI.java:1455: warning: [argument] incompatible argument for parameter msg of Logger.finest.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/SmtpSimple.java:43: warning: [argument] incompatible argument for parameter sSmtpServer of SmtpSimple.sendEmail.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:245: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:279: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:291: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:304: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:304: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:316: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:327: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:528: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:675: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:675: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:705: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:774: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:782: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:788: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:817: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:822: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:848: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/client/SocketClientThread.java:848: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/appmain/Start.java:157: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/appmain/Start.java:158: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/appmain/Start.java:888: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/appmain/Start.java:913: warning: [argument] incompatible argument for parameter args of Start constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/StrategicMapLoader.java:58: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/StrategicMapLoader.java:62: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/SwingDocumentLogHandler.java:59: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/SwingDocumentLogHandler.java:82: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/TerrainRecruitLoader.java:225: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/TerrainRecruitLoader.java:303: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/TerrainRecruitLoader.java:307: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/TerrainRecruitLoader.java:311: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/xmlparser/TerrainRecruitLoader.java:1077: warning: [return] incompatible types in return.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webcommon/UserDB.java:351: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webcommon/UserDB.java:357: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webcommon/UserDB.java:390: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/VariantSupport.java:246: warning: [argument] incompatible argument for parameter msg of Logger.warning.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/VariantSupport.java:265: warning: [argument] incompatible argument for parameter msg of Logger.severe.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/VariantSupport.java:378: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/VariantSupport.java:493: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/VariantSupport.java:566: warning: [conflicting.annos] invalid type: conflicting annotations [@RPolyTainted, @RUntainted] in type "@RPolyTainted @RUntainted AllCreatureType"
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/VariantSupport.java:589: warning: [conflicting.annos] invalid type: conflicting annotations [@RPolyTainted, @RUntainted] in type "@RPolyTainted @RUntainted AllCreatureType"
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/server/VariantSupport.java:595: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/ViableEntityManager.java:73: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/util/ViableEntityManager.java:106: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClient.java:511: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:139: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:152: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:222: warning: [argument] incompatible argument for parameter s of WebClientSocketThread.writeLog.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:233: warning: [argument] incompatible argument for parameter s of WebClientSocketThread.writeLog.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:242: warning: [argument] incompatible argument for parameter s of WebClientSocketThread.writeLog.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:246: warning: [argument] incompatible argument for parameter s of WebClientSocketThread.writeLog.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:300: warning: [argument] incompatible argument for parameter s of WebClientSocketThread.writeLog.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:356: warning: [argument] incompatible argument for parameter s of WebClientSocketThread.writeLog.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:414: warning: [argument] incompatible argument for parameter s of WebClientSocketThread.writeLog.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:670: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:695: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:760: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:779: warning: [override.param] Incompatible parameter type for lines.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:786: warning: [override.param] Incompatible parameter type for username.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:786: warning: [override.param] Incompatible parameter type for oldPW.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:813: warning: [override.param] Incompatible parameter type for gameOptions.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webclient/WebClientSocketThread.java:813: warning: [override.param] Incompatible parameter type for teleportOptions.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:134: warning: [argument] incompatible argument for parameter optionsFile of WebServer constructor.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:332: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:397: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:421: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:463: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:471: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:480: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:510: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:546: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:1406: warning: [argument] incompatible argument for parameter lines of ChatChannel.sendLinesToClient.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:1429: warning: [argument] incompatible argument for parameter lines of ChatChannel.sendLinesToClient.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:1629: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:1635: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:1972: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:1978: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:2021: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServer.java:2149: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClient.java:85: warning: [assignment] incompatible types in assignment.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClient.java:651: warning: [argument] incompatible argument for parameter message of WebServer.messageToAdmin.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:101: warning: [argument] incompatible argument for parameter msg of Logger.info.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:123: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:123: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:133: warning: [argument] incompatible argument for parameter msg of Logger.info.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:149: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:160: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:188: warning: [argument] incompatible argument for parameter msg of Logger.info.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:196: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:206: warning: [argument] incompatible argument for parameter msg of Logger.info.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:214: warning: [argument] incompatible argument for parameter msg of Logger.info.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:221: warning: [argument] incompatible argument for parameter msg of Logger.info.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:230: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:235: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:241: warning: [argument] incompatible argument for parameter msg of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:241: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:284: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerClientSocketThread.java:471: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+/Users/kknock/RIPLE/taint/injection-experiment-gradle/colossus/src/main/java/net/sf/colossus/webserver/WebServerOptions.java:42: warning: [argument] incompatible argument for parameter thrown of Logger.log.
+
+Total: 365
