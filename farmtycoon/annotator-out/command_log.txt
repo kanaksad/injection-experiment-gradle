@@ -1,0 +1,76 @@
+2024-12-30T23:29:11.889562:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:29:22.214152:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:29:27.335453:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:29:31.859238:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:29:33.685726:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:29:40.072718:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:29:45.724833:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:29:50.498435:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:29:54.989923:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:29:59.606442:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:04.098163:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:09.312021:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:13.965101:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:15.329138:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:19.710030:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:24.752476:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:30.398367:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:35.296466:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:39.960194:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:44.662326:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:49.174025:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:53.702999:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:30:58.079646:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:03.693629:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:09.696157:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:14.089347:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:18.847106:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:24.350603:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:30.812934:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:38.098574:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:39.675911:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:41.342944:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:47.003144:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:52.873071:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:31:58.855114:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:32:04.678007:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:32:10.603059:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+
+2024-12-30T23:32:16.274710:cd /Users/kknock/RIPLE/taint/injection-experiment-gradle && ./annotator-command.sh farmtycoon
+

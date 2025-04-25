@@ -11,11 +11,12 @@ checkerFramework {
     ]
 
     extraJavacArgs = [
-            '-AannotatedPackages=' + 'ndt.sf.colossus',
+            '-AannotatedPackages=' + 'net.sf.colossus',
             "-AenableLibraryCheck=$System.env.ANNOTATOR_LIBRARY",
             "-AenablePolyTaintInference=$System.env.ANNOTATOR_POLY",
             "-AenableTypeArgumentInference=$System.env.ANNOTATOR_TYPE_ARG",
             "-AenableSerialization",
+            "-AenableSideEffect",
             "-AserializationConfigPath=" + checker_config,
             '-Awarns'
     ]

@@ -2,7 +2,7 @@
 <scanner>
     <serialization active="true"/>
     <uuid>0ac9a909-7b41-4448-bd68-aefae00e2520</uuid>
-    <path>/Users/nima/Desktop/injection-experiment-gradle/jexcelapi/annotator-out/0</path>
+    <path>/Users/kknock/RIPLE/taint/injection-experiment-gradle/jexcelapi/annotator-out/0</path>
     <processor>
         <LOMBOK active="true"/>
     </processor>
